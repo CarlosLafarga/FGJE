@@ -30,6 +30,7 @@ import { SideChatComponent } from '../theme/components/side-chat/side-chat.compo
 import { FavoritesComponent } from '../theme/components/favorites/favorites.component';
 import { BlankComponent } from './blank/blank.component';
 import { SearchComponent } from './search/search.component';
+import { PruebaCarlosComponent } from './prueba/prueba-carlos.component';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { SearchComponent } from './search/search.component';
     SideChatComponent,
     FavoritesComponent,
     BlankComponent,
-    SearchComponent
+    SearchComponent,
+    PruebaCarlosComponent
   ],
   providers:[
     {

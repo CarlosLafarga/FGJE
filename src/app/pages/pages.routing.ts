@@ -4,6 +4,7 @@ import { ModuleWithProviders } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import { BlankComponent } from './blank/blank.component';
 import { SearchComponent } from './search/search.component';
+import { PruebaCarlosComponent } from './prueba/prueba-carlos.component';
 
 export const routes: Routes = [
     {
@@ -23,7 +24,8 @@ export const routes: Routes = [
             { path: 'charts', loadChildren: 'app/pages/charts/charts.module#ChartsModule', data: { breadcrumb: 'Charts' } },
             { path: 'dynamic-menu', loadChildren: 'app/pages/dynamic-menu/dynamic-menu.module#DynamicMenuModule', data: { breadcrumb: 'Dynamic Menu' }  },          
             { path: 'blank', component: BlankComponent, data: { breadcrumb: 'Blank page' } },
-            { path: 'search', component: SearchComponent, data: { breadcrumb: 'Search' } }
+            { path: 'search', component: SearchComponent, data: { breadcrumb: 'Search' } },
+            { path: 'prueba', component: PruebaCarlosComponent, data: { breadcrumb: 'Prueba Carlos' } }
        ]
     }
 ];
