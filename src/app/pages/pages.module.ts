@@ -31,7 +31,7 @@ import { FavoritesComponent } from '../theme/components/favorites/favorites.comp
 import { BlankComponent } from './blank/blank.component';
 import { SearchComponent } from './search/search.component';
 import { PruebaCarlosComponent } from './prueba/prueba-carlos.component';
-import { CambioAdscripcionComponent } from './cambio-adscripcion/cambio-adscripcion.component';
+import { CambioAdscripcionComponent } from './cambio/cambio-adscripcion/cambio-adscripcion.component';
 
 
 @NgModule({

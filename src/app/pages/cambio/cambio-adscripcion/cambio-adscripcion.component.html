@@ -1,0 +1,206 @@
+<h2>Cambio de adscripción</h2>
+
+<hr>
+
+<div class="col">
+  <div class="input-group mb-2">
+    <span class="input-group-prepend">
+      <span class="input-group-text">
+        <i class="fa fa-search"></i>
+      </span>
+    </span>
+    <input class="form-control" type="text" placeholder="Escriba el nombre del funcionario"/>
+  </div>
+
+  <div widget class="card border-0 box-shadow">
+      <div class="card-body pt-0 widget-body">          
+          <table class="table table-hover">
+              <thead>
+                  <tr>
+                      <th></th>
+                      <th>Nombre</th>
+                      <th>Apellido paterno</th>
+                      <th>Apellido materno</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <th scope="row">1</th>
+                      <td>Armando</td>
+                      <td>Mora</td>
+                      <td>Aguirre</td>
+                  </tr>
+                  <tr>
+                      <th scope="row">2</th>
+                      <td>Hernan</td>
+                      <td>Hernandes</td>
+                      <td>Pulido</td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+
+<br>
+
+<div class="col">
+    <div widget class="card border-0 box-shadow">
+        <div class="card-header transparent border-0 text-muted">
+            <h5 class="mb-0">Reasignación de expedientes</h5>
+            <div class="widget-controls"> 
+                <a data-widgster="expand" href="#" class="transition"><i class="fa fa-chevron-down"></i></a>
+                <a data-widgster="collapse" href="#" class="transition"><i class="fa fa-chevron-up"></i></a>
+                <a data-widgster="close" href="#" class="transition"><i class="fa fa-times"></i></a>
+            </div>        
+        </div>
+        <div class="card-body pt-0 widget-body"> 
+
+            <div class="clearfix">            
+                <ul class="nav nav-tabs custom top">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#ta">Titular de la agencia</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#tb">Nuevo funcionario</a>
+                    </li>                          
+                </ul>
+          </div>
+          <div class="tab-content top">
+              <div class="tab-pane active" id="ta">
+                  <h6>Nombre del funcionario titular de la agencia: </h6>
+                  <p>(mostrar el nombre del titular de la agencia)</p>
+                  <button type="button" class="btn btn-secondary w-100p mb-1 mr-1">Asignar</button>
+              </div>
+              <div class="tab-pane" id="tb">
+                  <div class="input-group mb-2">
+                      <span class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="fa fa-search"></i>
+                        </span>
+                      </span>
+                      <input class="form-control" type="text" placeholder="Escriba el nombre del funcionario"/>
+                  </div>
+                  <table class="table table-hover">
+                      <thead>
+                          <tr>
+                              <th></th>
+                              <th>Nombre</th>
+                              <th>Apellido paterno</th>
+                              <th>Apellido materno</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <th scope="row">1</th>
+                              <td>Armando</td>
+                              <td>Mora</td>
+                              <td>Aguirre</td>
+                          </tr>
+                          <tr>
+                              <th scope="row">2</th>
+                              <td>Hernan</td>
+                              <td>Hernandes</td>
+                              <td>Pulido</td>
+                          </tr>
+                      </tbody>
+                  </table>
+                  <button type="button" class="btn btn-secondary w-100p mb-1 mr-1">Asignar</button>
+              </div>
+          </div> 
+
+        </div>
+    </div>
+</div>
+
+<br>
+
+<div class="col">
+    <div widget class="card border-0 box-shadow">
+        <div class="card-header transparent border-0 text-muted">
+            <h5 class="mb-0">Reubicar a funcionario</h5>    
+        </div>
+        <div class="card-body pt-0 widget-body"> 
+
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 mb-4">
+                  <h6>Nombre del funcionario titular de la agencia: </h6>
+                  <p>(mostrar el nombre del titular de la agencia)</p>
+              </div>
+              <div class="col-xl-6 col-lg-6 mb-4">
+                  <div class="form-group">
+                      <label for="exampleSelect3">Nueva agencia:</label>
+                      <select class="form-control custom-select" id="exampleSelect3">
+                          <option selected>-- Seleccione una agencia --</option>
+                          <option value="1">005 - CUMPAS</option>
+                          <option value="2">010 - HERMOSILLO PRIMERA UNIDAD ESPECIALIZADA EN EL SISTEMA DE JUSTICIA PENAL ACUSATORIO Y ORAL</option>
+                          <option value="3">089 - DIRECCIÓN GENERAL DE SERVICIOS PERICIALES</option>
+                          <option value="4">...</option>
+                      </select>
+                  </div>
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+              <div class="col-xl-4 col-lg-6 mb-4">
+                  <table class="table table-hover">
+                      <thead>
+                          <tr>
+                              <th></th>
+                              <th>Roles</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <th scope="row">1</th>
+                              <td>Coordinador MP</td>
+                          </tr>
+                          <tr>
+                              <th scope="row">2</th>
+                              <td>AMP Especializado</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+              <div class="col-xl-4 col-lg-6 mb-4">
+                  <button type="button" class="btn btn-secondary btn-block">Agregar <i class="fa fa-long-arrow-right"></i> </button> <br>
+                  <button type="button" class="btn btn-secondary btn-block">Quitar <i class="fa fa-long-arrow-left"></i> </button>
+              </div>
+              <div class="col-xl-4 col-lg-6 mb-4">
+                  <table class="table table-hover">
+                      <thead>
+                          <tr>
+                              <th></th>
+                              <th>Roles</th>
+                              <th>Principal</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <th scope="row">1</th>
+                              <td>Coordinador MP</td>
+                              <td> <input type="radio" name="esPrincipal" class="" id=""> </td>
+                          </tr>
+                          <tr>
+                              <th scope="row">2</th>
+                              <td>AMP Especializado</td>
+                              <td> <input type="radio" name="esPrincipal" class="" id=""> </td>
+                          </tr>
+                      </tbody>
+                  </table>
+
+                  <hr>
+
+                  <div class="row">
+                      <button type="button" class="btn btn-secondary w-100p mb-1 mr-1">Aceptar</button>
+                      <button type="button" class="btn btn-secondary w-100p mb-1 mr-1">Cancelar</button>
+                  </div>
+
+              </div>
+            </div>
+
+        </div>
+    </div>
+</div>

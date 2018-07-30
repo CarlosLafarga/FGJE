@@ -19,9 +19,9 @@ export class NgxComponent {
   @ViewChild(DatatableComponent) table: DatatableComponent;
 
   columns = [
-    { prop: 'name' },
-    { name: 'Gender' },
-    { name: 'Company' }
+    { prop: 'Nombre' },
+    { name: 'Apellido paterno' },
+    { name: 'Apellido materno' }
   ];
 
  constructor() {
