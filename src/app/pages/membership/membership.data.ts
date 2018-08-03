@@ -4,6 +4,255 @@ export class MembershipData implements InMemoryDbService {
     const users = [
         {
             id: 1,
+            nombreUsuario: "mando",
+            contrasena: "mando123",
+            profile: {
+                name: "Armando",
+                surname: "Mora",
+                birthday: { day: 2, month: 4, year: 1990 },
+                gender: "male",
+                image: ""
+            },
+            work: {
+                company: "Google",
+                position: "Aguirre",
+                salary: 5000
+            },
+            contacts:{
+                email: "FGJE Sistemas",
+                phone: "(202) 756-9756",
+                address: "Washington"
+            },
+            social: {
+                facebook:"",
+                twitter:"",
+                google:""
+            },
+            settings:{
+                isActive: true,
+                isDeleted: false,
+                registrationDate: "2012-10-13T12:20:40.511Z",
+                joinedDate: "2018-04-02T18:25:43.511Z"
+            },
+            menuIds: []
+        },
+        {
+            id: 2,
+            nombreUsuario: "bruno.V",
+            contrasena: "bruno123",
+            profile: {
+                name: "Bruno",
+                surname: "Vespa",
+                birthday: { day: 20, month: 11, year: 1992 },
+                gender: "male",
+                image: "assets/img/profile/bruno.jpg"
+            },
+            work: {
+                company: "Dell EMC",
+                position: "Vespa",
+                salary: 17000
+            },
+            contacts:{
+                email: "FGJE Sistemas",
+                phone: "(415) 231-0332",
+                address: "San Francisco"
+            },
+            social: {
+                facebook:"",
+                twitter:"",
+                google:""
+            },
+            settings:{
+                isActive: false,
+                isDeleted: true,
+                registrationDate: "2011-01-05T08:45:23.511Z",
+                joinedDate: "2017-05-20T18:25:43.511Z"
+            },
+            menuIds: [] 
+        },
+        {
+            id: 3,
+            nombreUsuario: "andy.79",
+            contrasena: "andy123",
+            profile: {
+                name: "Andy",
+                surname: "Warhol",
+                birthday: { day: 21, month: 10, year: 1979 },
+                gender: "male",
+                image: "assets/img/avatars/avatar-3.png"
+            },
+            work: {
+                company: "Adecco",
+                position: "Warhol",
+                salary: 13000
+            },
+            contacts:{
+                email: "FGJE Sistemas",
+                phone: "(212) 457-2308",
+                address: "New York"
+            },
+            social: {
+                facebook:"",
+                twitter:"",
+                google:""
+            },
+            settings:{
+                isActive: true,
+                isDeleted: true,
+                registrationDate: "2014-11-01T19:35:43.511Z",
+                joinedDate: "2017-06-28T15:25:43.511Z"
+            },
+            menuIds: [] 
+        },
+        {
+            id: 4,
+            nombreUsuario: "julia.a",
+            contrasena: "julia123",
+            profile: {
+                name: "Julia",
+                surname: "Aniston",
+                birthday: { day: 18, month: 6, year: 1982 },
+                gender: "female",
+                image: "assets/img/profile/julia.jpg"
+            },
+            work: {
+                company: "Apple",
+                position: "Aniston",
+                salary: 18000
+            },
+            contacts:{
+                email: "FGJE Sistemas",
+                phone: "(224) 267-1346",
+                address: "Illinois, Chicago"
+            },
+            social: {
+                facebook:"",
+                twitter:"",
+                google:""
+            },
+            settings:{
+                isActive: true,
+                isDeleted: false,
+                registrationDate: "2015-12-06T11:10:20.511Z",
+                joinedDate: "2017-06-29T15:15:40.511Z"
+            },
+            menuIds: [] 
+        },
+        {
+            id: 5,
+            nombreUsuario: "lusia.m",
+            contrasena: "lusia123",
+            profile: {
+                name: "Lusia",
+                surname: "Manuel",
+                birthday: { day: 2, month: 12, year: 1992 },
+                gender: "female",
+                image: "assets/img/avatars/avatar-7.png"
+            },
+            work: {
+                company: "Alphabet",
+                position: "Manuel",
+                salary: 10000
+            },
+            contacts:{
+                email: "FGJE Sistemas",
+                phone: "(224) 267-1346",
+                address: "California, Los Angeles"
+            },
+            social: {
+                facebook:"",
+                twitter:"",
+                google:""
+            },
+            settings:{
+                isActive: true,
+                isDeleted: false,
+                registrationDate: "2014-01-10T10:20:20.511Z",
+                joinedDate: "2017-06-28T12:20:40.511Z"
+            },
+            menuIds: [] 
+        },
+        {
+            id: 6,
+            nombreUsuario: "adam.82",
+            contrasena: "adam123",
+            profile: {
+                name: "Adam",
+                surname: "Sandler",
+                birthday: { day: 24, month: 12, year: 1987 },
+                gender: "male",
+                image: "assets/img/profile/adam.jpg"
+            },
+            work: {
+                company: "General Electric",
+                position: "Sandler",
+                salary: 21000
+            },
+            contacts:{
+                email: "FGJE Sistemas",
+                phone: "(224) 267-1346",
+                address: "Texas, Houston"
+            },
+            social: {
+                facebook:"",
+                twitter:"",
+                google:""
+            },
+            settings:{
+                isActive: false,
+                isDeleted: false,
+                registrationDate: "2016-11-16T12:20:20.511Z",
+                joinedDate: "2017-06-27T14:20:40.511Z"
+            },
+            menuIds: [] 
+        },
+        {
+            id: 7,
+            nombreUsuario: "tereza.s",
+            contrasena: "tereza123",
+            profile: {
+                name: "Tereza",
+                surname: "Stiles",
+                birthday: { day: 9, month: 7, year: 1979 },
+                gender: "female",
+                image: "assets/img/profile/tereza.jpg"
+            },
+            work: {
+                company: "Southwest Airlines",
+                position: "Stiles",
+                salary: 31000
+            },
+            contacts:{
+                email: "FGJE Sistemas",
+                phone: "(214) 617-2614",
+                address: "Texas, Dallas"
+            },
+            social: {
+                facebook:"",
+                twitter:"",
+                google:""
+            },
+            settings:{
+                isActive: true,
+                isDeleted: false,
+                registrationDate: "2010-10-12T16:20:20.511Z",
+                joinedDate: "2017-06-29T15:20:40.511Z"
+            },
+            menuIds: [] 
+        }
+       
+    ];
+    return {users};
+  }
+}
+
+/*
+import { InMemoryDbService } from 'angular-in-memory-web-api';
+export class MembershipData implements InMemoryDbService {
+  createDb() {
+    const users = [
+        {
+            id: 1,
             username: "pretty",
             password: "pretty123",
             profile: {
@@ -313,3 +562,4 @@ export class MembershipData implements InMemoryDbService {
     return {users};
   }
 }
+*/

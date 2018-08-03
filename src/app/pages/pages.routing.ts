@@ -5,7 +5,7 @@ import { PagesComponent } from './pages.component';
 import { BlankComponent } from './blank/blank.component';
 import { SearchComponent } from './search/search.component';
 import { PruebaCarlosComponent } from './prueba/prueba-carlos.component';
-import { CambioAdscripcionComponent } from './cambio/cambio-adscripcion/cambio-adscripcion.component';
+//import { CambioAdscripcionComponent } from './cambio-adscripcion/cambio-adscripcion.component';
 
 export const routes: Routes = [
     {
@@ -27,7 +27,7 @@ export const routes: Routes = [
             { path: 'blank', component: BlankComponent, data: { breadcrumb: 'Blank page' } },
             { path: 'search', component: SearchComponent, data: { breadcrumb: 'Search' } },
             { path: 'prueba', component: PruebaCarlosComponent, data: { breadcrumb: 'Prueba Carlos' } },
-            { path: 'cambio-adscripcion', component: CambioAdscripcionComponent, data: { breadcrumb: 'Cambio de adsrcipción' } }
+            //{ path: 'cambio-adscripcion', component: CambioAdscripcionComponent, data: { breadcrumb: 'Cambio de adsrcipción' } }
        ]
     }
 ];

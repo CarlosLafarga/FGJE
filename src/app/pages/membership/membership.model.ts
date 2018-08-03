@@ -1,5 +1,61 @@
 export class User {
   id: number;
+  nombreUsuario: string;
+  contrasena: string;  
+  profile: UserProfile;
+  work: UserWork;
+  contacts: UserContacts;
+  social: UserSocial;
+  settings: UserSettings;
+  menuIds: number[];//  =>   for create ngModel multiselect
+}
+
+export class UserProfile {  
+  name: string;
+  surname: string;  
+  birthday: Object;
+  gender: string;
+  image: string;
+}
+
+export class UserWork {
+  company: string;
+  position: string;
+  salary: number;
+}
+
+export class UserContacts{
+  email: string;
+  phone: string;
+  address: string;  
+}
+
+export class UserSocial {
+  facebook: string;
+  twitter: string;
+  google: string;
+}
+
+export class UserSettings{
+  isActive: boolean;
+  isDeleted: boolean;
+  registrationDate: Date;
+  joinedDate: Date;
+}
+
+export class FuncionarioData {
+  nombre: string;
+  apPaterno: string;
+  apMaterno: string;
+  usuario: string;
+  agencia: string;
+  estatus: Date;
+  fechaIngreso: string;
+}
+
+/*
+export class User {
+  id: number;
   username: string;
   password: string;  
   profile: UserProfile;
@@ -42,7 +98,7 @@ export class UserSettings{
   registrationDate: Date;
   joinedDate: Date;
 }
-
+*/
 
 // let date = new Date(),
 //     day = date.getDate(),

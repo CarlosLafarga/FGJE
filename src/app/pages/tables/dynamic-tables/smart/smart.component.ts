@@ -95,7 +95,7 @@ export class SmartComponent {
   }
 
   public onRowSelect(event){
-   // console.log(event);
+    console.log(event);
   }
 
   public onUserRowSelect(event){

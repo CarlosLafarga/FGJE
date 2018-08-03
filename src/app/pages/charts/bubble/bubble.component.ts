@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { bubble } from './../charts.data';
+import { bubble } from '../charts.data';
 
 @Component({
   selector: 'app-bubble',

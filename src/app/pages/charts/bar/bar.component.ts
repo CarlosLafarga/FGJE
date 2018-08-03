@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { single, multi } from './../charts.data';
+import { single, multi } from '../charts.data';
 
 @Component({
   selector: 'app-bar',

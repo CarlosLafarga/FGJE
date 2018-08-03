@@ -12,8 +12,6 @@ import { AppComponent } from './app.component';
 import { NotFoundComponent } from './pages/errors/not-found/not-found.component';
 
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
