@@ -43,14 +43,14 @@ export class UserSettings{
   joinedDate: Date;
 }
 
-export class FuncionarioData {
+export class FuncionariosData {
   nombre: string;
   apPaterno: string;
   apMaterno: string;
   usuario: string;
   agencia: string;
-  estatus: Date;
-  fechaIngreso: string;
+  estatus: string;
+  fechaIngreso: Date;
 }
 
 /*

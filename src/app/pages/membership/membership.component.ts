@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings } from './membership.model';
+import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData } from './membership.model';
 import { MembershipService } from './membership.service';
 import { MenuService } from '../../theme/components/menu/menu.service';
  
@@ -17,6 +17,8 @@ import { MenuService } from '../../theme/components/menu/menu.service';
 export class MembershipComponent implements OnInit {
 
   public menuItems: Array<any>;  
+  public funcionarios: FuncionariosData[];
+  public funcionario: FuncionariosData;
   public users: User[];
   public user: User;
   public searchText: string;
@@ -48,6 +50,7 @@ export class MembershipComponent implements OnInit {
   public menuSelectOptions: IMultiSelectOption[] = [];
   
   constructor(public fb:FormBuilder, 
+              public fbf: FormBuilder,
               public toastrService: ToastrService,
               public membershipService:MembershipService,
               public menuService:MenuService, 
@@ -64,6 +67,27 @@ export class MembershipComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getFuncionarios();
+    if (this.funcionarios) {
+      console.log('Mostrando el arreglo funcionarios:');
+      console.log(this.funcionarios);
+    } else {
+      console.log('El arreglo esta vacio!');
+    }
+    
+    /*
+    this.form = this.fbf.group({
+      nombre: null,
+      apPaterno: null,
+      apMaterno: null,
+      usuario: null,
+      agencia: null,
+      estatus: null,
+      fechaIngreso: null
+    });
+    */
+
+    /*
     this.getUsers(); 
     this.form = this.fb.group({
         id: null,
@@ -99,6 +123,13 @@ export class MembershipComponent implements OnInit {
         }),
         menuIds: null
     });
+    */
+  }
+
+  public getFuncionarios(): void {
+    this.membershipService.getFuncionarios().subscribe( funcionarios =>
+      this.funcionarios = funcionarios
+    );
   }
 
   public getUsers(): void {
@@ -167,11 +198,6 @@ export class MembershipComponent implements OnInit {
   public openModal2(modal2) {
     this.modalRef = this.modalService.open(modal2);
     console.log('se abrio el modal 2');
-  }
-
-  public openModal3(modal3) {
-    this.modalRef = this.modalService.open(modal3);
-    console.log('se abrio el modal 3');
   }
 
   public openModal(modalContent, user) {

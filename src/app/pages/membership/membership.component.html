@@ -132,18 +132,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let user of users | UserSearchPipe : searchText | paginate: { itemsPerPage: 5, currentPage: p }">                        
-                            <td class="align-middle text-truncate">{{user.profile.name}}</td>
-                            <td class="align-middle text-truncate">{{user.profile.surname}}</td>
-                            <td class="align-middle text-truncate">{{user.work.position}}</td>                        
-                            <td class="align-middle text-truncate">{{user.nombreUsuario}}</td>
-                            <td class="align-middle text-truncate">{{user.contacts.email}}</td>
+                        <tr *ngFor="let funcionario of funcionarios | UserSearchPipe : searchText | paginate: { itemsPerPage: 5, currentPage: p }">                        
+                            <td class="align-middle text-truncate">{{funcionario.nombre}}</td>
+                            <td class="align-middle text-truncate">{{funcionario.apPaterno}}</td>
+                            <td class="align-middle text-truncate">{{funcionario.apMaterno}}</td>                        
+                            <td class="align-middle text-truncate">{{funcionario.usuario}}</td>
+                            <td class="align-middle text-truncate">{{funcionario.agencia}}</td>
+                            <td class="align-middle text-truncate">{{funcionario.estatus}}</td>
+                            <!--
                             <td class="align-middle">
                                 <i *ngIf="!user.settings.isDeleted" class="fa fa-user mr-2" [ngClass]="{ 'text-success': user.settings.isActive, 
                                                                                                          'text-inverse': !user.settings.isActive}" placement="bottom" [ngbTooltip]="(user.settings.isActive) ? 'Activo' : 'passive'"></i>
                                 <i *ngIf="user.settings.isDeleted" class="fa fa-user mr-2 text-danger" placement="bottom" [ngbTooltip]="'Eliminado'"></i>
                             </td>
-                            <td class="align-middle text-truncate">{{user.settings.joinedDate | date:"dd MMMM, yyyy"}}</td>
+                            -->
+                            <td class="align-middle text-truncate">{{funcionario.fechaIngreso | date:"dd MMMM, yyyy"}}</td>
                             <td class="align-middle">
                                 <div class="btn-group" role="group">
                                     <button class="btn btn-secondary btn-sm" (click)="openModal(modalContent, user)"><i class="fa fa-pencil"></i></button>

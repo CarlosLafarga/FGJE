@@ -1,6 +1,40 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
+
+
 export class MembershipData implements InMemoryDbService {
+    
   createDb() {
+
+    const funcionarios = [
+        {
+            nombre: "Fernando",
+            apPaterno: "Moreno",
+            apMaterno: "Fuentes",
+            usuario: "FMoreno",
+            agencia: "Primera de Querellas",
+            estatus: "activo",
+            fechaIngreso: "2018-04-02T18:25:43.511Z"
+        },
+        {
+            nombre: "Hernan",
+            apPaterno: "Hernandez",
+            apMaterno: "Jimenez",
+            usuario: "HHernandez",
+            agencia: "Segunda de Querellas",
+            estatus: "Eliminado",
+            fechaIngreso: "2018-04-02T18:25:43.511Z"
+        },
+        {
+            nombre: "Miguel",
+            apPaterno: "Hernandez",
+            apMaterno: "Escalante",
+            usuario: "MHernandez",
+            agencia: "Tercera de Querellas",
+            estatus: "Activo",
+            fechaIngreso: "2017-03-02T18:25:43.511Z"
+        }
+    ];    
+
     const users = [
         {
             id: 1,
@@ -242,9 +276,15 @@ export class MembershipData implements InMemoryDbService {
         }
        
     ];
-    return {users};
+    return {
+        users: users,
+        funcionarios: funcionarios
+    };
   }
+  
 }
+
+
 
 /*
 import { InMemoryDbService } from 'angular-in-memory-web-api';

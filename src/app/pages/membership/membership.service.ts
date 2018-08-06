@@ -1,12 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from './membership.model';
+import { User, FuncionariosData } from './membership.model';
 
 @Injectable()
 export class MembershipService {
+
     public url = "api/users";
+    public url2 = "api/funcionarios";
+
     constructor(public http:HttpClient) { }
+
+    getFuncionarios(): Observable<FuncionariosData[]> {
+        return this.http.get<FuncionariosData[]>(this.url2);
+    }
 
     getUsers(): Observable<User[]> {
         return this.http.get<User[]>(this.url);
