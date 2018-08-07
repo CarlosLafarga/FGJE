@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData } from './membership.model';
 import { MembershipService } from './membership.service';
 import { MenuService } from '../../theme/components/menu/menu.service';
+import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
  
 @Component({
   selector: 'app-membership',
@@ -75,8 +76,8 @@ export class MembershipComponent implements OnInit {
       console.log('El arreglo esta vacio!');
     }
     
-    /*
     this.form = this.fbf.group({
+      /*
       nombre: null,
       apPaterno: null,
       apMaterno: null,
@@ -84,8 +85,8 @@ export class MembershipComponent implements OnInit {
       agencia: null,
       estatus: null,
       fechaIngreso: null
+      */
     });
-    */
 
     /*
     this.getUsers(); 
@@ -200,42 +201,27 @@ export class MembershipComponent implements OnInit {
     console.log('se abrio el modal 2');
   }
 
-  public openModal(modalContent, user) {
-    if(user){
-      this.user = user;
-      this.form.setValue(user);
-      this.genderOption = user.profile.gender; 
+  public openModal(modalContent, funcionario) {
+    /*
+    if(funcionario){
+      this.funcionario = funcionario;
+      this.form.setValue(funcionario);
     } 
-    else{
-      this.user = new User();
-      this.user.profile = new UserProfile();
-      this.user.work = new UserWork();
-      this.user.contacts = new UserContacts();
-      this.user.social = new UserSocial();
-      this.user.settings = new UserSettings();
-    }   
-    this.modalRef = this.modalService.open(modalContent, { container: '.app' });
-    
-    this.modalRef.result.then((result) => {
-      this.form.reset();
-      this.genderOption = null;
-    }, (reason) => {
-      this.form.reset();
-      this.genderOption = null;
-    });
+    */
+    this.modalRef = this.modalService.open(modalContent, { size: 'lg' });
   }
 
   public closeModal(){
     this.modalRef.close();
   }
 
-  public onSubmit(user:User):void {
+  public onSubmit(funcionario:FuncionariosData):void {
     if (this.form.valid) {
-      if(user.id){
-        this.updateUser(user);
+      if(funcionario.clave){
+        //this.updateUser(funcionario);
       }
       else{
-        this.addUser(user);
+        //this.addUser(funcionario);
       }      
       this.modalRef.close();    
     }

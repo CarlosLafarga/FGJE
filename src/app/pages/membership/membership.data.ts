@@ -7,6 +7,7 @@ export class MembershipData implements InMemoryDbService {
 
     const funcionarios = [
         {
+            clave: 1,
             nombre: "Fernando",
             apPaterno: "Moreno",
             apMaterno: "Fuentes",
@@ -16,6 +17,7 @@ export class MembershipData implements InMemoryDbService {
             fechaIngreso: "2018-04-02T18:25:43.511Z"
         },
         {
+            clave: 2,
             nombre: "Hernan",
             apPaterno: "Hernandez",
             apMaterno: "Jimenez",
@@ -25,6 +27,37 @@ export class MembershipData implements InMemoryDbService {
             fechaIngreso: "2018-04-02T18:25:43.511Z"
         },
         {
+            clave: 3,
+            nombre: "Miguel",
+            apPaterno: "Hernandez",
+            apMaterno: "Escalante",
+            usuario: "MHernandez",
+            agencia: "Tercera de Querellas",
+            estatus: "Activo",
+            fechaIngreso: "2017-03-02T18:25:43.511Z"
+        },
+        {
+            clave: 4,
+            nombre: "Miguel",
+            apPaterno: "Hernandez",
+            apMaterno: "Escalante",
+            usuario: "MHernandez",
+            agencia: "Tercera de Querellas",
+            estatus: "Activo",
+            fechaIngreso: "2017-03-02T18:25:43.511Z"
+        },
+        {
+            clave: 5,
+            nombre: "Miguel",
+            apPaterno: "Hernandez",
+            apMaterno: "Escalante",
+            usuario: "MHernandez",
+            agencia: "Tercera de Querellas",
+            estatus: "Activo",
+            fechaIngreso: "2017-03-02T18:25:43.511Z"
+        },
+        {
+            clave: 6,
             nombre: "Miguel",
             apPaterno: "Hernandez",
             apMaterno: "Escalante",

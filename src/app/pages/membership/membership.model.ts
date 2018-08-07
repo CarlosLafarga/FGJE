@@ -44,6 +44,7 @@ export class UserSettings{
 }
 
 export class FuncionariosData {
+  clave: number;
   nombre: string;
   apPaterno: string;
   apMaterno: string;

@@ -472,6 +472,9 @@ a.text-inverse:focus, a.text-inverse:hover{
     z-index: 999999;
     padding-top: 5%;
 }
+.modal-lg {
+    max-width: 80%;
+}
 .modal-dialog{
     .modal-content{
        // color: $dark-color;
