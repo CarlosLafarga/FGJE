@@ -50,11 +50,11 @@ export class MembershipComponent implements OnInit {
   };
   public menuSelectOptions: IMultiSelectOption[] = [];
   
-  constructor(public fb:FormBuilder, 
+  constructor(public fb: FormBuilder, 
               public fbf: FormBuilder,
               public toastrService: ToastrService,
-              public membershipService:MembershipService,
-              public menuService:MenuService, 
+              public membershipService: MembershipService,
+              public menuService: MenuService, 
               public modalService: NgbModal) {
 
     this.menuItems = this.menuService.getVerticalMenuItems();
@@ -70,7 +70,7 @@ export class MembershipComponent implements OnInit {
   ngOnInit() {
     this.getFuncionarios();
     if (this.funcionarios) {
-      console.log('Mostrando el arreglo funcionarios:');
+      console.log('Mostrando el arreglo funcionarios: ' + this.funcionarios.length);
       console.log(this.funcionarios);
     } else {
       console.log('El arreglo esta vacio!');

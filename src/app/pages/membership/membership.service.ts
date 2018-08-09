@@ -8,9 +8,8 @@ export class MembershipService {
 
     public url = "api/users";
     public url2 = "api/funcionarios";
-    public clave: number;
 
-    constructor(public http:HttpClient) { }
+    constructor(public http: HttpClient) { }
 
     getFuncionarios(): Observable<FuncionariosData[]> {
         return this.http.get<FuncionariosData[]>(this.url2);

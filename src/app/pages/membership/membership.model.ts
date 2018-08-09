@@ -54,6 +54,23 @@ export class FuncionariosData {
   fechaIngreso: Date;
 }
 
+export class Rol {
+  rolId: number;
+  nombreRol: string;
+  descripcionRol: string;
+  esActivo: number;
+  confInstitucion: number;
+  jerarquiaOrganizacional: number;
+}
+
+export class UsuarioRol {
+  usuarioId: number;
+  rolId: number;
+  fechaInicio: Date;
+  fechaFin: Date;
+  esPrincipal: number;
+}
+
 /*
 export class User {
   id: number;

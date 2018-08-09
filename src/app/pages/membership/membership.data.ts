@@ -48,7 +48,7 @@ export class MembershipData implements InMemoryDbService {
         },
         {
             clave: 5,
-            nombre: "Miguel",
+            nombre: "Manuel",
             apPaterno: "Hernandez",
             apMaterno: "Escalante",
             usuario: "MHernandez",
