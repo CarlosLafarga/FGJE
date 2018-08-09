@@ -217,7 +217,7 @@ export class MembershipComponent implements OnInit {
 
   public onSubmit(funcionario:FuncionariosData):void {
     if (this.form.valid) {
-      if(funcionario.clave){
+      if(funcionario.claveFuncionario){
         //this.updateUser(funcionario);
       }
       else{

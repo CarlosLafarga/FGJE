@@ -43,8 +43,9 @@ export class UserSettings{
   joinedDate: Date;
 }
 
+// Mostrar resultados de la busqueda de funcionarios.
 export class FuncionariosData {
-  clave: number;
+  claveFuncionario: number;
   nombre: string;
   apPaterno: string;
   apMaterno: string;
@@ -54,6 +55,25 @@ export class FuncionariosData {
   fechaIngreso: Date;
 }
 
+// Datos de funcionario especifico.
+export class Funcionario {
+  claveFuncionario: number;
+  nombreFuncionario: string;
+  apPaterno: string;
+  apMaterno: string;
+  catDiscriminanteId: number;
+  catUIEId: number;
+  esMP: number;
+}
+
+// Datos de la agencia.
+export class Agencia {
+  catDiscriminante: number;
+  claveDiscriminante: number;
+  nombre: string;
+}
+
+// Roles existentes en el SIGI.
 export class Rol {
   rolId: number;
   nombreRol: string;
@@ -63,6 +83,15 @@ export class Rol {
   jerarquiaOrganizacional: number;
 }
 
+// Datos de usuario especifico.
+export class Usuario {
+  usuarioId: number;
+  claveUsuario: string;
+  claveFuncionario:number;
+  esActivo: number;
+}
+
+// Roles de usuario especifico.
 export class UsuarioRol {
   usuarioId: number;
   rolId: number;
