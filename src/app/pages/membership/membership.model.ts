@@ -67,14 +67,14 @@ export class Funcionario {
 }
 
 // Datos de la agencia.
-export class Agencia {
+export class FuncionarioAgencia {
   catDiscriminante: number;
   claveDiscriminante: number;
-  nombre: string;
+  nombreAgencia: string;
 }
 
 // Roles existentes en el SIGI.
-export class Rol {
+export class FuncionarioRol {
   rolId: number;
   nombreRol: string;
   descripcionRol: string;
@@ -84,7 +84,7 @@ export class Rol {
 }
 
 // Datos de usuario especifico.
-export class Usuario {
+export class FuncionarioUsuario {
   usuarioId: number;
   claveUsuario: string;
   claveFuncionario:number;
@@ -92,7 +92,7 @@ export class Usuario {
 }
 
 // Roles de usuario especifico.
-export class UsuarioRol {
+export class FuncionarioUsuarioRol {
   usuarioId: number;
   rolId: number;
   fechaInicio: Date;

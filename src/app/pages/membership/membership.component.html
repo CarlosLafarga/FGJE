@@ -37,9 +37,9 @@
                             <td class="align-middle text-truncate">{{ funcionario.nombre }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.apPaterno }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.apMaterno }}</td>                        
-                            <td class="align-middle text-truncate">{{ funcionario.usuario }}</td>
-                            <td class="align-middle text-truncate">{{ funcionario.agencia }}</td>
-                            <td class="align-middle text-truncate">{{ funcionario.estatus }}</td>
+                            <td class="align-middle text-truncate">{{ funcionario.usuario.claveUsuario }}</td>
+                            <td class="align-middle text-truncate">{{ funcionario.agencia.nombreAgencia }}</td>
+                            <td class="align-middle text-truncate">{{ funcionario.usuario.esActivo }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.fechaIngreso | date:"dd MMMM, yyyy" }}</td>
                             <td class="align-middle">
                                 <div class="btn-group" role="group">
@@ -385,6 +385,7 @@
                             </div>          
                         </div>
                         <div class="col-12 bg-white text-center py-1">
+                            <button type="button" class="btn btn-success mr-1">Aceptar</button>
                             <!--
                             <button [disabled]="!form.valid" class="btn btn-success mr-1" type="submit"><span *ngIf="!funcionario.clave">Add</span><span *ngIf="funcionario.clave">Update</span></button>
                             -->

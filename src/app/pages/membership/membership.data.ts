@@ -7,66 +7,157 @@ export class MembershipData implements InMemoryDbService {
 
     const funcionarios = [
         {
-            clave: 1,
+            claveFuncionario: 1,
             nombre: "Fernando",
             apPaterno: "Moreno",
             apMaterno: "Fuentes",
-            usuario: "FMoreno",
-            agencia: "Primera de Querellas",
-            estatus: "activo",
-            fechaIngreso: "2018-04-02T18:25:43.511Z"
+            fechaIngreso: "2018-04-02T18:25:43.511Z",
+            agencia: {
+                catDiscriminanteId: 1235,
+                claveDiscriminante: 1235,
+                nombreAgencia: "Primera de querellas"
+            },
+            usuario: {
+                usuarioId: 1324,
+                claveUsuario: "FMoreno",
+                claveFuncionario: 1325,
+                esActivo: 1
+            },
+            usuarioRol: {
+                usuarioId: 1324,
+                rolId: 8,
+                fechaInicio: new Date(),
+                fchaFin: new Date(),
+                esPrincipal: 1
+            }
         },
         {
-            clave: 2,
+            claveFuncionario: 2,
             nombre: "Hernan",
             apPaterno: "Hernandez",
             apMaterno: "Jimenez",
-            usuario: "HHernandez",
-            agencia: "Segunda de Querellas",
-            estatus: "Eliminado",
-            fechaIngreso: "2018-04-02T18:25:43.511Z"
+            fechaIngreso: "2018-04-02T18:25:43.511Z",
+            agencia: {
+                catDiscriminanteId: 1235,
+                claveDiscriminante: 1235,
+                nombreAgencia: "Primera de querellas"
+            },
+            usuario: {
+                usuarioId: 1324,
+                claveUsuario: "HHernandez",
+                claveFuncionario: 1325,
+                esActivo: 0
+            },
+            usuarioRol: {
+                usuarioId: 1324,
+                rolId: 8,
+                fechaInicio: new Date(),
+                fchaFin: new Date(),
+                esPrincipal: 1
+            }
         },
         {
-            clave: 3,
+            claveFuncionario: 3,
             nombre: "Miguel",
             apPaterno: "Hernandez",
             apMaterno: "Escalante",
-            usuario: "MHernandez",
-            agencia: "Tercera de Querellas",
-            estatus: "Activo",
-            fechaIngreso: "2017-03-02T18:25:43.511Z"
+            fechaIngreso: "2017-03-02T18:25:43.511Z",
+            agencia: {
+                catDiscriminanteId: 1235,
+                claveDiscriminante: 1235,
+                nombreAgencia: "Primera de querellas"
+            },
+            usuario: {
+                usuarioId: 1324,
+                claveUsuario: "MHernandez",
+                claveFuncionario: 1325,
+                esActivo: 0
+            },
+            usuarioRol: {
+                usuarioId: 1324,
+                rolId: 8,
+                fechaInicio: new Date(),
+                fchaFin: new Date(),
+                esPrincipal: 1
+            }
         },
         {
-            clave: 4,
-            nombre: "Miguel",
-            apPaterno: "Hernandez",
-            apMaterno: "Escalante",
-            usuario: "MHernandez",
-            agencia: "Tercera de Querellas",
-            estatus: "Activo",
-            fechaIngreso: "2017-03-02T18:25:43.511Z"
+            claveFuncionario: 4,
+            nombre: "Luis Francisco",
+            apPaterno: "Corrales",
+            apMaterno: "Fuentes",
+            fechaIngreso: "2017-03-02T18:25:43.511Z",
+            agencia: {
+                catDiscriminanteId: 1235,
+                claveDiscriminante: 1235,
+                nombreAgencia: "Primera de querellas"
+            },
+            usuario: {
+                usuarioId: 1324,
+                claveUsuario: "LCorrales",
+                claveFuncionario: 1325,
+                esActivo: 1
+            },
+            usuarioRol: {
+                usuarioId: 1324,
+                rolId: 8,
+                fechaInicio: new Date(),
+                fchaFin: new Date(),
+                esPrincipal: 1
+            }
         },
         {
-            clave: 5,
-            nombre: "Manuel",
-            apPaterno: "Hernandez",
-            apMaterno: "Escalante",
-            usuario: "MHernandez",
-            agencia: "Tercera de Querellas",
-            estatus: "Activo",
-            fechaIngreso: "2017-03-02T18:25:43.511Z"
+            claveFuncionario: 5,
+            nombre: "Samuel",
+            apPaterno: "Azuka",
+            apMaterno: "Cardenas",
+            fechaIngreso: "2017-03-02T18:25:43.511Z",
+            agencia: {
+                catDiscriminanteId: 1235,
+                claveDiscriminante: 1235,
+                nombreAgencia: "Primera de querellas"
+            },
+            usuario: {
+                usuarioId: 1324,
+                claveUsuario: "SAzuka",
+                claveFuncionario: 1325,
+                esActivo: 1
+            },
+            usuarioRol: {
+                usuarioId: 1324,
+                rolId: 8,
+                fechaInicio: new Date(),
+                fchaFin: new Date(),
+                esPrincipal: 1
+            }
         },
         {
-            clave: 6,
-            nombre: "Miguel",
-            apPaterno: "Hernandez",
-            apMaterno: "Escalante",
-            usuario: "MHernandez",
-            agencia: "Tercera de Querellas",
-            estatus: "Activo",
-            fechaIngreso: "2017-03-02T18:25:43.511Z"
+            claveFuncionario: 6,
+            nombre: "Carlos",
+            apPaterno: "Preciado",
+            apMaterno: "Lafarga",
+            fechaIngreso: "2017-03-02T18:25:43.511Z",
+            agencia: {
+                catDiscriminanteId: 1235,
+                claveDiscriminante: 1235,
+                nombreAgencia: "Primera de querellas"
+            },
+            usuario: {
+                usuarioId: 1324,
+                claveUsuario: "CPreciado",
+                claveFuncionario: 1325,
+                esActivo: 1
+            },
+            usuarioRol: {
+                usuarioId: 1324,
+                rolId: 8,
+                fechaInicio: new Date(),
+                fchaFin: new Date(),
+                esPrincipal: 1
+            }
         }
     ];    
+
 
     const users = [
         {
