@@ -241,7 +241,7 @@
     <ng-template #modalContent>
         <div class="modal-body bg-gray">
             <div class="row">
-                <div class="col-12 vertical-tabs">                
+                <div class="col-12 horizontal-tabs">                
                     <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="row px-3">
                         <ul class="nav flex-column left col-2 border-0 rounded-0 mr-0 bg-light">              
                             <li class="nav-item bg-light">
@@ -325,67 +325,83 @@
 
                             </div>
                             <div class="tab-pane" id="reasignarExpedientes">
-                            
-                                        <div class="clearfix">            
-                                            <ul class="nav nav-tabs custom top">
-                                                <li class="nav-item">
-                                                    <a class="nav-link active" data-toggle="tab" href="#ta">Titular de la agencia</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" data-toggle="tab" href="#tb">Nuevo funcionario</a>
-                                                </li>                          
-                                            </ul>
-                                        </div>
-                            
-                                    <div class="tab-content top">
-                                        <div class="tab-pane active" id="ta">
-                                            <div class="container">
-                                                <h6>Nombre del funcionario titular de la agencia: </h6>
-                                                <p>(mostrar el nombre del titular de la agencia)</p>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane" id="tb">
-                                            <div class="container">
-                                                <div class="input-group mb-2">
-                                                    <span class="input-group-prepend">
-                                                        <span class="input-group-text">
-                                                            <i class="fa fa-search"></i>
-                                                        </span>
-                                                    </span>
-                                                    <input class="form-control" type="text" placeholder="Escriba el nombre del funcionario"/>
-                                                </div>
-                                                <table class="table table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <th></th>
-                                                            <th>Nombre</th>
-                                                            <th>Apellido paterno</th>
-                                                            <th>Apellido materno</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th scope="row">1</th>
-                                                            <td>Armando</td>
-                                                            <td>Mora</td>
-                                                            <td>Aguirre</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">2</th>
-                                                            <td>Hernan</td>
-                                                            <td>Hernandes</td>
-                                                            <td>Pulido</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
+
+                                <div class="card">                        
+                                    <div class="card-body">
+                                        <h5 class="card-title mb-0">Reasignar expedientes</h5>
                                     </div>
+                                    <div id="accordion" role="tablist" aria-multiselectable="true">
+
+                                        <div class="card border-0">
+                                            <div class="card-header transparent" role="tab" id="headingOne">
+                                                <h6 class="mb-0">
+                                                    <a class="text-primary" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                        Titular de la agencia
+                                                    </a>
+                                                </h6>
+                                            </div>
+                
+                                            <div id="collapseOne" class="collapse show" data-parent="#accordion" role="tabpanel" aria-labelledby="headingOne">
+                                                <div class="card-body">
+                                                    <h6>Nombre del funcionario titular de la agencia: </h6>
+                                                    <p>(mostrar el nombre del titular de la agencia)</p> 
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card border-0">
+                                            <div class="card-header transparent" role="tab" id="headingTwo">
+                                                <h6 class="mb-0">
+                                                    <a class="text-primary collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                        Otro funcionario
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                            <div id="collapseTwo" class="collapse" data-parent="#accordion" role="tabpanel" aria-labelledby="headingTwo">
+                                                <div class="card-body">
+                                                    <div class="input-group mb-2">
+                                                        <span class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                <i class="fa fa-search"></i>
+                                                            </span>
+                                                        </span>
+                                                        <input class="form-control" type="text" placeholder="Escriba el nombre del funcionario"/>
+                                                    </div>
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th>Nombre</th>
+                                                                <th>Apellido paterno</th>
+                                                                <th>Apellido materno</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th scope="row">1</th>
+                                                                <td>Armando</td>
+                                                                <td>Mora</td>
+                                                                <td>Aguirre</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">2</th>
+                                                                <td>Hernan</td>
+                                                                <td>Hernandes</td>
+                                                                <td>Pulido</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
 
                             </div>          
                         </div>
                         <div class="col-12 bg-white text-center py-1">
-                            <button type="button" class="btn btn-success mr-1">Aceptar</button>
+                            <button type="button" class="btn btn-success mr-1"(click)="closeModal()">Aceptar</button>
                             <!--
                             <button [disabled]="!form.valid" class="btn btn-success mr-1" type="submit"><span *ngIf="!funcionario.clave">Add</span><span *ngIf="funcionario.clave">Update</span></button>
                             -->
