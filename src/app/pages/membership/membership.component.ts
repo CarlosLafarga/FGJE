@@ -202,13 +202,14 @@ export class MembershipComponent implements OnInit {
   }
 
   public openModal(modalContent, funcionario) {
+    console.log(funcionario);
     /*
     if(funcionario){
       this.funcionario = funcionario;
       this.form.setValue(funcionario);
     } 
     */
-    this.modalRef = this.modalService.open(modalContent, { size: 'lg' });
+    this.modalRef = this.modalService.open(modalContent, funcionario);
   }
 
   public closeModal(){

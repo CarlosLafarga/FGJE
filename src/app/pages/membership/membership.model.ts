@@ -43,7 +43,7 @@ export class UserSettings{
   joinedDate: Date;
 }
 
-// Mostrar resultados de la busqueda de funcionarios.
+// Mostrar resultados de la busqueda de funcionarios. (tabla Funcionario)
 export class FuncionariosData {
   claveFuncionario: number;
   nombre: string;
@@ -55,7 +55,7 @@ export class FuncionariosData {
   fechaIngreso: Date;
 }
 
-// Datos de funcionario especifico.
+// Datos de funcionario especifico. (tabla Funcionario)
 export class Funcionario {
   claveFuncionario: number;
   nombreFuncionario: string;
@@ -66,24 +66,14 @@ export class Funcionario {
   esMP: number;
 }
 
-// Datos de la agencia.
+// Datos de la agencia. (tabla CatDiscriminante)
 export class FuncionarioAgencia {
   catDiscriminante: number;
   claveDiscriminante: number;
   nombreAgencia: string;
 }
 
-// Roles existentes en el SIGI.
-export class FuncionarioRol {
-  rolId: number;
-  nombreRol: string;
-  descripcionRol: string;
-  esActivo: number;
-  confInstitucion: number;
-  jerarquiaOrganizacional: number;
-}
-
-// Datos de usuario especifico.
+// Datos de usuario especifico. (tabla Usuario)
 export class FuncionarioUsuario {
   usuarioId: number;
   claveUsuario: string;
@@ -91,13 +81,30 @@ export class FuncionarioUsuario {
   esActivo: number;
 }
 
-// Roles de usuario especifico.
+// Roles de usuario especifico. (tabla UsuarioRol)
 export class FuncionarioUsuarioRol {
   usuarioId: number;
   rolId: number;
   fechaInicio: Date;
   fechaFin: Date;
   esPrincipal: number;
+}
+
+// Catálogo de agencias. (tabla CatDiscriminante)
+export class Agencias {
+  catDiscriminanteId: number;
+  claveDiscrimiante: number;
+  cNombre: string;
+}
+
+// Catálogo de roles (tabla Rol)
+export class Rol {
+  rolId: number;
+  nombreRol: string;
+  descripcionRol: string;
+  esActivo: number;
+  confInstitucion: number;
+  jerarquiaOrganizacional: number;
 }
 
 /*

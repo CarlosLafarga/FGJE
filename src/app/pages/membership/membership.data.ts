@@ -25,7 +25,7 @@ export class MembershipData implements InMemoryDbService {
             },
             usuarioRol: {
                 usuarioId: 1324,
-                rolId: 8,
+                rolId: { id: [8, 7] },
                 fechaInicio: new Date(),
                 fchaFin: new Date(),
                 esPrincipal: 1
@@ -50,7 +50,7 @@ export class MembershipData implements InMemoryDbService {
             },
             usuarioRol: {
                 usuarioId: 1324,
-                rolId: 8,
+                rolId: { id: [8] },
                 fechaInicio: new Date(),
                 fchaFin: new Date(),
                 esPrincipal: 1
@@ -75,7 +75,7 @@ export class MembershipData implements InMemoryDbService {
             },
             usuarioRol: {
                 usuarioId: 1324,
-                rolId: 8,
+                rolId: { id: [8] },
                 fechaInicio: new Date(),
                 fchaFin: new Date(),
                 esPrincipal: 1
@@ -100,7 +100,7 @@ export class MembershipData implements InMemoryDbService {
             },
             usuarioRol: {
                 usuarioId: 1324,
-                rolId: 8,
+                rolId: { id: [8] },
                 fechaInicio: new Date(),
                 fchaFin: new Date(),
                 esPrincipal: 1
@@ -125,7 +125,7 @@ export class MembershipData implements InMemoryDbService {
             },
             usuarioRol: {
                 usuarioId: 1324,
-                rolId: 8,
+                rolId: { id: [8] },
                 fechaInicio: new Date(),
                 fchaFin: new Date(),
                 esPrincipal: 1
@@ -150,7 +150,7 @@ export class MembershipData implements InMemoryDbService {
             },
             usuarioRol: {
                 usuarioId: 1324,
-                rolId: 8,
+                rolId: { id: [8] },
                 fechaInicio: new Date(),
                 fchaFin: new Date(),
                 esPrincipal: 1
