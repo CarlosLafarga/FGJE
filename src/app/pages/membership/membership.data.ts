@@ -161,23 +161,35 @@ export class MembershipData implements InMemoryDbService {
     const agencias = [
         {
             catDiscriminanteId: 1,
+            catDistritoId: 7,
             claveDiscrimiante: 5,
-            cNombre: "CUMPAS"
+            cNombre: "CUMPAS",
+            tipo: 1,
+            catDelegacionId: 1
         },
         {
             catDiscriminanteId: 2,
+            catDistritoId: 1,
             claveDiscrimiante: 10,
-            cNombre: "HERMOSILLO PRIMERA UNIDAD ESPECIALIZADA EN EL SISTEMA DE JUSTICIA PENAL ACUSATORIO Y ORAL"
+            cNombre: "HERMOSILLO PRIMERA UNIDAD ESPECIALIZADA EN EL SISTEMA DE JUSTICIA PENAL ACUSATORIO Y ORAL",
+            tipo: 1,
+            catDelegacionId: 1
         },
         {
             catDiscriminanteId: 3,
+            catDistritoId: 1,
             claveDiscrimiante: 89,
-            cNombre: "DIRECCIÓN GENERAL DE SERVICIOS PERICIALES"
+            cNombre: "DIRECCIÓN GENERAL DE SERVICIOS PERICIALES",
+            tipo: 0,
+            catDelegacionId: 1
         },
         {
             catDiscriminanteId: 4,
+            catDistritoId: 1,
             claveDiscrimiante: 90,
-            cNombre: "DIRECCIÓN DE SISTEMAS"
+            cNombre: "DIRECCIÓN DE SISTEMAS",
+            tipo: 0,
+            catDelegacionId: 1
         }
     ];
 

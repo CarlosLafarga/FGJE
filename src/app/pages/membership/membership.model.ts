@@ -82,8 +82,11 @@ export class FuncionarioUsuarioRol {
 // Catálogo de agencias. (tabla CatDiscriminante)
 export class Agencias {
   catDiscriminanteId: number;
+  catDistritoId: number;
   claveDiscrimiante: number;
   cNombre: string;
+  tipo: number;
+  catDelegacionId: number;
 }
 
 // Catálogo de roles (tabla Rol)
