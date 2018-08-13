@@ -56,187 +56,11 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="bg-white text-center">
-                <pagination-controls autoHide="true" (pageChange)="p = $event" maxSize="3"></pagination-controls>
+                <pagination-controls autoHide="true" (pageChange)="p = $event" maxSize="10"></pagination-controls>
             </div>        
         </div>
     </div>
 
-    <!--
-    <div class="row mb-5">
-        <div class="col">
-            <button type="button" class="btn btn-secondary mb-1 mr-1" (click)="openModal1(modal1)">Reubicar funcionario</button>
-            <button type="button" class="btn btn-secondary mb-1 mr-1" (click)="openModal2(modal2)">Reasignar expedientes</button>
-        </div>
-    </div>
-
-    <ng-template #modal1>
-
-        <div class="modal-header">
-            <h5 class="modal-title">Reubicar funcionario</h5>
-        </div>
-
-        <div class="modal-body bg-gray">
-
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input checkbox-primary" id="expedientesPendientes">
-                <label class="custom-control-label" for="expedientesPendientes">Expedientes pendientes</label>
-            </div>
-
-            <div class="form-group">
-                <label for="nuevaAgencia">Nueva agencia:</label>
-                <select class="form-control custom-select" id="nuevaAgencia">
-                    <option selected>-- Seleccione una agencia --</option>
-                    <option value="1">005 - CUMPAS</option>
-                    <option value="2">010 - HERMOSILLO PRIMERA UNIDAD ESPECIALIZADA EN EL SISTEMA DE JUSTICIA PENAL ACUSATORIO Y ORAL</option>
-                    <option value="3">089 - DIRECCIÓN GENERAL DE SERVICIOS PERICIALES</option>
-                    <option value="4">...</option>
-                </select>
-            </div>
-
-            <hr>
-
-            <div class="row">
-                <div class="col-xl-5 col-lg-6 mb-4">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Roles</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Coordinador MP</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>AMP Especializado</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-xl-2 col-lg-6 mb-4">
-                    <button type="button" class="btn btn-secondary btn-block"> <i class="fa fa-long-arrow-right"></i> </button> <br>
-                    <button type="button" class="btn btn-secondary btn-block"> <i class="fa fa-long-arrow-left"></i> </button>
-                </div>
-                <div class="col-xl-5 col-lg-6 mb-4">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Roles</th>
-                                <th>Principal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Coordinador MP</td>
-                                <td> <input type="radio" name="esPrincipal" class="" id=""> </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>AMP Especializado</td>
-                                <td> <input type="radio" name="esPrincipal" class="" id=""> </td>
-                            </tr>
-                        </tbody>
-                    </table>
-          
-                </div>
-            </div>
-
-        </div>  
-
-        <div class="modal-footer">
-            <div class="col-12 bg-white text-center py-1">
-                <button type="button" class="btn btn-secondary mr-2">Aceptar</button>
-                <button type="button" class="btn btn-danger" (click)="closeModal()">Cancelar</button>
-            </div>
-        </div>
-
-    </ng-template>
-
-    <ng-template #modal2>
-
-        <div class="modal-header">
-            <h5 class="modal-title">Reasignar expedientes</h5>
-        </div>
-
-        <div class="modal-body bg-gray">
-
-            <div class="row">
-                <div class="col-12">
-
-                    <div class="clearfix">            
-                        <ul class="nav nav-tabs custom top">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#ta">Titular de la agencia</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tb">Nuevo funcionario</a>
-                            </li>                          
-                        </ul>
-                    </div>
-
-                </div>
-                <div class="tab-content top">
-                    <div class="tab-pane active" id="ta">
-                        <div class="container">
-                            <h6>Nombre del funcionario titular de la agencia: </h6>
-                            <p>(mostrar el nombre del titular de la agencia)</p>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="tb">
-                        <div class="container">
-                            <div class="input-group mb-2">
-                                <span class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fa fa-search"></i>
-                                </span>
-                                </span>
-                                <input class="form-control" type="text" placeholder="Escriba el nombre del funcionario"/>
-                            </div>
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Nombre</th>
-                                        <th>Apellido paterno</th>
-                                        <th>Apellido materno</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Armando</td>
-                                        <td>Mora</td>
-                                        <td>Aguirre</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Hernan</td>
-                                        <td>Hernandes</td>
-                                        <td>Pulido</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="modal-footer">
-            <div class="col-12 bg-white text-center py-1">
-                <button type="button" class="btn btn-secondary mr-2">Aceptar</button>
-                <button type="button" class="btn btn-danger" (click)="closeModal()">Cancelar</button>
-            </div>
-        </div>
-
-    </ng-template>
-    -->
     
     <ng-template #modalContent>
         <div class="modal-body bg-gray">
@@ -263,10 +87,7 @@
                                     <label for="nuevaAgencia">Nueva agencia:</label>
                                     <select class="form-control custom-select" id="nuevaAgencia">
                                         <option selected>-- Seleccione una agencia --</option>
-                                        <option value="1">005 - CUMPAS</option>
-                                        <option value="2">010 - HERMOSILLO PRIMERA UNIDAD ESPECIALIZADA EN EL SISTEMA DE JUSTICIA PENAL ACUSATORIO Y ORAL</option>
-                                        <option value="3">089 - DIRECCIÓN GENERAL DE SERVICIOS PERICIALES</option>
-                                        <option value="4">...</option>
+                                        <option *ngFor="let agencia of agencias" [value]="agencia.catDiscriminanteId">{{ agencia.cNombre }}</option>
                                     </select>
                                 </div>
 
@@ -282,13 +103,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Coordinador MP</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>AMP Especializado</td>
+                                                <tr *ngFor="let ro of rol">
+                                                    <th scope="row">{{ ro.rolId }}</th>
+                                                    <td>{{ ro.descripcionRol }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -307,14 +124,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Coordinador MP</td>
-                                                    <td> <input type="radio" name="esPrincipal" class="" id=""> </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>AMP Especializado</td>
+                                                <tr *ngFor="let r of rol">
+                                                    <th scope="row">{{ r.rolId }}</th>
+                                                    <td>{{ r.descripcionRol }}</td>
                                                     <td> <input type="radio" name="esPrincipal" class="" id=""> </td>
                                                 </tr>
                                             </tbody>
