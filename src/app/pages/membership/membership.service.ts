@@ -7,7 +7,7 @@ import { User, FuncionariosData } from './membership.model';
 export class MembershipService {
 
     public url = "api/users";
-    public url2 = "api/funcionarios";
+    public url2 = "http://localhost:55244/api/funcionarios";
 
     constructor(public http: HttpClient) { }
 
