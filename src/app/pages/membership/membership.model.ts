@@ -49,8 +49,8 @@ export class FuncionariosData {
   nombre: string;
   apPaterno: string;
   apMaterno: string;
-  usuario: string;
-  agencia: string;
+  username: string;
+  //agencia: string;
   estatus: string;
   fechaIngreso: Date;
 }
@@ -81,12 +81,12 @@ export class FuncionarioUsuarioRol {
 
 // Catálogo de agencias. (tabla CatDiscriminante)
 export class Agencias {
-  catDiscriminanteId: number;
-  catDistritoId: number;
-  claveDiscrimiante: number;
+  catDiscriminante_Id: number;
+  catDistrito_Id: number;
+  cClaveDiscrimiante: number;
   cNombre: string;
-  tipo: number;
-  catDelegacionId: number;
+  iTipo: number;
+  CatDelegacion_Id: number;
 }
 
 // Catálogo de roles (tabla Rol)

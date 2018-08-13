@@ -8,8 +8,8 @@ export class MembershipService {
 
     //public url2 = "http://192.168.105.30:55244/api/funcionarios";
     public url = "api/users";
-    public url2 = "api/funcionarios";
-    public url3 = "api/agencias";
+    public url2 = "http://localhost:55244/api/funcionarios";
+    public url3 = "http://localhost:55244/api/catDiscriminantes";
     public url4 = "api/rol";
 
     constructor(public http: HttpClient) { }
