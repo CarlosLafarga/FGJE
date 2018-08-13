@@ -9,7 +9,7 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PipesModule } from '../../theme/pipes/pipes.module';
 import { MembershipComponent } from './membership.component';
-//import { MembershipData } from './membership.data';
+import { MembershipData } from './membership.data';
 
 export const routes = [
   { path: '', component: MembershipComponent, pathMatch: 'full' }
@@ -19,7 +19,7 @@ export const routes = [
   imports: [
     CommonModule,
     HttpClientModule,
-    //InMemoryWebApiModule.forRoot(MembershipData, { delay: 0 }),
+    InMemoryWebApiModule.forRoot(MembershipData, { delay: 0 }),
     RouterModule.forChild(routes),
     FormsModule,
     ReactiveFormsModule,

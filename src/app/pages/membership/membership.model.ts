@@ -49,8 +49,8 @@ export class FuncionariosData {
   nombre: string;
   apPaterno: string;
   apMaterno: string;
-  username: string;
-  //agencia: string;
+  usuario: string;
+  agencia: string;
   estatus: string;
   fechaIngreso: Date;
 }
