@@ -156,65 +156,7 @@ export class MembershipData implements InMemoryDbService {
                 esPrincipal: 1
             }
         }
-    ];
-
-    const agencias = [
-        {
-            catDiscriminanteId: 1,
-            claveDiscrimiante: 5,
-            cNombre: "CUMPAS"
-        },
-        {
-            catDiscriminanteId: 2,
-            claveDiscrimiante: 10,
-            cNombre: "HERMOSILLO PRIMERA UNIDAD ESPECIALIZADA EN EL SISTEMA DE JUSTICIA PENAL ACUSATORIO Y ORAL"
-        },
-        {
-            catDiscriminanteId: 3,
-            claveDiscrimiante: 89,
-            cNombre: "DIRECCIÓN GENERAL DE SERVICIOS PERICIALES"
-        },
-        {
-            catDiscriminanteId: 4,
-            claveDiscrimiante: 90,
-            cNombre: "DIRECCIÓN DE SISTEMAS"
-        }
-    ];
-
-    const rol = [
-        {
-            rolId: 1,
-            nombreRol: "reginicial",
-            descripcionRol: "Recepcionista",
-            esActivo: 1,
-            confInstitucion: 1,
-            jerarquiaOrganizacional: 43
-        },
-        {
-            rolId: 2,
-            nombreRol: "adminat",
-            descripcionRol: "Agente MP Orientador Administrativo",
-            esActivo: 1,
-            confInstitucion: 1,
-            jerarquiaOrganizacional: 45
-        },
-        {
-            rolId: 3,
-            nombreRol: "atpenal",
-            descripcionRol: "Agente MP Orientador Penal",
-            esActivo: 1,
-            confInstitucion: 1,
-            jerarquiaOrganizacional: 44
-        },
-        {
-            rolId: 4,
-            nombreRol: "visitador",
-            descripcionRol: "Visitaduría",
-            esActivo: 1,
-            confInstitucion: 1,
-            jerarquiaOrganizacional: 55
-        }
-    ];
+    ];    
 
 
     const users = [
@@ -460,9 +402,7 @@ export class MembershipData implements InMemoryDbService {
     ];
     return {
         users: users,
-        funcionarios: funcionarios,
-        agencias: agencias,
-        rol: rol
+        funcionarios: funcionarios
     };
   }
   
