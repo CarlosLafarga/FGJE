@@ -263,10 +263,7 @@
                                     <label for="nuevaAgencia">Nueva agencia:</label>
                                     <select class="form-control custom-select" id="nuevaAgencia">
                                         <option selected>-- Seleccione una agencia --</option>
-                                        <option value="1">005 - CUMPAS</option>
-                                        <option value="2">010 - HERMOSILLO PRIMERA UNIDAD ESPECIALIZADA EN EL SISTEMA DE JUSTICIA PENAL ACUSATORIO Y ORAL</option>
-                                        <option value="3">089 - DIRECCIÓN GENERAL DE SERVICIOS PERICIALES</option>
-                                        <option value="4">...</option>
+                                        <option *ngFor="let agencia of agencias" [value]="agencia.catDiscriminanteId">{{ agencia.cNombre }}</option>
                                     </select>
                                 </div>
 
@@ -282,13 +279,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Coordinador MP</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>AMP Especializado</td>
+                                                <tr *ngFor="let ro of rol">
+                                                    <th scope="row">{{ ro.rolId }}</th>
+                                                    <td>{{ ro.descripcionRol }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>

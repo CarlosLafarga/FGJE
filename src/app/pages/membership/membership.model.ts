@@ -55,17 +55,6 @@ export class FuncionariosData {
   fechaIngreso: Date;
 }
 
-// Datos de funcionario especifico. (tabla Funcionario)
-export class Funcionario {
-  claveFuncionario: number;
-  nombreFuncionario: string;
-  apPaterno: string;
-  apMaterno: string;
-  catDiscriminanteId: number;
-  catUIEId: number;
-  esMP: number;
-}
-
 // Datos de la agencia. (tabla CatDiscriminante)
 export class FuncionarioAgencia {
   catDiscriminante: number;
