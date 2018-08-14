@@ -91,12 +91,13 @@ export class Agencias {
 
 // Catálogo de roles (tabla Rol)
 export class Rol {
-  rolId: number;
-  nombreRol: string;
-  descripcionRol: string;
-  esActivo: number;
-  confInstitucion: number;
-  jerarquiaOrganizacional: number;
+  rol_id: number;
+  cNombreRol: string;
+  cDescripcionRol: string;
+  bEsActivo: number;
+  confInstitucion_id: number;
+  jerarquiaOrganizacional_id: number;
+  rolPadre_id: number
 }
 
 /*
