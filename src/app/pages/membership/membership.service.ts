@@ -10,7 +10,10 @@ export class MembershipService {
     public url = "api/users";
     public url2 = "http://localhost:55244/api/funcionarios";
     public url3 = "http://localhost:55244/api/catDiscriminantes";
-    public url4 = "api/rol";
+    public url4 = "http://localhost:55244/api/Roles";
+    //public url2 = "/api/funcionarios";
+    //public url3 = "api/catDiscriminantes";
+    //public url4 = "api/rol";
 
     constructor(public http: HttpClient) { }
 
@@ -18,12 +21,12 @@ export class MembershipService {
         return this.http.get<FuncionariosData[]>(this.url2);
     }
 
-    getRol(): Observable<Rol[]> {
-        return this.http.get<Rol[]>(this.url4);
-    }
-
     getAgencias(): Observable<Agencias[]> {
         return this.http.get<Agencias[]>(this.url3);
+    }
+
+    getRol(): Observable<Rol[]> {
+        return this.http.get<Rol[]>(this.url4);
     }
 
     getUsers(): Observable<User[]> {

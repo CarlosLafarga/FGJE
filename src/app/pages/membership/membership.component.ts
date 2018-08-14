@@ -84,54 +84,30 @@ export class MembershipComponent implements OnInit {
     console.log(this.rol);
     
     this.form = this.fbf.group({
-      /*
+      claveFuncionario: null,
       nombre: null,
       apPaterno: null,
       apMaterno: null,
-      usuario: null,
-      agencia: null,
-      estatus: null,
-      fechaIngreso: null
-      */
+      usuarfechaIngresoio: null,
+      agencia: this.fbf.group({
+        catDiscriminanteId: null,
+        claveDiscriminante: null,
+        nombreAgencia: null
+      }),
+      usuario: this.fbf.group({
+        usuarioId: null,
+        claveUsuario: null,
+        claveFuncionario: null,
+        esActivo: null
+      }),
+      usuarioRol: this.fbf.group({
+        usuarioId: null,
+        rolId: null,
+        fechaInicio: null,
+        fchaFin: null,
+        esPrincipal: null
+      })
     });
-
-    /*
-    this.getUsers(); 
-    this.form = this.fb.group({
-        id: null,
-        nombreUsuario: [null, Validators.compose([Validators.required, Validators.minLength(5)])],
-        contrasena: [null, Validators.compose([Validators.required, Validators.minLength(6)])],       
-        profile: this.fb.group({
-          name: null,
-          surname: null,  
-          birthday: null,
-          gender: null,
-          image: null
-        }),
-        work: this.fb.group({
-          company: null,
-          position: null,
-          salary: null
-        }),
-        contacts: this.fb.group({
-          email: null,
-          phone: null,
-          address: null          
-        }),
-        social: this.fb.group({
-          facebook: null,
-          twitter: null,
-          google: null
-        }),
-        settings: this.fb.group({
-          isActive: null,
-          isDeleted: null,
-          registrationDate: null,
-          joinedDate: null
-        }),
-        menuIds: null
-    });
-    */
   }
 
   public getFuncionarios(): void {
@@ -180,6 +156,14 @@ export class MembershipComponent implements OnInit {
     this.type = type;
   }
 
+  agregarRol(){
+    console.log("Funcion agregar");
+  }
+
+  quitarRol(){
+    console.log("Funcion quitar");
+  }
+
   public openMenuAssign(event){
     let parent = event.target.parentNode;
     while (parent){
@@ -210,16 +194,6 @@ export class MembershipComponent implements OnInit {
     this.toastrService.success('Please, logout and login to see result.', 'Successfully assigned !');
   }
 
-  public openModal1(modal1) {
-    this.modalRef = this.modalService.open(modal1);
-    console.log('se abrio el modal 1');
-  }
-
-  public openModal2(modal2) {
-    this.modalRef = this.modalService.open(modal2);
-    console.log('se abrio el modal 2');
-  }
-
   public openModal(modalContent, funcionario) {
     console.log(funcionario);
     /*
@@ -228,7 +202,7 @@ export class MembershipComponent implements OnInit {
       this.form.setValue(funcionario);
     } 
     */
-    this.modalRef = this.modalService.open(modalContent, funcionario);
+    this.modalRef = this.modalService.open(modalContent, { size: 'lg',});
   }
 
   public closeModal(){

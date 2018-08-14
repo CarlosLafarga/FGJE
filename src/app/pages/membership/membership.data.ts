@@ -158,7 +158,7 @@ export class MembershipData implements InMemoryDbService {
         }
     ];    
 
-    const agencias = [
+    const catDiscriminantes = [
         {
             catDiscriminanteId: 1,
             catDistritoId: 7,
@@ -225,6 +225,22 @@ export class MembershipData implements InMemoryDbService {
             esActivo: 1,
             confInstitucion: 1,
             jerarquiaOrganizacional: 55
+        },
+        {
+            rolId: 5,
+            nombreRol: "facilitador",
+            descripcionRol: "Especialista MASC",
+            esActivo: 1,
+            confInstitucion: 1,
+            jerarquiaOrganizacional: 11
+        },
+        {
+            rolId: 6,
+            nombreRol: "coordinadorJAR",
+            descripcionRol: "AMP Facilitador",
+            esActivo: 1,
+            confInstitucion: 1,
+            jerarquiaOrganizacional: 7
         }
     ];
 
@@ -474,7 +490,7 @@ export class MembershipData implements InMemoryDbService {
     return {
         users: users,
         funcionarios: funcionarios,
-        agencias: agencias,
+        catDiscriminantes: catDiscriminantes,
         rol: rol
     };
   }
