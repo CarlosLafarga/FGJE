@@ -37,9 +37,9 @@
                             <td class="align-middle text-truncate">{{ funcionario.claveFuncionario }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.nombre }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.apPaterno }}</td>
-                            <td class="align-middle text-truncate">{{ funcionario.apMaterno }}</td>                        
-                            <td class="align-middle text-truncate">{{ funcionario.usuario.claveUsuario }}</td>
-                            <td class="align-middle text-truncate">{{ funcionario.usuario.esActivo }}</td>
+                            <td class="align-middle text-truncate">{{ funcionario.apMaterno }}</td>
+                            <td class="align-middle text-truncate">{{ funcionario.username }}</td>
+                            <td class="align-middle text-truncate">{{ funcionario.estatus }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.fechaIngreso | date:"dd MMMM, yyyy" }}</td>
                             <td class="align-middle">
                                 <div class="btn-group" role="group">
@@ -82,84 +82,87 @@
                                         <h5 class="card-title mb-0">Reubicar funcionario</h5>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="text-gray">Nombre del funcionario seleccionado</label>
-                                        <input formControlName="nombre" class="form-control" type="text" disabled>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="custom-control custom-checkbox">
-                                            <input fomControlName="pendientes" type="checkbox" class="custom-control-input checkbox-dark-gray" id="expedientesPendientes">
-                                            <label class="custom-control-label" for="expedientesPendientes">Expedientes pendientes</label>
+                                    <div class="container">
+                                        <div class="form-group">
+                                            <label class="text-gray">Nombre del funcionario seleccionado</label>
+                                            <input formControlName="nombre" class="form-control" type="text" disabled>
                                         </div>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label for="nuevaAgencia">Nueva agencia:</label>
-                                        <select class="form-control custom-select" id="nuevaAgencia">
-                                            <option selected>-- Seleccione una agencia --</option>
-                                            <option *ngFor="let agencia of agencias" [value]="agencia.catDiscriminanteId">{{ agencia.cNombre }}</option>
-                                        </select>
-                                    </div>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                <input fomControlName="pendientes" type="checkbox" class="custom-control-input checkbox-dark-gray" id="expedientesPendientes">
+                                                <label class="custom-control-label" for="expedientesPendientes">Expedientes pendientes</label>
+                                            </div>
+                                        </div>
 
-                                    <hr>
+                                        <div class="form-group">
+                                            <label for="nuevaAgencia">Nueva agencia:</label>
+                                            <select class="form-control custom-select" id="nuevaAgencia">
+                                                <option selected>-- Seleccione una agencia --</option>
+                                                <option *ngFor="let agencia of agencias" [value]="agencia.catDiscriminanteId">{{ agencia.cNombre }}</option>
+                                            </select>
+                                        </div>
 
-                                    <div class="row">
-                                        <div class="col-xl-5 col-lg-6 mb-4">
-                                            <table class="table table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th></th>
-                                                        <th>Roles</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr *ngFor="let r of rol | paginate: { itemsPerPage: 10, currentPage: p2 }">
-                                                        <th scope="row">{{ r.rol_id }}</th>
-                                                        <td>{{ r.cDescripcionRol }}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                        <hr>
 
-                                            <div class="row mb-4">
-                                                <div class="col-12">
-                                                    <div class="bg-white text-center">
-                                                        <pagination-controls autoHide="true" (pageChange)="p2 = $event" maxSize="10" previousLabel="" nextLabel=""></pagination-controls>
-                                                    </div>        
+                                        <div class="row">
+                                            <div class="col-xl-5 col-lg-6 mb-4">
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Roles</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let r of rol | paginate: { itemsPerPage: 10, currentPage: p2 }">
+                                                            <th scope="row">{{ r.rol_id }}</th>
+                                                            <td>{{ r.cDescripcionRol }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <div class="row mb-4">
+                                                    <div class="col-12">
+                                                        <div class="bg-white text-center">
+                                                            <pagination-controls autoHide="true" (pageChange)="p2 = $event" maxSize="10" previousLabel="" nextLabel=""></pagination-controls>
+                                                        </div>        
+                                                    </div>
                                                 </div>
+
                                             </div>
 
-                                        </div>
+                                            <div class="col-xl-2 col-lg-6 mb-4">
+                                                <button type="button" class="btn btn-secondary btn-block" (click)="agregarRol()"> <i class="fa fa-long-arrow-right"></i> </button> <br>
+                                                <button type="button" class="btn btn-secondary btn-block" (click)="quitarRol()"> <i class="fa fa-long-arrow-left"></i> </button>
+                                            </div>
 
-                                        <div class="col-xl-2 col-lg-6 mb-4">
-                                            <button type="button" class="btn btn-secondary btn-block" (click)="agregarRol()"> <i class="fa fa-long-arrow-right"></i> </button> <br>
-                                            <button type="button" class="btn btn-secondary btn-block" (click)="quitarRol()"> <i class="fa fa-long-arrow-left"></i> </button>
-                                        </div>
-                                        
-                                        <div class="col-xl-5 col-lg-6 mb-4">
-                                            <table class="table table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th></th>
-                                                        <th>Roles</th>
-                                                        <th>Principal</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Coordinador MP</td>
-                                                        <td> <input type="radio" name="esPrincipal" class="" id=""> </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">2</th>
-                                                        <td>AMP Especializado</td>
-                                                        <td> <input type="radio" name="esPrincipal" class="" id=""> </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            <div class="col-xl-5 col-lg-6 mb-4">
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Roles</th>
+                                                            <th>Principal</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope="row">1</th>
+                                                            <td>Coordinador MP</td>
+                                                            <td> <input type="radio" name="esPrincipal" class="radio-dark-gray" id=""> </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">2</th>
+                                                            <td>AMP Especializado</td>
+                                                            <td> <input type="radio" name="esPrincipal" class="radio-dark-gray" id=""> </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
 
@@ -168,83 +171,84 @@
                                     <div class="card-body">
                                         <h5 class="card-title mb-0">Reasignar expedientes</h5>
                                     </div>
-                                    <div id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="container">
+                                        <div id="accordion" role="tablist" aria-multiselectable="true">
 
-                                        <div class="card border-0">
-                                            <div class="card-header transparent" role="tab" id="headingOne">
-                                                <h6 class="mb-0">
-                                                    <a class="text-primary" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        Titular de la agencia
-                                                    </a>
-                                                </h6>
-                                            </div>
-                
-                                            <div id="collapseOne" class="collapse show" data-parent="#accordion" role="tabpanel" aria-labelledby="headingOne">
-                                                <div class="card-body">
-                                                    <h6>Nombre del funcionario titular de la agencia: </h6>
-                                                    <p>(mostrar el nombre del titular de la agencia)</p> 
+                                            <div class="card border-0">
+                                                <div class="card-header transparent" role="tab" id="headingOne">
+                                                    <h6 class="mb-0">
+                                                        <a class="text-primary" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                            Titular de la agencia
+                                                        </a>
+                                                    </h6>
                                                 </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="card border-0">
-                                            <div class="card-header transparent" role="tab" id="headingTwo">
-                                                <h6 class="mb-0">
-                                                    <a class="text-primary collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                        Otro funcionario
-                                                    </a>
-                                                </h6>
-                                            </div>
-                                            <div id="collapseTwo" class="collapse" data-parent="#accordion" role="tabpanel" aria-labelledby="headingTwo">
-                                                <div class="card-body">
-                                                    <div class="input-group mb-2">
-                                                        <span class="input-group-prepend">
-                                                            <span class="input-group-text">
-                                                                <i class="fa fa-search"></i>
-                                                            </span>
-                                                        </span>
-                                                        <input class="form-control" type="text" placeholder="Escriba el nombre del funcionario"/>
+                    
+                                                <div id="collapseOne" class="collapse show" data-parent="#accordion" role="tabpanel" aria-labelledby="headingOne">
+                                                    <div class="card-body">
+                                                        <h6>Nombre del funcionario titular de la agencia: </h6>
+                                                        <p>(mostrar el nombre del titular de la agencia)</p> 
                                                     </div>
-                                                    <table class="table table-hover">
-                                                        <thead>
-                                                            <tr>
-                                                                <th></th>
-                                                                <th>Nombre</th>
-                                                                <th>Apellido paterno</th>
-                                                                <th>Apellido materno</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <th scope="row">1</th>
-                                                                <td>Armando</td>
-                                                                <td>Mora</td>
-                                                                <td>Aguirre</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th scope="row">2</th>
-                                                                <td>Hernan</td>
-                                                                <td>Hernandes</td>
-                                                                <td>Pulido</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
                                                 </div>
                                             </div>
+
+                                            <div class="card border-0">
+                                                <div class="card-header transparent" role="tab" id="headingTwo">
+                                                    <h6 class="mb-0">
+                                                        <a class="text-primary collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                            Otro funcionario
+                                                        </a>
+                                                    </h6>
+                                                </div>
+                                                <div id="collapseTwo" class="collapse" data-parent="#accordion" role="tabpanel" aria-labelledby="headingTwo">
+                                                    <div class="card-body">
+                                                        <div class="input-group mb-2">
+                                                            <span class="input-group-prepend">
+                                                                <span class="input-group-text">
+                                                                    <i class="fa fa-search"></i>
+                                                                </span>
+                                                            </span>
+                                                            <input class="form-control" type="text" placeholder="Escriba el nombre del funcionario"/>
+                                                        </div>
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th></th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Apellido paterno</th>
+                                                                    <th>Apellido materno</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th scope="row">1</th>
+                                                                    <td>Armando</td>
+                                                                    <td>Mora</td>
+                                                                    <td>Aguirre</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">2</th>
+                                                                    <td>Hernan</td>
+                                                                    <td>Hernandes</td>
+                                                                    <td>Pulido</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
                                         </div>
-                                        
                                     </div>
                                 </div>
                             </div>
                                   
                         </div>
-                        <div class="col-12 bg-white text-center py-1">
-                            <button type="button" class="btn btn-success mr-1"(click)="closeModal()">Aceptar</button>
-                            <!--
-                            <button [disabled]="!form.valid" class="btn btn-success mr-1" type="submit"><span *ngIf="!funcionario.clave">Add</span><span *ngIf="funcionario.clave">Update</span></button>
-                            -->
+
+                        <div class="col-11 bg-white text-center py-1">
+                            <button [disabled]="!form.valid" type="submit" class="btn btn-success mr-1">Aceptar</button>
                             <button type="button" class="btn btn-danger" (click)="closeModal()">Cancelar</button>
                         </div> 
+
                     </form> 
                 </div>
             </div>    

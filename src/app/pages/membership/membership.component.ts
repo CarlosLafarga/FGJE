@@ -71,12 +71,7 @@ export class MembershipComponent implements OnInit {
 
   ngOnInit() {
     this.getFuncionarios();
-    if (this.funcionarios) {
-      console.log('Mostrando el arreglo funcionarios: ' + this.funcionarios.length);
-      console.log(this.funcionarios);
-    } else {
-      console.log('El arreglo esta vacio!');
-    }
+    console.log(this.funcionarios);
 
     this.getAgencias();
     this.getRol()
@@ -202,7 +197,7 @@ export class MembershipComponent implements OnInit {
       this.form.setValue(funcionario);
     } 
     */
-    this.modalRef = this.modalService.open(modalContent, { size: 'lg',});
+    this.modalRef = this.modalService.open(modalContent, { size: 'lg', container: '.app' });
   }
 
   public closeModal(){
@@ -210,6 +205,7 @@ export class MembershipComponent implements OnInit {
   }
 
   public onSubmit(funcionario:FuncionariosData):void {
+    console.log(funcionario.claveFuncionario);
     if (this.form.valid) {
       if(funcionario.claveFuncionario){
         //this.updateUser(funcionario);
