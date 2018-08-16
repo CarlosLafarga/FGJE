@@ -34,6 +34,10 @@ export class MembershipService {
         return this.http.get<FuncionarioUsuarioRol[]>(this.url5);
     }
 
+    updateFuncionario( funcionario:FuncionariosData){
+        return this.http.put(this.url2, funcionario);
+    }
+
     getUsers(): Observable<User[]> {
         return this.http.get<User[]>(this.url);
     }

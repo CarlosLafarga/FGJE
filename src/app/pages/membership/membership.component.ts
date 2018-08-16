@@ -141,6 +141,12 @@ export class MembershipComponent implements OnInit {
     );
   }
 
+  public updateFuncionario(funcionario:FuncionariosData) {
+    this.membershipService.updateFuncionario(funcionario).subscribe(funcionario => {
+      this.getFuncionarios();
+    });
+  }
+
   public getUsers(): void {
     this.membershipService.getUsers().subscribe( users => 
       this.users = users
@@ -234,10 +240,8 @@ export class MembershipComponent implements OnInit {
     if (this.form.valid) {
       console.log("Se envio el formulario");
       if(funcionario.claveFuncionario){
-        //this.updateUser(funcionario);
-      }
-      else{
-        //this.addUser(funcionario);
+        //this.updateFuncionario(funcionario);
+        console.log("Se actualizo el funcionario");
       }      
       this.modalRef.close();    
     }
