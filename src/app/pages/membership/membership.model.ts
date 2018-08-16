@@ -72,10 +72,10 @@ export class FuncionarioUsuario {
 
 // Roles de usuario especifico. (tabla UsuarioRol)
 export class FuncionarioUsuarioRol {
-  usuarioId: number;
-  rolId: number;
-  fechaInicio: Date;
-  fechaFin: Date;
+  Usuario_id: number;
+  Rol_id: number;
+  dFechaInicio: Date;
+  dFechaFin: Date;
   esPrincipal: number;
 }
 

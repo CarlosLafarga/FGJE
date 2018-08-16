@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User, FuncionariosData, Rol, Agencias } from './membership.model';
+import { User, FuncionariosData, Rol, Agencias, FuncionarioUsuarioRol } from './membership.model';
 
 @Injectable()
 export class MembershipService {
@@ -11,6 +11,7 @@ export class MembershipService {
     public url2 = "http://localhost:55244/api/funcionarios";
     public url3 = "http://localhost:55244/api/catDiscriminantes";
     public url4 = "http://localhost:55244/api/Roles";
+    public url5 = "http://localhost:55244/api/FUsuarioRol";
     //public url2 = "/api/funcionarios";
     //public url3 = "api/catDiscriminantes";
     //public url4 = "api/rol";
@@ -27,6 +28,10 @@ export class MembershipService {
 
     getRol(): Observable<Rol[]> {
         return this.http.get<Rol[]>(this.url4);
+    }
+
+    getFUsuarioRol(): Observable<FuncionarioUsuarioRol[]> {
+        return this.http.get<FuncionarioUsuarioRol[]>(this.url5);
     }
 
     getUsers(): Observable<User[]> {

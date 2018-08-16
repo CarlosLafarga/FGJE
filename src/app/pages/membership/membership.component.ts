@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Rol, Agencias } from './membership.model';
+import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Rol, Agencias, FuncionarioUsuarioRol } from './membership.model';
 import { MembershipService } from './membership.service';
 import { MenuService } from '../../theme/components/menu/menu.service';
 import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
@@ -21,6 +21,7 @@ export class MembershipComponent implements OnInit {
   public funcionarios: FuncionariosData[];
   public funcionario: FuncionariosData;
   public rol: Rol[];
+  public funcionarioRol: FuncionarioUsuarioRol[];
   public agencias: Agencias[];
   public users: User[];
   public user: User;
@@ -81,27 +82,38 @@ export class MembershipComponent implements OnInit {
     this.form = this.fbf.group({
       claveFuncionario: null,
       nombre: null,
+      username: null,
+      estatus: null,
+      fechaIngreso: null,
       apPaterno: null,
-      apMaterno: null,
-      usuarfechaIngresoio: null,
-      agencia: this.fbf.group({
-        catDiscriminanteId: null,
-        claveDiscriminante: null,
-        nombreAgencia: null
-      }),
-      usuario: this.fbf.group({
-        usuarioId: null,
-        claveUsuario: null,
-        claveFuncionario: null,
-        esActivo: null
-      }),
-      usuarioRol: this.fbf.group({
-        usuarioId: null,
-        rolId: null,
-        fechaInicio: null,
-        fchaFin: null,
-        esPrincipal: null
-      })
+      apMaterno:null,
+      iClaveFuncionario:null,
+      cNombreFuncionario: null,
+      cApellidoPaternoFuncionario: null,
+      cApellidoMaternoFuncionario: null,
+      cSexo: null,
+      cRFC: null,
+      cCURP: null,
+      dFechaNacimiento: null,
+      cEmail: null,
+      cCedula: null,
+      iClaveFuncionarioJefe: null,
+      especialidad_val: null,
+      puesto_val: null,
+      jerarquiaOrganizacional_id: null,
+      dcCargaTrabajo: null,
+      tipoEspecialidad_val: null,
+      bEsPar: null,
+      cNumeroEmpleado: null,
+      catDiscriminante_id: null,
+      dFechaIngreso: null,
+      archivoDigital_id: null,
+      catUIE_id: null,
+      catAreasNegocio_id: null,
+      esMP:null,
+      cNumeroCertificado: null,
+      usuario: null,
+      numeroExpediente: null
     });
   }
 
@@ -114,6 +126,12 @@ export class MembershipComponent implements OnInit {
   public getRol(): void {
     this.membershipService.getRol().subscribe( rol =>
       this.rol = rol
+    );
+  }
+
+  public getFuncionarioRol(): void {
+    this.membershipService.getFUsuarioRol().subscribe( funcionarioRol =>
+      this.funcionarioRol = funcionarioRol
     );
   }
 
@@ -191,13 +209,20 @@ export class MembershipComponent implements OnInit {
 
   public openModal(modalContent, funcionario) {
     console.log(funcionario);
-    /*
+    
     if(funcionario){
       this.funcionario = funcionario;
       this.form.setValue(funcionario);
     } 
-    */
+    
     this.modalRef = this.modalService.open(modalContent, { size: 'lg', container: '.app' });
+
+    this.modalRef.result.then((result) => {
+      this.form.reset();
+    }, (reason) => {
+      this.form.reset();
+    });
+
   }
 
   public closeModal(){
@@ -205,8 +230,9 @@ export class MembershipComponent implements OnInit {
   }
 
   public onSubmit(funcionario:FuncionariosData):void {
-    console.log(funcionario.claveFuncionario);
+    console.log(funcionario);
     if (this.form.valid) {
+      console.log("Se envio el formulario");
       if(funcionario.claveFuncionario){
         //this.updateUser(funcionario);
       }
