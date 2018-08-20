@@ -145,7 +145,7 @@ export class MembershipComponent implements OnInit {
     this.membershipService.updateFuncionario(funcionario).subscribe(funcionario => {
       this.getFuncionarios();
     });
-    console.log("Se ejecuto el updateFuncionario: " + funcionario.nombre);
+    //console.log("Se ejecuto el updateFuncionario: " + funcionario.nombre);
   }
 
   public getUsers(): void {
@@ -217,7 +217,7 @@ export class MembershipComponent implements OnInit {
   public openModal(modalContent, funcionario) {
     console.log(funcionario);
 
-    this.getFuncionarioRol( funcionario );
+    //this.getFuncionarioRol( funcionario );
     
     if(funcionario){
       this.funcionario = funcionario;
@@ -244,7 +244,7 @@ export class MembershipComponent implements OnInit {
       console.log(this.form.value);
       if(funcionario.claveFuncionario){
         this.updateFuncionario(funcionario);
-        console.log("Se actualizo el funcionario");
+        console.log("Se actualizo el funcionario => " + funcionario.claveFuncionario);
       }      
       this.modalRef.close();    
     }
