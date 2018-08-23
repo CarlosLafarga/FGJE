@@ -85,12 +85,12 @@
                                     <div class="container">
                                         <div class="form-group">
                                             <label class="text-gray">Nombre del funcionario seleccionado</label>
-                                            <input formControlName="nombre" class="form-control" type="text" disabled>
+                                            <input formControlName="nombre" class="form-control" type="text" readonly>
                                         </div>
 
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox">
-                                                <input fomControlName="pendientes" type="checkbox" class="custom-control-input checkbox-dark-gray" id="expedientesPendientes">
+                                                <input fomControlName="pendientes" type="checkbox" class="custom-control-input" id="expedientesPendientes">
                                                 <label class="custom-control-label" for="expedientesPendientes">Expedientes pendientes</label>
                                             </div>
                                         </div>
@@ -99,7 +99,7 @@
                                             <label for="nuevaAgencia">Nueva agencia:</label>
                                             <select class="form-control custom-select" id="nuevaAgencia">
                                                 <option selected>-- Seleccione una agencia --</option>
-                                                <option *ngFor="let agencia of agencias" [value]="agencia.catDiscriminanteId">{{ agencia.cNombre }}</option>
+                                                <option *ngFor="let agencia of agencias" [value]="agencia.catDiscriminanteId">{{ agencia.cClaveDiscriminante }} - {{ agencia.cNombre }}</option>
                                             </select>
                                         </div>
 
@@ -115,7 +115,8 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr *ngFor="let r of rol | paginate: { itemsPerPage: 10, currentPage: p2 }">
+                                                        <tr *ngFor="let r of roles | paginate: { itemsPerPage: 10, currentPage: p2 }" (click)="onSelect(r)"
+                                                            [ngClass] = "{'highlight' : r.rol_id == selectedRol}">
                                                             <th scope="row">{{ r.rol_id }}</th>
                                                             <td>{{ r.cDescripcionRol }}</td>
                                                         </tr>

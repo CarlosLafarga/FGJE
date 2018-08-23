@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Rol, Agencias, FuncionarioUsuarioRol } from './membership.model';
+import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol } from './membership.model';
 import { MembershipService } from './membership.service';
 import { MenuService } from '../../theme/components/menu/menu.service';
 import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
@@ -20,8 +20,8 @@ export class MembershipComponent implements OnInit {
   public menuItems: Array<any>;  
   public funcionarios: FuncionariosData[];
   public funcionario: FuncionariosData;
-  public rol: Rol[];
-  public funcionarioRol: FuncionarioUsuarioRol[];
+  public roles: Roles[];
+  public funcionarioRol: Roles[];
   public agencias: Agencias[];
   public users: User[];
   public user: User;
@@ -32,6 +32,8 @@ export class MembershipComponent implements OnInit {
   public form: FormGroup;
   public genders = ['male', 'female'];
   public genderOption: string;
+  public selectedRol: any;
+  public addRol: Roles;
  
   public menuSelectSettings: IMultiSelectSettings = {
       enableSearch: true,
@@ -75,9 +77,10 @@ export class MembershipComponent implements OnInit {
     console.log(this.funcionarios);
 
     this.getAgencias();
-    this.getRol()
-    console.log(this.agencias);
-    console.log(this.rol);
+    //console.log(this.agencias);
+
+    this.getRoles()
+    console.log("Roles: " + this.roles);
     
     this.form = this.fbf.group({
       claveFuncionario: null,
@@ -117,30 +120,36 @@ export class MembershipComponent implements OnInit {
     });
   }
 
+  // Se cargan los datos del funcionario
   public getFuncionarios(): void {
     this.membershipService.getFuncionarios().subscribe( funcionarios =>
       this.funcionarios = funcionarios
     );
   }
 
-  public getRol(): void {
-    this.membershipService.getRol().subscribe( rol =>
-      this.rol = rol
+  // Se cargan los roles del catalogo
+  public getRoles(): void {
+    this.membershipService.getRol().subscribe( roles =>
+      this.roles = roles
     );
+    
   }
-
+/*
+  // Obtener los roles del funcionario que se selecciona
   public getFuncionarioRol(funcionario: FuncionariosData): void {
     this.membershipService.getFUsuarioRol(funcionario.claveFuncionario).subscribe( funcionarioRol =>
       this.funcionarioRol = funcionarioRol
     );
   }
-
+*/
+  // Se cargan las agencias del catalogo
   public getAgencias(): void {
     this.membershipService.getAgencias().subscribe( agencias =>
       this.agencias = agencias
     );
   }
 
+  // Se actualiza el funcionario seleccionado
   public updateFuncionario(funcionario:FuncionariosData) {
     this.membershipService.updateFuncionario(funcionario).subscribe(funcionario => {
       this.getFuncionarios();
@@ -176,12 +185,25 @@ export class MembershipComponent implements OnInit {
     this.type = type;
   }
 
+  // Se agrega el roles a los roles del funcionario
   agregarRol(){
-    console.log("Funcion agregar");
+    //this.funcionarioRol.push(this.addRol);
+    console.log("Funcion agregar:");
+    console.log(this.addRol);
   }
 
+  // Se quita el roles a los roles del funcionario
   quitarRol(){
     console.log("Funcion quitar");
+
+  }
+
+  // Se dispara con el evento del clic cuando se selecciona un role
+  public onSelect(r: Roles) {
+    console.log("Se selecciono el roles => " + r.rol_id);
+    this.addRol = r;
+    console.log(this.addRol);
+    this.selectedRol = r.rol_id;
   }
 
   public openMenuAssign(event){
@@ -214,6 +236,7 @@ export class MembershipComponent implements OnInit {
     this.toastrService.success('Please, logout and login to see result.', 'Successfully assigned !');
   }
 
+  // Se abre el modal y se cargan los datos del funcionario seleccionado
   public openModal(modalContent, funcionario) {
     console.log(funcionario);
 
@@ -231,13 +254,14 @@ export class MembershipComponent implements OnInit {
     }, (reason) => {
       this.form.reset();
     });
-
   }
 
+  // Cerrar el modal
   public closeModal(){
     this.modalRef.close();
   }
 
+  // Se ejecuta el envio del formulario
   public onSubmit(funcionario:FuncionariosData):void {
     if (this.form.valid) {
       console.log("Se envio el formulario:");

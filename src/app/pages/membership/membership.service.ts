@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User, FuncionariosData, Rol, Agencias, FuncionarioUsuarioRol } from './membership.model';
+import { User, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol } from './membership.model';
 
 @Injectable()
 export class MembershipService {
@@ -26,8 +26,8 @@ export class MembershipService {
         return this.http.get<Agencias[]>(this.url3);
     }
 
-    getRol(): Observable<Rol[]> {
-        return this.http.get<Rol[]>(this.url4);
+    getRol(): Observable<Roles[]> {
+        return this.http.get<Roles[]>(this.url4);
     }
 
     getFUsuarioRol( id: number ): Observable<FuncionarioUsuarioRol[]> {

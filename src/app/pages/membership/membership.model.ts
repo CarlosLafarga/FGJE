@@ -47,12 +47,39 @@ export class UserSettings{
 export class FuncionariosData {
   claveFuncionario: number;
   nombre: string;
-  apPaterno: string;
-  apMaterno: string;
   username: string;
-  //agencia: string;
   estatus: string;
   fechaIngreso: Date;
+  apPaterno: string;
+  apMaterno: string;
+  iClaveFuncionario: number;
+  cNombreFuncionario: string;
+  cApellidoPaternoFuncionario: string;
+  cApellidoMaternoFuncionario: string;
+  cSexo: string;
+  cRFC: string;
+  cCURP: string;
+  dFechaNacimiento: Date;
+  cEmail: string;
+  cCedula: string;
+  iClaveFuncionarioJefe: number;
+  especialidad_val: number;
+  puesto_val: number;
+  jerarquiaOrganizacional_id: number;
+  dcCargaTrabajo: number;
+  tipoEspecialidad_val: number;
+  bEsPar: number;
+  cNumeroEmpleado: number;
+  catDiscriminante_id: number;
+  dFechaIngreso: Date;
+  archivoDigital_id: number;
+  catUIE_id: number;
+  catAreasNegocio_id: number;
+  esMP: number;
+  cNumeroCertificado: string;
+  usuario: string;
+  numeroExpediente: number;
+  //agencia: string;
 }
 
 // Datos de la agencia. (tabla CatDiscriminante)
@@ -73,7 +100,7 @@ export class FuncionarioUsuario {
 // Roles de usuario especifico. (tabla UsuarioRol)
 export class FuncionarioUsuarioRol {
   Usuario_id: number;
-  Rol_id: number;
+  rol_id: number;
   dFechaInicio: Date;
   dFechaFin: Date;
   esPrincipal: number;
@@ -81,23 +108,23 @@ export class FuncionarioUsuarioRol {
 
 // Catálogo de agencias. (tabla CatDiscriminante)
 export class Agencias {
-  catDiscriminante_Id: number;
-  catDistrito_Id: number;
-  cClaveDiscrimiante: number;
+  catDiscriminante_id: number;
+  catDistrito_id: number;
+  cClaveDiscriminante: number;
   cNombre: string;
   iTipo: number;
-  CatDelegacion_Id: number;
+  catDelegacion_id: number;
 }
 
 // Catálogo de roles (tabla Rol)
-export class Rol {
+export class Roles {
   rol_id: number;
   cNombreRol: string;
   cDescripcionRol: string;
   bEsActivo: number;
   confInstitucion_id: number;
   jerarquiaOrganizacional_id: number;
-  rolPadre_id: number
+  rolPadre_id: number;
 }
 
 /*
