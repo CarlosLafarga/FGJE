@@ -39,7 +39,10 @@
                             <td class="align-middle text-truncate">{{ funcionario.apPaterno }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.apMaterno }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.username }}</td>
-                            <td class="align-middle text-truncate">{{ funcionario.estatus }}</td>
+                            <td class="align-middle">
+                                <i *ngIf="funcionario.estatus === 1" class="fa fa-user mr-2 text-success" placement="bottom" [ngbTooltip]="'Activo'"></i>
+                                <i *ngIf="funcionario.estatus != 1" class="fa fa-user mr-2 text-danger" placement="bottom" [ngbTooltip]="'Inactivo'"></i>
+                            </td>
                             <td class="align-middle text-truncate">{{ funcionario.fechaIngreso | date:"dd MMMM, yyyy" }}</td>
                             <td class="align-middle">
                                 <div class="btn-group" role="group">
@@ -90,7 +93,7 @@
 
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox">
-                                                <input fomControlName="pendientes" type="checkbox" class="custom-control-input" id="expedientesPendientes">
+                                                <input fomControlName="pendientes" type="checkbox" class="custom-control-input checkbox-primary" id="expedientesPendientes">
                                                 <label class="custom-control-label" for="expedientesPendientes">Expedientes pendientes</label>
                                             </div>
                                         </div>
@@ -150,7 +153,7 @@
                                                     <tbody>
                                                         <tr *ngFor="let fRol of funcionarioRol">
                                                             <th scope="row">{{ fRol.Rol_id }}</th>
-                                                            <td>{{ fRol.Usuario_id }}</td>
+                                                            <td>{{ fRol.cDescripcionRol }}</td>
                                                             <td> <input type="radio" name="esPrincipal" class="radio-dark-gray" id=""> </td>
                                                         </tr>
                                                     </tbody>

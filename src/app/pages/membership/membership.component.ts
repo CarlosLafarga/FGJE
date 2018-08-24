@@ -21,7 +21,7 @@ export class MembershipComponent implements OnInit {
   public funcionarios: FuncionariosData[];
   public funcionario: FuncionariosData;
   public roles: Roles[];
-  public funcionarioRol: Roles[];
+  public funcionarioRol: Roles[] = [];
   public agencias: Agencias[];
   public users: User[];
   public user: User;
@@ -32,8 +32,9 @@ export class MembershipComponent implements OnInit {
   public form: FormGroup;
   public genders = ['male', 'female'];
   public genderOption: string;
-  public selectedRol: any;
+  public selectedRol: number = 0;
   public addRol: Roles;
+  public posicion: number = 0;
  
   public menuSelectSettings: IMultiSelectSettings = {
       enableSearch: true,
@@ -55,8 +56,7 @@ export class MembershipComponent implements OnInit {
   };
   public menuSelectOptions: IMultiSelectOption[] = [];
   
-  constructor(public fb: FormBuilder, 
-              public fbf: FormBuilder,
+  constructor(public fbf: FormBuilder,
               public toastrService: ToastrService,
               public membershipService: MembershipService,
               public menuService: MenuService, 
@@ -132,7 +132,6 @@ export class MembershipComponent implements OnInit {
     this.membershipService.getRol().subscribe( roles =>
       this.roles = roles
     );
-    
   }
 /*
   // Obtener los roles del funcionario que se selecciona
@@ -187,9 +186,15 @@ export class MembershipComponent implements OnInit {
 
   // Se agrega el roles a los roles del funcionario
   agregarRol(){
-    //this.funcionarioRol.push(this.addRol);
+    this.funcionarioRol.push(this.addRol);
     console.log("Funcion agregar:");
     console.log(this.addRol);
+    console.log("Array funcionarioRol:");
+    console.log(this.funcionarioRol);
+
+    
+    //this.roles.splice(0, 1);
+    
   }
 
   // Se quita el roles a los roles del funcionario
@@ -204,6 +209,9 @@ export class MembershipComponent implements OnInit {
     this.addRol = r;
     console.log(this.addRol);
     this.selectedRol = r.rol_id;
+
+    
+
   }
 
   public openMenuAssign(event){
