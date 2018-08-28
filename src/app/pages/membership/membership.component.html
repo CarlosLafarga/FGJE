@@ -118,7 +118,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr *ngFor="let r of roles | paginate: { itemsPerPage: 10, currentPage: p2 }" (click)="onSelect(r)"
+                                                        <tr *ngFor="let r of roles | paginate: { itemsPerPage: 10, currentPage: p2, id:'roles' }" (click)="onSelectRol(r)"
                                                             [ngClass] = "{'highlight' : r.rol_id == selectedRol}">
                                                             <th scope="row">{{ r.rol_id }}</th>
                                                             <td>{{ r.cDescripcionRol }}</td>
@@ -129,7 +129,7 @@
                                                 <div class="row mb-4">
                                                     <div class="col-12">
                                                         <div class="bg-white text-center">
-                                                            <pagination-controls autoHide="true" (pageChange)="p2 = $event" maxSize="10" previousLabel="" nextLabel=""></pagination-controls>
+                                                            <pagination-controls autoHide="true" (pageChange)="p2 = $event" id='roles' maxSize="10" previousLabel="" nextLabel=""></pagination-controls>
                                                         </div>        
                                                     </div>
                                                 </div>
@@ -151,13 +151,23 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr *ngFor="let fRol of funcionarioRol">
+                                                        <tr *ngFor="let fRol of funcionarioRol | paginate: { itemsPerPage: 10, currentPage: p3, id:'rolesFuncionario' }" (click)="onSelectFRolF(fRol)"
+                                                            [ngClass]="{'highlight': fRol.rol_id == selectedRolF}">
                                                             <th scope="row">{{ fRol.Rol_id }}</th>
                                                             <td>{{ fRol.cDescripcionRol }}</td>
                                                             <td> <input type="radio" name="esPrincipal" class="radio-dark-gray" id=""> </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                
+                                                <div class="row mb-4">
+                                                    <div class="col-12">
+                                                        <div class="bg-white text-center">
+                                                            <pagination-controls autoHide="true" (pageChange)="p3 = $event" id='rolesFuncionario' maxSize="10" previousLabel="" nextLabel=""></pagination-controls>
+                                                        </div>        
+                                                    </div>
+                                                </div>
+                                                
                                             </div>
                                         </div>
                                     </div>

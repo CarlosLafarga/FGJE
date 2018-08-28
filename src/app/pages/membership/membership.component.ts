@@ -18,9 +18,9 @@ import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
 export class MembershipComponent implements OnInit {
 
   public menuItems: Array<any>;  
-  public funcionarios: FuncionariosData[];
+  public funcionarios: FuncionariosData[] = [];
   public funcionario: FuncionariosData;
-  public roles: Roles[];
+  public roles: Roles[] = [];
   public funcionarioRol: Roles[] = [];
   public agencias: Agencias[];
   public users: User[];
@@ -33,8 +33,11 @@ export class MembershipComponent implements OnInit {
   public genders = ['male', 'female'];
   public genderOption: string;
   public selectedRol: number = 0;
+  public selectedRolF: number = 0;
   public addRol: Roles;
-  public posicion: number = 0;
+  public delRol: Roles;
+  public posicionRol: number = 0;
+  public posicionRolF: number = 0;
  
   public menuSelectSettings: IMultiSelectSettings = {
       enableSearch: true,
@@ -80,7 +83,7 @@ export class MembershipComponent implements OnInit {
     //console.log(this.agencias);
 
     this.getRoles()
-    console.log("Roles: " + this.roles);
+    console.log(this.roles);
     
     this.form = this.fbf.group({
       claveFuncionario: null,
@@ -129,7 +132,7 @@ export class MembershipComponent implements OnInit {
 
   // Se cargan los roles del catalogo
   public getRoles(): void {
-    this.membershipService.getRol().subscribe( roles =>
+    this.membershipService.getRoles().subscribe( roles =>
       this.roles = roles
     );
   }
@@ -184,7 +187,17 @@ export class MembershipComponent implements OnInit {
     this.type = type;
   }
 
-  // Se agrega el roles a los roles del funcionario
+  // Se dispara con el evento del clic cuando se selecciona un rol del catálogo
+  public onSelectRol(r: Roles) {
+    this.selectedRol = r.rol_id;
+    console.log("Se selecciono el rol => " + this.selectedRol);
+    this.addRol = r;
+    console.log(this.addRol);
+
+    this.posicionRol = this.roles.indexOf(this.addRol);
+  }
+
+  // Se agrega el rol a los roles del funcionario
   agregarRol(){
     this.funcionarioRol.push(this.addRol);
     console.log("Funcion agregar:");
@@ -192,26 +205,37 @@ export class MembershipComponent implements OnInit {
     console.log("Array funcionarioRol:");
     console.log(this.funcionarioRol);
 
+    if (this.posicionRol > -1) {
+      this.roles.splice(this.posicionRol, 1);
+    }
     
-    //this.roles.splice(0, 1);
-    
+    this.posicionRol = 0;
+    //this.addRol = null;
   }
 
-  // Se quita el roles a los roles del funcionario
+  public onSelectFRolF(fRol: Roles) {
+    this.selectedRolF = fRol.rol_id;
+    console.log("Se seleccion de rol del funcionario=> " + this.selectedRolF);
+    this.delRol = fRol;
+    console.log(this.delRol);
+
+    this.posicionRolF = this.funcionarioRol.indexOf(this.delRol);
+  }
+
+  // Se quita el rol a los roles del funcionario
   quitarRol(){
+    this.roles.push(this.delRol);
     console.log("Funcion quitar");
+    console.log(this.delRol);
+    console.log("Array roles:");
+    console.log(this.roles);
 
-  }
+    if (this.posicionRolF > -1) {
+      this.funcionarioRol.splice(this.posicionRolF, 1);
+    }
 
-  // Se dispara con el evento del clic cuando se selecciona un role
-  public onSelect(r: Roles) {
-    console.log("Se selecciono el roles => " + r.rol_id);
-    this.addRol = r;
-    console.log(this.addRol);
-    this.selectedRol = r.rol_id;
-
-    
-
+    this.posicionRolF = 0;
+    this.delRol = null;
   }
 
   public openMenuAssign(event){

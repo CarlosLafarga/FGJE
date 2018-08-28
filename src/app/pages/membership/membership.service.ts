@@ -26,7 +26,7 @@ export class MembershipService {
         return this.http.get<Agencias[]>(this.url3);
     }
 
-    getRol(): Observable<Roles[]> {
+    getRoles(): Observable<Roles[]> {
         return this.http.get<Roles[]>(this.url4);
     }
 
