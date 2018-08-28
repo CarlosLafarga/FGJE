@@ -199,18 +199,19 @@ export class MembershipComponent implements OnInit {
 
   // Se agrega el rol a los roles del funcionario
   agregarRol(){
-    this.funcionarioRol.push(this.addRol);
-    console.log("Funcion agregar:");
-    console.log(this.addRol);
-    console.log("Array funcionarioRol:");
-    console.log(this.funcionarioRol);
-
-    if (this.posicionRol > -1) {
+    if (this.posicionRol > -1 && this.selectedRol != 0) {
+      this.funcionarioRol.push(this.addRol);
+      console.log("Funcion agregar:");
+      console.log(this.addRol);
+      console.log("Array funcionarioRol:");
+      console.log(this.funcionarioRol);
       this.roles.splice(this.posicionRol, 1);
+    } else {
+      console.log("Seleccine un rol a agregar!");
     }
     
     this.posicionRol = 0;
-    //this.addRol = null;
+    this.selectedRol = 0;
   }
 
   public onSelectFRolF(fRol: Roles) {
@@ -224,18 +225,19 @@ export class MembershipComponent implements OnInit {
 
   // Se quita el rol a los roles del funcionario
   quitarRol(){
-    this.roles.push(this.delRol);
-    console.log("Funcion quitar");
-    console.log(this.delRol);
-    console.log("Array roles:");
-    console.log(this.roles);
-
-    if (this.posicionRolF > -1) {
+    if (this.posicionRolF > -1 && this.selectedRolF != 0) {
+      this.roles.push(this.delRol);
+      console.log("Funcion quitar");
+      console.log(this.delRol);
+      console.log("Array roles:");
+      console.log(this.roles);
       this.funcionarioRol.splice(this.posicionRolF, 1);
+    } else {
+      console.log("Seleccione el rol a eliminar!");
     }
 
     this.posicionRolF = 0;
-    this.delRol = null;
+    this.selectedRolF = 0;
   }
 
   public openMenuAssign(event){
