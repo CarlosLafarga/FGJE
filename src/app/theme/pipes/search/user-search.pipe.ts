@@ -6,11 +6,11 @@ export class UserSearchPipe implements PipeTransform {
     let searchText = new RegExp(args, 'ig');
     if (value) {
       return value.filter(funcionario => {
-        if (funcionario.nombre) {
-          return funcionario.nombre.search(searchText) !== -1;
+        if (funcionario.cNombreFuncionario) {
+          return funcionario.cNombreFuncionario.search(searchText) !== -1;
         }
         else{
-          return funcionario.nombre.search(searchText) !== -1;
+          return funcionario.cNombreFuncionario.search(searchText) !== -1;
         }
       });
     }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol } from './membership.model';
+import { User, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia } from './membership.model';
 
 @Injectable()
 export class MembershipService {
@@ -11,7 +11,8 @@ export class MembershipService {
     public url2 = "http://localhost:55244/api/funcionarios";
     public url3 = "http://localhost:55244/api/catDiscriminantes";
     public url4 = "http://localhost:55244/api/Roles";
-    //public url5 = "http://localhost:55244/api/FUsuarioRol";
+    public url5 = "http://localhost:55244/api/usuarios";
+    public url6 = "http://localhost:55244/api/FunciAgencia";
     //public url2 = "/api/funcionarios";
     //public url3 = "api/catDiscriminantes";
     //public url4 = "api/rol";
@@ -26,12 +27,16 @@ export class MembershipService {
         return this.http.get<Agencias[]>(this.url3);
     }
 
-    getRoles(): Observable<Roles[]> {
-        return this.http.get<Roles[]>(this.url4);
+    getFUsuarioAgencia( catdis: number ) : Observable<FunciAgencia[]> {
+        return this.http.get<FunciAgencia[]>(this.url6 + "?catdis=" + catdis);
+    }
+
+    getRoles(): Observable<FuncionarioUsuarioRol[]> {
+        return this.http.get<FuncionarioUsuarioRol[]>(this.url4);
     }
 
     getFUsuarioRol( id: number ): Observable<FuncionarioUsuarioRol[]> {
-        return this.http.get<FuncionarioUsuarioRol[]>(this.url2 + "/" + id);
+        return this.http.get<FuncionarioUsuarioRol[]>(this.url5 + "/" + id);
     }
 
     updateFuncionario( funcionario:FuncionariosData){

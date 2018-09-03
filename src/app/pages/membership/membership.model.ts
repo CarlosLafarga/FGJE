@@ -45,13 +45,6 @@ export class UserSettings{
 
 // Mostrar resultados de la busqueda de funcionarios. (tabla Funcionario)
 export class FuncionariosData {
-  claveFuncionario: number;
-  nombre: string;
-  username: string;
-  estatus: string;
-  fechaIngreso: Date;
-  apPaterno: string;
-  apMaterno: string;
   iClaveFuncionario: number;
   cNombreFuncionario: string;
   cApellidoPaternoFuncionario: string;
@@ -77,9 +70,11 @@ export class FuncionariosData {
   catAreasNegocio_id: number;
   esMP: number;
   cNumeroCertificado: string;
-  usuario: string;
-  numeroExpediente: number;
-  //agencia: string;
+  bEsActivo: number;
+  cClaveUsuario: string;
+  cNombre: string;
+  usuario: string[];
+  numeroExpediente: number[];
 }
 
 // Datos de la agencia. (tabla CatDiscriminante)
@@ -98,13 +93,13 @@ export class FuncionarioUsuario {
 }
 
 // Roles de usuario especifico. (tabla UsuarioRol)
-export class FuncionarioUsuarioRol {
-  Usuario_id: number;
-  rol_id: number;
-  dFechaInicio: Date;
-  dFechaFin: Date;
-  esPrincipal: number;
-}
+// export class FuncionarioUsuarioRol {
+//   Usuario_id: number;
+//   rol_id: number;
+//   dFechaInicio: Date;
+//   dFechaFin: Date;
+//   esPrincipal: number;
+// }
 
 // Catálogo de agencias. (tabla CatDiscriminante)
 export class Agencias {
@@ -125,6 +120,32 @@ export class Roles {
   confInstitucion_id: number;
   jerarquiaOrganizacional_id: number;
   rolPadre_id: number;
+}
+
+// Roles de usuario especifico. (tabla UsuarioRol)
+export class FuncionarioUsuarioRol {
+  usuario_id: number;
+  cClaveUsuario: string;
+  cPalabraSecreta: string;
+  iClaveFuncionario: number;
+  password: string;
+  cllave: string;
+  iSesion: number;
+  iIntentos:number;
+  cIP: string;
+  bEsActivo: number;
+  idSesionServertring;
+  usuarioRol: string[];
+}
+
+export class FunciAgencia{
+  iClaveFuncionario: number;
+  cNombreFuncionario: string;
+  cApellidoPaternoFuncionario: string;
+  cAPellidoMaternoFuncionario: string;
+  cNombre: string;
+  EsMP: number;
+
 }
 
 /*

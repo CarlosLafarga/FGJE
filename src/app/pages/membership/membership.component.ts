@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol } from './membership.model';
+import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia } from './membership.model';
 import { MembershipService } from './membership.service';
 import { MenuService } from '../../theme/components/menu/menu.service';
 import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
@@ -20,9 +20,10 @@ export class MembershipComponent implements OnInit {
   public menuItems: Array<any>;  
   public funcionarios: FuncionariosData[] = [];
   public funcionario: FuncionariosData;
-  public roles: Roles[] = [];
-  public funcionarioRol: Roles[] = [];
-  public agencias: Agencias[];
+  public roles: FuncionarioUsuarioRol[] = [];
+  public funcionarioRol: FuncionarioUsuarioRol[] = [];
+  public agencias: Agencias[] = [];
+  public agencia: Agencias;
   public users: User[];
   public user: User;
   public searchText: string;
@@ -34,10 +35,11 @@ export class MembershipComponent implements OnInit {
   public genderOption: string;
   public selectedRol: number = 0;
   public selectedRolF: number = 0;
-  public addRol: Roles;
-  public delRol: Roles;
+  public addRol: FuncionarioUsuarioRol;
+  public delRol: FuncionarioUsuarioRol;
   public posicionRol: number = 0;
   public posicionRolF: number = 0;
+  public funciAgencia: FunciAgencia[];
  
   public menuSelectSettings: IMultiSelectSettings = {
       enableSearch: true,
@@ -80,20 +82,14 @@ export class MembershipComponent implements OnInit {
     console.log(this.funcionarios);
 
     this.getAgencias();
-    //console.log(this.agencias);
+    console.log(this.agencias);
 
-    this.getRoles()
+    this.getRoles();
     console.log(this.roles);
+    //console.log(JSON.stringify(this.roles));
     
     this.form = this.fbf.group({
-      claveFuncionario: null,
-      nombre: null,
-      username: null,
-      estatus: null,
-      fechaIngreso: null,
-      apPaterno: null,
-      apMaterno:null,
-      iClaveFuncionario:null,
+      iClaveFuncionario: null,
       cNombreFuncionario: null,
       cApellidoPaternoFuncionario: null,
       cApellidoMaternoFuncionario: null,
@@ -116,8 +112,11 @@ export class MembershipComponent implements OnInit {
       archivoDigital_id: null,
       catUIE_id: null,
       catAreasNegocio_id: null,
-      esMP:null,
+      esMP: null,
       cNumeroCertificado: null,
+      bEsActivo: null,
+      cClaveUsuario: null,
+      cNombre: null,
       usuario: null,
       numeroExpediente: null
     });
@@ -125,30 +124,43 @@ export class MembershipComponent implements OnInit {
 
   // Se cargan los datos del funcionario
   public getFuncionarios(): void {
-    this.membershipService.getFuncionarios().subscribe( funcionarios =>
+    this.membershipService.getFuncionarios().subscribe( funcionarios => {
       this.funcionarios = funcionarios
-    );
+      console.log(this.funcionarios);
+    });
   }
 
   // Se cargan los roles del catalogo
   public getRoles(): void {
-    this.membershipService.getRoles().subscribe( roles =>
+    this.membershipService.getRoles().subscribe( roles => {
       this.roles = roles
-    );
+      console.log(this.roles);
+      /* for (const id$ in roles) {
+        const p = roles[id$];
+        p.id$ = id$;
+        this.roles.push(roles[id$]);
+      } */
+    });
   }
-/*
+
   // Obtener los roles del funcionario que se selecciona
   public getFuncionarioRol(funcionario: FuncionariosData): void {
-    this.membershipService.getFUsuarioRol(funcionario.claveFuncionario).subscribe( funcionarioRol =>
+    this.membershipService.getFUsuarioRol(funcionario.iClaveFuncionario).subscribe( funcionarioRol =>
       this.funcionarioRol = funcionarioRol
     );
   }
-*/
+
   // Se cargan las agencias del catalogo
   public getAgencias(): void {
-    this.membershipService.getAgencias().subscribe( agencias =>
+    this.membershipService.getAgencias().subscribe( agencias => {
       this.agencias = agencias
-    );
+      console.log(this.agencias);
+    });
+  }
+
+  public getFuncionarioAgencia(funcionario:FuncionariosData):void{
+    this.membershipService.getFUsuarioAgencia(funcionario.catDiscriminante_id).subscribe(
+      funciAgencia => this.funciAgencia = funciAgencia);
   }
 
   // Se actualiza el funcionario seleccionado
@@ -156,31 +168,7 @@ export class MembershipComponent implements OnInit {
     this.membershipService.updateFuncionario(funcionario).subscribe(funcionario => {
       this.getFuncionarios();
     });
-    //console.log("Se ejecuto el updateFuncionario: " + funcionario.nombre);
-  }
-
-  public getUsers(): void {
-    this.membershipService.getUsers().subscribe( users => 
-      this.users = users
-    );    
-  }
-
-  public addUser(user:User){
-    this.membershipService.addUser(user).subscribe(user => {
-      this.getUsers();      
-    });
-  }
-
-  public updateUser(user:User){
-    this.membershipService.updateUser(user).subscribe(user => {
-      this.getUsers();      
-    });
-  }
-
-  public deleteUser(user:User){
-    this.membershipService.deleteUser(user.id).subscribe(result => 
-      this.getUsers()
-    );
+    console.log("Se ejecuto el updateFuncionario: " + funcionario.cNombreFuncionario);
   }
 
   public toggle(type){
@@ -188,8 +176,8 @@ export class MembershipComponent implements OnInit {
   }
 
   // Se dispara con el evento del clic cuando se selecciona un rol del catálogo
-  public onSelectRol(r: Roles) {
-    this.selectedRol = r.rol_id;
+  public onSelectRol(r: FuncionarioUsuarioRol) {
+    this.selectedRol = r.usuario_id;
     console.log("Se selecciono el rol => " + this.selectedRol);
     this.addRol = r;
     console.log(this.addRol);
@@ -199,7 +187,7 @@ export class MembershipComponent implements OnInit {
 
   // Se agrega el rol a los roles del funcionario
   agregarRol(){
-    if (this.posicionRol > -1 && this.selectedRol != 0) {
+    if (this.posicionRol > -1 && this.selectedRol !== 0) {
       this.funcionarioRol.push(this.addRol);
       console.log("Funcion agregar:");
       console.log(this.addRol);
@@ -208,14 +196,15 @@ export class MembershipComponent implements OnInit {
       this.roles.splice(this.posicionRol, 1);
     } else {
       console.log("Seleccine un rol a agregar!");
+      this.toastrService.warning('Por favor seleccione un rol para agregar!', 'Atención!', {timeOut: 3000});
     }
     
     this.posicionRol = 0;
     this.selectedRol = 0;
   }
 
-  public onSelectFRolF(fRol: Roles) {
-    this.selectedRolF = fRol.rol_id;
+  public onSelectFRolF(fRol: FuncionarioUsuarioRol) {
+    this.selectedRolF = fRol.usuario_id;
     console.log("Se seleccion de rol del funcionario=> " + this.selectedRolF);
     this.delRol = fRol;
     console.log(this.delRol);
@@ -225,7 +214,7 @@ export class MembershipComponent implements OnInit {
 
   // Se quita el rol a los roles del funcionario
   quitarRol(){
-    if (this.posicionRolF > -1 && this.selectedRolF != 0) {
+    if (this.posicionRolF > -1 && this.selectedRolF !== 0) {
       this.roles.push(this.delRol);
       console.log("Funcion quitar");
       console.log(this.delRol);
@@ -234,47 +223,19 @@ export class MembershipComponent implements OnInit {
       this.funcionarioRol.splice(this.posicionRolF, 1);
     } else {
       console.log("Seleccione el rol a eliminar!");
+      this.toastrService.warning('Por favor seleccione un rol para eliminar!', 'Atención!', {timeOut: 3000});
     }
 
     this.posicionRolF = 0;
     this.selectedRolF = 0;
   }
 
-  public openMenuAssign(event){
-    let parent = event.target.parentNode;
-    while (parent){
-      parent = parent.parentNode;
-      if(parent.classList.contains('content')){
-        parent.classList.add('flipped');
-        parent.parentNode.parentNode.classList.add('z-index-1');
-        break;
-      }
-    }
-  }
-
-  public closeMenuAssign(event){
-    let parent = event.target.parentNode;
-    while (parent){
-      parent = parent.parentNode;
-      if(parent.classList.contains('content')){
-        parent.classList.remove('flipped');
-        parent.parentNode.parentNode.classList.remove('z-index-1');
-        break;
-      }
-    }
-  }
-
-  public assignMenuItemsToUser(user){  
-    this.updateUser(user);
-    sessionStorage.setItem('userMenuItems', JSON.stringify(user.menuIds));
-    this.toastrService.success('Please, logout and login to see result.', 'Successfully assigned !');
-  }
-
   // Se abre el modal y se cargan los datos del funcionario seleccionado
   public openModal(modalContent, funcionario) {
     console.log(funcionario);
 
-    //this.getFuncionarioRol( funcionario );
+    this.getFuncionarioRol( funcionario );
+    this.getFuncionarioAgencia(funcionario);
     
     if(funcionario){
       this.funcionario = funcionario;
@@ -293,6 +254,7 @@ export class MembershipComponent implements OnInit {
   // Cerrar el modal
   public closeModal(){
     this.modalRef.close();
+    this.form.reset();
   }
 
   // Se ejecuta el envio del formulario
@@ -300,9 +262,9 @@ export class MembershipComponent implements OnInit {
     if (this.form.valid) {
       console.log("Se envio el formulario:");
       console.log(this.form.value);
-      if(funcionario.claveFuncionario){
+      if(funcionario.iClaveFuncionario){
         this.updateFuncionario(funcionario);
-        console.log("Se actualizo el funcionario => " + funcionario.claveFuncionario);
+        console.log("Se actualizo el funcionario => " + funcionario.iClaveFuncionario);
       }      
       this.modalRef.close();    
     }

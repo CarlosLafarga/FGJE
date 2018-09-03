@@ -24,26 +24,26 @@
                         <tr>
                             <th>Clave Funcionario</th> 
                             <th>Nombre(s)</th> 
-                            <th>Apellido paterno</th>                      
-                            <th>Apellido materno</th>                        
+                            <th>Apellido paterno</th>
+                            <th>Apellido materno</th>
                             <th>Usuario</th>
                             <th>Estatus</th>
-                            <th>Fecha de ingreso</th>                        
+                            <th>Fecha de ingreso</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let funcionario of funcionarios | UserSearchPipe : searchText | paginate: { itemsPerPage: 10, currentPage: p }">                        
-                            <td class="align-middle text-truncate">{{ funcionario.claveFuncionario }}</td>
-                            <td class="align-middle text-truncate">{{ funcionario.nombre }}</td>
-                            <td class="align-middle text-truncate">{{ funcionario.apPaterno }}</td>
-                            <td class="align-middle text-truncate">{{ funcionario.apMaterno }}</td>
-                            <td class="align-middle text-truncate">{{ funcionario.username }}</td>
+                        <tr *ngFor="let funcionario of funcionarios | UserSearchPipe : searchText | paginate: { itemsPerPage: 10, currentPage: p }">
+                            <td class="align-middle text-truncate">{{ funcionario.iClaveFuncionario }}</td>
+                            <td class="align-middle text-truncate">{{ funcionario.cNombreFuncionario }}</td>
+                            <td class="align-middle text-truncate">{{ funcionario.cApellidoPaternoFuncionario }}</td>
+                            <td class="align-middle text-truncate">{{ funcionario.cApellidoMaternoFuncionario }}</td>
+                            <td class="align-middle text-truncate">{{ funcionario.cClaveUsuario }}</td>
                             <td class="align-middle">
-                                <i *ngIf="funcionario.estatus === 1" class="fa fa-user mr-2 text-success" placement="bottom" [ngbTooltip]="'Activo'"></i>
-                                <i *ngIf="funcionario.estatus != 1" class="fa fa-user mr-2 text-danger" placement="bottom" [ngbTooltip]="'Inactivo'"></i>
+                                <i *ngIf="funcionario.bEsActivo === 1" class="fa fa-user mr-2 text-success" placement="bottom" [ngbTooltip]="'Activo'"></i>
+                                <i *ngIf="funcionario.bEsActivo != 1" class="fa fa-user mr-2 text-danger" placement="bottom" [ngbTooltip]="'Inactivo'"></i>
                             </td>
-                            <td class="align-middle text-truncate">{{ funcionario.fechaIngreso | date:"dd MMMM, yyyy" }}</td>
+                            <td class="align-middle text-truncate">{{ funcionario.dFechaIngreso | date:"dd MMMM, yyyy" }}</td>
                             <td class="align-middle">
                                 <div class="btn-group" role="group">
                                     <button class="btn btn-secondary btn-sm" (click)="openModal(modalContent, funcionario)"><i class="fa fa-check"></i></button>
@@ -86,11 +86,32 @@
                                     </div>
 
                                     <div class="container">
-                                        <div class="form-group">
-                                            <label class="text-gray">Nombre del funcionario seleccionado</label>
-                                            <input formControlName="nombre" class="form-control" type="text" readonly>
-                                        </div>
+                                        <label class="text-gray">Nombre del funcionario seleccionado:</label>
+                                        <div class="row">
 
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="text-gray">Nombre</label>
+                                                    <input formControlName="cNombreFuncionario" class="form-control" type="text" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="text-gray">Apellido paterno</label>
+                                                    <input formControlName="cApellidoPaternoFuncionario" class="form-control" type="text" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="text-gray">Apellido materno</label>
+                                                    <input formControlName="cApellidoMaternoFuncionario" class="form-control" type="text" readonly>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox">
                                                 <input fomControlName="pendientes" type="checkbox" class="custom-control-input checkbox-primary" id="expedientesPendientes">
@@ -152,12 +173,20 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr *ngFor="let fRol of funcionarioRol | paginate: { itemsPerPage: 10, currentPage: p3, id:'rolesFuncionario' }" (click)="onSelectFRolF(fRol)"
+
+                                                        <!-- <tr *ngFor="let fRol of funcionarioRol | paginate: { itemsPerPage: 10, currentPage: p3, id:'rolesFuncionario' }" (click)="onSelectFRolF(fRol)"
                                                             [ngClass]="{'highlight': fRol.rol_id == selectedRolF}">
                                                             <th scope="row">{{ fRol.rol_id }}</th>
                                                             <td>{{ fRol.cDescripcionRol }}</td>
                                                             <td> <input type="radio" name="esPrincipal" class="radio-dark-gray" id=""> </td>
-                                                        </tr>
+                                                        </tr> -->
+
+                                                        <tr *ngFor="let rol of funcionarioRol.usuarioRol">
+                                                                <th scope="row">{{ rol.rol_id }}</th>
+                                                                <td>{{ rol.usuario_id }}</td>
+                                                                <td > <input type="radio" name="esPrincipal" class="radio-dark-gray"  ng-checked="rol.esPrincipal == 1" id=""> </td>
+                                                                </tr>
+
                                                     </tbody>
                                                 </table>
                                                 
@@ -197,12 +226,10 @@
                                                     <div class="card-body">
                                                         <h6>Nombre del funcionario titular de la agencia: </h6>
                                                         <p>(mostrar el nombre del titular de la agencia)</p> 
-                                                        <!--
                                                         <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input checkbox-dark-gray" id="asignados" formControlName="asignados" [value]="">
+                                                            <input type="checkbox" class="custom-control-input checkbox-dark-gray" id="asignados" [value]="">
                                                             <label class="custom-control-label" for="asignados">Asignados</label>
                                                         </div>
-                                                        -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -227,25 +254,25 @@
                                                         </div>
                                                         <table class="table table-hover">
                                                             <thead>
-                                                                <tr>
-                                                                    <th></th>
-                                                                    <th>Nombre</th>
-                                                                    <th>Apellido paterno</th>
-                                                                    <th>Apellido materno</th>
-                                                                </tr>
+                                                                    <tr>
+                                                                            <th>Clave funcionario</th>
+                                                                            <th>Nombre</th>
+                                                                            <th>Apellido paterno</th>
+                                                                            <th>Apellido materno</th>
+                                                                            <th>Nombre Agencia</th>
+                                                                            <th>Titular</th>
+                                                                            <th></th>
+                                                                        </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr>
-                                                                    <th scope="row">1</th>
-                                                                    <td>Armando</td>
-                                                                    <td>Mora</td>
-                                                                    <td>Aguirre</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">2</th>
-                                                                    <td>Hernan</td>
-                                                                    <td>Hernandes</td>
-                                                                    <td>Pulido</td>
+                                                                <tr *ngFor="let funagen of funciAgencia ">
+                                                                    <th scope="row">{{ funagen.iClaveFuncionario }}</th>
+                                                                    <td>{{ funagen.cNombreFuncionario }}</td>
+                                                                    <td>{{ funagen.cApellidoPaternoFuncionario }}</td>
+                                                                    <td>{{ funagen.cApellidoMaternoFuncionario }}</td>
+                                                                    <td>{{ funagen.cNombre }}</td> 
+                                                                    <td>{{ funagen.esMP }}</td>                                                                    
+                                                                    <td ><input type="radio" name="cambio" class="radio-dark-gray"   id=""> </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
