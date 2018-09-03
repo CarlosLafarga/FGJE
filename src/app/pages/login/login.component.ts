@@ -18,7 +18,7 @@ export class LoginComponent {
   constructor(router:Router, fb:FormBuilder) {
       this.router = router;
       this.form = fb.group({
-          'email': ['', Validators.compose([Validators.required, CustomValidators.email])],
+          'email': ['', Validators.compose([Validators.required, Validators.nullValidator])],
           'password': ['', Validators.compose([Validators.required, Validators.minLength(6)])]
       });
 
@@ -28,7 +28,7 @@ export class LoginComponent {
 
   public onSubmit(values:Object):void {
       if (this.form.valid) {
-          this.router.navigate(['pages/dashboard']);
+          this.router.navigate(['pages/membership']);
       }
   }
 
