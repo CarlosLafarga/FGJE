@@ -12,7 +12,7 @@ export const routes: Routes = [
         path: '', 
         component: PagesComponent,
         children:[
-            { path:'', redirectTo:'dashboard', pathMatch:'full' },
+            { path:'', redirectTo:'login', pathMatch:'full' },
             { path: 'dashboard', loadChildren: 'app/pages/dashboard/dashboard.module#DashboardModule', data: { breadcrumb: 'Dashboard' }  },          
             { path: 'membership', loadChildren: 'app/pages/membership/membership.module#MembershipModule', data: { breadcrumb: 'Cambio de adscripción' } },
             { path: 'ui', loadChildren: 'app/pages/ui/ui.module#UiModule', data: { breadcrumb: 'UI' } },

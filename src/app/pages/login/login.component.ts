@@ -19,7 +19,7 @@ export class LoginComponent {
       this.router = router;
       this.form = fb.group({
           'email': ['', Validators.compose([Validators.required, Validators.nullValidator])],
-          'password': ['', Validators.compose([Validators.required, Validators.minLength(6)])]
+          'password': ['', Validators.compose([Validators.required, Validators.minLength(8)])]
       });
 
       this.email = this.form.controls['email'];

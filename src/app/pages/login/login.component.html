@@ -13,6 +13,7 @@
                         <input [formControl]="email" class="form-control validation-field" placeholder="Usuario" type="text">                      
                         <small class="text-danger" *ngIf="form.get('email').touched && form.get('email').hasError('required')">Usuario es requerido</small>                              
                         
+                        
                     </div>
                     <div class="form-group">
                         <input [formControl]="password" class="form-control validation-field" placeholder="Contrase&ntilde;a" type="password">
