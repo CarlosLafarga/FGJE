@@ -11,7 +11,7 @@ export class MembershipService {
     public url2 = "http://localhost:55244/api/funcionarios";
     public url3 = "http://localhost:55244/api/catDiscriminantes";
     public url4 = "http://localhost:55244/api/Roles";
-    public url5 = "http://localhost:55244/api/usuarios";
+    public url5 = "http://localhost:55244/api/RolFunci";
     public url6 = "http://localhost:55244/api/FunciAgencia";
     //public url2 = "/api/funcionarios";
     //public url3 = "api/catDiscriminantes";
@@ -31,12 +31,12 @@ export class MembershipService {
         return this.http.get<FunciAgencia[]>(this.url6 + "?catdis=" + catdis);
     }
 
-    getRoles(): Observable<FuncionarioUsuarioRol[]> {
-        return this.http.get<FuncionarioUsuarioRol[]>(this.url4);
+    getRoles(): Observable<Roles[]> {
+        return this.http.get<Roles[]>(this.url4);
     }
 
-    getFUsuarioRol( id: number ): Observable<FuncionarioUsuarioRol[]> {
-        return this.http.get<FuncionarioUsuarioRol[]>(this.url5 + "/" + id);
+    getFUsuarioRol( id: number ): Observable<Roles[]> {
+        return this.http.get<Roles[]>(this.url5 + "?usuario_id=" + id);
     }
 
     updateFuncionario( funcionario:FuncionariosData){

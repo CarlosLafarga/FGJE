@@ -140,7 +140,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr *ngFor="let r of roles | paginate: { itemsPerPage: 10, currentPage: p2, id:'roles' }" (click)="onSelectRol(r)"
-                                                            [ngClass] = "{'highlight' : r.rol_id == selectedRol}">
+                                                            [ngClass] = "{'highlight' : r.rol_id === selectedRol}">
                                                             <th scope="row">{{ r.rol_id }}</th>
                                                             <td>{{ r.cDescripcionRol }}</td>
                                                         </tr>
@@ -181,11 +181,12 @@
                                                             <td> <input type="radio" name="esPrincipal" class="radio-dark-gray" id=""> </td>
                                                         </tr> -->
 
-                                                        <tr *ngFor="let rol of funcionarioRol.usuarioRol">
-                                                                <th scope="row">{{ rol.rol_id }}</th>
-                                                                <td>{{ rol.usuario_id }}</td>
-                                                                <td > <input type="radio" name="esPrincipal" class="radio-dark-gray"  ng-checked="rol.esPrincipal == 1" id=""> </td>
-                                                                </tr>
+                                                        <tr *ngFor="let rol of funcionarioRol | paginate: { itemsPerPage: 10, currentPage: p3, id:'rolesFuncionario' }" (click)="onSelectFRolF(rol)"
+                                                            [ngClass]="{'highlight': rol.rol_id === selectedRolF}">
+                                                            <th scope="row">{{ rol.rol_id }}</th>
+                                                            <td>{{ rol.cDescripcionRol }}</td>
+                                                            <td > <input type="radio" name="esPrincipal" class="radio-dark-gray"  [checked]="rol.esPrincipal === 1" id=""> </td>
+                                                        </tr>
 
                                                     </tbody>
                                                 </table>
@@ -244,28 +245,28 @@
                                                 </div>
                                                 <div id="collapseTwo" class="collapse" data-parent="#accordion" role="tabpanel" aria-labelledby="headingTwo">
                                                     <div class="card-body">
-                                                        <div class="input-group mb-2">
+                                                        <div class="input-group mb-2 box-shadow">
                                                             <span class="input-group-prepend">
                                                                 <span class="input-group-text">
                                                                     <i class="fa fa-search"></i>
                                                                 </span>
                                                             </span>
-                                                            <input class="form-control" type="text" placeholder="Escriba el nombre del funcionario"/>
+                                                            <input type="text" placeholder="Escriba el nombre del funcionario" class="form-control">
                                                         </div>
                                                         <table class="table table-hover">
                                                             <thead>
-                                                                    <tr>
-                                                                            <th>Clave funcionario</th>
-                                                                            <th>Nombre</th>
-                                                                            <th>Apellido paterno</th>
-                                                                            <th>Apellido materno</th>
-                                                                            <th>Nombre Agencia</th>
-                                                                            <th>Titular</th>
-                                                                            <th></th>
-                                                                        </tr>
+                                                                <tr>
+                                                                    <th>Clave funcionario</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Apellido paterno</th>
+                                                                    <th>Apellido materno</th>
+                                                                    <th>Nombre Agencia</th>
+                                                                    <th>Titular</th>
+                                                                    <th></th>
+                                                                </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr *ngFor="let funagen of funciAgencia ">
+                                                                <tr *ngFor="let funagen of funciAgencia | FuncionarioSearchPipe : buscarFuncionario | paginate: { itemsPerPage: 10, currentPage: p4, id:'FuncionarioAgencia' }">
                                                                     <th scope="row">{{ funagen.iClaveFuncionario }}</th>
                                                                     <td>{{ funagen.cNombreFuncionario }}</td>
                                                                     <td>{{ funagen.cApellidoPaternoFuncionario }}</td>
@@ -276,6 +277,15 @@
                                                                 </tr>
                                                             </tbody>
                                                         </table>
+
+                                                        <div class="row mb-4">
+                                                            <div class="col-12">
+                                                                <div class="bg-white text-center">
+                                                                    <pagination-controls autoHide="true" (pageChange)="p4 = $event" id='FuncionarioAgencia' maxSize="10" previousLabel="" nextLabel=""></pagination-controls>
+                                                                </div>        
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -285,12 +295,15 @@
                                 </div>
                             </div>
 
+                            <!-- <pre>
+                                {{ roles | json }}
+                            </pre> -->
                             <pre>
                                 {{ funcionarioRol | json }}
                             </pre>
-                            <pre>
+                            <!-- <pre>
                                 {{ form.value | json }}
-                            </pre>
+                            </pre> -->
                                   
                         </div>
 

@@ -120,6 +120,7 @@ export class Roles {
   confInstitucion_id: number;
   jerarquiaOrganizacional_id: number;
   rolPadre_id: number;
+  esPrincipal?: number;
 }
 
 // Roles de usuario especifico. (tabla UsuarioRol)
@@ -138,14 +139,13 @@ export class FuncionarioUsuarioRol {
   usuarioRol: string[];
 }
 
-export class FunciAgencia{
+export class FunciAgencia {
   iClaveFuncionario: number;
   cNombreFuncionario: string;
   cApellidoPaternoFuncionario: string;
   cAPellidoMaternoFuncionario: string;
   cNombre: string;
   EsMP: number;
-
 }
 
 /*

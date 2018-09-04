@@ -3,14 +3,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({ name: 'FuncionarioSearchPipe', pure: false })
 export class FuncionarioSearchPipe implements PipeTransform {
   transform(value, args?): Array<any> {
-    let searchText = new RegExp(args, 'ig');
+    let buscaFuncionario = new RegExp(args, 'ig');
     if (value) {
-      return value.filter(funcionario => {
-        if (funcionario.nombre) {
-          return funcionario.nombre.search(searchText) !== -1;
+      return value.filter(funagen => {
+        if (funagen.cNombreFuncionario) {
+          return funagen.cNombreFuncionario.search(buscaFuncionario) !== -1;
         }
         else{
-          return funcionario.nombre.search(searchText) !== -1;
+          return funagen.cNombreFuncionario.search(buscaFuncionario) !== -1;
         }
       });
     }

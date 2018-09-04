@@ -7,6 +7,7 @@ import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, Fu
 import { MembershipService } from './membership.service';
 import { MenuService } from '../../theme/components/menu/menu.service';
 import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
+import { RouteConfigLoadStart } from '@angular/router';
  
 @Component({
   selector: 'app-membership',
@@ -17,11 +18,12 @@ import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
 })
 export class MembershipComponent implements OnInit {
 
+  public buscarFuncionario: string;
   public menuItems: Array<any>;  
   public funcionarios: FuncionariosData[] = [];
   public funcionario: FuncionariosData;
-  public roles: FuncionarioUsuarioRol[] = [];
-  public funcionarioRol: FuncionarioUsuarioRol[] = [];
+  public roles: Roles[] = [];
+  public funcionarioRol: Roles[] = [];
   public agencias: Agencias[] = [];
   public agencia: Agencias;
   public users: User[];
@@ -35,8 +37,8 @@ export class MembershipComponent implements OnInit {
   public genderOption: string;
   public selectedRol: number = 0;
   public selectedRolF: number = 0;
-  public addRol: FuncionarioUsuarioRol;
-  public delRol: FuncionarioUsuarioRol;
+  public addRol: Roles;
+  public delRol: Roles;
   public posicionRol: number = 0;
   public posicionRolF: number = 0;
   public funciAgencia: FunciAgencia[];
@@ -145,9 +147,10 @@ export class MembershipComponent implements OnInit {
 
   // Obtener los roles del funcionario que se selecciona
   public getFuncionarioRol(funcionario: FuncionariosData): void {
-    this.membershipService.getFUsuarioRol(funcionario.iClaveFuncionario).subscribe( funcionarioRol =>
+    this.membershipService.getFUsuarioRol(funcionario.iClaveFuncionario).subscribe( funcionarioRol => {
       this.funcionarioRol = funcionarioRol
-    );
+      console.log(this.funcionarioRol);
+    });
   }
 
   // Se cargan las agencias del catalogo
@@ -171,13 +174,13 @@ export class MembershipComponent implements OnInit {
     console.log("Se ejecuto el updateFuncionario: " + funcionario.cNombreFuncionario);
   }
 
-  public toggle(type){
+  public toggle(type) {
     this.type = type;
   }
 
   // Se dispara con el evento del clic cuando se selecciona un rol del catálogo
-  public onSelectRol(r: FuncionarioUsuarioRol) {
-    this.selectedRol = r.usuario_id;
+  public onSelectRol(r: Roles) {
+    this.selectedRol = r.rol_id;
     console.log("Se selecciono el rol => " + this.selectedRol);
     this.addRol = r;
     console.log(this.addRol);
@@ -186,7 +189,7 @@ export class MembershipComponent implements OnInit {
   }
 
   // Se agrega el rol a los roles del funcionario
-  agregarRol(){
+  agregarRol() {
     if (this.posicionRol > -1 && this.selectedRol !== 0) {
       this.funcionarioRol.push(this.addRol);
       console.log("Funcion agregar:");
@@ -203,17 +206,17 @@ export class MembershipComponent implements OnInit {
     this.selectedRol = 0;
   }
 
-  public onSelectFRolF(fRol: FuncionarioUsuarioRol) {
-    this.selectedRolF = fRol.usuario_id;
+  public onSelectFRolF(rol: Roles) {
+    this.selectedRolF = rol.rol_id;
     console.log("Se seleccion de rol del funcionario=> " + this.selectedRolF);
-    this.delRol = fRol;
+    this.delRol = rol;
     console.log(this.delRol);
 
     this.posicionRolF = this.funcionarioRol.indexOf(this.delRol);
   }
 
   // Se quita el rol a los roles del funcionario
-  quitarRol(){
+  quitarRol() {
     if (this.posicionRolF > -1 && this.selectedRolF !== 0) {
       this.roles.push(this.delRol);
       console.log("Funcion quitar");
