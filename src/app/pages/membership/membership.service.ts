@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia } from './membership.model';
+import { User, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE } from './membership.model';
 
 @Injectable()
 export class MembershipService {
@@ -13,6 +13,7 @@ export class MembershipService {
     public url4 = "http://localhost:55244/api/Roles";
     public url5 = "http://localhost:55244/api/RolFunci";
     public url6 = "http://localhost:55244/api/FunciAgencia";
+    public url7 = "http://localhost:55244/api//catUEI";
     //public url2 = "/api/funcionarios";
     //public url3 = "api/catDiscriminantes";
     //public url4 = "api/rol";
@@ -37,6 +38,10 @@ export class MembershipService {
 
     getFUsuarioRol( id: number ): Observable<Roles[]> {
         return this.http.get<Roles[]>(this.url5 + "?usuario_id=" + id);
+    }
+
+    getcatUIE( catdis: number ): Observable<catUIE[]> {
+        return this.http.get<catUIE[]>(this.url7 + "?catdis=" + catdis);
     }
 
     updateFuncionario( funcionario:FuncionariosData){

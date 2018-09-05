@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators, NgForm} from '@angular
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia } from './membership.model';
+import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE } from './membership.model';
 import { MembershipService } from './membership.service';
 import { MenuService } from '../../theme/components/menu/menu.service';
 import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
@@ -42,6 +42,7 @@ export class MembershipComponent implements OnInit {
   public posicionRol: number = 0;
   public posicionRolF: number = 0;
   public funciAgencia: FunciAgencia[];
+  public catUIE: catUIE[] = [];
  
   public menuSelectSettings: IMultiSelectSettings = {
       enableSearch: true,
@@ -167,6 +168,12 @@ export class MembershipComponent implements OnInit {
     });
   }
 
+  public getCatUIE(agencia: Agencias): void {
+    this.membershipService.getcatUIE(agencia.catDiscriminante_id).subscribe( catUIE => {
+      this.catUIE = catUIE
+    });
+    }
+
   // Se actualiza el funcionario seleccionado
   public updateFuncionario(funcionario:FuncionariosData) {
     this.membershipService.updateFuncionario(funcionario).subscribe(funcionario => {
@@ -240,6 +247,7 @@ export class MembershipComponent implements OnInit {
 
     this.getFuncionarioRol( funcionario );
     this.getFuncionarioAgencia( funcionario );
+    // this.getCatUIE( funcionario );
     
     if(funcionario){
       this.funcionario = funcionario;
@@ -264,12 +272,19 @@ export class MembershipComponent implements OnInit {
 
   // Se ejecuta el envio del formulario
   public onSubmit(funcionario:FuncionariosData):void {
+
     if (this.form.valid) {
-      console.log("iClaveFuncionarioSolicitante => " + this.form.value.iClaveFuncionario);
-      console.log("iClaveFuncionarioAnterior => " );
-      console.log("catDiscriminante_id => " + this.funcionario.catDiscriminante_id);
-      console.log("catUIE_id => ");
-      console.log("catDiscriminante_idNuevo => " + this.form.value.catDiscriminante_id);
+      const iClaveFuncionarioSolicitante: number = this.form.value.iClaveFuncionario;
+      const iClaveFuncionarioAnterior: number = 0;
+      const catDiscriminante_id: number = this.funcionario.catDiscriminante_id;
+      const catUIE_id: number = 0;
+      const catDiscriminante_idNuevo: number = this.form.value.catDiscriminante_id;
+
+      console.log("iClaveFuncionarioSolicitante => " + iClaveFuncionarioSolicitante);
+      console.log("iClaveFuncionarioAnterior => " + iClaveFuncionarioAnterior);
+      console.log("catDiscriminante_id => " + catDiscriminante_id);
+      console.log("catUIE_id => " + catUIE_id);
+      console.log("catDiscriminante_idNuevo => " + catDiscriminante_idNuevo);
       console.log("Jusfificación (pendiente) => ");
 
       console.log("Se envio el formulario:");

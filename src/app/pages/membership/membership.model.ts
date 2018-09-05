@@ -111,6 +111,14 @@ export class Agencias {
   catDelegacion_id: number;
 }
 
+export class catUIE {
+  catUIE_id: number;
+  cClaveUIE: string;
+  cNombreUIE:string;
+  cAcronimo: string;
+  catDiscriminante_id: number;
+}
+
 // Catálogo de roles (tabla Rol)
 export class Roles {
   rol_id: number;

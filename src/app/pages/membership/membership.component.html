@@ -121,10 +121,11 @@
 
                                         <div class="form-group">
                                             <label for="nuevaAgencia">Nueva agencia:</label>
-                                            <select class="form-control custom-select" id="catDiscriminante_id" formControlName="catDiscriminante_id" [(ngModel)]="catDiscriminante_id">
+                                            <select class="form-control custom-select" id="catDiscriminante_id" formControlName="catDiscriminante_id" [(ngModel)]="catDiscriminante_id" (change)="getCatUIE(this.value)">
                                                 <option selected>-- Seleccione una agencia --</option>
                                                 <option *ngFor="let agencia of agencias" [value]="agencia.catDiscriminante_id">{{ agencia.cClaveDiscriminante }} - {{ agencia.cNombre }}</option>
                                             </select>
+                                            <input fromControlName="catUIE_id" class="form-control" type="text" readonly>
                                         </div>
 
                                         <hr>
