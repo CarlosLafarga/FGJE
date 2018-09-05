@@ -68,7 +68,7 @@
         <div class="modal-body bg-gray">
             <div class="row">
                 <div class="col-12 vertical-tabs">                
-                    <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="row px-3">
+                    <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="row px-3" #datos="ngForm">
                         <ul class="nav flex-column left col-2 border-0 rounded-0 mr-0 bg-light">              
                             <li class="nav-item bg-light">
                                 <a class="nav-link active" href="#reubicarFuncionario" data-toggle="tab">Reubicar funcionario</a>
@@ -121,9 +121,9 @@
 
                                         <div class="form-group">
                                             <label for="nuevaAgencia">Nueva agencia:</label>
-                                            <select class="form-control custom-select" id="nuevaAgencia">
+                                            <select class="form-control custom-select" id="catDiscriminante_id" formControlName="catDiscriminante_id" [(ngModel)]="catDiscriminante_id">
                                                 <option selected>-- Seleccione una agencia --</option>
-                                                <option *ngFor="let agencia of agencias" [value]="agencia.catDiscriminanteId">{{ agencia.cClaveDiscriminante }} - {{ agencia.cNombre }}</option>
+                                                <option *ngFor="let agencia of agencias" [value]="agencia.catDiscriminante_id">{{ agencia.cClaveDiscriminante }} - {{ agencia.cNombre }}</option>
                                             </select>
                                         </div>
 
@@ -301,9 +301,9 @@
                             <pre>
                                 {{ funcionarioRol | json }}
                             </pre>
-                            <!-- <pre>
-                                {{ form.value | json }}
-                            </pre> -->
+                            <pre>
+                                   {{ form.value | json }}
+                            </pre>
                                   
                         </div>
 

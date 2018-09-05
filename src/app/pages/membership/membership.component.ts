@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation} from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, NgForm} from '@angular/forms';
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -162,8 +162,9 @@ export class MembershipComponent implements OnInit {
   }
 
   public getFuncionarioAgencia(funcionario:FuncionariosData):void{
-    this.membershipService.getFUsuarioAgencia(funcionario.catDiscriminante_id).subscribe(
-      funciAgencia => this.funciAgencia = funciAgencia);
+    this.membershipService.getFUsuarioAgencia(funcionario.catDiscriminante_id).subscribe( funciAgencia => {
+      this.funciAgencia = funciAgencia
+    });
   }
 
   // Se actualiza el funcionario seleccionado
@@ -238,7 +239,7 @@ export class MembershipComponent implements OnInit {
     console.log(funcionario);
 
     this.getFuncionarioRol( funcionario );
-    this.getFuncionarioAgencia(funcionario);
+    this.getFuncionarioAgencia( funcionario );
     
     if(funcionario){
       this.funcionario = funcionario;
@@ -258,11 +259,19 @@ export class MembershipComponent implements OnInit {
   public closeModal(){
     this.modalRef.close();
     this.form.reset();
+    this.funcionario = null;
   }
 
   // Se ejecuta el envio del formulario
   public onSubmit(funcionario:FuncionariosData):void {
     if (this.form.valid) {
+      console.log("iClaveFuncionarioSolicitante => " + this.form.value.iClaveFuncionario);
+      console.log("iClaveFuncionarioAnterior => " );
+      console.log("catDiscriminante_id => " + this.funcionario.catDiscriminante_id);
+      console.log("catUIE_id => ");
+      console.log("catDiscriminante_idNuevo => " + this.form.value.catDiscriminante_id);
+      console.log("Jusfificación (pendiente) => ");
+
       console.log("Se envio el formulario:");
       console.log(this.form.value);
       if(funcionario.iClaveFuncionario){
