@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE } from './membership.model';
+import { User, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE , CambioAdscripcion } from './membership.model';
 
 @Injectable()
 export class MembershipService {
@@ -14,6 +14,8 @@ export class MembershipService {
     public url5 = "http://localhost:55244/api/RolFunci";
     public url6 = "http://localhost:55244/api/FunciAgencia";
     public url7 = "http://localhost:55244/api/catUEI";
+    public url8 = "http://localhost:55244/api/funciActual";
+    public url9 = "http://localhost:55244/api/CambioAD";
     //public url2 = "/api/funcionarios";
     //public url3 = "api/catDiscriminantes";
     //public url4 = "api/rol";
@@ -45,6 +47,10 @@ export class MembershipService {
         return this.http.get<catUIE[]>(this.url7 + "?catdis=" + catdis);
     }
 
+    getfunciMP(catdis:number): Observable<FuncionariosData[]>{
+        return this.http.get<FuncionariosData[]>(this.url8+"?catdis="+catdis);
+    }
+
     updateFuncionario( funcionario:FuncionariosData){
         return this.http.put(this.url2, funcionario);
     }
@@ -55,6 +61,17 @@ export class MembershipService {
 
     addUser(user:User){	    
         return this.http.post(this.url, user);
+    }
+
+    cambioAdscripcion(cambioAdscripcion:CambioAdscripcion){
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              }
+            )
+          };
+        return this.http.post(this.url9, cambioAdscripcion,httpOptions);
     }
 
     updateUser(user:User){

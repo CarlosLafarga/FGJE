@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators, NgForm} from '@angular
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE } from './membership.model';
+import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE, CambioAdscripcion } from './membership.model';
 import { MembershipService } from './membership.service';
 import { MenuService } from '../../theme/components/menu/menu.service';
 import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
@@ -21,6 +21,8 @@ export class MembershipComponent implements OnInit {
 
   public buscarFuncionario: string;
   public menuItems: Array<any>;  
+  public cambioAdscripcion : CambioAdscripcion[];
+  public adscripcion : CambioAdscripcion;
   public funcionarios: FuncionariosData[] = [];
   public funcionario: FuncionariosData;
   public roles: Roles[] = [];
@@ -45,6 +47,9 @@ export class MembershipComponent implements OnInit {
   public funciAgencia: FunciAgencia[];
   public catUIE: catUIE[] = [];
   public val: number[];
+  public funciMP:FuncionariosData[] = [];
+  public clavedelactaul :number[];
+  public cambio : any[];
  
   public menuSelectSettings: IMultiSelectSettings = {
       enableSearch: true,
@@ -187,14 +192,32 @@ export class MembershipComponent implements OnInit {
     } else {
       console.log("No se ha seleccionado agencia");
     }
+
+    if(valor !== undefined){
+    this.membershipService.getfunciMP(valor).subscribe( funciMP => {
+      this.funciMP = funciMP
+      console.log(funciMP);
+      if (this.funciMP.some(cat => cat.iClaveFuncionario !== 0)) {
+        this.clavedelactaul = this.funciMP.map(cat => cat.iClaveFuncionario);
+        console.log(this.clavedelactaul);
+      } else {
+        this.clavedelactaul = [0];
+        console.log(this.clavedelactaul);
+      }
+    })
+  }else 
+  {
+    console.log("No se ha seleccionado agencia");
+  
+  }
   }
 
   // Se actualiza el funcionario seleccionado
-  public updateFuncionario(funcionario:FuncionariosData) {
-    this.membershipService.updateFuncionario(funcionario).subscribe( funcionario => {
-      this.getFuncionarios();
+  public cambioAdscripcion1(cambioAdscripcion:CambioAdscripcion) {
+    this.membershipService.cambioAdscripcion(cambioAdscripcion).subscribe( cambioAdscripcion => {
+      this.cambioAdscripcion;
     });
-    console.log("Se ejecuto el updateFuncionario: " + funcionario.cNombreFuncionario);
+    console.log("Se ejecuto el cambio de adscripcion: " + cambioAdscripcion.iClaveFuncionarioSolicitante);
   }
 
   public toggle(type) {
@@ -265,6 +288,8 @@ export class MembershipComponent implements OnInit {
     this.getCatUIE(catUIE);
     
     
+    
+    
     if(funcionario){
       this.funcionario = funcionario;
       this.form.setValue(funcionario);
@@ -287,30 +312,41 @@ export class MembershipComponent implements OnInit {
   }
 
   // Se ejecuta el envio del formulario
-  public onSubmit(funcionario:FuncionariosData):void {
+  public onSubmit():void {
 
     if (this.form.valid) {
       const iClaveFuncionarioSolicitante: number = this.form.value.iClaveFuncionario;
-      const iClaveFuncionarioAnterior: number = 0;
-      const catDiscriminante_id: number = this.funcionario.catDiscriminante_id;
-      const catUIE_id: number = this.val[0];
-      const catDiscriminante_idNuevo: number = this.form.value.catDiscriminante_id;
+      const iClaveFuncionarioAnterior: number = this.clavedelactaul[0];
+      const catDiscriminateSolicitante: number = this.funcionario.catDiscriminante_id;
+      const catUIE_actual: number = this.val[0];
+      const catDiscriminateNuevo: number = this.form.value.catDiscriminante_id;
+      const Justificacion: string = "";
+           
 
       console.log("iClaveFuncionarioSolicitante => " + iClaveFuncionarioSolicitante);
       console.log("iClaveFuncionarioAnterior => " + iClaveFuncionarioAnterior);
-      console.log("catDiscriminante_id => " + catDiscriminante_id);
-      console.log("catUIE_id => " + catUIE_id);
-      console.log("catDiscriminante_idNuevo => " + catDiscriminante_idNuevo);
-      console.log("Jusfificación (pendiente) => ");
+      console.log("catDiscriminante_id => " + catDiscriminateSolicitante);
+      console.log("catUIE_id => " + catUIE_actual);
+      console.log("catDiscriminante_idNuevo => " + catDiscriminateNuevo);
+      console.log("Jusfificación (pendiente) => " +Justificacion);
 
       console.log("Se envio el formulario:");
-      console.log(this.form.value);
-      if(funcionario.iClaveFuncionario){
-        this.updateFuncionario(funcionario);
-        console.log("Se actualizo el funcionario => " + funcionario.iClaveFuncionario);
-      }      
-      this.modalRef.close();    
+     // console.log(this.form.value);
+      
+     let chuyito = new CambioAdscripcion(iClaveFuncionarioSolicitante,
+                                          iClaveFuncionarioAnterior,
+                                          catDiscriminateSolicitante,
+                                          catUIE_actual,
+                                          catDiscriminateNuevo,
+                                          Justificacion);
+      console.log(chuyito);
+      this.cambioAdscripcion1(chuyito);
+      this.form.reset({
+        hasSubMenu:false,
+        parentId:0
+      });
     }
+    this.modalRef.close();  
   } 
 
 }

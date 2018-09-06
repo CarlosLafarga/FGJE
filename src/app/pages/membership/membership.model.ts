@@ -156,6 +156,18 @@ export class FunciAgencia {
   EsMP: number;
 }
 
+export class CambioAdscripcion{
+ constructor(
+   public iClaveFuncionarioSolicitante : number,
+   public iClaveFuncionarioAnterior : number,
+   public catDiscriminateSolicitante: number,
+   public catUIE_actual: number,
+   public catDiscriminateNuevo : number,
+   public Justificacion: string
+  ){}
+
+}
+
 /*
 export class User {
   id: number;

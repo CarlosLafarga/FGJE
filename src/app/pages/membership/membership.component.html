@@ -125,7 +125,9 @@
                                                 <option selected>-- Seleccione una agencia --</option>
                                                 <option *ngFor="let agencia of agencias" [value]="agencia.catDiscriminante_id">{{ agencia.cClaveDiscriminante }} - {{ agencia.cNombre }}</option>
                                             </select><br><br>
-                                            <input fromControlName="catUIE_id" class="form-control" type="text" [value]="r.catUIE_id" readonly id="catUIE_id" *ngFor="let r of catUIE">
+                                            
+                                            <input fromControlName="catUIE_id" class="form-control" type="hidden" [value]="r.catUIE_id" readonly id="catUIE_id" *ngFor="let r of catUIE">
+                                            <input fromControlName="clavefunciAgenciaNueva" class="form-control" type="hidden" [value]="" readonly id="clavefunciAgenciaNueva" >
                                         </div>
 
                                         <hr>
