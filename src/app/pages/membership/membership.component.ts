@@ -252,6 +252,7 @@ export class MembershipComponent implements OnInit {
 
     this.getFuncionarioRol( funcionario );
     this.getFuncionarioAgencia( funcionario );
+    this.getCatUIE(catUIE);
     
     
     if(funcionario){
