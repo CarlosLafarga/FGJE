@@ -13,7 +13,7 @@ export class MembershipService {
     public url4 = "http://localhost:55244/api/Roles";
     public url5 = "http://localhost:55244/api/RolFunci";
     public url6 = "http://localhost:55244/api/FunciAgencia";
-    public url7 = "http://localhost:55244/api//catUEI";
+    public url7 = "http://localhost:55244/api/catUEI";
     //public url2 = "/api/funcionarios";
     //public url3 = "api/catDiscriminantes";
     //public url4 = "api/rol";
@@ -41,6 +41,7 @@ export class MembershipService {
     }
 
     getcatUIE( catdis: number ): Observable<catUIE[]> {
+        console.log(catdis);
         return this.http.get<catUIE[]>(this.url7 + "?catdis=" + catdis);
     }
 

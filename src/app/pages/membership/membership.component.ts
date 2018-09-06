@@ -8,6 +8,7 @@ import { MembershipService } from './membership.service';
 import { MenuService } from '../../theme/components/menu/menu.service';
 import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
 import { RouteConfigLoadStart } from '@angular/router';
+import { $ } from 'protractor';
  
 @Component({
   selector: 'app-membership',
@@ -168,10 +169,14 @@ export class MembershipComponent implements OnInit {
     });
   }
 
-  public getCatUIE(agencia: Agencias): void {
-    this.membershipService.getcatUIE(agencia.catDiscriminante_id).subscribe( catUIE => {
+  public getCatUIE(valor: number): void {
+    console.log(valor);
+    this.membershipService.getcatUIE(valor).subscribe( catUIE => {
       this.catUIE = catUIE
+      console.log(this.catUIE);
+       
     });
+    
     }
 
   // Se actualiza el funcionario seleccionado
@@ -242,12 +247,12 @@ export class MembershipComponent implements OnInit {
   }
 
   // Se abre el modal y se cargan los datos del funcionario seleccionado
-  public openModal(modalContent, funcionario) {
+  public openModal(modalContent, funcionario, catUIE) {
     console.log(funcionario);
 
     this.getFuncionarioRol( funcionario );
     this.getFuncionarioAgencia( funcionario );
-    // this.getCatUIE( funcionario );
+    
     
     if(funcionario){
       this.funcionario = funcionario;
