@@ -41,7 +41,7 @@ export class MembershipService {
     }
 
     getcatUIE( catdis: number ): Observable<catUIE[]> {
-        console.log(catdis);
+        //console.log(catdis);
         return this.http.get<catUIE[]>(this.url7 + "?catdis=" + catdis);
     }
 

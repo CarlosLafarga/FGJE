@@ -44,6 +44,7 @@ export class MembershipComponent implements OnInit {
   public posicionRolF: number = 0;
   public funciAgencia: FunciAgencia[];
   public catUIE: catUIE[] = [];
+  public val: number[];
  
   public menuSelectSettings: IMultiSelectSettings = {
       enableSearch: true,
@@ -170,18 +171,27 @@ export class MembershipComponent implements OnInit {
   }
 
   public getCatUIE(valor: number): void {
-    console.log(valor);
-    this.membershipService.getcatUIE(valor).subscribe( catUIE => {
-      this.catUIE = catUIE
-      console.log(this.catUIE);
-       
-    });
-    
+    if (valor !== undefined) {
+      console.log(valor);
+      this.membershipService.getcatUIE(valor).subscribe( catUIE => {
+        this.catUIE = catUIE
+        console.log(this.catUIE);
+        if (this.catUIE.some(cat => cat.catUIE_id !== 0)) {
+          this.val = this.catUIE.map(cat => cat.catUIE_id);
+          console.log(this.val);
+        } else {
+          this.val = [0];
+          console.log(this.val);
+        }
+      });
+    } else {
+      console.log("No se ha seleccionado agencia");
     }
+  }
 
   // Se actualiza el funcionario seleccionado
   public updateFuncionario(funcionario:FuncionariosData) {
-    this.membershipService.updateFuncionario(funcionario).subscribe(funcionario => {
+    this.membershipService.updateFuncionario(funcionario).subscribe( funcionario => {
       this.getFuncionarios();
     });
     console.log("Se ejecuto el updateFuncionario: " + funcionario.cNombreFuncionario);
@@ -283,7 +293,7 @@ export class MembershipComponent implements OnInit {
       const iClaveFuncionarioSolicitante: number = this.form.value.iClaveFuncionario;
       const iClaveFuncionarioAnterior: number = 0;
       const catDiscriminante_id: number = this.funcionario.catDiscriminante_id;
-      const catUIE_id: number = 0;
+      const catUIE_id: number = this.val[0];
       const catDiscriminante_idNuevo: number = this.form.value.catDiscriminante_id;
 
       console.log("iClaveFuncionarioSolicitante => " + iClaveFuncionarioSolicitante);
