@@ -15,12 +15,14 @@ export class MembershipService {
     public url6 = "http://localhost:55244/api/FunciAgencia";
     public url7 = "http://localhost:55244/api/catUEI";
     public url8 = "http://localhost:55244/api/funciActual";
-    public url9 = "http://localhost:55244/api/CambioAD";
+    public url9 = "http://localhost:55244/api/CambioAD/cambioADS";
     //public url2 = "/api/funcionarios";
     //public url3 = "api/catDiscriminantes";
     //public url4 = "api/rol";
-
-    constructor(public http: HttpClient) { }
+    private headers;
+    constructor(public http: HttpClient) {
+        this.headers = new HttpHeaders({ 'Content-Type': 'application/json' }); 
+     }
 
     getFuncionarios(): Observable<FuncionariosData[]> {
         return this.http.get<FuncionariosData[]>(this.url2);
@@ -64,14 +66,10 @@ export class MembershipService {
     }
 
     cambioAdscripcion(cambioAdscripcion:CambioAdscripcion){
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-              }
-            )
-          };
-        return this.http.post(this.url9, cambioAdscripcion,httpOptions);
+        
+        const newpres = JSON.stringify(cambioAdscripcion);
+        console.log(newpres);
+        return this.http.post(this.url9, newpres ,{headers:this.headers});
     }
 
     updateUser(user:User){

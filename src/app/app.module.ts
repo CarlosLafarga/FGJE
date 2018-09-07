@@ -11,6 +11,7 @@ import { AppSettings } from './app.settings';
 import { AppComponent } from './app.component';
 import { NotFoundComponent } from './pages/errors/not-found/not-found.component';
 
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { NotFoundComponent } from './pages/errors/not-found/not-found.component'
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDe_oVpi9eRSN99G4o6TwVjJbFBNr58NxE'
