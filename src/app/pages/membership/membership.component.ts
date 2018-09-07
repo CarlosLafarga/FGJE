@@ -320,7 +320,7 @@ export class MembershipComponent implements OnInit {
       const catDiscriminateSolicitante: number = this.funcionario.catDiscriminante_id;
       const catUIE_actual: number = this.val[0];
       const catDiscriminateNuevo: number = this.form.value.catDiscriminante_id;
-      const Justificacion: string = "";
+      const Justificacion: string = this.form.value.cRFC;
            
 
       console.log("iClaveFuncionarioSolicitante => " + iClaveFuncionarioSolicitante);

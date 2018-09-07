@@ -310,6 +310,13 @@
                                   
                         </div>
 
+                        <div class="col-12 bg-white py-1">
+                            <div class="form-group">
+                                <label for="justificacion">justificación</label>
+                                <textarea id="justificacion" class="form-control" formControlName="cRFC" [(ngModel)]="cRFC" ></textarea>
+                            </div>
+                        </div>
+
                         <div class="col-12 bg-white text-center py-1">
                             <button [disabled]="!form.valid" type="submit" class="btn btn-success mr-1">Aceptar</button>
                             <button type="button" class="btn btn-danger" (click)="closeModal()">Cancelar</button>
