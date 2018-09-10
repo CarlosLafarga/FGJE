@@ -114,10 +114,12 @@
                                         
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox">
-                                                <input fomControlName="pendientes" type="checkbox" class="custom-control-input checkbox-primary" id="expedientesPendientes">
+                                                <input fomControlName="pendientes" type="checkbox" class="custom-control-input checkbox-primary" id="expedientesPendientes" (change)="pendientesCheck($event)">
                                                 <label class="custom-control-label" for="expedientesPendientes">Expedientes pendientes</label>
                                             </div>
                                         </div>
+
+                                        <pre>{{ pendientes | json }}</pre>
 
                                         <div class="form-group">
                                             <label for="nuevaAgencia">Nueva agencia:</label>

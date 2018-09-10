@@ -50,6 +50,7 @@ export class MembershipComponent implements OnInit {
   public funciMP:FuncionariosData[] = [];
   public clavedelactaul :number[];
   public cambio : any[];
+  public pendientes: boolean;
  
   public menuSelectSettings: IMultiSelectSettings = {
       enableSearch: true,
@@ -132,6 +133,10 @@ export class MembershipComponent implements OnInit {
     });
   }
 
+  public pendientesCheck( e ) {
+    this.pendientes = e.target.checked;
+  }
+
   // Se cargan los datos del funcionario
   public getFuncionarios(): void {
     this.membershipService.getFuncionarios().subscribe( funcionarios => {
@@ -194,22 +199,18 @@ export class MembershipComponent implements OnInit {
     }
 
     if(valor !== undefined){
-    this.membershipService.getfunciMP(valor).subscribe( funciMP => {
-      this.funciMP = funciMP
-      console.log(funciMP);
-      if (this.funciMP.some(cat => cat.iClaveFuncionario !== 0)) {
-        this.clavedelactaul = this.funciMP.map(cat => cat.iClaveFuncionario);
-        console.log(this.clavedelactaul);
-      } else {
-        this.clavedelactaul = [0];
-        console.log(this.clavedelactaul);
-      }
-    })
-  }else 
-  {
-    console.log("No se ha seleccionado agencia");
-  
-  }
+      this.membershipService.getfunciMP(valor).subscribe( funciMP => {
+        this.funciMP = funciMP
+        console.log(funciMP);
+        if (this.funciMP.some(cat => cat.iClaveFuncionario !== 0)) {
+          this.clavedelactaul = this.funciMP.map(cat => cat.iClaveFuncionario);
+          console.log(this.clavedelactaul);
+        } else {
+          this.clavedelactaul = [0];
+          console.log(this.clavedelactaul);
+        }
+      })
+    }
   }
 
   // Se actualiza el funcionario seleccionado
@@ -321,6 +322,7 @@ export class MembershipComponent implements OnInit {
       const catUIE_actual: number = this.val[0];
       const catDiscriminateNuevo: number = this.form.value.catDiscriminante_id;
       const Justificacion: string = this.form.value.cRFC;
+      const expPendientes: boolean = this.pendientes;
            
 
       console.log("iClaveFuncionarioSolicitante => " + iClaveFuncionarioSolicitante);
@@ -328,7 +330,8 @@ export class MembershipComponent implements OnInit {
       console.log("catDiscriminante_id => " + catDiscriminateSolicitante);
       console.log("catUIE_id => " + catUIE_actual);
       console.log("catDiscriminante_idNuevo => " + catDiscriminateNuevo);
-      console.log("Jusfificación (pendiente) => " +Justificacion);
+      console.log("Jusfificación => " + Justificacion);
+      console.log("Expedientes pendientes => " + this.pendientes);
 
       console.log("Se envio el formulario:");
      // console.log(this.form.value);
@@ -338,7 +341,8 @@ export class MembershipComponent implements OnInit {
                                           catDiscriminateSolicitante,
                                           catUIE_actual,
                                           catDiscriminateNuevo,
-                                          Justificacion);
+                                          Justificacion,
+                                          expPendientes);
       console.log(chuyito);
       this.cambioAdscripcion1(chuyito);
       this.form.reset({
