@@ -8,6 +8,7 @@ import { MembershipService } from './membership.service';
 import { MenuService } from '../../theme/components/menu/menu.service';
 import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
 import { RouteConfigLoadStart } from '@angular/router';
+import swal from 'sweetalert2';
 import { $ } from 'protractor';
  
 @Component({
@@ -19,6 +20,7 @@ import { $ } from 'protractor';
 })
 export class MembershipComponent implements OnInit {
 
+  public titularAgencia: string;
   public buscarFuncionario: string;
   public menuItems: Array<any>;  
   public cambioAdscripcion : CambioAdscripcion[];
@@ -219,6 +221,7 @@ export class MembershipComponent implements OnInit {
       this.cambioAdscripcion;
     });
     console.log("Se ejecuto el cambio de adscripcion: " + cambioAdscripcion.iClaveFuncionarioSolicitante);
+    swal('Registro exitoso...', this.titularAgencia, 'success');
   }
 
   public toggle(type) {

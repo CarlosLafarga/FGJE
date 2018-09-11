@@ -29,6 +29,9 @@ export class LoginComponent {
   public onSubmit(values:Object):void {
       if (this.form.valid) {
           this.router.navigate(['pages/membership']);
+      }else {
+
+        
       }
   }
 
