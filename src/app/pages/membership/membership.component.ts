@@ -327,41 +327,43 @@ export class MembershipComponent implements OnInit {
 
       const iClaveFuncionarioSolicitante: number = this.form.value.iClaveFuncionario;
       const iClaveFuncionarioAnterior: number = this.clavedelactaul[0];
+      const iClaveFuncionarioExp: number = this.form.value.archivoDigital_id;
       const catDiscriminateSolicitante: number = this.funcionario.catDiscriminante_id;
       const catUIE_actual: number = this.val[0];
       const catDiscriminateNuevo: number = this.form.value.catDiscriminante_id;
       const Justificacion: string = this.form.value.cRFC;
       const expPendientes: number = this.pendientesNum;
       const rolesFuncionario: Roles[] = this.funcionarioRol;
-       
      
       const id_roles  = this.funcionarioRol.map(cat => cat.rol_id)
       const RolesString = String(id_roles);
 
       console.log("iClaveFuncionarioSolicitante => " + iClaveFuncionarioSolicitante);
       console.log("iClaveFuncionarioAnterior => " + iClaveFuncionarioAnterior);
+      console.log("iClaveFuncionarioExp => " + iClaveFuncionarioExp);
       console.log("catDiscriminante_id => " + catDiscriminateSolicitante);
       console.log("catUIE_id => " + catUIE_actual);
       console.log("catDiscriminante_idNuevo => " + catDiscriminateNuevo);
       console.log("Jusfificación => " + Justificacion);
       console.log("Expedientes pendientes => " + expPendientes);
       console.log("Roles del funcionario => " + rolesFuncionario);
-      console.log("Roles en un string =>"+RolesString);
+      console.log("Roles en un string => "+RolesString);
 
       console.log("Se envio el formulario:");
      // console.log(this.form.value);
      console.log(this.funcionarioRol);
       
-     let chuyito = new CambioAdscripcion(iClaveFuncionarioSolicitante,
-                                          iClaveFuncionarioAnterior,
-                                          catDiscriminateSolicitante,
-                                          catUIE_actual,
-                                          catDiscriminateNuevo,
-                                          Justificacion,
-                                          expPendientes,
-                                          RolesString);
-      console.log(chuyito);
-      this.cambioAdscripcion1(chuyito);
+     let cambioAdscripcion = new CambioAdscripcion(iClaveFuncionarioSolicitante,
+                                                    iClaveFuncionarioAnterior,
+                                                    iClaveFuncionarioExp,
+                                                    catDiscriminateSolicitante,
+                                                    catUIE_actual,
+                                                    catDiscriminateNuevo,
+                                                    Justificacion,
+                                                    expPendientes,
+                                                    RolesString);
+      console.log(cambioAdscripcion);
+      this.cambioAdscripcion1(cambioAdscripcion);
       this.form.reset({
         hasSubMenu:false,
         parentId:0

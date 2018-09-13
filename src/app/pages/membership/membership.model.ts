@@ -160,11 +160,12 @@ export class FunciAgencia {
 
 export class CambioAdscripcion{
  constructor(
-   public iClaveFuncionarioSolicitante : number,
-   public iClaveFuncionarioAnterior : number,
+   public iClaveFuncionarioSolicitante: number,
+   public iClaveFuncionarioAnterior: number,
+   public iClaveFuncionarioExp: number,
    public catDiscriminateSolicitante: number,
    public catUIE_actual: number,
-   public catDiscriminateNuevo : number,
+   public catDiscriminateNuevo: number,
    public Justificacion: string,
    public pendientes: number,
    public rolesFuncionario: string
