@@ -167,7 +167,7 @@ export class CambioAdscripcion{
    public catDiscriminateNuevo : number,
    public Justificacion: string,
    public pendientes: number,
-   public rolesFuncionario: Roles[]
+   public rolesFuncionario: string
   ){}
 
 }

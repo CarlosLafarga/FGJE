@@ -333,7 +333,11 @@ export class MembershipComponent implements OnInit {
       const Justificacion: string = this.form.value.cRFC;
       const expPendientes: number = this.pendientesNum;
       const rolesFuncionario: Roles[] = this.funcionarioRol;
-           
+       
+     
+      const id_roles  = this.funcionarioRol.map(cat => cat.rol_id)
+      const RolesString = String(id_roles);
+
       console.log("iClaveFuncionarioSolicitante => " + iClaveFuncionarioSolicitante);
       console.log("iClaveFuncionarioAnterior => " + iClaveFuncionarioAnterior);
       console.log("catDiscriminante_id => " + catDiscriminateSolicitante);
@@ -342,6 +346,7 @@ export class MembershipComponent implements OnInit {
       console.log("Jusfificación => " + Justificacion);
       console.log("Expedientes pendientes => " + expPendientes);
       console.log("Roles del funcionario => " + rolesFuncionario);
+      console.log("Roles en un string =>"+RolesString);
 
       console.log("Se envio el formulario:");
      // console.log(this.form.value);
@@ -354,7 +359,7 @@ export class MembershipComponent implements OnInit {
                                           catDiscriminateNuevo,
                                           Justificacion,
                                           expPendientes,
-                                          rolesFuncionario);
+                                          RolesString);
       console.log(chuyito);
       this.cambioAdscripcion1(chuyito);
       this.form.reset({
