@@ -1,3 +1,5 @@
+import { StaticInjector } from "@angular/core/src/di/injector";
+
 export class User {
   id: number;
   nombreUsuario: string;
@@ -164,7 +166,8 @@ export class CambioAdscripcion{
    public catUIE_actual: number,
    public catDiscriminateNuevo : number,
    public Justificacion: string,
-   public pendientes: boolean
+   public pendientes: number,
+   public rolesFuncionario: Roles[]
   ){}
 
 }

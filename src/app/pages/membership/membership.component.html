@@ -74,7 +74,8 @@
                                 <a class="nav-link active" href="#reubicarFuncionario" data-toggle="tab">Reubicar funcionario</a>
                             </li>
                             <li class="nav-item bg-light">
-                                <a class="nav-link" href="#reasignarExpedientes" data-toggle="tab">Reasignar expedientes</a>
+                                <a *ngIf="!pendientes" class="nav-link" href="#reasignarExpedientes" data-toggle="tab">Reasignar expedientes</a>
+                                <a *ngIf="pendientes" class="nav-link disabled" href="#reasignarExpedientes" data-toggle="tab">Reasignar expedientes</a>
                             </li>               
                         </ul>                    
                         <div class="tab-content col-10 border-0">
@@ -118,8 +119,6 @@
                                                 <label class="custom-control-label" for="expedientesPendientes">Expedientes pendientes</label>
                                             </div>
                                         </div>
-
-                                        <pre>{{ pendientes | json }}</pre>
 
                                         <div class="form-group">
                                             <label for="nuevaAgencia">Nueva agencia:</label>
@@ -190,11 +189,13 @@
                                                             [ngClass]="{'highlight': rol.rol_id === selectedRolF}">
                                                             <th scope="row">{{ rol.rol_id }}</th>
                                                             <td>{{ rol.cDescripcionRol }}</td>
-                                                            <td > <input type="radio" name="esPrincipal" class="radio-dark-gray"  [checked]="rol.esPrincipal === 1" id=""> </td>
+                                                            <td > <input type="radio" name="esPrincipal" class="radio-dark-gray"  [checked]="rol.esPrincipal === 1" id="rol.rol_id"> </td>
                                                         </tr>
 
                                                     </tbody>
                                                 </table>
+
+                                                <pre>{{ esPrincipal | json }}</pre>
                                                 
                                                 <div class="row mb-4">
                                                     <div class="col-12">
@@ -232,10 +233,6 @@
                                                     <div class="card-body">
                                                         <h6>Nombre del funcionario titular de la agencia: </h6>
                                                         <p>(mostrar el nombre del titular de la agencia)</p> 
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input checkbox-dark-gray" id="asignados" [value]="">
-                                                            <label class="custom-control-label" for="asignados">Asignados</label>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -302,13 +299,13 @@
 
                             <!-- <pre>
                                 {{ roles | json }}
-                            </pre> 
+                            </pre>  -->
                             <pre>
                                 {{ funcionarioRol | json }}
                             </pre>
-                            <pre>
+                            <!-- <pre>
                                    {{ form.value | json }}
-                            </pre>-->
+                            </pre> -->
                                   
                         </div>
 

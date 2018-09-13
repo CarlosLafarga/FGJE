@@ -17,12 +17,12 @@
                     </div>
                     <div class="form-group">
                         <input [formControl]="password" class="form-control validation-field" placeholder="Contrase&ntilde;a" type="password">
-                        <small class="text-danger" *ngIf="form.get('password').touched && form.get('password').hasError('required')">Password es requerido</small>                              
-                        <small class="text-danger" *ngIf="form.get('password').touched && form.get('password').hasError('minlength')">Password isn't long enough, minimum of 6 characters</small>
+                        <small class="text-danger" *ngIf="form.get('password').touched && form.get('password').hasError('required')">Por favor, escriba su contraseña</small>                              
+                        <small class="text-danger" *ngIf="form.get('password').touched && form.get('password').hasError('minlength')">La contraseña debe tener minimo 8 caracteres</small>
                     </div>
                   
                     <div class="form-group">
-                        <button [disabled]="!form.valid" class="btn btn-block" type="submit">Iniciar Sesion</button>
+                        <button [disabled]="!form.valid" class="btn btn-block" type="submit">Iniciar Sesión</button>
                     </div>
                 </form>
             </div>
