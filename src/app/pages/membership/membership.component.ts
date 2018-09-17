@@ -157,18 +157,18 @@ export class MembershipComponent implements OnInit {
       this.roles = roles
       console.log(this.roles);
 
-      for (let index = 1; index <= roles.length; index++) {
-        var obj = roles.filter( function ( rol ) {
-          return rol.rol_id === index;
-        });
-        for( const i in obj ) {
-          this.rolesSR.push( obj[0] );
-          obj = [];
-          break
-        }
-      }
+      // for (let index = 1; index <= roles.length; index++) {
+      //   var obj = roles.filter( function ( rol ) {
+      //     return rol.rol_id === index;
+      //   });
+      //   for( const i in obj ) {
+      //     this.rolesSR.push( obj[0] );
+      //     obj = [];
+      //     break
+      //   }
+      // }
 
-      console.log(this.rolesSR);
+      // console.log(this.rolesSR);
 
     });
   }
@@ -349,6 +349,8 @@ export class MembershipComponent implements OnInit {
       const id_roles  = this.funcionarioRol.map(cat => cat.rol_id)
       const RolesString = String(id_roles);
 
+      const esPrincipal: number = this.form.value.puesto_val;
+
       console.log("iClaveFuncionarioSolicitante => " + iClaveFuncionarioSolicitante);
       console.log("iClaveFuncionarioAnterior => " + iClaveFuncionarioAnterior);
       console.log("iClaveFuncionarioExp => " + iClaveFuncionarioExp);
@@ -359,6 +361,7 @@ export class MembershipComponent implements OnInit {
       console.log("Expedientes pendientes => " + expPendientes);
       console.log("Roles del funcionario => " + rolesFuncionario);
       console.log("Roles en un string => "+RolesString);
+      console.log("Es principal => " + esPrincipal);
 
       console.log("Se envio el formulario:");
      // console.log(this.form.value);
@@ -372,7 +375,8 @@ export class MembershipComponent implements OnInit {
                                                     catDiscriminateNuevo,
                                                     Justificacion,
                                                     expPendientes,
-                                                    RolesString);
+                                                    RolesString,
+                                                    esPrincipal);
       console.log(cambioAdscripcion);
       this.cambioAdscripcion1(cambioAdscripcion);
       this.form.reset({

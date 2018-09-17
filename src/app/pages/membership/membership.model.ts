@@ -168,7 +168,8 @@ export class CambioAdscripcion{
    public catDiscriminateNuevo: number,
    public Justificacion: string,
    public pendientes: number,
-   public rolesFuncionario: string
+   public rolesFuncionario: string,
+   public esPrincipal: number
   ){}
 
 }
