@@ -296,7 +296,7 @@ export class MembershipComponent implements OnInit {
       this.roles.push(this.delRol);
       console.log("Funcion quitar");
       console.log(this.delRol);
-      //this.roles.sort( (a, b) => a.rol_id > b.rol_id );
+      this.roles.sort( (a, b) => a.rol_id - b.rol_id );
       console.log("Array roles:");
       console.log(this.roles);
       this.funcionarioRol.splice(this.posicionRolF, 1);
