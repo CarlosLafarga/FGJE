@@ -143,7 +143,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr *ngFor="let r of roles | paginate: { itemsPerPage: 10, currentPage: p2, id:'roles' }" (click)="onSelectRol(r)"
+                                                        <tr *ngFor="let r of rolesSR | paginate: { itemsPerPage: 10, currentPage: p2, id:'roles' }" (click)="onSelectRol(r)"
                                                             [ngClass] = "{'highlight' : r.rol_id === selectedRol}">
                                                             <th scope="row">{{ r.rol_id }}</th>
                                                             <td>{{ r.cDescripcionRol }}</td>
@@ -194,8 +194,6 @@
 
                                                     </tbody>
                                                 </table>
-
-                                                <pre>{{ esPrincipal | json }}</pre>
                                                 
                                                 <div class="row mb-4">
                                                     <div class="col-12">
@@ -274,13 +272,11 @@
                                                                     <td>{{ funagen.cApellidoPaternoFuncionario }}</td>
                                                                     <td>{{ funagen.cApellidoMaternoFuncionario }}</td>
                                                                     <td>{{ funagen.cNombre }}</td> 
-                                                                    <td>{{ funagen.esMP }}</td>                                                                    
+                                                                    <td>{{ funagen.esMP }}</td>
                                                                     <td ><input type="radio" name="archivoDigital_id" formControlName="archivoDigital_id"  class="radio-dark-gray" [(ngModel)]="archivoDigital_id" [value]="funagen.iClaveFuncionario"> </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
-
-                                                        <pre>{{ archivoDigital_id | json }}</pre>
 
                                                         <div class="row mb-4">
                                                             <div class="col-12">
@@ -302,9 +298,9 @@
                             <!-- <pre>
                                 {{ roles | json }}
                             </pre>  -->
-                            <pre>
+                            <!-- <pre>
                                 {{ funcionarioRol | json }}
-                            </pre>
+                            </pre> -->
                             <!-- <pre>
                                    {{ form.value | json }}
                             </pre> -->

@@ -149,16 +149,27 @@ export class MembershipComponent implements OnInit {
     });
   }
 
+  public rolesSR: Roles[] = [];
+  
   // Se cargan los roles del catalogo
   public getRoles(): void {
     this.membershipService.getRoles().subscribe( roles => {
       this.roles = roles
       console.log(this.roles);
-      /* for (const id$ in roles) {
-        const p = roles[id$];
-        p.id$ = id$;
-        this.roles.push(roles[id$]);
-      } */
+
+      for (let index = 1; index <= roles.length; index++) {
+        var obj = roles.filter( function ( rol ) {
+          return rol.rol_id === index;
+        });
+        for( const i in obj ) {
+          this.rolesSR.push( obj[0] );
+          obj = [];
+          break
+        }
+      }
+
+      console.log(this.rolesSR);
+
     });
   }
 
@@ -237,7 +248,7 @@ export class MembershipComponent implements OnInit {
     this.addRol = r;
     console.log(this.addRol);
 
-    this.posicionRol = this.roles.indexOf(this.addRol);
+    this.posicionRol = this.rolesSR.indexOf(this.addRol);
   }
 
   // Se agrega el rol a los roles del funcionario
@@ -248,7 +259,7 @@ export class MembershipComponent implements OnInit {
       console.log(this.addRol);
       console.log("Array funcionarioRol:");
       console.log(this.funcionarioRol);
-      this.roles.splice(this.posicionRol, 1);
+      this.rolesSR.splice(this.posicionRol, 1);
     } else {
       console.log("Seleccine un rol a agregar!");
       this.toastrService.warning('Por favor seleccione un rol para agregar!', 'Atención!', {timeOut: 3000});
@@ -270,11 +281,11 @@ export class MembershipComponent implements OnInit {
   // Se quita el rol a los roles del funcionario
   quitarRol() {
     if (this.posicionRolF > -1 && this.selectedRolF !== 0) {
-      this.roles.push(this.delRol);
+      this.rolesSR.push(this.delRol);
       console.log("Funcion quitar");
       console.log(this.delRol);
       console.log("Array roles:");
-      console.log(this.roles);
+      console.log(this.rolesSR);
       this.funcionarioRol.splice(this.posicionRolF, 1);
     } else {
       console.log("Seleccione el rol a eliminar!");
