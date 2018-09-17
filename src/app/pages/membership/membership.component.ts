@@ -248,7 +248,7 @@ export class MembershipComponent implements OnInit {
     this.addRol = r;
     console.log(this.addRol);
 
-    this.posicionRol = this.rolesSR.indexOf(this.addRol);
+    this.posicionRol = this.roles.indexOf(this.addRol);
   }
 
   // Se agrega el rol a los roles del funcionario
@@ -259,7 +259,7 @@ export class MembershipComponent implements OnInit {
       console.log(this.addRol);
       console.log("Array funcionarioRol:");
       console.log(this.funcionarioRol);
-      this.rolesSR.splice(this.posicionRol, 1);
+      this.roles.splice(this.posicionRol, 1);
     } else {
       console.log("Seleccine un rol a agregar!");
       this.toastrService.warning('Por favor seleccione un rol para agregar!', 'Atención!', {timeOut: 3000});
@@ -281,11 +281,11 @@ export class MembershipComponent implements OnInit {
   // Se quita el rol a los roles del funcionario
   quitarRol() {
     if (this.posicionRolF > -1 && this.selectedRolF !== 0) {
-      this.rolesSR.push(this.delRol);
+      this.roles.push(this.delRol);
       console.log("Funcion quitar");
       console.log(this.delRol);
       console.log("Array roles:");
-      console.log(this.rolesSR);
+      console.log(this.roles);
       this.funcionarioRol.splice(this.posicionRolF, 1);
     } else {
       console.log("Seleccione el rol a eliminar!");
