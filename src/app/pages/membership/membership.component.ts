@@ -178,6 +178,17 @@ export class MembershipComponent implements OnInit {
     this.membershipService.getFUsuarioRol(funcionario.iClaveFuncionario).subscribe( funcionarioRol => {
       this.funcionarioRol = funcionarioRol
       console.log(this.funcionarioRol);
+      
+      for (let i = 0; i < this.funcionarioRol.length; i++) {
+        const elementFR = this.funcionarioRol[i];
+        for (let j = 0; j < this.roles.length; j++) {
+          const elementR = this.roles[j];
+          if ( elementFR.rol_id === elementR.rol_id) {
+            this.roles.splice(j, 1);
+          }
+        }
+      }
+
     });
   }
 
@@ -235,6 +246,7 @@ export class MembershipComponent implements OnInit {
     });
     console.log("Se ejecuto el cambio de adscripcion: " + cambioAdscripcion.iClaveFuncionarioSolicitante);
     swal('Registro exitoso...', this.titularAgencia, 'success');
+    this.ngOnInit();
   }
 
   public toggle(type) {
@@ -284,6 +296,7 @@ export class MembershipComponent implements OnInit {
       this.roles.push(this.delRol);
       console.log("Funcion quitar");
       console.log(this.delRol);
+      //this.roles.sort( (a, b) => a.rol_id > b.rol_id );
       console.log("Array roles:");
       console.log(this.roles);
       this.funcionarioRol.splice(this.posicionRolF, 1);
@@ -387,7 +400,8 @@ export class MembershipComponent implements OnInit {
 
     this.pendientes = false;
 
-    this.modalRef.close();  
+    //this.modalRef.close();  
+    this.closeModal();
   } 
 
 }
