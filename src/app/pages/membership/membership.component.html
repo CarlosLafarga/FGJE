@@ -219,12 +219,12 @@
                             <div class="tab-pane" id="reasignarExpedientes">
                                 <div class="card">                        
                                     <div class="card-body">
-                                        <h5 class="card-title mb-0">Reasignar expedientes</h5>
+                                        <h5 class="card-title mb-0">Reasignar expedientes en agencia actual: <small>{{ nombreAgActual }}</small></h5>
                                     </div>
                                     <div class="container">
                                         <div id="accordion" role="tablist" aria-multiselectable="true">
 
-                                            <div class="card border-0">
+                                            <!-- <div class="card border-0">
                                                 <div class="card-header transparent" role="tab" id="headingOne">
                                                     <h6 class="mb-0">
                                                         <a class="text-primary" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -239,17 +239,17 @@
                                                         <p>(mostrar el nombre del titular de la agencia)</p> 
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                             <div class="card border-0">
                                                 <div class="card-header transparent" role="tab" id="headingTwo">
                                                     <h6 class="mb-0">
-                                                        <a class="text-primary collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                            Otro funcionario
+                                                        <a class="text-primary" data-toggle="collapse" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                                            Funcinarios
                                                         </a>
                                                     </h6>
                                                 </div>
-                                                <div id="collapseTwo" class="collapse" data-parent="#accordion" role="tabpanel" aria-labelledby="headingTwo">
+                                                <div id="collapseTwo" class="collapse show" data-parent="#accordion" role="tabpanel" aria-labelledby="headingTwo">
                                                     <div class="card-body">
                                                         <div class="input-group mb-2 box-shadow">
                                                             <span class="input-group-prepend">
@@ -266,7 +266,7 @@
                                                                     <th>Nombre</th>
                                                                     <th>Apellido paterno</th>
                                                                     <th>Apellido materno</th>
-                                                                    <th>Nombre Agencia</th>
+                                                                    <!-- <th>Nombre Agencia</th> -->
                                                                     <th>Titular</th>
                                                                     <th></th>
                                                                 </tr>
@@ -277,8 +277,11 @@
                                                                     <td>{{ funagen.cNombreFuncionario }}</td>
                                                                     <td>{{ funagen.cApellidoPaternoFuncionario }}</td>
                                                                     <td>{{ funagen.cApellidoMaternoFuncionario }}</td>
-                                                                    <td>{{ funagen.cNombre }}</td> 
-                                                                    <td>{{ funagen.esMP }}</td>
+                                                                    <!-- <td>{{ funagen.cNombre }}</td>  -->
+                                                                    <td>
+                                                                        <i *ngIf="funagen.esMP === 1" class="fa fa-check mr-2 text-success" placement="bottom"></i>
+                                                                        <i *ngIf="funagen.esMP != 1" class="fa fa-close mr-2 text-danger" placement="bottom"></i>
+                                                                    </td>
                                                                     <td ><input type="radio" name="archivoDigital_id" formControlName="archivoDigital_id"  class="radio-dark-gray" [(ngModel)]="archivoDigital_id" [value]="funagen.iClaveFuncionario"> </td>
                                                                 </tr>
                                                             </tbody>

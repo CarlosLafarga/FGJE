@@ -9,7 +9,7 @@ import { MenuService } from '../../theme/components/menu/menu.service';
 import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
 import { RouteConfigLoadStart } from '@angular/router';
 import swal from 'sweetalert2';
-import { $ } from 'protractor';
+import { Location } from '@angular/common'
  
 @Component({
   selector: 'app-membership',
@@ -46,7 +46,7 @@ export class MembershipComponent implements OnInit {
   public delRol: Roles;
   public posicionRol: number = 0;
   public posicionRolF: number = 0;
-  public funciAgencia: FunciAgencia[];
+  public funciAgencia: FunciAgencia[] = [];
   public catUIE: catUIE[] = [];
   public val: number[];
   public funciMP:FuncionariosData[] = [];
@@ -80,7 +80,8 @@ export class MembershipComponent implements OnInit {
               public toastrService: ToastrService,
               public membershipService: MembershipService,
               public menuService: MenuService, 
-              public modalService: NgbModal) {
+              public modalService: NgbModal,
+              public location: Location) {
 
     this.menuItems = this.menuService.getVerticalMenuItems();
     this.menuItems.forEach(item=>{
@@ -135,6 +136,10 @@ export class MembershipComponent implements OnInit {
       usuario: null,
       numeroExpediente: null
     });
+  }
+
+  pageRefresh() {
+    location.reload();
   }
 
   public pendientesCheck( e ) {
@@ -200,10 +205,15 @@ export class MembershipComponent implements OnInit {
     });
   }
 
+  public nombreAgActual: string;
+  public nAgActual: string[];
   public getFuncionarioAgencia(funcionario:FuncionariosData):void{
     this.membershipService.getFUsuarioAgencia(funcionario.catDiscriminante_id).subscribe( funciAgencia => {
       this.funciAgencia = funciAgencia
+      this.nAgActual = this.funciAgencia.map(a => a.cNombre);
+      this.nombreAgActual = this.nAgActual[0];
     });
+    console.log(this.nombreAgActual);
   }
 
   public getCatUIE(valor: number): void {
@@ -238,7 +248,7 @@ export class MembershipComponent implements OnInit {
       })
     }
   }
-
+  
   // Se actualiza el funcionario seleccionado
   public cambioAdscripcion1(cambioAdscripcion:CambioAdscripcion) {
     this.membershipService.cambioAdscripcion(cambioAdscripcion).subscribe( cambioAdscripcion => {
@@ -246,7 +256,7 @@ export class MembershipComponent implements OnInit {
     });
     console.log("Se ejecuto el cambio de adscripcion: " + cambioAdscripcion.iClaveFuncionarioSolicitante);
     swal('Registro exitoso...', this.titularAgencia, 'success');
-    this.ngOnInit();
+    
   }
 
   public toggle(type) {
@@ -336,6 +346,7 @@ export class MembershipComponent implements OnInit {
     this.modalRef.close();
     this.form.reset();
     this.funcionario = null;
+    this.getRoles();
   }
 
   // Se ejecuta el envio del formulario
@@ -379,7 +390,7 @@ export class MembershipComponent implements OnInit {
       console.log("Se envio el formulario:");
      // console.log(this.form.value);
      console.log(this.funcionarioRol);
-      
+    
      let cambioAdscripcion = new CambioAdscripcion(iClaveFuncionarioSolicitante,
                                                     iClaveFuncionarioAnterior,
                                                     iClaveFuncionarioExp,
@@ -400,7 +411,7 @@ export class MembershipComponent implements OnInit {
 
     this.pendientes = false;
 
-    //this.modalRef.close();  
+    //this.modalRef.close();
     this.closeModal();
   } 
 
