@@ -53,7 +53,11 @@ export class MembershipComponent implements OnInit {
   public clavedelactaul :number[];
   public cambio : any[];
   public pendientes: boolean = false;
+  public esMP: boolean = false;
+  public soloRoles: boolean = false;
   public pendientesNum: number;
+  public esMPNum: number;
+  public soloRolesNum: number;
   public esPrincipal: number;
  
   public menuSelectSettings: IMultiSelectSettings = {
@@ -144,6 +148,14 @@ export class MembershipComponent implements OnInit {
 
   public pendientesCheck( e ) {
     this.pendientes = e.target.checked;
+  }
+
+  public esMPCheck( e ) {
+    this.esMP = e.target.checked;
+  }
+
+  public soloRolesCheck( e ) {
+    this.soloRoles = e.target.checked;
   }
 
   // Se cargan los datos del funcionario
@@ -360,6 +372,18 @@ export class MembershipComponent implements OnInit {
         this.pendientesNum = 0;
       }
 
+      if (this.esMP) {
+        this.esMPNum = 1;
+      } else {
+        this.esMPNum = 0;
+      }
+
+      if (this.soloRoles) {
+        this.soloRolesNum = 1;
+      } else {
+        this.soloRolesNum = 0;
+      }
+
       const iClaveFuncionarioSolicitante: number = this.form.value.iClaveFuncionario;
       const iClaveFuncionarioAnterior: number = this.clavedelactaul[0];
       const iClaveFuncionarioExp: number = this.form.value.archivoDigital_id;
@@ -374,6 +398,8 @@ export class MembershipComponent implements OnInit {
       const RolesString = String(id_roles);
 
       const esPrincipal: number = this.form.value.puesto_val;
+      const esMP: number = this.esMPNum;
+      const soloRoles: number = this.soloRolesNum;
 
       console.log("iClaveFuncionarioSolicitante => " + iClaveFuncionarioSolicitante);
       console.log("iClaveFuncionarioAnterior => " + iClaveFuncionarioAnterior);
@@ -400,7 +426,9 @@ export class MembershipComponent implements OnInit {
                                                     Justificacion,
                                                     expPendientes,
                                                     RolesString,
-                                                    esPrincipal);
+                                                    esPrincipal,
+                                                    esMP,
+                                                    soloRoles);
       console.log(cambioAdscripcion);
       this.cambioAdscripcion1(cambioAdscripcion);
       this.form.reset({

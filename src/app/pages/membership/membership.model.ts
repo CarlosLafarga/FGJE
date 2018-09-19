@@ -169,7 +169,9 @@ export class CambioAdscripcion{
    public Justificacion: string,
    public pendientes: number,
    public rolesFuncionario: string,
-   public esPrincipal: number
+   public esPrincipal: number,
+   public esMP: number,
+   public soloRoles: number
   ){}
 
 }

@@ -113,12 +113,28 @@
 
                                         </div>
                                         
+                                        <hr>
+
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox">
                                                 <input fomControlName="pendientes" type="checkbox" class="custom-control-input checkbox-primary" id="expedientesPendientes" (change)="pendientesCheck($event)">
                                                 <label class="custom-control-label" for="expedientesPendientes">Expedientes pendientes</label>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                <input fomControlName="esMP" type="checkbox" class="custom-control-input checkbox-primary" id="EsMP" (change)="esMPCheck($event)">
+                                                <label class="custom-control-label" for="EsMP">es MP</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                <input fomControlName="soloRoles" type="checkbox" class="custom-control-input checkbox-primary" id="SoloRoles" (change)="soloRolesCheck($event)">
+                                                <label class="custom-control-label" for="SoloRoles">Solo cambio de roles</label>
+                                            </div>
+                                        </div>
+
+                                        <hr>
 
                                         <div class="form-group">
                                             <label for="nuevaAgencia">Nueva agencia:</label>
