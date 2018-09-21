@@ -54,7 +54,7 @@ export class MembershipComponent implements OnInit {
   public funciMP:FuncionariosData[] = [];
   public clavedelactaul :number[];
   public cambio : any[];
-  public pendientes: boolean = false;
+  public expPendientes: boolean = false;
   public esMP: boolean = false;
   public soloRoles: boolean = false;
   public pendientesNum: number;
@@ -83,7 +83,7 @@ export class MembershipComponent implements OnInit {
   public menuSelectOptions: IMultiSelectOption[] = [];
   
   constructor(public fbf: FormBuilder,
-              public fbfExpPend: FormBuilder,
+              public fbExpPend: FormBuilder,
               public toastrService: ToastrService,
               public membershipService: MembershipService,
               public menuService: MenuService, 
@@ -111,7 +111,7 @@ export class MembershipComponent implements OnInit {
     console.log(this.roles);
     //console.log(JSON.stringify(this.roles));
 
-    this.formExpPend =  this.fbfExpPend.group({
+    this.formExpPend =  this.fbExpPend.group({
 
     })
     
@@ -153,16 +153,43 @@ export class MembershipComponent implements OnInit {
     location.reload();
   }
 
+  public valReasignarExpedientes: boolean = true;
+  public valExpPendCheck: boolean = true;
+  public valEsMPCheck: boolean = true;
+  public valSolocambioCheck: boolean = true;
+
   public pendientesCheck( e ) {
-    this.pendientes = e.target.checked;
+    this.expPendientes = e.target.checked;
+    if (this.expPendientes) {
+      this.valReasignarExpedientes = false;
+      this.valSolocambioCheck = false;
+    } else {
+      this.valReasignarExpedientes = true;
+      this.valSolocambioCheck = true;
+    }
   }
 
   public esMPCheck( e ) {
     this.esMP = e.target.checked;
+    if (this.esMP) {
+      this.valSolocambioCheck = false;
+    } else {
+      this.valSolocambioCheck = true
+    }
   }
 
   public soloRolesCheck( e ) {
     this.soloRoles = e.target.checked;
+    if (this.soloRoles) {
+      this.valReasignarExpedientes = false;
+      this.valExpPendCheck = false;
+      this.valEsMPCheck = false;
+    } else {
+      this.valReasignarExpedientes = true;
+      this.valExpPendCheck = true;
+      this.valEsMPCheck = true;
+    }
+    //this.checkEPyMP = null;
   }
 
   // Se cargan los datos del funcionario
@@ -212,7 +239,6 @@ export class MembershipComponent implements OnInit {
           }
         }
       }
-
     });
   }
 
@@ -226,6 +252,7 @@ export class MembershipComponent implements OnInit {
 
   public nombreAgActual: string;
   public nAgActual: string[];
+
   public getFuncionarioAgencia(funcionario:FuncionariosData):void{
     this.membershipService.getFUsuarioAgencia(funcionario.catDiscriminante_id).subscribe( funciAgencia => {
       this.funciAgencia = funciAgencia
@@ -360,8 +387,9 @@ export class MembershipComponent implements OnInit {
     });
   }
 
-  openExpPend(contenido) {
-    this.modalExpPend = this.modalService.open(contenido, { size: 'lg', container: '.app' })
+  // Se abre el modal y se cargan los los expedientes pendientes
+  openExpPend(expPendientes) {
+    this.modalExpPend = this.modalService.open(expPendientes, { size: 'lg', container: '.app' });
   }
 
   // Cerrar el modal
@@ -372,6 +400,7 @@ export class MembershipComponent implements OnInit {
     this.getRoles();
   }
 
+  // Cerrar el modal de expedientes pendientes
   closeModalExpPend() {
     this.modalExpPend.close();
     this.formExpPend.reset();
@@ -382,7 +411,7 @@ export class MembershipComponent implements OnInit {
 
     if (this.form.valid) {
 
-      if (this.pendientes) {
+      if (this.expPendientes) {
         this.pendientesNum = 1;
       } else {
         this.pendientesNum = 0;
@@ -433,7 +462,7 @@ export class MembershipComponent implements OnInit {
      // console.log(this.form.value);
      console.log(this.funcionarioRol);
     
-     let cambioAdscripcion = new CambioAdscripcion(iClaveFuncionarioSolicitante,
+     let cambioAdscripcion = new CambioAdscripcion( iClaveFuncionarioSolicitante,
                                                     iClaveFuncionarioAnterior,
                                                     iClaveFuncionarioExp,
                                                     catDiscriminateSolicitante,
@@ -444,7 +473,7 @@ export class MembershipComponent implements OnInit {
                                                     RolesString,
                                                     esPrincipal,
                                                     esMP,
-                                                    soloRoles);
+                                                    soloRoles );
       console.log(cambioAdscripcion);
       this.cambioAdscripcion1(cambioAdscripcion);
       this.form.reset({
@@ -453,7 +482,7 @@ export class MembershipComponent implements OnInit {
       });
     }
 
-    this.pendientes = false;
+    this.expPendientes = false;
 
     //this.modalRef.close();
     this.closeModal();
@@ -461,7 +490,7 @@ export class MembershipComponent implements OnInit {
 
   onSubmitExpPend(): void {
     if (this.formExpPend.valid) {
-      console.log("se envia el formulario validado");
+      console.log("se envia el formulario de expedientes pendientes validado");
       this.closeModalExpPend();
     }
   }

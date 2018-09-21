@@ -1,4 +1,4 @@
-<div class="row mb-1">
+    <div class="row mb-1">
         <div class="col">
             <div class="input-group mb-3 box-shadow"> 
                 <div class="input-group-prepend">
@@ -16,9 +16,9 @@
         </div>
     </div>
 
-    <div class="bg-white text-right">
-        <button *ngIf="true" type="button" class="btn btn-success mb-1 mr-1" (click)="openExpPend(contenido)">Expedientes pendientes</button>
-        <button *ngIf="false" type="button" class="btn btn-danger mb-1 mr-1" (click)="openExpPend(contenido)">Expedientes pendientes</button>
+    <div class="text-right mb-1 mr-1">
+        <button *ngIf="true" type="button" class="btn btn-success mb-1 mr-1" (click)="openExpPend(expPendientes)">Ver expedientes pendientes</button>
+        <button *ngIf="false" type="button" class="btn btn-danger mb-1 mr-1" (click)="openExpPend(expPendientes)">Ver expedientes pendientes</button>
     </div>   
     
     <div *ngIf="type=='list'" class="row">
@@ -72,17 +72,17 @@
     <ng-template #modalContent>
         <div class="modal-body bg-gray">
             <div class="row">
-                <div class="col-12 vertical-tabs">                
+                <div class="col-12 vertical-tabs">
                     <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="row px-3" #datos2="ngForm">
                         <ul class="nav flex-column left col-2 border-0 rounded-0 mr-0 bg-light">              
                             <li class="nav-item bg-light">
                                 <a class="nav-link active" href="#reubicarFuncionario" data-toggle="tab">Reubicar funcionario</a>
                             </li>
                             <li class="nav-item bg-light">
-                                <a *ngIf="!pendientes" class="nav-link" href="#reasignarExpedientes" data-toggle="tab">Reasignar expedientes</a>
-                                <a *ngIf="pendientes" class="nav-link disabled" href="#reasignarExpedientes" data-toggle="tab">Reasignar expedientes</a>
+                                <a *ngIf="valReasignarExpedientes" class="nav-link" href="#reasignarExpedientes" data-toggle="tab">Reasignar expedientes</a>
+                                <a *ngIf="!valReasignarExpedientes" class="nav-link disabled" href="#reasignarExpedientes" data-toggle="tab">Reasignar expedientes</a>
                             </li>
-                        </ul>                    
+                        </ul>
                         <div class="tab-content col-10 border-0">
 
                             <div class="tab-pane active" id="reubicarFuncionario">
@@ -125,31 +125,46 @@
                                             <div class="col-sm-3">
                                                 <div class="form-group">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input fomControlName="pendientes" type="checkbox" class="custom-control-input checkbox-primary" id="expedientesPendientes" (change)="pendientesCheck($event)">
+                                                        <input fomControlName="pendientes"
+                                                                type="checkbox"
+                                                                class="custom-control-input checkbox-primary"
+                                                                id="expedientesPendientes"
+                                                                (change)="pendientesCheck($event)"
+                                                                [disabled]="!valExpPendCheck">
                                                         <label class="custom-control-label" for="expedientesPendientes">Expedientes pendientes</label>
                                                     </div>
                                                 </div>
-                                                <pre>{{ pendientes }}</pre>
+                                                <!-- <pre>{{ pendientes }}</pre> -->
                                             </div>
 
                                             <div class="col-sm-3">
                                                 <div class="form-group">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input fomControlName="esMP" type="checkbox" class="custom-control-input checkbox-primary" id="EsMP" (change)="esMPCheck($event)">
+                                                        <input fomControlName="esMP"
+                                                                type="checkbox"
+                                                                class="custom-control-input checkbox-primary"
+                                                                id="EsMP"
+                                                                (change)="esMPCheck($event)"
+                                                                [disabled]="!valEsMPCheck">
                                                         <label class="custom-control-label" for="EsMP">es MP</label>
                                                     </div>
                                                 </div>
-                                                <pre>{{ esMP }}</pre>
+                                                <!-- <pre>{{ esMP }}</pre> -->
                                             </div>
 
                                             <div class="col-sm-3">
                                                 <div class="form-group">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input fomControlName="soloRoles" type="checkbox" class="custom-control-input checkbox-primary" id="SoloRoles" (change)="soloRolesCheck($event)">
+                                                        <input fomControlName="soloRoles"
+                                                                type="checkbox"
+                                                                class="custom-control-input checkbox-primary"
+                                                                id="SoloRoles"
+                                                                (change)="soloRolesCheck($event)"
+                                                                [disabled]="!valSolocambioCheck">
                                                         <label class="custom-control-label" for="SoloRoles">Solo cambio de roles</label>
                                                     </div>
                                                 </div>
-                                                <pre>{{ soloRoles }}</pre>
+                                                <!-- <pre>{{ soloRoles }}</pre> -->
                                             </div>
                                         </div>
 
@@ -369,7 +384,7 @@
         </div>
     </ng-template>
 
-    <ng-template #contenido>
+    <ng-template #expPendientes>
         <div class="modal-body bg-gray">
             <div class="row">
                 <div class="col-12">
