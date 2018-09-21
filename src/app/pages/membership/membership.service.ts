@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE , CambioAdscripcion } from './membership.model';
+import { User, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE , CambioAdscripcion, expPendientes } from './membership.model';
 
 @Injectable()
 export class MembershipService {
@@ -16,6 +16,7 @@ export class MembershipService {
     public url7 = "http://localhost:55244/api/catUEI";
     public url8 = "http://localhost:55244/api/funciActual";
     public url9 = "http://localhost:55244/api/CambioAD/cambioADS";
+    public url10 = "http://localhost:55244/api/";
     //public url2 = "/api/funcionarios";
     //public url3 = "api/catDiscriminantes";
     //public url4 = "api/rol";
@@ -50,19 +51,11 @@ export class MembershipService {
     }
 
     getfunciMP(catdis:number): Observable<FuncionariosData[]>{
-        return this.http.get<FuncionariosData[]>(this.url8+"?catdis="+catdis);
+        return this.http.get<FuncionariosData[]>(this.url8 + "?catdis=" + catdis);
     }
 
     updateFuncionario( funcionario:FuncionariosData){
         return this.http.put(this.url2, funcionario);
-    }
-
-    getUsers(): Observable<User[]> {
-        return this.http.get<User[]>(this.url);
-    }
-
-    addUser(user:User){	    
-        return this.http.post(this.url, user);
     }
 
     cambioAdscripcion(cambioAdscripcion:CambioAdscripcion){
@@ -70,6 +63,21 @@ export class MembershipService {
         const newpres = JSON.stringify(cambioAdscripcion);
         console.log(newpres);
         return this.http.post(this.url9, newpres ,{headers:this.headers});
+    }
+
+    getExpPendientes(): Observable<expPendientes[]> {
+        return this.http.get<expPendientes[]>(this.url10);
+    }
+
+
+
+
+    getUsers(): Observable<User[]> {
+        return this.http.get<User[]>(this.url);
+    }
+
+    addUser(user:User){	    
+        return this.http.post(this.url, user);
     }
 
     updateUser(user:User){

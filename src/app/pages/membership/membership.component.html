@@ -399,25 +399,31 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-12">
+
                                             <table class="table table-hover">
                                                 <thead>
                                                     <tr>
-                                                        <th>Id</th>
-                                                        <th>Expedientes</th>
+                                                        <th>Clave Funcionario</th>
+                                                        <th>Agencia anterior</th>
+                                                        <th>Agencia asignados</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <th scope="row">5252</th>
-                                                        <td>Aqui la descripción</td>
+                                                    <tr *ngFor="let expPend of expPendientesLista | paginate: { itemsPerPage: 10, currentPage: p5, id:'ExpPendientes' }">
+                                                        <td class="align-middle text-truncate">{{ expPend.iclaveFuncionario }}</td>
+                                                        <td class="align-middle text-truncate">{{ expPend.catDis_ant }}</td>
+                                                        <td class="align-middle text-truncate">{{ expPend.catDis_asignado }}</td>
                                                     </tr>
-                                                    <tr>
-                                                        <th scope="row">5253</th>
-                                                        <td>Aqui la descripción 2</td>
-                                                    </tr>
-                                                    <tr></tr>
                                                 </tbody>
                                             </table>
+
+                                            <div class="row mb-4">
+                                                <div class="col-12">
+                                                    <div class="bg-white text-center">
+                                                        <pagination-controls autoHide="true" (pageChange)="p5 = $event" id='ExpPendientes' maxSize="10" previousLabel="" nextLabel=""></pagination-controls>
+                                                    </div>        
+                                                </div>
+                                            </div>
 
                                         </div>
                                     </div>

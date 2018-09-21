@@ -1,4 +1,3 @@
-import { StaticInjector } from "@angular/core/src/di/injector";
 
 export class User {
   id: number;
@@ -169,9 +168,20 @@ export class CambioAdscripcion{
    public Justificacion: string,
    public pendientes: number,
    public rolesFuncionario: string,
+   public rolesEliminadosString: string,
    public esPrincipal: number,
    public esMP: number,
    public soloRoles: number
   ){}
+}
 
+export class expPendientes {
+  public cambioAdscripcion_id: number;
+  public iclaveFuncionario: number;
+  public catDis_ant: number;
+  public catDis_asignado: number;
+  public fecha_creacion: Date;
+  public fecha_modificacion: Date;
+  public esEmp: number;
+  public Asignados: number;
 }

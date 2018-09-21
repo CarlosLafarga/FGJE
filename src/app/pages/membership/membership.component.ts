@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators, NgForm} from '@angular
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE, CambioAdscripcion } from './membership.model';
+import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE, CambioAdscripcion, expPendientes } from './membership.model';
 import { MembershipService } from './membership.service';
 import { MenuService } from '../../theme/components/menu/menu.service';
 import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
@@ -112,8 +112,15 @@ export class MembershipComponent implements OnInit {
     //console.log(JSON.stringify(this.roles));
 
     this.formExpPend =  this.fbExpPend.group({
-
-    })
+      cambioAdscripcion_id: null,
+      iclaveFuncionario: null,
+      catDis_ant: null,
+      catDis_asignado: null,
+      fecha_creacion: null,
+      fecha_modificacion: null,
+      esEmp: null,
+      Asignados: null,
+    });
     
     this.form = this.fbf.group({
       iClaveFuncionario: null,
@@ -347,9 +354,12 @@ export class MembershipComponent implements OnInit {
   }
 
   // Se quita el rol a los roles del funcionario
+  public rolesEliminados: Roles[] = [];
   quitarRol() {
     if (this.posicionRolF > -1 && this.selectedRolF !== 0) {
       this.roles.push(this.delRol);
+      this.rolesEliminados.push(this.delRol);
+      console.log(this.rolesEliminados);
       console.log("Funcion quitar");
       console.log(this.delRol);
       this.roles.sort( (a, b) => a.rol_id - b.rol_id );
@@ -397,6 +407,7 @@ export class MembershipComponent implements OnInit {
     this.modalRef.close();
     this.form.reset();
     this.funcionario = null;
+    this.rolesEliminados = [];
     this.getRoles();
   }
 
@@ -440,7 +451,10 @@ export class MembershipComponent implements OnInit {
       const rolesFuncionario: Roles[] = this.funcionarioRol;
      
       const id_roles  = this.funcionarioRol.map(cat => cat.rol_id)
-      const RolesString = String(id_roles);
+      const rolesString = String(id_roles);
+
+      const id_rolesEliminados = this.rolesEliminados.map(obt => obt.rol_id)
+      const rolesEliminadosString = String(id_rolesEliminados);
 
       const esPrincipal: number = this.form.value.puesto_val;
       const esMP: number = this.esMPNum;
@@ -455,7 +469,8 @@ export class MembershipComponent implements OnInit {
       console.log("Jusfificación => " + Justificacion);
       console.log("Expedientes pendientes => " + expPendientes);
       console.log("Roles del funcionario => " + rolesFuncionario);
-      console.log("Roles en un string => "+RolesString);
+      console.log("Roles en un string => " + rolesString);
+      console.log("Roles eliminados => " + rolesEliminadosString)
       console.log("Es principal => " + esPrincipal);
 
       console.log("Se envio el formulario:");
@@ -470,7 +485,8 @@ export class MembershipComponent implements OnInit {
                                                     catDiscriminateNuevo,
                                                     Justificacion,
                                                     expPendientes,
-                                                    RolesString,
+                                                    rolesString,
+                                                    rolesEliminadosString,
                                                     esPrincipal,
                                                     esMP,
                                                     soloRoles );
@@ -487,6 +503,16 @@ export class MembershipComponent implements OnInit {
     //this.modalRef.close();
     this.closeModal();
   } 
+
+  public expPendientesLista: expPendientes[] = [];
+
+  // Se cargan los expedientes que se encuentran pendientes
+  public getExpPendientes(): void {
+    this.membershipService.getExpPendientes().subscribe( eP => {
+      this.expPendientesLista = eP
+      console.log(this.expPendientesLista);
+    });
+  }
 
   onSubmitExpPend(): void {
     if (this.formExpPend.valid) {
