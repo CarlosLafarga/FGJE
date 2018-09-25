@@ -175,7 +175,7 @@ export class CambioAdscripcion{
   ){}
 }
 
-export class expPendientes {
+export class ExpPendientes {
   public cambioAdscripcion_id: number;
   public iclaveFuncionario: number;
   public catDis_ant: number;
@@ -184,4 +184,12 @@ export class expPendientes {
   public fecha_modificacion: Date;
   public esEmp: number;
   public Asignados: number;
+}
+
+export class AsignarPendientes {
+  constructor(
+    public iClaveFuncionarioAsignar: number,
+    public iClaveFuncionarioAnterior: number,
+    public catDiscriminanteAnterior: number,
+   ){}
 }

@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators, NgForm} from '@angular
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE, CambioAdscripcion, expPendientes } from './membership.model';
+import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE, CambioAdscripcion, ExpPendientes, AsignarPendientes } from './membership.model';
 import { MembershipService } from './membership.service';
 import { MenuService } from '../../theme/components/menu/menu.service';
 import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
@@ -109,7 +109,8 @@ export class MembershipComponent implements OnInit {
 
     this.getRoles();
     console.log(this.roles);
-    //console.log(JSON.stringify(this.roles));
+    
+    //this.getExpPendientes();
 
     this.formExpPend =  this.fbExpPend.group({
       cambioAdscripcion_id: null,
@@ -266,7 +267,6 @@ export class MembershipComponent implements OnInit {
       this.nAgActual = this.funciAgencia.map(a => a.cNombre);
       this.nombreAgActual = this.nAgActual[0];
     });
-    console.log(this.nombreAgActual);
   }
 
   public getCatUIE(valor: number): void {
@@ -504,18 +504,46 @@ export class MembershipComponent implements OnInit {
     this.closeModal();
   } 
 
-  public expPendientesLista: expPendientes[] = [];
+  public expPendientesLista: ExpPendientes[] = [];
 
   // Se cargan los expedientes que se encuentran pendientes
   public getExpPendientes(): void {
     this.membershipService.getExpPendientes().subscribe( eP => {
       this.expPendientesLista = eP
-      console.log(this.expPendientesLista);
+      console.log(this.expPendientesLista); 
     });
+  }
+
+  public asignarPendientes : AsignarPendientes[];
+
+  // Se actualiza el funcionario seleccionado
+  public asignarExpPendientes(asignarPendientes: AsignarPendientes) {
+    this.membershipService.asignarExpPendientes(asignarPendientes).subscribe( asignarPendientes => {
+      this.asignarPendientes;
+    });
+    console.log("Se ejecuto el asignar expedientes: " + asignarPendientes.iClaveFuncionarioAsignar);
+    swal('Se asignaron los expedientes...', this.titularAgencia, 'success');
+    
   }
 
   onSubmitExpPend(): void {
     if (this.formExpPend.valid) {
+
+      const iClaveFuncionarioAsignar: number = 0;
+      const iClaveFuncionarioAnterior: number = 0;
+      const catDiscriminanteAnterior: number = 0;
+
+      let asignarPendientes = new AsignarPendientes(  iClaveFuncionarioAsignar,
+                                                      iClaveFuncionarioAnterior,
+                                                      catDiscriminanteAnterior );
+
+      this.asignarExpPendientes( asignarPendientes );
+
+      this.formExpPend.reset({
+        hasSubMenu:false,
+        parentId:0
+      });
+
       console.log("se envia el formulario de expedientes pendientes validado");
       this.closeModalExpPend();
     }

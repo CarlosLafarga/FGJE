@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE , CambioAdscripcion, expPendientes } from './membership.model';
+import { User, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE , CambioAdscripcion, ExpPendientes, AsignarPendientes } from './membership.model';
 
 @Injectable()
 export class MembershipService {
@@ -17,6 +17,7 @@ export class MembershipService {
     public url8 = "http://localhost:55244/api/funciActual";
     public url9 = "http://localhost:55244/api/CambioAD/cambioADS";
     public url10 = "http://localhost:55244/api/";
+    public url11 = "http://localhost:55244/api/";
     //public url2 = "/api/funcionarios";
     //public url3 = "api/catDiscriminantes";
     //public url4 = "api/rol";
@@ -59,14 +60,19 @@ export class MembershipService {
     }
 
     cambioAdscripcion(cambioAdscripcion:CambioAdscripcion){
-        
         const newpres = JSON.stringify(cambioAdscripcion);
         console.log(newpres);
         return this.http.post(this.url9, newpres ,{headers:this.headers});
     }
 
-    getExpPendientes(): Observable<expPendientes[]> {
-        return this.http.get<expPendientes[]>(this.url10);
+    getExpPendientes(): Observable<ExpPendientes[]> {
+        return this.http.get<ExpPendientes[]>(this.url10);
+    }
+
+    asignarExpPendientes(asignarExpPendientes:AsignarPendientes){
+        const newExp = JSON.stringify(asignarExpPendientes);
+        console.log(newExp);
+        return this.http.post(this.url11, newExp ,{headers:this.headers});
     }
 
 
