@@ -183,7 +183,7 @@ export class ExpPendientes {
   public fecha_creacion: Date;
   public fecha_modificacion: Date;
   public esEmp: number;
-  public Asignados: number;
+  public asignados: number;
 }
 
 export class AsignarPendientes {

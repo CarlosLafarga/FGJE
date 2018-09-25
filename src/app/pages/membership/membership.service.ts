@@ -16,7 +16,7 @@ export class MembershipService {
     public url7 = "http://localhost:55244/api/catUEI";
     public url8 = "http://localhost:55244/api/funciActual";
     public url9 = "http://localhost:55244/api/CambioAD/cambioADS";
-    public url10 = "http://localhost:55244/api/";
+    public url10 = "http://localhost:55244/api/cambioAdscripcionExps";
     public url11 = "http://localhost:55244/api/";
     //public url2 = "/api/funcionarios";
     //public url3 = "api/catDiscriminantes";

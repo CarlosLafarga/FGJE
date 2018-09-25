@@ -172,7 +172,13 @@
 
                                         <div class="form-group">
                                             <label for="nuevaAgencia">Nueva agencia:</label>
-                                            <select class="form-control custom-select" id="catDiscriminante_id" formControlName="catDiscriminante_id" [(ngModel)]="catDiscriminante_id" (change)="getCatUIE($event.target.value)" required>
+                                            <select *ngIf="valAgenciaSelect"
+                                                    class="form-control custom-select"
+                                                    id="catDiscriminante_id"
+                                                    formControlName="catDiscriminante_id"
+                                                    [(ngModel)]="catDiscriminante_id"
+                                                    (change)="getCatUIE($event.target.value)"
+                                                    [disabled]="valAgenciaSelect">
                                                 <option selected>-- Seleccione una agencia --</option>
                                                 <option *ngFor="let agencia of agencias" [value]="agencia.catDiscriminante_id">{{ agencia.cClaveDiscriminante }} - {{ agencia.cNombre }}</option>
                                             </select><br><br>
@@ -194,7 +200,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr *ngFor="let r of roles | paginate: { itemsPerPage: 10, currentPage: p2, id:'roles' }" (click)="onSelectRol(r)"
-                                                            [ngClass] = "{'highlight' : r.rol_id === selectedRol}">
+                                                            [ngClass] = "{ 'highlight' : r.rol_id === selectedRol }">
                                                             <th scope="row">{{ r.rol_id }}</th>
                                                             <td>{{ r.cDescripcionRol }}</td>
                                                         </tr>
@@ -236,7 +242,7 @@
                                                         </tr> -->
 
                                                         <tr *ngFor="let rol of funcionarioRol | paginate: { itemsPerPage: 10, currentPage: p3, id:'rolesFuncionario' }" (click)="onSelectFRolF(rol)"
-                                                            [ngClass]="{'highlight': rol.rol_id === selectedRolF}">
+                                                            [ngClass]="{ 'highlight': rol.rol_id === selectedRolF }">
                                                             <th scope="row">{{ rol.rol_id }}</th>
                                                             <td>{{ rol.cDescripcionRol }}</td>
                                                             <!-- <td > <input type="radio" name="esPrincipal" class="radio-dark-gray"  [checked]="rol.esPrincipal === 1" id="rol.rol_id"> </td> -->
@@ -415,7 +421,7 @@
                                                         <td class="align-middle text-truncate">{{ expPend.catDis_asignado }}</td>
                                                         <td class="align-middle">
                                                             <div class="btn-group" role="group">
-                                                                <button class="btn btn-secondary btn-sm"><i class="fa fa-share"></i></button>
+                                                                <button class="btn btn-secondary btn-sm" [ngbTooltip]="'Reasignar'"><i class="fa fa-share"></i></button>
                                                             </div>
                                                         </td>
                                                     </tr>

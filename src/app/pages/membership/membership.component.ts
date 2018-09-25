@@ -110,7 +110,8 @@ export class MembershipComponent implements OnInit {
     this.getRoles();
     console.log(this.roles);
     
-    //this.getExpPendientes();
+    this.getExpPendientes();
+    console.log(this.expPendientesLista);
 
     this.formExpPend =  this.fbExpPend.group({
       cambioAdscripcion_id: null,
@@ -165,6 +166,7 @@ export class MembershipComponent implements OnInit {
   public valExpPendCheck: boolean = true;
   public valEsMPCheck: boolean = true;
   public valSolocambioCheck: boolean = true;
+  public valAgenciaSelect: boolean = true;
 
   public pendientesCheck( e ) {
     this.expPendientes = e.target.checked;
@@ -192,10 +194,12 @@ export class MembershipComponent implements OnInit {
       this.valReasignarExpedientes = false;
       this.valExpPendCheck = false;
       this.valEsMPCheck = false;
+      this.valAgenciaSelect = false;
     } else {
       this.valReasignarExpedientes = true;
       this.valExpPendCheck = true;
       this.valEsMPCheck = true;
+      this.valAgenciaSelect = true;
     }
     //this.checkEPyMP = null;
   }
@@ -409,6 +413,7 @@ export class MembershipComponent implements OnInit {
     this.funcionario = null;
     this.rolesEliminados = [];
     this.getRoles();
+    this.pageRefresh();
   }
 
   // Cerrar el modal de expedientes pendientes
