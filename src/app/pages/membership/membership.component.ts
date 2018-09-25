@@ -403,6 +403,9 @@ export class MembershipComponent implements OnInit {
 
   // Se abre el modal y se cargan los los expedientes pendientes
   openExpPend(expPendientes) {
+
+    
+
     this.modalExpPend = this.modalService.open(expPendientes, { size: 'lg', container: '.app' });
   }
 
@@ -458,9 +461,6 @@ export class MembershipComponent implements OnInit {
       const id_roles  = this.funcionarioRol.map(cat => cat.rol_id)
       const rolesString = String(id_roles);
 
-      const id_rolesEliminados = this.rolesEliminados.map(obt => obt.rol_id)
-      const rolesEliminadosString = String(id_rolesEliminados);
-
       const esPrincipal: number = this.form.value.puesto_val;
       const esMP: number = this.esMPNum;
       const soloRoles: number = this.soloRolesNum;
@@ -475,7 +475,6 @@ export class MembershipComponent implements OnInit {
       console.log("Expedientes pendientes => " + expPendientes);
       console.log("Roles del funcionario => " + rolesFuncionario);
       console.log("Roles en un string => " + rolesString);
-      console.log("Roles eliminados => " + rolesEliminadosString)
       console.log("Es principal => " + esPrincipal);
 
       console.log("Se envio el formulario:");
@@ -491,7 +490,6 @@ export class MembershipComponent implements OnInit {
                                                     Justificacion,
                                                     expPendientes,
                                                     rolesString,
-                                                    rolesEliminadosString,
                                                     esPrincipal,
                                                     esMP,
                                                     soloRoles );

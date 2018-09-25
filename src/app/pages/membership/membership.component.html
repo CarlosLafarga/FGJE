@@ -421,7 +421,7 @@
                                                         <td class="align-middle text-truncate">{{ expPend.catDis_asignado }}</td>
                                                         <td class="align-middle">
                                                             <div class="btn-group" role="group">
-                                                                <button class="btn btn-secondary btn-sm" [ngbTooltip]="'Reasignar'"><i class="fa fa-share"></i></button>
+                                                                <button class="btn btn-secondary btn-sm" (click)="openModalFuncionario()" [ngbTooltip]="'Reasignar'"><i class="fa fa-share"></i></button>
                                                             </div>
                                                         </td>
                                                     </tr>

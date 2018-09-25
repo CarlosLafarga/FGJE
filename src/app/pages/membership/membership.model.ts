@@ -168,7 +168,6 @@ export class CambioAdscripcion{
    public Justificacion: string,
    public pendientes: number,
    public rolesFuncionario: string,
-   public rolesEliminadosString: string,
    public esPrincipal: number,
    public esMP: number,
    public soloRoles: number
@@ -183,7 +182,7 @@ export class ExpPendientes {
   public fecha_creacion: Date;
   public fecha_modificacion: Date;
   public esEmp: number;
-  public asignados: number;
+  public Asignados: number;
 }
 
 export class AsignarPendientes {
@@ -192,4 +191,5 @@ export class AsignarPendientes {
     public iClaveFuncionarioAnterior: number,
     public catDiscriminanteAnterior: number,
    ){}
+
 }
