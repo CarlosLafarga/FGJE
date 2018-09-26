@@ -404,7 +404,7 @@
 
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-12">
+                                        <div class="col-9">
 
                                             <table class="table table-hover">
                                                 <thead>
@@ -415,15 +415,11 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr *ngFor="let expPend of expPendientesLista | paginate: { itemsPerPage: 10, currentPage: p5, id:'ExpPendientes' }">
+                                                    <tr *ngFor="let expPend of expPendientesLista | paginate: { itemsPerPage: 10, currentPage: p5, id:'ExpPendientes' }" (click)="onSelectExpPend(expPend)"
+                                                        [ngClass]="{ 'highlight': expPend.cambioAdscripcion_id === selectedExpPend }">
                                                         <td class="align-middle text-truncate">{{ expPend.iclaveFuncionario }}</td>
                                                         <td class="align-middle text-truncate">{{ expPend.catDis_ant }}</td>
                                                         <td class="align-middle text-truncate">{{ expPend.catDis_asignado }}</td>
-                                                        <td class="align-middle">
-                                                            <div class="btn-group" role="group">
-                                                                <button class="btn btn-secondary btn-sm" (click)="openModalFuncionario()" [ngbTooltip]="'Reasignar'"><i class="fa fa-share"></i></button>
-                                                            </div>
-                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -436,6 +432,19 @@
                                                 </div>
                                             </div>
 
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="iclaveFuncionarioAsign">Selccione el funcionario de la agencia</label>
+                                                <select class="form-control custom-select"
+                                                        id="iclaveFuncionarioAsign"
+                                                        formControlName="iclaveFuncionarioAsign"
+                                                        [(ngModel)]="iclaveFuncionarioAsign"
+                                                        required>
+                                                    <option selected>-- Seleccione un funcionario --</option>
+                                                    <option *ngFor="let funsAg of funcinariosAgencia" [value]="funsAg.iClaveFuncionario">{{ funsAg.cNombreFuncionario }} {{ funsAg.cApellidoPaternoFuncionario }} {{ funsAg.cAPellidoMaternoFuncionario }}</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

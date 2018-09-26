@@ -9,7 +9,7 @@ import { MenuService } from '../../theme/components/menu/menu.service';
 import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
 import { RouteConfigLoadStart } from '@angular/router';
 import swal from 'sweetalert2';
-import { Location } from '@angular/common'
+import { Location } from '@angular/common';
  
 @Component({
   selector: 'app-membership',
@@ -122,6 +122,7 @@ export class MembershipComponent implements OnInit {
       fecha_modificacion: null,
       esEmp: null,
       Asignados: null,
+      iclaveFuncionarioAsign: null
     });
     
     this.form = this.fbf.group({
@@ -517,6 +518,28 @@ export class MembershipComponent implements OnInit {
     });
   }
 
+  public funcinariosAgencia: FunciAgencia[] = [];
+
+  public getFuncionariosAg(expPend: ExpPendientes):void {
+    this.membershipService.getFUsuarioAgencia(expPend.catDis_ant).subscribe( exp => {
+      this.funcinariosAgencia = exp
+      console.log(this.funcinariosAgencia);
+    });
+  }
+
+  public selectedExpPend: number = 0;
+  public objExpPend: ExpPendientes;
+
+  public onSelectExpPend(expPend: ExpPendientes) {
+    this.selectedExpPend = expPend.cambioAdscripcion_id;
+    console.log("Se seleccionaron los expedientes pendientes => " + this.selectedExpPend);
+    this.objExpPend = expPend;
+    console.log(this.objExpPend);
+    
+    this.getFuncionariosAg(this.objExpPend);
+
+  }
+
   public asignarPendientes : AsignarPendientes[];
 
   // Se actualiza el funcionario seleccionado
@@ -526,15 +549,40 @@ export class MembershipComponent implements OnInit {
     });
     console.log("Se ejecuto el asignar expedientes: " + asignarPendientes.iClaveFuncionarioAsignar);
     swal('Se asignaron los expedientes...', this.titularAgencia, 'success');
+
+    // swal({
+    //   title: 'Funcionarios de la agencia',
+    //   text: 'Mostrar los funcionarios de la agencia seleccionada',
+    //   type: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonText: 'Asignar',
+    //   cancelButtonText: 'Cancelar'
+    // }).then((result) => {
+    //   if (result.value) {
+    //     swal(
+    //       'Expedientes asignados',
+    //       'Funcionario al que se le asigno',
+    //       'success'
+    //     )
+    //   // For more information about handling dismissals please visit
+    //   // https://sweetalert2.github.io/#handling-dismissals
+    //   } else if (result.dismiss === swal.DismissReason.cancel) {
+    //     swal(
+    //       'Cancelado',
+    //       'Los expedientes no se asignaron',
+    //       'error'
+    //     )
+    //   }
+    // })
     
   }
 
   onSubmitExpPend(): void {
     if (this.formExpPend.valid) {
 
-      const iClaveFuncionarioAsignar: number = 0;
-      const iClaveFuncionarioAnterior: number = 0;
-      const catDiscriminanteAnterior: number = 0;
+      const iClaveFuncionarioAsignar: number = this.formExpPend.value.iclaveFuncionarioAsign;
+      const iClaveFuncionarioAnterior: number = this.objExpPend.iclaveFuncionario;
+      const catDiscriminanteAnterior: number = this.objExpPend.catDis_ant;
 
       let asignarPendientes = new AsignarPendientes(  iClaveFuncionarioAsignar,
                                                       iClaveFuncionarioAnterior,
