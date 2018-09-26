@@ -111,7 +111,7 @@ export class MembershipComponent implements OnInit {
     console.log(this.roles);
     
     this.getExpPendientes();
-    console.log(this.expPendientesLista);
+    // console.log(this.expPendientesLista);
 
     this.formExpPend =  this.fbExpPend.group({
       cambioAdscripcion_id: null,
