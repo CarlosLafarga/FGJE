@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, NgForm} from '@angular/forms';
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE, CambioAdscripcion, ExpPendientes, AsignarPendientes } from './membership.model';
 import { MembershipService } from './membership.service';
@@ -98,6 +98,7 @@ export class MembershipComponent implements OnInit {
       }
       this.menuSelectOptions.push(menu);
     })
+
   }
 
   ngOnInit() {
@@ -405,9 +406,10 @@ export class MembershipComponent implements OnInit {
   // Se abre el modal y se cargan los los expedientes pendientes
   openExpPend(expPendientes) {
 
+    this.modalExpPend = this.modalService.open(expPendientes, { size: 'lg', container: '.app' });
+
     
 
-    this.modalExpPend = this.modalService.open(expPendientes, { size: 'lg', container: '.app' });
   }
 
   // Cerrar el modal
@@ -424,6 +426,7 @@ export class MembershipComponent implements OnInit {
   closeModalExpPend() {
     this.modalExpPend.close();
     this.formExpPend.reset();
+    this.pageRefresh();
   }
 
   // Se ejecuta el envio del formulario
@@ -537,6 +540,8 @@ export class MembershipComponent implements OnInit {
     console.log(this.objExpPend);
     
     this.getFuncionariosAg(this.objExpPend);
+
+    // this.expPendientesLista.
 
   }
 

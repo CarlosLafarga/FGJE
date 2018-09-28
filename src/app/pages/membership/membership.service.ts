@@ -18,7 +18,7 @@ export class MembershipService {
     public url9 = "http://localhost:55244/api/CambioAD/cambioADS";
     public url10 = "http://localhost:55244/api/ExpPendientes";
     // public url10 = "http://localhost:55244/api/cambioAdscripcionExps";
-    public url11 = "http://localhost:55244/api/";
+    public url11 = "http://localhost:55244/api/AsignarExp/asignarExp";
     //public url2 = "/api/funcionarios";
     //public url3 = "api/catDiscriminantes";
     //public url4 = "api/rol";
