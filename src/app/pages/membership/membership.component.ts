@@ -406,9 +406,8 @@ export class MembershipComponent implements OnInit {
   // Se abre el modal y se cargan los los expedientes pendientes
   openExpPend(expPendientes) {
 
-    this.modalExpPend = this.modalService.open(expPendientes, { size: 'lg', container: '.app' });
-
     this.getExpPendientes();
+    this.modalExpPend = this.modalService.open(expPendientes, { size: 'lg', container: '.app' });
 
   }
 
@@ -514,7 +513,7 @@ export class MembershipComponent implements OnInit {
 
   public expPendientesLista: ExpPendientes[] = [];
   // public array: ExpPendientesTabla[] = [];
-  public array: string[] = [];
+  // public array: string[] = [];
 
   // Se cargan los expedientes que se encuentran pendientes
   public getExpPendientes(): void {
@@ -530,18 +529,20 @@ export class MembershipComponent implements OnInit {
             this.expPendientesLista
             this.expPendientesLista[i].cNombre = agNombre;
 
-            this.array[i] = agNombre;
+            this.expPendientesLista[i].cNombre = agNombre;
+
+            // this.array[i] = agNombre;
           }
         }
+        // this.expPendientesLista[i].cNombre = this.array[i];
       }
 
-      for (let k = 0; k < this.expPendientesLista.length; k++) {
-        this.expPendientesLista[k].cNombre = this.array[k];
+      // for (let k = 0; k < this.expPendientesLista.length; k++) {
+      //   this.expPendientesLista[k].cNombre = this.array[k];
         
-      }
+      // }
 
-      console.log(this.array);
-      console.log(this.expPendientesLista);
+      // console.log(this.array);
 
     });
   }
