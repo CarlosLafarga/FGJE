@@ -419,14 +419,14 @@ export class MembershipComponent implements OnInit {
     this.funcionario = null;
     this.rolesEliminados = [];
     this.getRoles();
-    this.pageRefresh();
+    // this.pageRefresh();
   }
 
   // Cerrar el modal de expedientes pendientes
   closeModalExpPend() {
     this.modalExpPend.close();
     this.formExpPend.reset();
-    this.pageRefresh();
+    // this.pageRefresh();
   }
 
   // Se ejecuta el envio del formulario
@@ -509,6 +509,7 @@ export class MembershipComponent implements OnInit {
 
     //this.modalRef.close();
     this.closeModal();
+    this.pageRefresh();
   } 
 
   public expPendientesLista: ExpPendientes[] = [];
@@ -626,6 +627,7 @@ export class MembershipComponent implements OnInit {
 
       console.log("se envia el formulario de expedientes pendientes validado");
       this.closeModalExpPend();
+      this.pageRefresh();
     }
   }
 
