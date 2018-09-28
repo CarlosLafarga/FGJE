@@ -512,12 +512,36 @@ export class MembershipComponent implements OnInit {
   } 
 
   public expPendientesLista: ExpPendientes[] = [];
+  // public array: ExpPendientesTabla[] = [];
+  public array: string[] = [];
 
   // Se cargan los expedientes que se encuentran pendientes
   public getExpPendientes(): void {
     this.membershipService.getExpPendientes().subscribe( eP => {
       this.expPendientesLista = eP
       console.log(this.expPendientesLista); 
+
+      for (let i = 0; i < this.expPendientesLista.length; i++) {
+        const ag: number = this.expPendientesLista[i].catDis_ant;
+        for (let j = 0; j < this.agencias.length; j++) {
+          if (ag === this.agencias[j].catDiscriminante_id) {
+            const agNombre: string = this.agencias[j].cNombre;
+            this.expPendientesLista
+            this.expPendientesLista[i].cNombre = agNombre;
+
+            this.array[i] = agNombre;
+          }
+        }
+      }
+
+      for (let k = 0; k < this.expPendientesLista.length; k++) {
+        this.expPendientesLista[k].cNombre = this.array[k];
+        
+      }
+
+      console.log(this.array);
+      console.log(this.expPendientesLista);
+
     });
   }
 

@@ -417,7 +417,7 @@
                                                     <tr *ngFor="let expPend of expPendientesLista | paginate: { itemsPerPage: 10, currentPage: p5, id:'ExpPendientes' }" (click)="onSelectExpPend(expPend)"
                                                         [ngClass]="{ 'highlight': expPend.cambioAdscripcion_id === selectedExpPend }">
                                                         <td class="align-middle text-truncate">{{ expPend.iclaveFuncionario }}</td>
-                                                        <td class="align-middle text-truncate">{{ expPend.catDis_ant }}</td>
+                                                        <td class="align-middle text-truncate">{{ expPend.cNombre }}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -439,7 +439,7 @@
                                                         formControlName="iclaveFuncionarioAsign"
                                                         [(ngModel)]="iclaveFuncionarioAsign"
                                                         required>
-                                                    <!-- <option selected>-- Seleccione un funcionario --</option> -->
+                                                    <option selected>-- Seleccione un funcionario --</option>
                                                     <option *ngFor="let funsAg of funcinariosAgencia" [value]="funsAg.iClaveFuncionario">{{ funsAg.cNombreFuncionario }} {{ funsAg.cApellidoPaternoFuncionario }} {{ funsAg.cAPellidoMaternoFuncionario }}</option>
                                                 </select>
                                             </div>

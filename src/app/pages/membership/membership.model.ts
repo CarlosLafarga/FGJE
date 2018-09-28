@@ -183,6 +183,7 @@ export class ExpPendientes {
   public fecha_modificacion: Date;
   public esEmp: number;
   public Asignados: number;
+  public cNombre: string;
 }
 
 export class AsignarPendientes {
@@ -191,5 +192,9 @@ export class AsignarPendientes {
     public iClaveFuncionarioAnterior: number,
     public catDiscriminanteAnterior: number,
    ){}
-
 }
+
+// export class ExpPendientesTabla {
+//   public iclaveFuncionario: number;
+//   public catDis_ant: string
+// }
