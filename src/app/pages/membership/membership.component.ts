@@ -111,7 +111,7 @@ export class MembershipComponent implements OnInit {
     this.getRoles();
     console.log(this.roles);
     
-    this.getExpPendientes();
+    // this.getExpPendientes();
     // console.log(this.expPendientesLista);
 
     this.formExpPend =  this.fbExpPend.group({
@@ -408,7 +408,7 @@ export class MembershipComponent implements OnInit {
 
     this.modalExpPend = this.modalService.open(expPendientes, { size: 'lg', container: '.app' });
 
-    
+    this.getExpPendientes();
 
   }
 
