@@ -188,9 +188,9 @@ export class ExpPendientes {
 
 export class AsignarPendientes {
   constructor(
-    public iClaveFuncionarioAsignar: number,
-    public iClaveFuncionarioAnterior: number,
-    public catDiscriminanteAnterior: number,
+    public iclavefuncionarioAnt: number,
+    public iclavefuncionarioNuevo: number,
+    public catDiscriminante: number,
    ){}
 }
 

@@ -578,7 +578,7 @@ export class MembershipComponent implements OnInit {
     this.membershipService.asignarExpPendientes(asignarPendientes).subscribe( asignarPendientes => {
       this.asignarPendientes;
     });
-    console.log("Se ejecuto el asignar expedientes: " + asignarPendientes.iClaveFuncionarioAsignar);
+    console.log("Se ejecuto el asignar expedientes: " + asignarPendientes.iclavefuncionarioNuevo);
     swal('Se asignaron los expedientes...', this.titularAgencia, 'success');
 
     // swal({
@@ -611,13 +611,13 @@ export class MembershipComponent implements OnInit {
   onSubmitExpPend(): void {
     if (this.formExpPend.valid) {
 
-      const iClaveFuncionarioAsignar: number = this.formExpPend.value.iclaveFuncionarioAsign;
-      const iClaveFuncionarioAnterior: number = this.objExpPend.iclaveFuncionario;
-      const catDiscriminanteAnterior: number = this.objExpPend.catDis_ant;
+      const iclavefuncionarioAnt: number = this.formExpPend.value.iclaveFuncionarioAsign;
+      const iclavefuncionarioNuevo: number = this.objExpPend.iclaveFuncionario;
+      const catDiscriminante: number = this.objExpPend.catDis_ant;
 
-      let asignarPendientes = new AsignarPendientes(  iClaveFuncionarioAsignar,
-                                                      iClaveFuncionarioAnterior,
-                                                      catDiscriminanteAnterior );
+      let asignarPendientes = new AsignarPendientes(  iclavefuncionarioAnt,
+                                                      iclavefuncionarioNuevo,
+                                                      catDiscriminante );
 
       this.asignarExpPendientes( asignarPendientes );
 
