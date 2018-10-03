@@ -20,6 +20,7 @@ export class MembershipService {
     public url10 = "http://localhost:55244/api/cambioAdscripcionExps";
     public url11 = "http://localhost:55244/api/CambioExp";
     private headers;
+
     constructor(public http: HttpClient) {
         this.headers = new HttpHeaders({ 'Content-Type': 'application/json' }); 
      }
@@ -60,7 +61,7 @@ export class MembershipService {
     cambioAdscripcion(cambioAdscripcion:CambioAdscripcion){
         const newpres = JSON.stringify(cambioAdscripcion);
         console.log(newpres);
-        return this.http.post(this.url9, newpres ,{headers:this.headers});
+        return this.http.post(this.url9, newpres ,{headers: this.headers});
     }
 
     getExpPendientes(): Observable<ExpPendientes[]> {
@@ -70,7 +71,7 @@ export class MembershipService {
     asignarExpPendientes(asignarExpPendientes:AsignarPendientes){
         const newExp = JSON.stringify(asignarExpPendientes);
         console.log(newExp);
-        return this.http.post(this.url11, newExp ,{headers:this.headers});
+        return this.http.post(this.url11, newExp ,{headers: this.headers});
     }
 
 
