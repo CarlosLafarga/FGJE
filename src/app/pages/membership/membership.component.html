@@ -313,7 +313,7 @@
                                                                     <i class="fa fa-search"></i>
                                                                 </span>
                                                             </span>
-                                                            <input type="text" placeholder="Escriba el nombre del funcionario" class="form-control">
+                                                            <input type="text" [(ngModel)]="buscarFuncionario" formControlName="cNumeroCertificado" placeholder="Escriba el nombre del funcionario" class="form-control">
                                                         </div>
                                                         <table class="table table-hover">
                                                             <thead>
@@ -329,7 +329,7 @@
                                                             </thead>
                                                             <tbody>
                                                                 <tr *ngFor="let funagen of funciAgencia | FuncionarioSearchPipe : buscarFuncionario | paginate: { itemsPerPage: 10, currentPage: p4, id:'FuncionarioAgencia' }">
-                                                                    <th scope="row">{{ funagen.iClaveFuncionario }}</th>
+                                                                    <td scope="row">{{ funagen.iClaveFuncionario }}</td>
                                                                     <td>{{ funagen.cNombreFuncionario }}</td>
                                                                     <td>{{ funagen.cApellidoPaternoFuncionario }}</td>
                                                                     <td>{{ funagen.cApellidoMaternoFuncionario }}</td>

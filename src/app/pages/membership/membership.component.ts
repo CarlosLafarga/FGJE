@@ -419,6 +419,8 @@ export class MembershipComponent implements OnInit {
     this.rolesEliminados = [];
     this.getRoles();
     // this.pageRefresh();
+    this.selectedRol = 0;
+    this.selectedRolF = 0;
   }
 
   // Cerrar el modal de expedientes pendientes
@@ -426,6 +428,7 @@ export class MembershipComponent implements OnInit {
     this.modalExpPend.close();
     this.formExpPend.reset();
     // this.pageRefresh();
+    this.selectedExpPend = 0;
   }
 
   // Se ejecuta el envio del formulario
