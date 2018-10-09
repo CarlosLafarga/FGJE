@@ -10,8 +10,8 @@
 
                 <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="text-left mt-4">
                     <div class="form-group">
-                        <input [formControl]="email" class="form-control validation-field" placeholder="Usuario" type="text">                      
-                        <small class="text-danger" *ngIf="form.get('email').touched && form.get('email').hasError('required')">Usuario es requerido</small>                              
+                        <input [formControl]="usuario" class="form-control validation-field" placeholder="Usuario" type="text">                      
+                        <small class="text-danger" *ngIf="form.get('usuario').touched && form.get('usuario').hasError('required')">Usuario es requerido</small>                              
                         
                         
                     </div>

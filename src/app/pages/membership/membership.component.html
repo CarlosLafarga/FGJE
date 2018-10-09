@@ -27,19 +27,18 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Clave Funcionario</th> 
                             <th>Nombre(s)</th> 
                             <th>Apellido paterno</th>
                             <th>Apellido materno</th>
                             <th>Usuario</th>
                             <th>Estatus</th>
-                            <th>Fecha de ingreso</th>
+                            <th>Es MP</th>
+                            <th>Agencia</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let funcionario of funcionarios | UserSearchPipe : searchText | paginate: { itemsPerPage: 10, currentPage: p }">
-                            <td class="align-middle text-truncate">{{ funcionario.iClaveFuncionario }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.cNombreFuncionario }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.cApellidoPaternoFuncionario }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.cApellidoMaternoFuncionario }}</td>
@@ -48,7 +47,11 @@
                                 <i *ngIf="funcionario.bEsActivo === 1" class="fa fa-user mr-2 text-success" placement="bottom" [ngbTooltip]="'Activo'"></i>
                                 <i *ngIf="funcionario.bEsActivo != 1" class="fa fa-user mr-2 text-danger" placement="bottom" [ngbTooltip]="'Inactivo'"></i>
                             </td>
-                            <td class="align-middle text-truncate">{{ funcionario.dFechaIngreso | date:"dd MMMM, yyyy" }}</td>
+                            <td>
+                                <i *ngIf="funcionario.esMP === 1" class="fa fa-check mr-2 text-success" placement="bottom"></i>
+                                <i *ngIf="funcionario.esMP != 1" class="fa fa-close mr-2 text-danger" placement="bottom"></i>
+                            </td>
+                            <td class="align-middle text-truncate">{{ funcionario.cNombre }}</td>
                             <td class="align-middle">
                                 <div class="btn-group" role="group">
                                     <button class="btn btn-secondary btn-sm" (click)="openModal(modalContent, funcionario)"><i class="fa fa-check"></i></button>

@@ -11,18 +11,18 @@ import { CustomValidators } from 'ng2-validation';
 })
 export class LoginComponent {
   public router: Router;
-  public form:FormGroup;
-  public email:AbstractControl;
-  public password:AbstractControl;
+  public form: FormGroup;
+  public usuario: AbstractControl;
+  public password: AbstractControl;
 
   constructor(router:Router, fb:FormBuilder) {
       this.router = router;
       this.form = fb.group({
-          'email': ['', Validators.compose([Validators.required, Validators.nullValidator])],
+          'usuario': ['', Validators.compose([Validators.required, Validators.nullValidator])],
           'password': ['', Validators.compose([Validators.required, Validators.minLength(8)])]
       });
 
-      this.email = this.form.controls['email'];
+      this.usuario = this.form.controls['usuario'];
       this.password = this.form.controls['password'];
   }
 

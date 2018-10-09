@@ -211,6 +211,23 @@ export class MembershipComponent implements OnInit {
     this.membershipService.getFuncionarios().subscribe( funcionarios => {
       this.funcionarios = funcionarios
       console.log(this.funcionarios);
+
+      for (let i = 0; i < this.funcionarios.length; i++) {
+        const ag: number = this.funcionarios[i].catDiscriminante_id;
+        for (let j = 0; j < this.agencias.length; j++) {
+          if (ag === this.agencias[j].catDiscriminante_id) {
+            const agNombre: string = this.agencias[j].cNombre;
+            this.funcionarios
+            this.funcionarios[i].cNombre = agNombre;
+
+            this.funcionarios[i].cNombre = agNombre;
+
+            // this.array[i] = agNombre;
+          }
+        }
+        // this.expPendientesLista[i].cNombre = this.array[i];
+      }
+
     });
   }
 
