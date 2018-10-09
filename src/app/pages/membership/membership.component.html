@@ -34,6 +34,7 @@
                             <th>Estatus</th>
                             <th>Es MP</th>
                             <th>Agencia</th>
+                            <th>Roles</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -48,10 +49,11 @@
                                 <i *ngIf="funcionario.bEsActivo != 1" class="fa fa-user mr-2 text-danger" placement="bottom" [ngbTooltip]="'Inactivo'"></i>
                             </td>
                             <td>
-                                <i *ngIf="funcionario.esMP === 1" class="fa fa-check mr-2 text-success" placement="bottom"></i>
-                                <i *ngIf="funcionario.esMP != 1" class="fa fa-close mr-2 text-danger" placement="bottom"></i>
+                                <i *ngIf="funcionario.esMP === 1" class="fa fa-check mr-2 text-success" placement="bottom" [ngbTooltip]="'Es MP'"></i>
+                                <i *ngIf="funcionario.esMP != 1" class="fa fa-close mr-2 text-danger" placement="bottom" [ngbTooltip]="'No es MP'"></i>
                             </td>
                             <td class="align-middle text-truncate">{{ funcionario.cNombre }}</td>
+                            <td>Aqui los roles</td>
                             <td class="align-middle">
                                 <div class="btn-group" role="group">
                                     <button class="btn btn-secondary btn-sm" (click)="openModal(modalContent, funcionario)"><i class="fa fa-check"></i></button>
@@ -248,11 +250,11 @@
                                                             [ngClass]="{ 'highlight': rol.rol_id === selectedRolF }">
                                                             <th scope="row">{{ rol.rol_id }}</th>
                                                             <td>{{ rol.cDescripcionRol }}</td>
-                                                            <!-- <td > <input type="radio" name="esPrincipal" class="radio-dark-gray"  [checked]="rol.esPrincipal === 1" id="rol.rol_id"> </td> -->
-                                                            <td>
+                                                            <td > <input type="radio" name="esPrincipal" class="radio-dark-gray"  [checked]="rol.esPrincipal === 1" id="rol.rol_id"> </td>
+                                                            <!-- <td>
                                                                 <input type="radio" name="puesto_val" formControlName="puesto_val"  class="radio-dark-gray" [(ngModel)]="puesto_val" [value]="rol.rol_id" required>
                                                                 <small class="text-danger" *ngIf="form.get('puesto_val').hasError('required')">Por favor seleccione el rol principal</small>
-                                                            </td>
+                                                            </td> -->
                                                         </tr>
 
                                                     </tbody>

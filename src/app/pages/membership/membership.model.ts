@@ -129,7 +129,7 @@ export class Roles {
   confInstitucion_id: number;
   jerarquiaOrganizacional_id: number;
   rolPadre_id: number;
-  esPrincipal?: number;
+  esPrincipal: number;
 }
 
 // Roles de usuario especifico. (tabla UsuarioRol)

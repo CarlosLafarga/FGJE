@@ -217,15 +217,11 @@ export class MembershipComponent implements OnInit {
         for (let j = 0; j < this.agencias.length; j++) {
           if (ag === this.agencias[j].catDiscriminante_id) {
             const agNombre: string = this.agencias[j].cNombre;
-            this.funcionarios
             this.funcionarios[i].cNombre = agNombre;
 
             this.funcionarios[i].cNombre = agNombre;
-
-            // this.array[i] = agNombre;
           }
         }
-        // this.expPendientesLista[i].cNombre = this.array[i];
       }
 
     });
@@ -235,22 +231,16 @@ export class MembershipComponent implements OnInit {
   
   // Se cargan los roles del catalogo
   public getRoles(): void {
+    var hash = {}
     this.membershipService.getRoles().subscribe( roles => {
-      this.roles = roles
+      this.roles = roles.filter(function(current){
+        var exists = !hash[current.rol_id] || false;
+        hash[current.rol_id] = true;
+        // console.log("Este es el arreglo ya formateado:=>"+exists);
+        return exists;
+      });
+      console.log("Estos son los roles");
       console.log(this.roles);
-
-      // for (let index = 1; index <= roles.length; index++) {
-      //   var obj = roles.filter( function ( rol ) {
-      //     return rol.rol_id === index;
-      //   });
-      //   for( const i in obj ) {
-      //     this.rolesSR.push( obj[0] );
-      //     obj = [];
-      //     break
-      //   }
-      // }
-
-      // console.log(this.rolesSR);
 
     });
   }
@@ -402,11 +392,19 @@ export class MembershipComponent implements OnInit {
   public openModal(modalContent, funcionario, catUIE) {
     console.log(funcionario);
 
+    // this.getAgencias();
+    this.getRoles();
     this.getFuncionarioRol( funcionario );
     this.getFuncionarioAgencia( funcionario );
     this.getCatUIE(catUIE);
     
     if(funcionario){
+      const catDis: number = funcionario.catDiscriminante_id
+      for (let i = 0; i < this.agencias.length; i++) {
+        if (catDis === this.agencias[i].catDiscriminante_id) {
+          this.agencias.splice(i, 1);
+        }
+      }
       this.funcionario = funcionario;
       this.form.setValue(funcionario);
     } 
@@ -532,8 +530,6 @@ export class MembershipComponent implements OnInit {
   } 
 
   public expPendientesLista: ExpPendientes[] = [];
-  // public array: ExpPendientesTabla[] = [];
-  // public array: string[] = [];
 
   // Se cargan los expedientes que se encuentran pendientes
   public getExpPendientes(): void {
@@ -550,19 +546,9 @@ export class MembershipComponent implements OnInit {
             this.expPendientesLista[i].cNombre = agNombre;
 
             this.expPendientesLista[i].cNombre = agNombre;
-
-            // this.array[i] = agNombre;
           }
         }
-        // this.expPendientesLista[i].cNombre = this.array[i];
       }
-
-      // for (let k = 0; k < this.expPendientesLista.length; k++) {
-      //   this.expPendientesLista[k].cNombre = this.array[k];
-        
-      // }
-
-      // console.log(this.array);
 
     });
   }
