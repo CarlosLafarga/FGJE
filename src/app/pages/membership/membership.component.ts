@@ -110,9 +110,6 @@ export class MembershipComponent implements OnInit {
 
     this.getRoles();
     console.log(this.roles);
-    
-    // this.getExpPendientes();
-    // console.log(this.expPendientesLista);
 
     this.formExpPend =  this.fbExpPend.group({
       cambioAdscripcion_id: null,
@@ -158,6 +155,24 @@ export class MembershipComponent implements OnInit {
       usuario: null,
       numeroExpediente: null
     });
+  }
+
+  public controlActivos(e, funcionario) {
+    const act = e.target.checked;
+    const valor: number = 0;
+    console.log(funcionario);
+    funcionario.bEsActivo = 0;
+    console.log("Se desactiva el funcionario => " + funcionario.iClaveFuncionario );
+    console.log(valor);
+  }
+
+  public controlInactivo(e, funcionario) {
+    const inact = e.target.checked;
+    const valor: number = 1;
+    console.log(funcionario);
+    funcionario.bEsActivo = 1;
+    console.log("Se activa el funcionario => " + funcionario.iClaveFuncionario);
+    console.log(valor);
   }
 
   pageRefresh() {
@@ -212,6 +227,13 @@ export class MembershipComponent implements OnInit {
       this.funcionarios = funcionarios
       console.log(this.funcionarios);
 
+      // for (let j = 0; j < this.funcionarios.length; j++) {
+
+      //   this.cargarRoles(this.funcionarios[j].iClaveFuncionario);
+
+      //   this.funcionarios[j].usuario.push();
+      // }
+
       for (let i = 0; i < this.funcionarios.length; i++) {
         const ag: number = this.funcionarios[i].catDiscriminante_id;
         for (let j = 0; j < this.agencias.length; j++) {
@@ -225,6 +247,15 @@ export class MembershipComponent implements OnInit {
       }
 
     });
+  }
+
+  public rolesFunci: Roles[] = [];
+
+  public cargarRoles(claveFuncionario: number) {
+    this.membershipService.getFUsuarioRol(claveFuncionario).subscribe( rF =>  {
+      this.rolesFunci = rF
+    });
+    return this.rolesFunci;
   }
 
   public rolesSR: Roles[] = [];
@@ -436,6 +467,7 @@ export class MembershipComponent implements OnInit {
     // this.pageRefresh();
     this.selectedRol = 0;
     this.selectedRolF = 0;
+    this.getAgencias();
   }
 
   // Cerrar el modal de expedientes pendientes
