@@ -158,15 +158,81 @@ export class MembershipComponent implements OnInit {
   }
 
   public controlActivos(e, funcionario) {
-    const act = e.target.checked;
-    const valor: number = 0;
-    console.log(funcionario);
-    funcionario.bEsActivo = 0;
-    console.log("Se desactiva el funcionario => " + funcionario.iClaveFuncionario );
-    console.log(valor);
+
+    swal({
+      title: 'Desactivar usuario',
+      text: '¿Esta seguro que desea desactivar al usuario?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Desactivar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        const act = e.target.checked;
+        const valor: number = 0;
+        console.log(funcionario);
+        funcionario.bEsActivo = 0;
+        console.log("Se desactiva el funcionario => " + funcionario.iClaveFuncionario );
+        console.log(valor);
+        swal(
+          'Usuario desactivado',
+          'Desactivacion exitosa',
+          'success'
+        )
+      // For more information about handling dismissals please visit
+      // https://sweetalert2.github.io/#handling-dismissals
+      } else if (result.dismiss === swal.DismissReason.cancel) {
+        console.log("Se cancelo la desactivación")
+        swal(
+          'Cancelado',
+          'El usuario no se ha desactivado',
+          'error'
+        )
+      }
+    })
+
+    // const act = e.target.checked = true;
+    // const valor: number = 0;
+    // console.log(funcionario);
+    // funcionario.bEsActivo = 0;
+    // console.log("Se desactiva el funcionario => " + funcionario.iClaveFuncionario );
+    // console.log(valor);
   }
 
   public controlInactivo(e, funcionario) {
+
+    swal({
+      title: 'Activar usuario',
+      text: '¿Esta seguro que desea activar al usuario?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Activar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        const inact = e.target.checked;
+        const valor: number = 1;
+        console.log(funcionario);
+        funcionario.bEsActivo = 1;
+        console.log("Se activa el funcionario => " + funcionario.iClaveFuncionario);
+        console.log(valor);
+        swal(
+          'Usuario Activado',
+          'Activacion exitosa',
+          'success'
+        )
+      // For more information about handling dismissals please visit
+      // https://sweetalert2.github.io/#handling-dismissals
+      } else if (result.dismiss === swal.DismissReason.cancel) {
+        console.log("Se cancelo la activación")
+        swal(
+          'Cancelado',
+          'El usuario no se ha Activado',
+          'error'
+        )
+      }
+    })
+
     const inact = e.target.checked;
     const valor: number = 1;
     console.log(funcionario);
