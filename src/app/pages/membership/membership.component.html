@@ -70,7 +70,7 @@
                                 <i *ngIf="funcionario.esMP != 1" class="fa fa-close mr-2 text-danger" placement="bottom" [ngbTooltip]="'No es MP'"></i>
                             </td>
                             <td class="align-middle text-truncate">{{ funcionario.cNombre }}</td>
-                            <td>Aqui los roles</td>
+                            <td><button #ver value="{{funcionario.iClaveFuncionario}}" class="btn btn-secondary" (click)="llamarRoles(ver.value)">Ver Roles</button></td>
                             <td class="align-middle">
                                 <div class="btn-group" role="group">
                                     <button class="btn btn-secondary btn-sm" (click)="openModal(modalContent, funcionario)"><i class="fa fa-check"></i></button>

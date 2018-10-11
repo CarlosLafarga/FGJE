@@ -221,6 +221,30 @@ export class MembershipComponent implements OnInit {
     //this.checkEPyMP = null;
   }
 
+  public llamarRoles( clave:number){
+    var names = "";
+    this.membershipService.getFUsuarioRol(clave).subscribe( funcionarioRol => {
+      this.funcionarioRol = funcionarioRol
+      //console.log(this.funcionarioRol);
+      var roles  = JSON.stringify(this.funcionarioRol);
+
+      for(var i = 0; i<funcionarioRol.length; i++){
+      
+        names += funcionarioRol[i].cDescripcionRol+"<br>";
+        //console.log(names);
+      }
+      //console.log(names);
+      
+      swal({
+        title: "<b>Roles Del Funcionario</b>", 
+        html: names+"<br>",  
+        confirmButtonText: "Aceptar", 
+      });
+
+    });
+  }
+
+
   // Se cargan los datos del funcionario
   public getFuncionarios(): void {
     this.membershipService.getFuncionarios().subscribe( funcionarios => {
@@ -424,7 +448,7 @@ export class MembershipComponent implements OnInit {
     console.log(funcionario);
 
     // this.getAgencias();
-    this.getRoles();
+    // this.getRoles();
     this.getFuncionarioRol( funcionario );
     this.getFuncionarioAgencia( funcionario );
     this.getCatUIE(catUIE);
@@ -440,7 +464,7 @@ export class MembershipComponent implements OnInit {
       this.form.setValue(funcionario);
     } 
     
-    this.modalRef = this.modalService.open(modalContent, { size: 'lg', container: '.app' });
+    this.modalRef = this.modalService.open(modalContent, { size: 'lg', container: '.app', backdrop: 'static', keyboard: false });
 
     this.modalRef.result.then((result) => {
       this.form.reset();
@@ -453,7 +477,7 @@ export class MembershipComponent implements OnInit {
   openExpPend(expPendientes) {
 
     this.getExpPendientes();
-    this.modalExpPend = this.modalService.open(expPendientes, { size: 'lg', container: '.app' });
+    this.modalExpPend = this.modalService.open(expPendientes, { size: 'lg', container: '.app', backdrop: 'static', keyboard: false });
 
   }
 
