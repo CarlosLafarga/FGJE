@@ -10,6 +10,7 @@ import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
 import { RouteConfigLoadStart } from '@angular/router';
 import swal from 'sweetalert2';
 import { Location } from '@angular/common';
+import { promise } from 'protractor';
  
 @Component({
   selector: 'app-membership',
@@ -174,6 +175,7 @@ export class MembershipComponent implements OnInit {
         funcionario.bEsActivo = 0;
         console.log("Se desactiva el funcionario => " + funcionario.iClaveFuncionario );
         console.log(valor);
+        
         swal(
           'Usuario desactivado',
           'Desactivacion exitosa',

@@ -4,7 +4,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text border-top-0 border-left-0 border-bottom-0"><i class="fa fa-search"></i></span>
                 </div>                   
-                <input type="text" [(ngModel)]="searchText" placeholder="Buscar funcionario por nombre" class="form-control border-0">
+                <input type="text" [(ngModel)]="searchText" placeholder="Buscar..." class="form-control border-0">
                 <div class="input-group-append">
                     <!--
                     <span (click)="openModal(modalContent, null)" class="input-group-text border-top-0 border-right-0 border-bottom-0"><i class="fa fa-user-plus"></i></span>
@@ -39,7 +39,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let funcionario of funcionarios | UserSearchPipe : searchText | paginate: { itemsPerPage: 10, currentPage: p }">
+                        <!-- <tr *ngFor="let funcionario of funcionarios | UserSearchPipe : searchText | paginate: { itemsPerPage: 10, currentPage: p }"> -->
+                        <tr *ngFor="let funcionario of funcionarios | UserSearchPipe : {cNombreFuncionario: searchText,
+                                                                                        cApellidoPaternoFuncionario: searchText,
+                                                                                        cApellidoMaternoFuncionario: searchText,
+                                                                                        cClaveUsuario: searchText,
+                                                                                        cNombre: searchText} | paginate: { itemsPerPage: 10, currentPage: p }">
                             <td class="align-middle text-truncate">{{ funcionario.cNombreFuncionario }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.cApellidoPaternoFuncionario }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.cApellidoMaternoFuncionario }}</td>
