@@ -5,16 +5,30 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 
 export class MailSearchPipe implements PipeTransform {
-  transform(value, args?): Array<any> {
-    let searchText = new RegExp(args, 'ig');
-    if (value) {
-      return value.filter(mail => {
-        if(mail.sender || mail.subject){
-          if(mail.sender.search(searchText) !== -1 || mail.subject.search(searchText) !== -1){
-            return true;
-          }
-        }
-      });
+  transform(funcionarios: any, searchText: string, defaultFilter: boolean): Array<any> {
+    if (!searchText){
+      return funcionarios;
+    }
+
+    if (!Array.isArray(funcionarios)){
+      return funcionarios;
+    }
+
+    if (searchText && Array.isArray( funcionarios )) {
+      let filterKeys = Object.keys( searchText );
+
+      if (defaultFilter) {
+        return funcionarios.filter( item =>
+            filterKeys.reduce(( x, keyName ) =>
+                (x && new RegExp( searchText[keyName], 'gi' ).test( item[keyName] )) || searchText[keyName] == "", true));
+      }
+      else {
+        return funcionarios.filter( it => {
+          return filterKeys.some(( key ) => {
+            return new RegExp( searchText[key], 'gi' ).test( it[key] ) || searchText[key] == "";
+          });
+        });
+      }
     }
   }
 }

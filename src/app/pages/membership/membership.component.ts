@@ -3,14 +3,14 @@ import { FormGroup, FormControl, FormBuilder, Validators, NgForm} from '@angular
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE, CambioAdscripcion, ExpPendientes, AsignarPendientes } from './membership.model';
+import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE, CambioAdscripcion, ExpPendientes, AsignarPendientes, cambioEstatus } from './membership.model';
 import { MembershipService } from './membership.service';
 import { MenuService } from '../../theme/components/menu/menu.service';
 import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
 import { RouteConfigLoadStart } from '@angular/router';
 import swal from 'sweetalert2';
 import { Location } from '@angular/common';
-import { promise } from 'protractor';
+import { $ } from 'protractor';
  
 @Component({
   selector: 'app-membership',
@@ -30,6 +30,7 @@ export class MembershipComponent implements OnInit {
   public funcionario: FuncionariosData;
   public roles: Roles[] = [];
   public funcionarioRol: Roles[] = [];
+  public count : number;
   public agencias: Agencias[] = [];
   public agencia: Agencias;
   public users: User[];
@@ -62,6 +63,7 @@ export class MembershipComponent implements OnInit {
   public esMPNum: number;
   public soloRolesNum: number;
   public esPrincipal: number;
+  public cambioEstatus1: cambioEstatus[];
  
   public menuSelectSettings: IMultiSelectSettings = {
       enableSearch: true,
@@ -164,6 +166,7 @@ export class MembershipComponent implements OnInit {
       title: 'Desactivar usuario',
       text: '¿Esta seguro que desea desactivar al usuario?',
       type: 'warning',
+      html: '<b>¿Esta seguro que desea desactivar al usuario?</b><br><label><b>Justificacion:</b></label><input id="justificacion" class="swal2-input">',
       showCancelButton: true,
       confirmButtonText: 'Desactivar',
       cancelButtonText: 'Cancelar'
@@ -175,30 +178,27 @@ export class MembershipComponent implements OnInit {
         funcionario.bEsActivo = 0;
         console.log("Se desactiva el funcionario => " + funcionario.iClaveFuncionario );
         console.log(valor);
+        var justificacion = "";
+        var iclaveFuncionarionew = funcionario.iClaveFuncionario;
+
+        let cambioEstatus1 = new cambioEstatus(iclaveFuncionarionew,valor,justificacion);
+        this.cambioEstatus(cambioEstatus1);
         
-        swal(
-          'Usuario desactivado',
-          'Desactivacion exitosa',
-          'success'
-        )
-      // For more information about handling dismissals please visit
-      // https://sweetalert2.github.io/#handling-dismissals
+        swal({
+          title:"Usuario desactivado'",
+          text: "Desactivacion exitosa",
+          type: "success"
+          }).then(() =>{
+          
+           location.reload();
+          });
       } else if (result.dismiss === swal.DismissReason.cancel) {
         console.log("Se cancelo la desactivación")
-        swal(
-          'Cancelado',
-          'El usuario no se ha desactivado',
-          'error'
-        )
+       
       }
     })
 
-    // const act = e.target.checked = true;
-    // const valor: number = 0;
-    // console.log(funcionario);
-    // funcionario.bEsActivo = 0;
-    // console.log("Se desactiva el funcionario => " + funcionario.iClaveFuncionario );
-    // console.log(valor);
+    
   }
 
   public controlInactivo(e, funcionario) {
@@ -207,6 +207,7 @@ export class MembershipComponent implements OnInit {
       title: 'Activar usuario',
       text: '¿Esta seguro que desea activar al usuario?',
       type: 'warning',
+      html: '<b>¿Esta seguro que desea Activar al usuario?</b><br><label><b>Justificacion:</b></label><input id="justificacion" class="swal2-input">',
       showCancelButton: true,
       confirmButtonText: 'Activar',
       cancelButtonText: 'Cancelar'
@@ -218,20 +219,23 @@ export class MembershipComponent implements OnInit {
         funcionario.bEsActivo = 1;
         console.log("Se activa el funcionario => " + funcionario.iClaveFuncionario);
         console.log(valor);
-        swal(
-          'Usuario Activado',
-          'Activacion exitosa',
-          'success'
-        )
-      // For more information about handling dismissals please visit
-      // https://sweetalert2.github.io/#handling-dismissals
+        var justificacion = "";
+        var iclaveFuncionarionew = funcionario.iClaveFuncionario;
+
+
+        let cambioEstatus1 = new cambioEstatus(iclaveFuncionarionew,valor,justificacion);
+        this.cambioEstatus(cambioEstatus1);
+        swal({
+          title:"Usuario Activado",
+          text: "Activacion exitosa",
+          type: "success"
+          }).then(() =>{
+          
+           location.reload();
+          });
       } else if (result.dismiss === swal.DismissReason.cancel) {
         console.log("Se cancelo la activación")
-        swal(
-          'Cancelado',
-          'El usuario no se ha Activado',
-          'error'
-        )
+      
       }
     })
 
@@ -386,6 +390,20 @@ export class MembershipComponent implements OnInit {
     });
   }
 
+  public getCountExp1(funcionario: FuncionariosData){
+    this.membershipService.getCountExp(funcionario.iClaveFuncionario,funcionario.catDiscriminante_id).subscribe(
+      count =>{ this.count = count
+        console.log("Tiene estos expedientes pendientes => "+this.count);
+        if(count == 0){
+          this.valReasignarExpedientes = false;
+          this.valExpPendCheck = false;
+        }else if(count > 0){
+          this.valReasignarExpedientes = true;
+          this.valExpPendCheck = true;
+        }
+      });
+  }
+
   // Se cargan las agencias del catalogo
   public getAgencias(): void {
     this.membershipService.getAgencias().subscribe( agencias => {
@@ -444,7 +462,22 @@ export class MembershipComponent implements OnInit {
       this.cambioAdscripcion;
     });
     console.log("Se ejecuto el cambio de adscripcion: " + cambioAdscripcion.iClaveFuncionarioSolicitante);
-    swal('Registro exitoso...', this.titularAgencia, 'success');
+    
+    swal({
+      title:"Registro exitoso...",
+      text: this.titularAgencia,
+      type: "success"
+      }).then(() =>{
+      
+       location.reload();
+      });
+  }
+
+  public cambioEstatus(cambioEstatus:cambioEstatus){
+    this.membershipService.cambioEstatus(cambioEstatus).subscribe(cambioEstatus =>{
+      this.cambioEstatus;
+    });
+    console.log("se ejecuto cambio de estatus.");
     
   }
 
@@ -510,7 +543,7 @@ export class MembershipComponent implements OnInit {
     this.posicionRolF = 0;
     this.selectedRolF = 0;
   }
-
+  
   // Se abre el modal y se cargan los datos del funcionario seleccionado
   public openModal(modalContent, funcionario, catUIE) {
     console.log(funcionario);
@@ -520,6 +553,7 @@ export class MembershipComponent implements OnInit {
     this.getFuncionarioRol( funcionario );
     this.getFuncionarioAgencia( funcionario );
     this.getCatUIE(catUIE);
+    this.getCountExp1(funcionario);
     
     if(funcionario){
       const catDis: number = funcionario.catDiscriminante_id
@@ -600,13 +634,23 @@ export class MembershipComponent implements OnInit {
       const catUIE_actual: number = this.val[0];
       const catDiscriminateNuevo: number = this.form.value.catDiscriminante_id;
       const Justificacion: string = this.form.value.cRFC;
-      const expPendientes: number = this.pendientesNum;
+
+      if(this.count >0){
+      var  expPendientes: number = this.pendientesNum;
+      }else{
+      var expPendientes: number = 2;
+      }
+
       const rolesFuncionario: Roles[] = this.funcionarioRol;
-     
+      for (let i = 0; i < rolesFuncionario.length; i++) {
+        if (rolesFuncionario[i].esPrincipal === 1) {
+          this.esPrincipal = rolesFuncionario[i].rol_id;
+        }
+      }
+
       const id_roles  = this.funcionarioRol.map(cat => cat.rol_id)
       const rolesString = String(id_roles);
-
-      const esPrincipal: number = this.form.value.puesto_val;
+      //const esPrincipal: number = this.form.value.puesto_val;
       const esMP: number = this.esMPNum;
       const soloRoles: number = this.soloRolesNum;
 
@@ -620,7 +664,7 @@ export class MembershipComponent implements OnInit {
       console.log("Expedientes pendientes => " + expPendientes);
       console.log("Roles del funcionario => " + rolesFuncionario);
       console.log("Roles en un string => " + rolesString);
-      console.log("Es principal => " + esPrincipal);
+      console.log("Es principal => " + this.esPrincipal);
 
       console.log("Se envio el formulario:");
      // console.log(this.form.value);
@@ -635,7 +679,7 @@ export class MembershipComponent implements OnInit {
                                                     Justificacion,
                                                     expPendientes,
                                                     rolesString,
-                                                    esPrincipal,
+                                                    this.esPrincipal,
                                                     esMP,
                                                     soloRoles );
       console.log(cambioAdscripcion);
@@ -650,7 +694,7 @@ export class MembershipComponent implements OnInit {
 
     //this.modalRef.close();
     this.closeModal();
-    this.pageRefresh();
+    //this.pageRefresh();
   } 
 
   public expPendientesLista: ExpPendientes[] = [];

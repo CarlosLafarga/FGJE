@@ -157,6 +157,8 @@ export class FunciAgencia {
   EsMP: number;
 }
 
+
+
 export class CambioAdscripcion{
  constructor(
    public iClaveFuncionarioSolicitante: number,
@@ -192,6 +194,14 @@ export class AsignarPendientes {
     public iclavefuncionarioNuevo: number,
     public catDiscriminante: number,
    ){}
+}
+
+export class cambioEstatus{
+  constructor(
+    public iclavefuncionario:number,
+    public estatus:number,
+    public justificacion:string,
+  ){}
 }
 
 // export class ExpPendientesTabla {

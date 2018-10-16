@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE , CambioAdscripcion, ExpPendientes, AsignarPendientes } from './membership.model';
+import { User, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE , CambioAdscripcion, ExpPendientes, AsignarPendientes , cambioEstatus} from './membership.model';
 
 @Injectable()
 export class MembershipService {
@@ -19,6 +19,8 @@ export class MembershipService {
     // public url10 = "http://localhost:55244/api/ExpPendientes";
     public url10 = "http://localhost:55244/api/cambioAdscripcionExps";
     public url11 = "http://localhost:55244/api/CambioExp";
+    public url12 = "http://localhost:55244/api/cambiarEstatus";
+    public url13 = "http://localhost:55244/api/CountExp/countExp";
     private headers;
 
     constructor(public http: HttpClient) {
@@ -45,6 +47,10 @@ export class MembershipService {
         return this.http.get<Roles[]>(this.url5 + "?usuario_id=" + id);
     }
 
+    getCountExp(iclave: number,catdis:number):Observable<any>{
+        return this.http.get(this.url13+"?iclavefuncionario="+iclave+"+&catdiscriminate="+catdis);
+    }
+
     getcatUIE( catdis: number ): Observable<catUIE[]> {
         //console.log(catdis);
         return this.http.get<catUIE[]>(this.url7 + "?catdis=" + catdis);
@@ -64,6 +70,11 @@ export class MembershipService {
         return this.http.post(this.url9, newpres ,{headers: this.headers});
     }
 
+    cambioEstatus(cambioEstatus:cambioEstatus){
+        const estatus = JSON.stringify(cambioEstatus);
+        return this.http.post(this.url12,estatus,{headers: this.headers});
+    }
+
     getExpPendientes(): Observable<ExpPendientes[]> {
         return this.http.get<ExpPendientes[]>(this.url10);
     }
@@ -74,7 +85,7 @@ export class MembershipService {
         return this.http.post(this.url11, newExp ,{headers: this.headers});
     }
 
-
+    
 
 
     getUsers(): Observable<User[]> {
