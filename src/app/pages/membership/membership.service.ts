@@ -6,21 +6,19 @@ import { User, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAg
 @Injectable()
 export class MembershipService {
 
-    //public url2 = "http://192.168.105.30:55244/api/funcionarios";
-    public url = "api/users";
-    public url2 = "http://localhost:55244/api/funcionarios";
-    public url3 = "http://localhost:55244/api/catDiscriminantes";
-    public url4 = "http://localhost:55244/api/Roles";
-    public url5 = "http://localhost:55244/api/RolFunci";
-    public url6 = "http://localhost:55244/api/FunciAgencia";
-    public url7 = "http://localhost:55244/api/catUEI";
-    public url8 = "http://localhost:55244/api/funciActual";
-    public url9 = "http://localhost:55244/api/CambioAD/cambioADS";
-    // public url10 = "http://localhost:55244/api/ExpPendientes";
-    public url10 = "http://localhost:55244/api/cambioAdscripcionExps";
-    public url11 = "http://localhost:55244/api/CambioExp";
-    public url12 = "http://localhost:55244/api/cambiarEstatus";
-    public url13 = "http://localhost:55244/api/CountExp/countExp";
+    public general = "http://localhost:55244/api";
+    public url2 =   this.general+"/funcionarios";
+    public url3 =   this.general+"/catDiscriminantes";
+    public url4 =   this.general+"/Roles";
+    public url5 =   this.general+"/RolFunci";
+    public url6 =   this.general+"/FunciAgencia";
+    public url7 =   this.general+"/api/catUEI";
+    public url8 =   this.general+"/api/funciActual";
+    public url9 =   this.general+"/CambioAD/cambioADS";
+    public url10 =  this.general+"/cambioAdscripcionExps";
+    public url11 =  this.general+"/CambioExp";
+    public url12 =  this.general+"/cambiarEstatus";
+    public url13 =  this.general+"/CountExp/countExp";
     private headers;
 
     constructor(public http: HttpClient) {
@@ -86,21 +84,4 @@ export class MembershipService {
     }
 
     
-
-
-    getUsers(): Observable<User[]> {
-        return this.http.get<User[]>(this.url);
-    }
-
-    addUser(user:User){	    
-        return this.http.post(this.url, user);
-    }
-
-    updateUser(user:User){
-        return this.http.put(this.url, user);
-    }
-
-    deleteUser(id: number) {
-        return this.http.delete(this.url + "/" + id);
-    }
 } 
