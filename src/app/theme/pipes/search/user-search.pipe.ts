@@ -19,7 +19,7 @@ export class UserSearchPipe implements PipeTransform {
 
   // }
 
-  transform(funcionarios: any, searchText: any, defaultFilter: boolean): Array<any> {
+  transform(funcionarios: any, searchText: string, defaultFilter: boolean): Array<any> {
     if (!searchText){
       return funcionarios;
     }
