@@ -703,20 +703,39 @@ export class MembershipComponent implements OnInit {
   public getExpPendientes(): void {
     this.membershipService.getExpPendientes().subscribe( eP => {
       this.expPendientesLista = eP
-      console.log(this.expPendientesLista); 
+      // console.log(this.expPendientesLista); 
 
       for (let i = 0; i < this.expPendientesLista.length; i++) {
         const ag: number = this.expPendientesLista[i].catDis_ant;
         for (let j = 0; j < this.agencias.length; j++) {
           if (ag === this.agencias[j].catDiscriminante_id) {
             const agNombre: string = this.agencias[j].cNombre;
-            this.expPendientesLista
-            this.expPendientesLista[i].cNombre = agNombre;
+            // this.expPendientesLista
+            // this.expPendientesLista[i].cNombre = agNombre;
 
             this.expPendientesLista[i].cNombre = agNombre;
+            break;
           }
         }
       }
+
+      for (let i = 0; i < this.expPendientesLista.length; i++) {
+        const f: number = this.expPendientesLista[i].iclaveFuncionario;
+        for (let j = 0; j < this.funcionarios.length; j++) {
+          if (f === this.funcionarios[j].iClaveFuncionario) {
+            const nombreFuncionario: string = this.funcionarios[j].cNombreFuncionario + " "
+                                              + this.funcionarios[j].cApellidoPaternoFuncionario + " "
+                                              + this.funcionarios[j].cApellidoMaternoFuncionario;
+            // this.expPendientesLista
+            // this.expPendientesLista[i].cNombre = agNombre;
+
+            this.expPendientesLista[i].nombreFuncionario = nombreFuncionario;
+            break;
+          }
+        }
+      }
+
+      console.log(this.expPendientesLista); 
 
     });
   }

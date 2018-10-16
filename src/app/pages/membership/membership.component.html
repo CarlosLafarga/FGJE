@@ -435,7 +435,7 @@
 
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-9">
+                                        <div class="col-10">
 
                                             <table class="table table-hover">
                                                 <thead>
@@ -447,7 +447,7 @@
                                                 <tbody>
                                                     <tr *ngFor="let expPend of expPendientesLista | paginate: { itemsPerPage: 10, currentPage: p5, id:'ExpPendientes' }" (click)="onSelectExpPend(expPend)"
                                                         [ngClass]="{ 'highlight': expPend.cambioAdscripcion_id === selectedExpPend }">
-                                                        <td class="align-middle text-truncate">{{ expPend.iclaveFuncionario }}</td>
+                                                        <td class="align-middle text-truncate">{{ expPend.nombreFuncionario }}</td>
                                                         <td class="align-middle text-truncate">{{ expPend.cNombre }}</td>
                                                     </tr>
                                                 </tbody>
@@ -462,7 +462,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-2">
                                             <div class="form-group">
                                                 <label for="iclaveFuncionarioAsign">Selccione el funcionario de la agencia</label>
                                                 <select class="form-control custom-select"

@@ -186,6 +186,7 @@ export class ExpPendientes {
   public esEmp: number;
   public Asignados: number;
   public cNombre: string;
+  public nombreFuncionario: string;
 }
 
 export class AsignarPendientes {
