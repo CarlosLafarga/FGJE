@@ -772,32 +772,16 @@ export class MembershipComponent implements OnInit {
       this.asignarPendientes;
     });
     console.log("Se ejecuto el asignar expedientes: " + asignarPendientes.iclavefuncionarioNuevo);
-    swal('Se asignaron los expedientes...', this.titularAgencia, 'success');
-
-    // swal({
-    //   title: 'Funcionarios de la agencia',
-    //   text: 'Mostrar los funcionarios de la agencia seleccionada',
-    //   type: 'warning',
-    //   showCancelButton: true,
-    //   confirmButtonText: 'Asignar',
-    //   cancelButtonText: 'Cancelar'
-    // }).then((result) => {
-    //   if (result.value) {
-    //     swal(
-    //       'Expedientes asignados',
-    //       'Funcionario al que se le asigno',
-    //       'success'
-    //     )
-    //   // For more information about handling dismissals please visit
-    //   // https://sweetalert2.github.io/#handling-dismissals
-    //   } else if (result.dismiss === swal.DismissReason.cancel) {
-    //     swal(
-    //       'Cancelado',
-    //       'Los expedientes no se asignaron',
-    //       'error'
-    //     )
-    //   }
-    // })
+    
+    swal({
+      title:"Se asignaron los expedientes...",
+      text: this.titularAgencia,
+      type: "success"
+      }).then(() =>{
+      
+       location.reload();
+      });
+    
     
   }
 
@@ -808,9 +792,9 @@ export class MembershipComponent implements OnInit {
       const iclavefuncionarioNuevo: number = this.objExpPend.iclaveFuncionario;
       const catDiscriminante: number = this.objExpPend.catDis_ant;
 
-      let asignarPendientes = new AsignarPendientes(  iclavefuncionarioAnt,
-                                                      iclavefuncionarioNuevo,
-                                                      catDiscriminante );
+      console.log(iclavefuncionarioAnt+"             "+iclavefuncionarioNuevo+"       "+catDiscriminante);
+
+      let asignarPendientes = new AsignarPendientes(iclavefuncionarioAnt,iclavefuncionarioNuevo,catDiscriminante);
 
       this.asignarExpPendientes( asignarPendientes );
 
@@ -821,7 +805,7 @@ export class MembershipComponent implements OnInit {
 
       console.log("se envia el formulario de expedientes pendientes validado");
       this.closeModalExpPend();
-      this.pageRefresh();
+      //this.pageRefresh();
     }
   }
 
