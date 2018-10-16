@@ -1,0 +1,489 @@
+    <div class="row mb-1">
+        <div class="col">
+            <div class="input-group mb-3 box-shadow"> 
+                <div class="input-group-prepend">
+                    <span class="input-group-text border-top-0 border-left-0 border-bottom-0"><i class="fa fa-search"></i></span>
+                </div>                   
+                <input type="text" [(ngModel)]="searchText" placeholder="Buscar..." class="form-control border-0">
+                <div class="input-group-append">
+                    <!--
+                    <span (click)="openModal(modalContent, null)" class="input-group-text border-top-0 border-right-0 border-bottom-0"><i class="fa fa-user-plus"></i></span>
+                    <span (click)="toggle('grid')" class="input-group-text border-top-0 border-right-0 border-bottom-0"><i class="fa fa-th"></i></span>
+                    -->
+                    <span (click)="toggle('list')" class="input-group-text border-top-0 border-right-0 border-bottom-0"><i class="fa fa-list"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-right mb-1 mr-1">
+        <button *ngIf="true" type="button" class="btn btn-success mb-1 mr-1" (click)="openExpPend(expPendientes)">Ver expedientes pendientes</button>
+        <button *ngIf="false" type="button" class="btn btn-danger mb-1 mr-1" (click)="openExpPend(expPendientes)">Ver expedientes pendientes</button>
+    </div>   
+    
+    <div *ngIf="type=='list'" class="row">
+        <div class="col-12">
+            <div class="table-responsive bg-white box-shadow">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nombre(s)</th> 
+                            <th>Apellido paterno</th>
+                            <th>Apellido materno</th>
+                            <th>Usuario</th>
+                            <th>Estatus</th>
+                            <th>Es MP</th>
+                            <th>Agencia</th>
+                            <th>Roles</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <tr *ngFor="let funcionario of funcionarios | UserSearchPipe : searchText | paginate: { itemsPerPage: 10, currentPage: p }"> -->
+                        <tr *ngFor="let funcionario of funcionarios | UserSearchPipe : {cNombreFuncionario: searchText,
+                                                                                        cApellidoPaternoFuncionario: searchText,
+                                                                                        cApellidoMaternoFuncionario: searchText,
+                                                                                        cClaveUsuario: searchText,
+                                                                                        cNombre: searchText} | paginate: { itemsPerPage: 10, currentPage: p }">
+                            <td class="align-middle text-truncate">{{ funcionario.cNombreFuncionario }}</td>
+                            <td class="align-middle text-truncate">{{ funcionario.cApellidoPaternoFuncionario }}</td>
+                            <td class="align-middle text-truncate">{{ funcionario.cApellidoMaternoFuncionario }}</td>
+                            <td class="align-middle text-truncate">{{ funcionario.cClaveUsuario }}</td>
+                            <td class="align-middle">
+                                <input *ngIf="funcionario.bEsActivo === 1"
+                                        class="checkbox-success"
+                                        [ngbTooltip]="'Activo'"
+                                        type="checkbox"
+                                        id="Activo"
+                                        (change)="controlActivos($event, funcionario)"
+                                        checked
+                                >
+                                <input *ngIf="funcionario.bEsActivo != 1"
+                                        class="checkbox-danger"
+                                        [ngbTooltip]="'Inactivo'"
+                                        type="checkbox"
+                                        id="Inactivo"
+                                        (change)="controlInactivo($event, funcionario)"
+                                >
+                            </td>
+                            <!-- <td class="align-middle">
+                                <i *ngIf="funcionario.bEsActivo === 1" class="fa fa-user mr-2 text-success" placement="bottom" [ngbTooltip]="'Activo'"></i>
+                                <i *ngIf="funcionario.bEsActivo != 1" class="fa fa-user mr-2 text-danger" placement="bottom" [ngbTooltip]="'Inactivo'"></i>
+                            </td> -->
+                            <td class="align-middle"  (click)="control(funcionario)">
+                                <i *ngIf="funcionario.esMP === 1" class="fa fa-check mr-2 text-success" placement="bottom" [ngbTooltip]="'Es MP'"></i>
+                                <i *ngIf="funcionario.esMP != 1" class="fa fa-close mr-2 text-danger" placement="bottom" [ngbTooltip]="'No es MP'"></i>
+                            </td>
+                            <td class="align-middle text-truncate">{{ funcionario.cNombre }}</td>
+                            <td><button #ver value="{{funcionario.iClaveFuncionario}}" class="btn btn-secondary" (click)="llamarRoles(ver.value)">Ver Roles</button></td>
+                            <td class="align-middle">
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-secondary btn-sm" (click)="openModal(modalContent, funcionario)"><i class="fa fa-check"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="bg-white text-center">
+                <pagination-controls autoHide="true" (pageChange)="p = $event" maxSize="10" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+            </div>        
+        </div>
+    </div>
+    
+    <ng-template #modalContent>
+        <div class="modal-body bg-gray">
+            <div class="row">
+                <div class="col-12 vertical-tabs">
+                    <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="row px-3" #datos2="ngForm">
+                        <ul class="nav flex-column left col-2 border-0 rounded-0 mr-0 bg-light">              
+                            <li class="nav-item bg-light">
+                                <a class="nav-link active" href="#reubicarFuncionario" data-toggle="tab">Reubicar funcionario</a>
+                            </li>
+                            <li class="nav-item bg-light">
+                                <a *ngIf="valReasignarExpedientes" class="nav-link" href="#reasignarExpedientes" data-toggle="tab">Reasignar expedientes</a>
+                                <a *ngIf="!valReasignarExpedientes" class="nav-link disabled" href="#reasignarExpedientes" data-toggle="tab">Reasignar expedientes</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content col-10 border-0">
+
+                            <div class="tab-pane active" id="reubicarFuncionario">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title mb-0">Reubicar funcionario</h5>
+                                    </div>
+
+                                    <div class="container">
+                                        <label class="text-gray">Nombre del funcionario seleccionado:</label>
+
+                                        <div class="row">
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="text-gray">Nombre</label>
+                                                    <input formControlName="cNombreFuncionario" class="form-control" type="text" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="text-gray">Apellido paterno</label>
+                                                    <input formControlName="cApellidoPaternoFuncionario" class="form-control" type="text" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="text-gray">Apellido materno</label>
+                                                    <input formControlName="cApellidoMaternoFuncionario" class="form-control" type="text" readonly>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        
+                                        <hr>
+
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input fomControlName="pendientes"
+                                                                type="checkbox"
+                                                                class="custom-control-input checkbox-primary"
+                                                                id="expedientesPendientes"
+                                                                (change)="pendientesCheck($event)"
+                                                                [disabled]="!valExpPendCheck">
+                                                        <label class="custom-control-label" for="expedientesPendientes">Expedientes pendientes</label>
+                                                    </div>
+                                                </div>
+                                                <!-- <pre>{{ pendientes }}</pre> -->
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input fomControlName="esMP"
+                                                                type="checkbox"
+                                                                class="custom-control-input checkbox-primary"
+                                                                id="EsMP"
+                                                                (change)="esMPCheck($event)"
+                                                                [disabled]="!valEsMPCheck">
+                                                        <label class="custom-control-label" for="EsMP">es MP</label>
+                                                    </div>
+                                                </div>
+                                                <!-- <pre>{{ esMP }}</pre> -->
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input fomControlName="soloRoles"
+                                                                type="checkbox"
+                                                                class="custom-control-input checkbox-primary"
+                                                                id="SoloRoles"
+                                                                (change)="soloRolesCheck($event)"
+                                                                [disabled]="!valSolocambioCheck">
+                                                        <label class="custom-control-label" for="SoloRoles">Solo cambio de roles</label>
+                                                    </div>
+                                                </div>
+                                                <!-- <pre>{{ soloRoles }}</pre> -->
+                                            </div>
+                                        </div>
+
+                                        <hr>
+
+                                        <div class="form-group">
+                                            <label for="nuevaAgencia">Nueva agencia:</label>
+                                            <select *ngIf="valAgenciaSelect"
+                                                    class="form-control custom-select"
+                                                    id="catDiscriminante_id"
+                                                    formControlName="catDiscriminante_id"
+                                                    [(ngModel)]="catDiscriminante_id"
+                                                    (change)="getCatUIE($event.target.value)"
+                                                    [disabled]="valAgenciaSelect">
+                                                <option selected>-- Seleccione una agencia --</option>
+                                                <option *ngFor="let agencia of agencias" [value]="agencia.catDiscriminante_id">{{ agencia.cClaveDiscriminante }} - {{ agencia.cNombre }}</option>
+                                            </select><br><br>
+                                            
+                                            <input fromControlName="catUIE_id" class="form-control" type="hidden" [value]="r.catUIE_id" readonly id="catUIE_id" *ngFor="let r of catUIE">
+                                            <input fromControlName="clavefunciAgenciaNueva" class="form-control" type="hidden" [value]="" readonly id="clavefunciAgenciaNueva" >
+                                        </div>
+
+                                        <hr>
+
+                                        <div class="row">
+                                            <div class="col-xl-5 col-lg-6 mb-4">
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Id</th>
+                                                            <th>Roles</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let r of roles | paginate: { itemsPerPage: 10, currentPage: p2, id:'roles' }" (click)="onSelectRol(r)"
+                                                            [ngClass] = "{ 'highlight' : r.rol_id === selectedRol }">
+                                                            <th scope="row">{{ r.rol_id }}</th>
+                                                            <td>{{ r.cDescripcionRol }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <div class="row mb-4">
+                                                    <div class="col-12">
+                                                        <div class="bg-white text-center">
+                                                            <pagination-controls autoHide="true" (pageChange)="p2 = $event" id='roles' maxSize="10" previousLabel="" nextLabel=""></pagination-controls>
+                                                        </div>        
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-xl-2 col-lg-6 mb-4">
+                                                <button type="button" class="btn btn-secondary btn-block" (click)="agregarRol()" [ngbTooltip]="'Agregar rol'"> <i class="fa fa-long-arrow-right"></i> </button> <br>
+                                                <button type="button" class="btn btn-secondary btn-block" (click)="quitarRol()" [ngbTooltip]="'Quitar rol'"> <i class="fa fa-long-arrow-left"></i> </button>
+                                            </div>
+
+                                            <div class="col-xl-5 col-lg-6 mb-4">
+                                                
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Id</th>
+                                                            <th>Roles</th>
+                                                            <th>Principal</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <!-- <tr *ngFor="let fRol of funcionarioRol | paginate: { itemsPerPage: 10, currentPage: p3, id:'rolesFuncionario' }" (click)="onSelectFRolF(fRol)"
+                                                            [ngClass]="{'highlight': fRol.rol_id == selectedRolF}">
+                                                            <th scope="row">{{ fRol.rol_id }}</th>
+                                                            <td>{{ fRol.cDescripcionRol }}</td>
+                                                            <td> <input type="radio" name="esPrincipal" class="radio-dark-gray" id=""> </td>
+                                                        </tr> -->
+
+                                                        <tr *ngFor="let rol of funcionarioRol | paginate: { itemsPerPage: 10, currentPage: p3, id:'rolesFuncionario' }" (click)="onSelectFRolF(rol)"
+                                                            [ngClass]="{ 'highlight': rol.rol_id === selectedRolF }">
+                                                            <th scope="row">{{ rol.rol_id }}</th>
+                                                            <td>{{ rol.cDescripcionRol }}</td>
+                                                            <td > <input type="radio" name="esPrincipal" class="radio-dark-gray"  [checked]="rol.esPrincipal === 1" id="rol.rol_id"> </td>
+                                                            <!-- <td>
+                                                                <input type="radio" name="puesto_val" formControlName="puesto_val"  class="radio-dark-gray" [(ngModel)]="puesto_val" [value]="rol.rol_id" required>
+                                                                <small class="text-danger" *ngIf="form.get('puesto_val').hasError('required')">Por favor seleccione el rol principal</small>
+                                                            </td> -->
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+
+                                                <!-- <pre>{{ puesto_val | json }}</pre> -->
+                                                
+                                                <div class="row mb-4">
+                                                    <div class="col-12">
+                                                        <div class="bg-white text-center">
+                                                            <pagination-controls autoHide="true" (pageChange)="p3 = $event" id='rolesFuncionario' maxSize="10" previousLabel="" nextLabel=""></pagination-controls>
+                                                        </div>        
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="reasignarExpedientes">
+                                <div class="card">                        
+                                    <div class="card-body">
+                                        <h5 class="card-title mb-0">Reasignar expedientes en agencia actual: <small>{{ nombreAgActual }}</small></h5>
+                                    </div>
+                                    <div class="container">
+                                        <div id="accordion" role="tablist" aria-multiselectable="true">
+
+                                            <!-- <div class="card border-0">
+                                                <div class="card-header transparent" role="tab" id="headingOne">
+                                                    <h6 class="mb-0">
+                                                        <a class="text-primary" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                            Titular de la agencia
+                                                        </a>
+                                                    </h6>
+                                                </div>
+                    
+                                                <div id="collapseOne" class="collapse show" data-parent="#accordion" role="tabpanel" aria-labelledby="headingOne">
+                                                    <div class="card-body">
+                                                        <h6>Nombre del funcionario titular de la agencia: </h6>
+                                                        <p>(mostrar el nombre del titular de la agencia)</p> 
+                                                    </div>
+                                                </div>
+                                            </div> -->
+
+                                            <div class="card border-0">
+                                                <div class="card-header transparent" role="tab" id="headingTwo">
+                                                    <h6 class="mb-0">
+                                                        <a class="text-primary" data-toggle="collapse" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                                            Funcinarios
+                                                        </a>
+                                                    </h6>
+                                                </div>
+                                                <div id="collapseTwo" class="collapse show" data-parent="#accordion" role="tabpanel" aria-labelledby="headingTwo">
+                                                    <div class="card-body">
+                                                        <div class="input-group mb-2 box-shadow">
+                                                            <span class="input-group-prepend">
+                                                                <span class="input-group-text">
+                                                                    <i class="fa fa-search"></i>
+                                                                </span>
+                                                            </span>
+                                                            <input type="text" [(ngModel)]="buscarFuncionario" formControlName="cNumeroCertificado" placeholder="Escriba el nombre del funcionario" class="form-control">
+                                                        </div>
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Clave funcionario</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Apellido paterno</th>
+                                                                    <th>Apellido materno</th>
+                                                                    <!-- <th>Nombre Agencia</th> -->
+                                                                    <th>Titular</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let funagen of funciAgencia | FuncionarioSearchPipe : buscarFuncionario | paginate: { itemsPerPage: 10, currentPage: p4, id:'FuncionarioAgencia' }">
+                                                                    <td scope="row">{{ funagen.iClaveFuncionario }}</td>
+                                                                    <td>{{ funagen.cNombreFuncionario }}</td>
+                                                                    <td>{{ funagen.cApellidoPaternoFuncionario }}</td>
+                                                                    <td>{{ funagen.cApellidoMaternoFuncionario }}</td>
+                                                                    <!-- <td>{{ funagen.cNombre }}</td>  -->
+                                                                    <td>
+                                                                        <i *ngIf="funagen.esMP === 1" class="fa fa-check mr-2 text-success" placement="bottom"></i>
+                                                                        <i *ngIf="funagen.esMP != 1" class="fa fa-close mr-2 text-danger" placement="bottom"></i>
+                                                                    </td>
+                                                                    <td ><input type="radio" name="archivoDigital_id" formControlName="archivoDigital_id"  class="radio-dark-gray" [(ngModel)]="archivoDigital_id" [value]="funagen.iClaveFuncionario"> </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                        <div class="row mb-4">
+                                                            <div class="col-12">
+                                                                <div class="bg-white text-center">
+                                                                    <pagination-controls autoHide="true" (pageChange)="p4 = $event" id='FuncionarioAgencia' maxSize="10" previousLabel="" nextLabel=""></pagination-controls>
+                                                                </div>        
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <pre>
+                                {{ roles | json }}
+                            </pre>  -->
+                            <!-- <pre>
+                                {{ funcionarioRol | json }}
+                            </pre> -->
+                            <!-- <pre>
+                                   {{ form.value | json }}
+                            </pre> -->
+                                  
+                        </div>
+
+                        <div class="col-12 bg-white py-1">
+                            <div class="form-group">
+                                <label for="justificacion">justificación</label>
+                                <textarea id="justificacion" class="form-control" formControlName="cRFC" [(ngModel)]="cRFC" required></textarea>
+                                <small class="text-danger" *ngIf="form.get('cRFC').touched && form.get('cRFC').hasError('required')">Por favor ingrese la justificación</small>
+                            </div>
+                        </div>
+
+                        <div class="col-12 bg-white text-center py-1">
+                            <button [disabled]="!form.valid" type="submit" class="btn btn-success mr-1">Aceptar</button>
+                            <button type="button" class="btn btn-danger" (click)="closeModal()">Cancelar</button>
+                        </div>  
+                    </form> 
+                </div>
+            </div>    
+        </div>
+    </ng-template>
+
+    <ng-template #expPendientes>
+        <div class="modal-body bg-gray">
+            <div class="row">
+                <div class="col-12">
+                    <form [formGroup]="formExpPend" (ngSubmit)="onSubmitExpPend(formExpPend.value)" class="row px-3" #datos="ngForm">
+
+                        <div class="card col-12">
+                            <div class="card-header transparent border-0 text-muted">
+                                <h4 class="modal-title">Expedientes pendientes</h4>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-9">
+
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Clave Funcionario</th>
+                                                        <th>Agencia</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let expPend of expPendientesLista | paginate: { itemsPerPage: 10, currentPage: p5, id:'ExpPendientes' }" (click)="onSelectExpPend(expPend)"
+                                                        [ngClass]="{ 'highlight': expPend.cambioAdscripcion_id === selectedExpPend }">
+                                                        <td class="align-middle text-truncate">{{ expPend.iclaveFuncionario }}</td>
+                                                        <td class="align-middle text-truncate">{{ expPend.cNombre }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <div class="row mb-4">
+                                                <div class="col-12">
+                                                    <div class="bg-white text-center">
+                                                        <pagination-controls autoHide="true" (pageChange)="p5 = $event" id='ExpPendientes' maxSize="10" previousLabel="" nextLabel=""></pagination-controls>
+                                                    </div>        
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="iclaveFuncionarioAsign">Selccione el funcionario de la agencia</label>
+                                                <select class="form-control custom-select"
+                                                        id="iclaveFuncionarioAsign"
+                                                        formControlName="iclaveFuncionarioAsign"
+                                                        [(ngModel)]="iclaveFuncionarioAsign"
+                                                        required>
+                                                    <option selected>-- Seleccione un funcionario --</option>
+                                                    <option *ngFor="let funsAg of funcinariosAgencia" [value]="funsAg.iClaveFuncionario">{{ funsAg.cNombreFuncionario }} {{ funsAg.cApellidoPaternoFuncionario }} {{ funsAg.cAPellidoMaternoFuncionario }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-12 bg-white text-center py-2">
+                            <button [disabled]="!formExpPend.valid" type="submit" class="btn btn-success mr-1">Aceptar</button>
+                            <button type="button" class="btn btn-danger" (click)="closeModalExpPend()">Cancelar</button>
+                        </div> 
+
+                    </form>            
+                </div>
+            </div>
+        </div>
+    </ng-template>
