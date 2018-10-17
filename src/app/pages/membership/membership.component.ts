@@ -160,7 +160,8 @@ export class MembershipComponent implements OnInit {
     });
   }
 
-  public controlActivos(e, funcionario) {
+  public rev: boolean = true;
+  public controlActivos(funcionario) {
 
     swal({
       title: 'Desactivar usuario',
@@ -172,11 +173,11 @@ export class MembershipComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
-        const act = e.target.checked;
+        // const act = e.target.checked;
         const valor: number = 0;
         console.log(funcionario);
         funcionario.bEsActivo = 0;
-        console.log("Se desactiva el funcionario => " + funcionario.iClaveFuncionario );
+        console.log("Se desactiva el funcionario => " + funcionario.cNombreFuncionario );
         console.log(valor);
         var justificacion = "";
         var iclaveFuncionarionew = funcionario.iClaveFuncionario;
@@ -190,18 +191,18 @@ export class MembershipComponent implements OnInit {
           type: "success"
           }).then(() =>{
           
-           location.reload();
+          //  location.reload();
           });
       } else if (result.dismiss === swal.DismissReason.cancel) {
         console.log("Se cancelo la desactivación")
-       
+        this.rev = true; 
       }
     })
 
     
   }
 
-  public controlInactivo(e, funcionario) {
+  public controlInactivo(funcionario) {
 
     swal({
       title: 'Activar usuario',
@@ -213,11 +214,11 @@ export class MembershipComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
-        const inact = e.target.checked;
+        // const inact = e.target.checked;
         const valor: number = 1;
         console.log(funcionario);
         funcionario.bEsActivo = 1;
-        console.log("Se activa el funcionario => " + funcionario.iClaveFuncionario);
+        console.log("Se activa el funcionario => " + funcionario.cNombreFuncionario);
         console.log(valor);
         var justificacion = "";
         var iclaveFuncionarionew = funcionario.iClaveFuncionario;
@@ -231,7 +232,7 @@ export class MembershipComponent implements OnInit {
           type: "success"
           }).then(() =>{
           
-           location.reload();
+          //  location.reload();
           });
       } else if (result.dismiss === swal.DismissReason.cancel) {
         console.log("Se cancelo la activación")
@@ -239,12 +240,12 @@ export class MembershipComponent implements OnInit {
       }
     })
 
-    const inact = e.target.checked;
-    const valor: number = 1;
-    console.log(funcionario);
-    funcionario.bEsActivo = 1;
-    console.log("Se activa el funcionario => " + funcionario.iClaveFuncionario);
-    console.log(valor);
+    // const inact = e.target.checked;
+    // const valor: number = 1;
+    // console.log(funcionario);
+    // funcionario.bEsActivo = 1;
+    // console.log("Se activa el funcionario => " + funcionario.cNombreFuncionario);
+    // console.log(valor);
   }
 
   pageRefresh() {

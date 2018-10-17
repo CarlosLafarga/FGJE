@@ -49,12 +49,12 @@
                             <td class="align-middle text-truncate">{{ funcionario.cApellidoPaternoFuncionario }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.cApellidoMaternoFuncionario }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.cClaveUsuario }}</td>
-                            <td class="align-middle">
+                            <!-- <td class="align-middle">
                                 <input *ngIf="funcionario.bEsActivo === 1"
                                         class="checkbox-success"
                                         [ngbTooltip]="'Activo'"
                                         type="checkbox"
-                                        id="check"
+                                        id="checkAct"
                                         #activo
                                         (change)="controlActivos($event, funcionario)"
                                         checked
@@ -63,16 +63,16 @@
                                         class="checkbox-danger"
                                         [ngbTooltip]="'Inactivo'"
                                         type="checkbox"
-                                        id="check"
+                                        id="checkInact"
                                         #inactivo
                                         (change)="controlInactivo($event, funcionario)"
                                 >
-                            </td>
-                            <!-- <td class="align-middle">
-                                <i *ngIf="funcionario.bEsActivo === 1" class="fa fa-user mr-2 text-success" placement="bottom" [ngbTooltip]="'Activo'"></i>
-                                <i *ngIf="funcionario.bEsActivo != 1" class="fa fa-user mr-2 text-danger" placement="bottom" [ngbTooltip]="'Inactivo'"></i>
                             </td> -->
-                            <td class="align-middle"  (click)="control(funcionario)">
+                            <td class="align-middle">
+                                <i *ngIf="funcionario.bEsActivo === 1" class="fa fa-user mr-2 text-success" placement="bottom" [ngbTooltip]="'Activo, haga clic para desactivar'" (click)="controlActivos(funcionario)"></i>
+                                <i *ngIf="funcionario.bEsActivo != 1" class="fa fa-user mr-2 text-danger" placement="bottom" [ngbTooltip]="'Inactivo, haga clic para activar'" (click)="controlInactivo(funcionario)"></i>
+                            </td>
+                            <td class="align-middle">
                                 <i *ngIf="funcionario.esMP === 1" class="fa fa-check mr-2 text-success" placement="bottom" [ngbTooltip]="'Es MP'"></i>
                                 <i *ngIf="funcionario.esMP != 1" class="fa fa-close mr-2 text-danger" placement="bottom" [ngbTooltip]="'No es MP'"></i>
                             </td>
