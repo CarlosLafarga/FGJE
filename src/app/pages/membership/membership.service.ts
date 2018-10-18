@@ -12,8 +12,8 @@ export class MembershipService {
     public url4 =   this.general+"/Roles";
     public url5 =   this.general+"/RolFunci";
     public url6 =   this.general+"/FunciAgencia";
-    public url7 =   this.general+"/api/catUEI";
-    public url8 =   this.general+"/api/funciActual";
+    public url7 =   this.general+"/catUEI";
+    public url8 =   this.general+"/funciActual";
     public url9 =   this.general+"/CambioAD/cambioADS";
     public url10 =  this.general+"/cambioAdscripcionExps";
     public url11 =  this.general+"/CambioExp";

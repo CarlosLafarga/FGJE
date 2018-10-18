@@ -177,23 +177,24 @@ export class CambioAdscripcion{
 }
 
 export class ExpPendientes {
-  public cambioAdscripcion_id: number;
+  public cambioAdscripcionExp_id: number;
   public iclaveFuncionario: number;
-  public catDis_ant: number;
-  public catDis_asignado: number;
-  public fecha_creacion: Date;
-  public fecha_modificacion: Date;
-  public esEmp: number;
-  public Asignados: number;
+  public catDiscriminante_anterior: number;
+  public catDiscriminante_asignado: number;
+  public dFechaCreacion: Date;
+  public dFechaModificacion: Date;
+  public EsMP: number;
+  public bAsignados: number;
   public cNombre: string;
   public nombreFuncionario: string;
 }
 
 export class AsignarPendientes {
   constructor(
-    public iclavefuncionarioNuevo: number,
-    public iclavefuncionarioAnt: number,
     public catDiscriminante: number,
+    public iclavefuncionarioAnt: number,
+    public iclavefuncionarioNuevo: number,
+    
    ){}
 }
 

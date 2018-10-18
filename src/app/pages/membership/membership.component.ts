@@ -707,7 +707,7 @@ export class MembershipComponent implements OnInit {
       // console.log(this.expPendientesLista); 
 
       for (let i = 0; i < this.expPendientesLista.length; i++) {
-        const ag: number = this.expPendientesLista[i].catDis_ant;
+        const ag: number = this.expPendientesLista[i].catDiscriminante_anterior;
         for (let j = 0; j < this.agencias.length; j++) {
           if (ag === this.agencias[j].catDiscriminante_id) {
             const agNombre: string = this.agencias[j].cNombre;
@@ -744,7 +744,7 @@ export class MembershipComponent implements OnInit {
   public funcinariosAgencia: FunciAgencia[] = [];
 
   public getFuncionariosAg(expPend: ExpPendientes):void {
-    this.membershipService.getFUsuarioAgencia(expPend.catDis_ant).subscribe( exp => {
+    this.membershipService.getFUsuarioAgencia(expPend.catDiscriminante_anterior).subscribe( exp => {
       this.funcinariosAgencia = exp
       console.log(this.funcinariosAgencia);
     });
@@ -754,7 +754,7 @@ export class MembershipComponent implements OnInit {
   public objExpPend: ExpPendientes;
 
   public onSelectExpPend(expPend: ExpPendientes) {
-    this.selectedExpPend = expPend.cambioAdscripcion_id;
+    this.selectedExpPend = expPend.cambioAdscripcionExp_id;
     console.log("Se seleccionaron los expedientes pendientes => " + this.selectedExpPend);
     this.objExpPend = expPend;
     console.log(this.objExpPend);
@@ -791,11 +791,11 @@ export class MembershipComponent implements OnInit {
 
       const iclavefuncionarioAnt: number = this.formExpPend.value.iclaveFuncionarioAsign;
       const iclavefuncionarioNuevo: number = this.objExpPend.iclaveFuncionario;
-      const catDiscriminante: number = this.objExpPend.catDis_ant;
+      const catDiscriminante: number = this.objExpPend.catDiscriminante_anterior;
 
       console.log(iclavefuncionarioAnt+"             "+iclavefuncionarioNuevo+"       "+catDiscriminante);
 
-      let asignarPendientes = new AsignarPendientes(iclavefuncionarioAnt,iclavefuncionarioNuevo,catDiscriminante);
+      let asignarPendientes = new AsignarPendientes(catDiscriminante,iclavefuncionarioNuevo,iclavefuncionarioAnt);
 
       this.asignarExpPendientes( asignarPendientes );
 
