@@ -303,15 +303,16 @@ export class MembershipComponent implements OnInit {
 
       for(var i = 0; i<funcionarioRol.length; i++){
       
-        names += funcionarioRol[i].cDescripcionRol+"<br>";
+        names += "<b>"+funcionarioRol[i].cDescripcionRol+"</b><br>";
         //console.log(names);
       }
       //console.log(names);
       
       swal({
         title: "<b>Roles Del Funcionario</b>", 
-        html: names+"<br>",  
+        html: "<b>"+names+"</b><br>",  
         confirmButtonText: "Aceptar", 
+        confirmButtonColor:"#4BAE4F",
       });
 
     });
