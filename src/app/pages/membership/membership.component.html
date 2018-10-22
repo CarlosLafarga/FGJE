@@ -4,7 +4,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text border-top-0 border-left-0 border-bottom-0"><i class="fa fa-search"></i></span>
                 </div>                   
-                <input type="text" [(ngModel)]="searchText" placeholder="Buscar funcionario por nombre" class="form-control border-0">
+                <input type="text" [(ngModel)]="searchText" placeholder="Buscar..." class="form-control border-0">
                 <div class="input-group-append">
                     <!--
                     <span (click)="openModal(modalContent, null)" class="input-group-text border-top-0 border-right-0 border-bottom-0"><i class="fa fa-user-plus"></i></span>
@@ -31,6 +31,7 @@
                             <th>Apellido paterno</th>
                             <th>Apellido materno</th>
                             <th>Usuario</th>
+                            <th>Número de empleado</th>
                             <th>Estatus</th>
                             <th>Es MP</th>
                             <th>Agencia</th>
@@ -41,14 +42,16 @@
                     <tbody>
                        <!-- <tr *ngFor="let funcionario of funcionarios | UserSearchPipe : searchText | paginate: { itemsPerPage: 10, currentPage: p }"> -->
                             <tr *ngFor="let funcionario of funcionarios | UserSearchPipe : {cNombreFuncionario: searchText,
-                                cApellidoPaternoFuncionario: searchText,
-                                cApellidoMaternoFuncionario: searchText,
-                                cClaveUsuario: searchText,
-                                cNombre: searchText} | paginate: { itemsPerPage: 10, currentPage: p }">
+                                                                                            cApellidoPaternoFuncionario: searchText,
+                                                                                            cApellidoMaternoFuncionario: searchText,
+                                                                                            cClaveUsuario: searchText,
+                                                                                            cNumeroEmpleado: searchText,
+                                                                                            cNombre: searchText} | paginate: { itemsPerPage: 10, currentPage: p }">
                             <td class="align-middle text-truncate">{{ funcionario.cNombreFuncionario }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.cApellidoPaternoFuncionario }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.cApellidoMaternoFuncionario }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.cClaveUsuario }}</td>
+                            <td class="align-middle text-truncate">{{ funcionario.cNumeroEmpleado }}</td>
                             <!-- <td class="align-middle">
                                 <input *ngIf="funcionario.bEsActivo === 1"
                                         class="checkbox-success"
@@ -176,7 +179,8 @@
                                                                 class="custom-control-input checkbox-primary"
                                                                 id="EsMP"
                                                                 (change)="esMPCheck($event)"
-                                                                [disabled]="!valEsMPCheck">
+                                                                [disabled]="!valEsMPCheck"
+                                                                [checked]="funcionario.esMP === 1">
                                                         <label class="custom-control-label" for="EsMP">es MP</label>
                                                     </div>
                                                 </div>
@@ -332,7 +336,7 @@
                                                 <div class="card-header transparent" role="tab" id="headingTwo">
                                                     <h6 class="mb-0">
                                                         <a class="text-primary" data-toggle="collapse" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                                            Funcinarios
+                                                            Funcionarios
                                                         </a>
                                                     </h6>
                                                 </div>
@@ -344,12 +348,12 @@
                                                                     <i class="fa fa-search"></i>
                                                                 </span>
                                                             </span>
-                                                            <input type="text" [(ngModel)]="buscarFuncionario" formControlName="cNumeroCertificado" placeholder="Escriba el nombre del funcionario" class="form-control">
+                                                            <input type="text" [(ngModel)]="buscarFuncionario" formControlName="cNumeroCertificado" placeholder="Buscar..." class="form-control">
                                                         </div>
                                                         <table class="table table-hover">
                                                             <thead>
                                                                 <tr>
-                                                                    <th>Clave funcionario</th>
+                                                                    <th>Número de empleado</th>
                                                                     <th>Nombre</th>
                                                                     <th>Apellido paterno</th>
                                                                     <th>Apellido materno</th>
@@ -359,8 +363,11 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr *ngFor="let funagen of funciAgencia | FuncionarioSearchPipe : buscarFuncionario | paginate: { itemsPerPage: 10, currentPage: p4, id:'FuncionarioAgencia' }">
-                                                                    <td scope="row">{{ funagen.iClaveFuncionario }}</td>
+                                                                <tr *ngFor="let funagen of funciAgencia | FuncionarioSearchPipe : { cNumeroEmpleado: buscarFuncionario,
+                                                                                                                                    cNombreFuncionario: buscarFuncionario,
+                                                                                                                                    cApellidoPaternoFuncionario: buscarFuncionario,
+                                                                                                                                    cApellidoMaternoFuncionario: buscarFuncionario } | paginate: { itemsPerPage: 10, currentPage: p4, id:'FuncionarioAgencia' }">
+                                                                    <td scope="row">{{ funagen.cNumeroEmpleado }}</td>
                                                                     <td>{{ funagen.cNombreFuncionario }}</td>
                                                                     <td>{{ funagen.cApellidoPaternoFuncionario }}</td>
                                                                     <td>{{ funagen.cApellidoMaternoFuncionario }}</td>
@@ -404,10 +411,13 @@
                         </div>
 
                         <div class="col-12 bg-white py-1">
+                            <div *ngIf="form.get('cRFC').hasError('required')" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Atencion!</strong> Por favor ingrese la justificación.
+                            </div>
                             <div class="form-group">
                                 <label for="justificacion">justificación</label>
                                 <textarea id="justificacion" class="form-control" formControlName="cRFC" [(ngModel)]="cRFC" required></textarea>
-                                <small class="text-danger" *ngIf="form.get('cRFC').touched && form.get('cRFC').hasError('required')">Por favor ingrese la justificación</small>
+                                <!-- <small class="text-danger" *ngIf="form.get('cRFC').touched && form.get('cRFC').hasError('required')">Por favor ingrese la justificación</small> -->
                             </div>
                         </div>
 
@@ -440,7 +450,7 @@
                                             <table class="table table-hover">
                                                 <thead>
                                                     <tr>
-                                                        <th>Clave Funcionario</th>
+                                                        <th>Nombre del funcionario</th>
                                                         <th>Agencia</th>
                                                     </tr>
                                                 </thead>

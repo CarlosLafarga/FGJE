@@ -167,7 +167,7 @@ export class MembershipComponent implements OnInit {
       title: 'Desactivar usuario',
       text: '¿Esta seguro que desea desactivar al usuario?',
       type: 'warning',
-      html: '<b>¿Esta seguro que desea desactivar al usuario?</b><br><label><b>Justificacion:</b></label><input id="justificacion" class="swal2-input">',
+      html: '<b>¿Esta seguro que desea desactivar al usuario?</b><br><label><b>Justificacion:</b></label><input id="justificacion" class="swal2-input"> required',
       showCancelButton: true,
       confirmButtonText: 'Desactivar',
       cancelButtonText: 'Cancelar'
@@ -604,6 +604,7 @@ export class MembershipComponent implements OnInit {
     this.formExpPend.reset();
     // this.pageRefresh();
     this.selectedExpPend = 0;
+    this.funcinariosAgencia = [];
   }
 
   // Se ejecuta el envio del formulario

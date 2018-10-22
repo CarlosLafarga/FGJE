@@ -7,6 +7,7 @@ import { User, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAg
 export class MembershipService {
 
     public general = "http://localhost:55244/api";
+    // public general = "http://localhost:55244/api";
     public url2 =   this.general+"/funcionarios";
     public url3 =   this.general+"/catDiscriminantes";
     public url4 =   this.general+"/Roles";
