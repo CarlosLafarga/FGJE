@@ -4,7 +4,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text border-top-0 border-left-0 border-bottom-0"><i class="fa fa-search"></i></span>
                 </div>                   
-                <input type="text" [(ngModel)]="searchText" placeholder="Buscar..." class="form-control border-0">
+                <input type="text" [(ngModel)]="searchText" placeholder="Buscar por Num. de empleado, Nombre(s), Ap. paterno, Ap materno, Usuario ó Agencia" class="form-control border-0">
                 <div class="input-group-append">
                     <!--
                     <span (click)="openModal(modalContent, null)" class="input-group-text border-top-0 border-right-0 border-bottom-0"><i class="fa fa-user-plus"></i></span>
@@ -16,10 +16,34 @@
         </div>
     </div>
 
-    <div class="text-right mb-1 mr-1">
-        <button *ngIf="true" type="button" class="btn btn-success mb-1 mr-1" (click)="openExpPend(expPendientes)">Ver expedientes pendientes</button>
-        <button *ngIf="false" type="button" class="btn btn-danger mb-1 mr-1" (click)="openExpPend(expPendientes)">Ver expedientes pendientes</button>
-    </div>   
+    <!-- <button class="mt-3 btn btn-sm btn-outline-{{spinners ? 'success' : 'danger'}}" (click)="spinners = !spinners">
+        Mostrar solo activos - {{spinners ? "SI" : "NO"}}
+    </button>   -->
+    <div class="row mb-1">
+
+        <div class="col-sm-10">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox"
+                            class="custom-control-input checkbox-primary"
+                            id="soloActivos"
+                            (change)="soloActivos($event)"
+                            checked="mostrarActivos"
+                            name="soloActivos"
+                            [(ngModel)]="mostrarActivos"
+                    >
+                    <label class="custom-control-label" for="soloActivos">Mostrar solo usuarios activos</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-right mb-1 mr-1">
+            <button *ngIf="true" type="button" class="btn btn-success mb-1 mr-1" (click)="openExpPend(expPendientes)">Ver expedientes pendientes</button>
+            <button *ngIf="false" type="button" class="btn btn-danger mb-1 mr-1" (click)="openExpPend(expPendientes)">Ver expedientes pendientes</button>
+        </div>   
+    </div>
+
+    
     
     <div *ngIf="type=='list'" class="row">
         <div class="col-12">
@@ -27,11 +51,11 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
+                            <th>Número de empleado</th>
                             <th>Nombre(s)</th> 
                             <th>Apellido paterno</th>
                             <th>Apellido materno</th>
                             <th>Usuario</th>
-                            <th>Número de empleado</th>
                             <th>Estatus</th>
                             <th>Es MP</th>
                             <th>Agencia</th>
@@ -41,17 +65,19 @@
                     </thead>
                     <tbody>
                        <!-- <tr *ngFor="let funcionario of funcionarios | UserSearchPipe : searchText | paginate: { itemsPerPage: 10, currentPage: p }"> -->
-                            <tr *ngFor="let funcionario of funcionarios | UserSearchPipe : {cNombreFuncionario: searchText,
-                                                                                            cApellidoPaternoFuncionario: searchText,
-                                                                                            cApellidoMaternoFuncionario: searchText,
-                                                                                            cClaveUsuario: searchText,
-                                                                                            cNumeroEmpleado: searchText,
-                                                                                            cNombre: searchText} | paginate: { itemsPerPage: 10, currentPage: p }">
+                        <tr *ngFor="let funcionario of funcionarios | UserSearchPipe : {cNombreFuncionario: searchText,
+                                                                                        cApellidoPaternoFuncionario: searchText,
+                                                                                        cApellidoMaternoFuncionario: searchText,
+                                                                                        cClaveUsuario: searchText,
+                                                                                        cNumeroEmpleado: searchText,
+                                                                                        cNombre: searchText}
+                                                                    
+                                                                    | paginate: { itemsPerPage: 10, currentPage: p }">
+                            <td class="align-middle text-truncate">{{ funcionario.cNumeroEmpleado }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.cNombreFuncionario }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.cApellidoPaternoFuncionario }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.cApellidoMaternoFuncionario }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.cClaveUsuario }}</td>
-                            <td class="align-middle text-truncate">{{ funcionario.cNumeroEmpleado }}</td>
                             <!-- <td class="align-middle">
                                 <input *ngIf="funcionario.bEsActivo === 1"
                                         class="checkbox-success"
@@ -83,7 +109,7 @@
                             <td><button #ver value="{{funcionario.iClaveFuncionario}}" class="btn btn-secondary" (click)="llamarRoles(ver.value)">Ver Roles</button></td>
                             <td class="align-middle">
                                 <div class="btn-group" role="group">
-                                    <button class="btn btn-secondary btn-sm" (click)="openModal(modalContent, funcionario)"><i class="fa fa-check"></i></button>
+                                    <button [disabled]="funcionario.bEsActivo != 1" class="btn btn-secondary btn-sm" (click)="openModal(modalContent, funcionario)"><i class="fa fa-check"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -204,14 +230,13 @@
                                         </div>
 
                                         <hr>
-
+                                        <!-- [(ngModel)]="catDiscriminante_id" -->
                                         <div class="form-group">
-                                            <label for="nuevaAgencia">Nueva agencia:</label>
+                                            <label for="catDiscriminante_id">Nueva agencia:</label>
                                             <select *ngIf="valAgenciaSelect"
                                                     class="form-control custom-select"
                                                     id="catDiscriminante_id"
                                                     formControlName="catDiscriminante_id"
-                                                    [(ngModel)]="catDiscriminante_id"
                                                     (change)="getCatUIE($event.target.value)"
                                                     [disabled]="valAgenciaSelect">
                                                 <option selected>-- Seleccione una agencia --</option>
@@ -229,14 +254,18 @@
                                                 <table class="table table-hover">
                                                     <thead>
                                                         <tr>
-                                                            <th>Id</th>
+                                                            <!-- <th>Id</th> -->
                                                             <th>Roles</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr *ngFor="let r of roles | paginate: { itemsPerPage: 10, currentPage: p2, id:'roles' }" (click)="onSelectRol(r)"
+                                                        <tr *ngFor="let r of roles | paginate: { itemsPerPage: 10,
+                                                                                                currentPage: p2,
+                                                                                                id:'roles'
+                                                                                                 }"
+                                                            (click)="onSelectRol(r)"
                                                             [ngClass] = "{ 'highlight' : r.rol_id === selectedRol }">
-                                                            <th scope="row">{{ r.rol_id }}</th>
+                                                            <!-- <th scope="row">{{ r.rol_id }}</th> -->
                                                             <td>{{ r.cDescripcionRol }}</td>
                                                         </tr>
                                                     </tbody>
@@ -262,7 +291,7 @@
                                                 <table class="table table-hover">
                                                     <thead>
                                                         <tr>
-                                                            <th>Id</th>
+                                                            <!-- <th>Id</th> -->
                                                             <th>Roles</th>
                                                             <th>Principal</th>
                                                         </tr>
@@ -278,7 +307,7 @@
 
                                                         <tr *ngFor="let rol of funcionarioRol | paginate: { itemsPerPage: 10, currentPage: p3, id:'rolesFuncionario' }" (click)="onSelectFRolF(rol)"
                                                             [ngClass]="{ 'highlight': rol.rol_id === selectedRolF }">
-                                                            <th scope="row">{{ rol.rol_id }}</th>
+                                                            <!-- <th scope="row">{{ rol.rol_id }}</th> -->
                                                             <td>{{ rol.cDescripcionRol }}</td>
                                                             <td > <input type="radio"  name="esPrincipal" class="radio-dark-gray"  [checked]="rol.esPrincipal === 1" id="rol.rol_id"> </td>
                                                             <!-- <td>
@@ -416,7 +445,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="justificacion">justificación</label>
-                                <textarea id="justificacion" class="form-control" formControlName="cRFC" [(ngModel)]="cRFC" required></textarea>
+                                <textarea id="justificacion" class="form-control" formControlName="cRFC" required></textarea>
+                                <!-- <textarea id="justificacion" class="form-control" formControlName="cRFC" [(ngModel)]="cRFC" required></textarea> -->
                                 <!-- <small class="text-danger" *ngIf="form.get('cRFC').touched && form.get('cRFC').hasError('required')">Por favor ingrese la justificación</small> -->
                             </div>
                         </div>

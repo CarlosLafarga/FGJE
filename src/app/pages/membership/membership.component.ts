@@ -7,7 +7,7 @@ import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, Fu
 import { MembershipService } from './membership.service';
 import { MenuService } from '../../theme/components/menu/menu.service';
 import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
-import { RouteConfigLoadStart } from '@angular/router';
+import { RouteConfigLoadStart, Router } from '@angular/router';
 import swal from 'sweetalert2';
 import { Location } from '@angular/common';
 import { $ } from 'protractor';
@@ -21,6 +21,7 @@ import { $ } from 'protractor';
 })
 export class MembershipComponent implements OnInit {
 
+  public router: Router;
   public titularAgencia: string;
   public buscarFuncionario: string;
   public menuItems: Array<any>;  
@@ -52,9 +53,9 @@ export class MembershipComponent implements OnInit {
   public posicionRolF: number = 0;
   public funciAgencia: FunciAgencia[] = [];
   public catUIE: catUIE[] = [];
-  public val: number[];
+  public val: number[] = [];
   public funciMP:FuncionariosData[] = [];
-  public clavedelactaul :number[];
+  public clavedelactaul :number[] = [];
   public cambio : any[];
   public expPendientes: boolean = false;
   public esMP: boolean = false;
@@ -64,6 +65,7 @@ export class MembershipComponent implements OnInit {
   public soloRolesNum: number;
   public esPrincipal: number;
   public cambioEstatus1: cambioEstatus[];
+  public mostrarActivos: boolean = true;
  
   public menuSelectSettings: IMultiSelectSettings = {
       enableSearch: true,
@@ -85,13 +87,16 @@ export class MembershipComponent implements OnInit {
   };
   public menuSelectOptions: IMultiSelectOption[] = [];
   
-  constructor(public fbf: FormBuilder,
+  constructor(router: Router,
+              public fbf: FormBuilder,
               public fbExpPend: FormBuilder,
               public toastrService: ToastrService,
               public membershipService: MembershipService,
               public menuService: MenuService, 
               public modalService: NgbModal,
               public location: Location) {
+
+    this.router = router;
 
     this.menuItems = this.menuService.getVerticalMenuItems();
     this.menuItems.forEach(item=>{
@@ -167,11 +172,19 @@ export class MembershipComponent implements OnInit {
       title: 'Desactivar usuario',
       text: '¿Esta seguro que desea desactivar al usuario?',
       type: 'warning',
-      html: '<b>¿Esta seguro que desea desactivar al usuario?</b><br><label><b>Justificacion:</b></label><input id="justificacion" class="swal2-input"> required',
+      html: '<b>¿Esta seguro que desea desactivar al usuario?</b><br><label><b>Justificacion:</b></label>',
+      input: 'text',
+      inputValidator: (value) => {
+        return !value && 'Por favor ingrese la justificacion.'
+       },
       showCancelButton: true,
       confirmButtonText: 'Desactivar',
       cancelButtonText: 'Cancelar'
+
     }).then((result) => {
+
+      console.log(result.value);
+
       if (result.value) {
         // const act = e.target.checked;
         const valor: number = 0;
@@ -179,11 +192,11 @@ export class MembershipComponent implements OnInit {
         funcionario.bEsActivo = 0;
         console.log("Se desactiva el funcionario => " + funcionario.cNombreFuncionario );
         console.log(valor);
-        var justificacion = "";
+        var justificacion = result.value;
         var iclaveFuncionarionew = funcionario.iClaveFuncionario;
 
-        let cambioEstatus1 = new cambioEstatus(iclaveFuncionarionew,valor,justificacion);
-        this.cambioEstatus(cambioEstatus1);
+        let cambioEstatus1 = new cambioEstatus(iclaveFuncionarionew, valor, justificacion);
+        this.cambioEstatus( cambioEstatus1 );
         
         swal({
           title:"Usuario desactivado'",
@@ -194,11 +207,10 @@ export class MembershipComponent implements OnInit {
           //  location.reload();
           });
       } else if (result.dismiss === swal.DismissReason.cancel) {
-        console.log("Se cancelo la desactivación")
+        console.log("Se cancelo la desactivación" + result)
         this.rev = true; 
       }
-    })
-
+    });
     
   }
 
@@ -208,11 +220,18 @@ export class MembershipComponent implements OnInit {
       title: 'Activar usuario',
       text: '¿Esta seguro que desea activar al usuario?',
       type: 'warning',
-      html: '<b>¿Esta seguro que desea Activar al usuario?</b><br><label><b>Justificacion:</b></label><input id="justificacion" class="swal2-input">',
+      html: '<b>¿Esta seguro que desea Activar al usuario?</b><br><label><b>Justificacion:</b></label>',
+      input: 'text',
+      inputValidator: (value) => {
+        return !value && 'Por favor ingrese la justificacion.'
+       },
       showCancelButton: true,
       confirmButtonText: 'Activar',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
+
+      console.log(result.value);
+
       if (result.value) {
         // const inact = e.target.checked;
         const valor: number = 1;
@@ -240,16 +259,12 @@ export class MembershipComponent implements OnInit {
       }
     })
 
-    // const inact = e.target.checked;
-    // const valor: number = 1;
-    // console.log(funcionario);
-    // funcionario.bEsActivo = 1;
-    // console.log("Se activa el funcionario => " + funcionario.cNombreFuncionario);
-    // console.log(valor);
   }
 
   pageRefresh() {
-    location.reload();
+    this.form.reset();
+    this.router.navigate(['/pages/membership']);
+    // location.reload();
   }
 
   public valReasignarExpedientes: boolean = true;
@@ -294,6 +309,19 @@ export class MembershipComponent implements OnInit {
     //this.checkEPyMP = null;
   }
 
+  public searchActivos: string = "1"
+
+  public soloActivos( e ) {
+    this.mostrarActivos = e.target.checked
+    if (this.mostrarActivos) {
+      this.searchActivos = "1";
+      console.log(this.searchActivos);
+    } else if(!this.mostrarActivos) {
+      this.searchActivos = ""
+      console.log(this.searchActivos);
+    }
+  }
+
   public llamarRoles( clave:number){
     var names = "";
     this.membershipService.getFUsuarioRol(clave).subscribe( funcionarioRol => {
@@ -302,17 +330,16 @@ export class MembershipComponent implements OnInit {
       var roles  = JSON.stringify(this.funcionarioRol);
 
       for(var i = 0; i<funcionarioRol.length; i++){
-      
-        names += "<b>"+funcionarioRol[i].cDescripcionRol+"</b><br>";
+        names += "<b>" + funcionarioRol[i].cDescripcionRol + "</b><br>";
         //console.log(names);
       }
       //console.log(names);
       
       swal({
         title: "<b>Roles Del Funcionario</b>", 
-        html: "<b>"+names+"</b><br>",  
+        html: "<b>" + names + "</b><br>",  
         confirmButtonText: "Aceptar", 
-        confirmButtonColor:"#4BAE4F",
+        confirmButtonColor: "#4BAE4F",
       });
 
     });
@@ -359,16 +386,25 @@ export class MembershipComponent implements OnInit {
   public rolesSR: Roles[] = [];
   
   // Se cargan los roles del catalogo
+  // public getRoles(): void {
+  //   var hash = {}
+  //   this.membershipService.getRoles().subscribe( roles => {
+  //     this.roles = roles.filter(function(current){
+  //       var exists = !hash[current.rol_id] || false;
+  //       hash[current.rol_id] = true;
+  //       // console.log("Este es el arreglo ya formateado:=>"+exists);
+  //       return exists;
+  //     });
+  //     console.log("Estos son los roles");
+  //     console.log(this.roles);
+
+  //   });
+  // }
+
+  public cont: number;
   public getRoles(): void {
-    var hash = {}
     this.membershipService.getRoles().subscribe( roles => {
-      this.roles = roles.filter(function(current){
-        var exists = !hash[current.rol_id] || false;
-        hash[current.rol_id] = true;
-        // console.log("Este es el arreglo ya formateado:=>"+exists);
-        return exists;
-      });
-      console.log("Estos son los roles");
+      this.roles = roles
       console.log(this.roles);
 
     });
@@ -410,7 +446,10 @@ export class MembershipComponent implements OnInit {
   public getAgencias(): void {
     this.membershipService.getAgencias().subscribe( agencias => {
       this.agencias = agencias
+      
+      this.agencias.sort( (a, b) => a.cClaveDiscriminante - b.cClaveDiscriminante );
       console.log(this.agencias);
+
     });
   }
 
@@ -422,6 +461,13 @@ export class MembershipComponent implements OnInit {
       this.funciAgencia = funciAgencia
       this.nAgActual = this.funciAgencia.map(a => a.cNombre);
       this.nombreAgActual = this.nAgActual[0];
+
+      for (let i = 0; i < this.funciAgencia.length; i++) {
+        if (this.funcionario.iClaveFuncionario === this.funciAgencia[i].iClaveFuncionario) {
+          this.funciAgencia.splice( i, 1);
+        }
+      }
+
     });
   }
 
@@ -471,11 +517,11 @@ export class MembershipComponent implements OnInit {
       type: "success"
       }).then(() =>{
       
-       location.reload();
+        this.router.navigate(['/pages/membership']);
       });
   }
 
-  public cambioEstatus(cambioEstatus:cambioEstatus){
+  public cambioEstatus(cambioEstatus: cambioEstatus){
     this.membershipService.cambioEstatus(cambioEstatus).subscribe(cambioEstatus =>{
       this.cambioEstatus;
     });
@@ -528,15 +574,20 @@ export class MembershipComponent implements OnInit {
   public rolesEliminados: Roles[] = [];
   quitarRol() {
     if (this.posicionRolF > -1 && this.selectedRolF !== 0) {
-      this.roles.push(this.delRol);
-      this.rolesEliminados.push(this.delRol);
-      console.log(this.rolesEliminados);
-      console.log("Funcion quitar");
-      console.log(this.delRol);
-      this.roles.sort( (a, b) => a.rol_id - b.rol_id );
-      console.log("Array roles:");
-      console.log(this.roles);
-      this.funcionarioRol.splice(this.posicionRolF, 1);
+      if (this.delRol.esPrincipal === 1) {
+        console.log("El rol es principal");
+        this.toastrService.warning('no puede eliminar el rol principal! para poder eliminar este rol seleccione otro como principal.', 'Atención!', {timeOut: 3000});
+      } else {
+        this.roles.push(this.delRol);
+        this.rolesEliminados.push(this.delRol);
+        console.log(this.rolesEliminados);
+        console.log("Funcion quitar");
+        console.log(this.delRol);
+        this.roles.sort( (a, b) => a.rol_id - b.rol_id );
+        console.log("Array roles:");
+        console.log(this.roles);
+        this.funcionarioRol.splice(this.posicionRolF, 1);
+      }
     } else {
       console.log("Seleccione el rol a eliminar!");
       this.toastrService.warning('Por favor seleccione un rol para eliminar!', 'Atención!', {timeOut: 3000});
@@ -586,6 +637,9 @@ export class MembershipComponent implements OnInit {
   }
 
   // Cerrar el modal
+
+  public p2: number;
+
   public closeModal(){
     this.modalRef.close();
     this.form.reset();
@@ -596,6 +650,11 @@ export class MembershipComponent implements OnInit {
     this.selectedRol = 0;
     this.selectedRolF = 0;
     this.getAgencias();
+
+    this.p2 = 1;
+
+    this.pageRefresh();
+
   }
 
   // Cerrar el modal de expedientes pendientes
@@ -630,13 +689,25 @@ export class MembershipComponent implements OnInit {
         this.soloRolesNum = 0;
       }
 
-      const iClaveFuncionarioSolicitante: number = this.form.value.iClaveFuncionario;
-      const iClaveFuncionarioAnterior: number = this.clavedelactaul[0];
-      const iClaveFuncionarioExp: number = this.form.value.archivoDigital_id;
-      const catDiscriminateSolicitante: number = this.funcionario.catDiscriminante_id;
-      const catUIE_actual: number = this.val[0];
-      const catDiscriminateNuevo: number = this.form.value.catDiscriminante_id;
-      const Justificacion: string = this.form.value.cRFC;
+      var iClaveFuncionarioSolicitante: number = 0;
+      var iClaveFuncionarioAnterior: number = 0;
+      var iClaveFuncionarioExp: number = 0;
+      var catDiscriminateSolicitante: number = 0;
+      var catUIE_actual: number = 0;
+      var catDiscriminateNuevo: number = 0;
+      var Justificacion: string = "";
+      var rolesFuncionario: Roles[] = [];
+      var rolesString: string = "";
+      var esMP: number = 0;
+      var soloRoles: number = 0;
+
+      iClaveFuncionarioSolicitante = this.form.value.iClaveFuncionario;
+      iClaveFuncionarioAnterior = this.clavedelactaul[0];
+      iClaveFuncionarioExp = this.form.value.archivoDigital_id;
+      catDiscriminateSolicitante = this.funcionario.catDiscriminante_id;
+      catUIE_actual = this.val[0];
+      catDiscriminateNuevo = this.form.value.catDiscriminante_id;
+      Justificacion = this.form.value.cRFC;
 
       if(this.count >0){
       var  expPendientes: number = this.pendientesNum;
@@ -644,18 +715,22 @@ export class MembershipComponent implements OnInit {
       var expPendientes: number = 2;
       }
 
-      const rolesFuncionario: Roles[] = this.funcionarioRol;
+      
+
+      rolesFuncionario = this.funcionarioRol;
       for (let i = 0; i < rolesFuncionario.length; i++) {
         if (rolesFuncionario[i].esPrincipal === 1) {
           this.esPrincipal = rolesFuncionario[i].rol_id;
         }
       }
 
-      const id_roles  = this.funcionarioRol.map(cat => cat.rol_id)
-      const rolesString = String(id_roles);
+      var id_roles: number[] = [];
+
+      id_roles = this.funcionarioRol.map(cat => cat.rol_id)
+      rolesString = String(id_roles);
       //const esPrincipal: number = this.form.value.puesto_val;
-      const esMP: number = this.esMPNum;
-      const soloRoles: number = this.soloRolesNum;
+      esMP = this.esMPNum;
+      soloRoles = this.soloRolesNum;
 
       console.log("iClaveFuncionarioSolicitante => " + iClaveFuncionarioSolicitante);
       console.log("iClaveFuncionarioAnterior => " + iClaveFuncionarioAnterior);
@@ -782,7 +857,7 @@ export class MembershipComponent implements OnInit {
       type: "success"
       }).then(() =>{
       
-       location.reload();
+        this.router.navigate(['/pages/membership']);
       });
     
     

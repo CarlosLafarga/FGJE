@@ -7,6 +7,7 @@ import { UserSearchPipe } from './search/user-search.pipe';
 import { TruncatePipe } from './truncate/truncate.pipe';
 import { MailSearchPipe } from './search/mail-search.pipe';
 import { FuncionarioSearchPipe } from './search/funcionario-search.pipe';
+// import { ActivosSearchPipe } from './search/activos-search.pipe';
 
 @NgModule({
     imports: [ 
@@ -18,7 +19,8 @@ import { FuncionarioSearchPipe } from './search/funcionario-search.pipe';
         UserSearchPipe,
         TruncatePipe,
         MailSearchPipe,
-        FuncionarioSearchPipe
+        FuncionarioSearchPipe,
+        // ActivosSearchPipe
     ],
     exports: [
         ProfilePicturePipe,
@@ -26,7 +28,8 @@ import { FuncionarioSearchPipe } from './search/funcionario-search.pipe';
         UserSearchPipe,
         TruncatePipe,
         MailSearchPipe,
-        FuncionarioSearchPipe
+        FuncionarioSearchPipe,
+        // ActivosSearchPipe
     ]
 })
 export class PipesModule { }

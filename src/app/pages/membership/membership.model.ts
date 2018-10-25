@@ -172,7 +172,7 @@ export class CambioAdscripcion{
    public rolesFuncionario: string,
    public esPrincipal: number,
    public esMP: number,
-   public soloRoles: number
+   public funcion_roles: number
   ){}
 }
 
