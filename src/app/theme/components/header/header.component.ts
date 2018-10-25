@@ -3,6 +3,7 @@ import { trigger,  state,  style, transition, animate } from '@angular/animation
 import { AppSettings } from '../../../app.settings';
 import { Settings } from '../../../app.settings.model';
 import { MenuService } from '../menu/menu.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -24,7 +25,7 @@ export class HeaderComponent implements OnInit {
   public showInfoContent:boolean = false;
   public settings: Settings;
   public menuItems:Array<any>;
-  constructor(public appSettings:AppSettings, public menuService:MenuService) {
+  constructor(public appSettings:AppSettings, public menuService:MenuService, private router: Router) {
       this.settings = this.appSettings.settings;
       this.menuItems = this.menuService.getHorizontalMenuItems();
   }
@@ -34,7 +35,10 @@ export class HeaderComponent implements OnInit {
       this.showHorizontalMenu = false;
   }
 
-
+  logOut(){
+    localStorage.removeItem('isLoggedIn');
+    this.router.navigate(['/login']);
+  }
   public closeSubMenus(){
     let menu = document.querySelector("#menu0"); 
     if(menu){

@@ -13,6 +13,10 @@ import { NotFoundComponent } from './pages/errors/not-found/not-found.component'
 
 import { HttpClientModule } from '@angular/common/http';
 
+import {loginServices} from './pages/login/login.service';
+import {AuthGuard} from './pages/auth/auth.guard';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +32,7 @@ import { HttpClientModule } from '@angular/common/http';
     CalendarModule.forRoot(),
     routing
   ],
-  providers: [ AppSettings ],
+  providers: [ AppSettings , AuthGuard, loginServices],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

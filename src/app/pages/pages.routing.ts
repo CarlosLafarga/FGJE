@@ -4,6 +4,7 @@ import { ModuleWithProviders } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import { BlankComponent } from './blank/blank.component';
 import { SearchComponent } from './search/search.component';
+import { AuthGuard } from './auth/auth.guard';
 
 //import { CambioAdscripcionComponent } from './cambio-adscripcion/cambio-adscripcion.component';
 
@@ -14,7 +15,7 @@ export const routes: Routes = [
         children:[
             { path:'', redirectTo:'login', pathMatch:'full' },
             // { path: 'dashboard', loadChildren: 'app/pages/dashboard/dashboard.module#DashboardModule', data: { breadcrumb: 'Dashboard' }  },          
-            { path: 'membership', loadChildren: 'app/pages/membership/membership.module#MembershipModule', data: { breadcrumb: 'Cambio de adscripción' } },
+            { path: 'membership', loadChildren: 'app/pages/membership/membership.module#MembershipModule', data: { breadcrumb: 'Cambio de adscripción' } , canActivate:[AuthGuard]},
             // { path: 'ui', loadChildren: 'app/pages/ui/ui.module#UiModule', data: { breadcrumb: 'UI' } },
             // { path: 'form-elements', loadChildren: 'app/pages/form-elements/form-elements.module#FormElementsModule', data: { breadcrumb: 'Form Elements' } },
             // { path: 'tables', loadChildren: 'app/pages/tables/tables.module#TablesModule', data: { breadcrumb: 'Tables' } },
