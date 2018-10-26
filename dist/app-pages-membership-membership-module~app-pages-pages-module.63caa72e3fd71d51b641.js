@@ -10576,7 +10576,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-// import { ActivosSearchPipe } from './search/activos-search.pipe';
 var PipesModule = /** @class */ (function () {
     function PipesModule() {
     }
@@ -10907,4 +10906,4 @@ var TruncatePipe = /** @class */ (function () {
 /***/ })
 
 }]);
-//# sourceMappingURL=app-pages-membership-membership-module~app-pages-pages-module.9f1763f190726a8ce2e0.js.map
+//# sourceMappingURL=app-pages-membership-membership-module~app-pages-pages-module.63caa72e3fd71d51b641.js.map

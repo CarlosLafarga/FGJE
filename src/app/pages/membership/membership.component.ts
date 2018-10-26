@@ -666,6 +666,10 @@ export class MembershipComponent implements OnInit {
     this.funcinariosAgencia = [];
   }
 
+  // radioChange( e ) {
+  //   console.log("detecte el evento del radio");
+  // }
+
   // Se ejecuta el envio del formulario
   public onSubmit():void {
 

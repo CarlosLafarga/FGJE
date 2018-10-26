@@ -11,12 +11,14 @@ var map = {
 	"app/pages/login/login.module": [
 		"./src/app/pages/login/login.module.ts",
 		"app-pages-login-login-module~app-pages-membership-membership-module~app-pages-pages-module~app-pages~37ae9313",
+		"app-pages-login-login-module~app-pages-membership-membership-module",
 		"app-pages-login-login-module"
 	],
 	"app/pages/membership/membership.module": [
 		"./src/app/pages/membership/membership.module.ts",
 		"app-pages-login-login-module~app-pages-membership-membership-module~app-pages-pages-module~app-pages~37ae9313",
 		"app-pages-membership-membership-module~app-pages-pages-module",
+		"app-pages-login-login-module~app-pages-membership-membership-module",
 		"app-pages-membership-membership-module"
 	],
 	"app/pages/pages.module": [
@@ -142,12 +144,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
 /* harmony import */ var _pages_errors_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/errors/not-found/not-found.component */ "./src/app/pages/errors/not-found/not-found.component.ts");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _pages_login_login_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/login/login.service */ "./src/app/pages/login/login.service.ts");
+/* harmony import */ var _pages_auth_auth_guard__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./pages/auth/auth.guard */ "./src/app/pages/auth/auth.guard.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -177,7 +183,7 @@ var AppModule = /** @class */ (function () {
                 angular_calendar__WEBPACK_IMPORTED_MODULE_4__["CalendarModule"].forRoot(),
                 _app_routing__WEBPACK_IMPORTED_MODULE_5__["routing"]
             ],
-            providers: [_app_settings__WEBPACK_IMPORTED_MODULE_6__["AppSettings"]],
+            providers: [_app_settings__WEBPACK_IMPORTED_MODULE_6__["AppSettings"], _pages_auth_auth_guard__WEBPACK_IMPORTED_MODULE_11__["AuthGuard"], _pages_login_login_service__WEBPACK_IMPORTED_MODULE_10__["loginServices"]],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
         })
     ], AppModule);
@@ -284,6 +290,58 @@ var AppSettings = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/pages/auth/auth.guard.ts":
+/*!******************************************!*\
+  !*** ./src/app/pages/auth/auth.guard.ts ***!
+  \******************************************/
+/*! exports provided: AuthGuard */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthGuard", function() { return AuthGuard; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _login_login_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../login/login.service */ "./src/app/pages/login/login.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var AuthGuard = /** @class */ (function () {
+    function AuthGuard(router, loginservices) {
+        this.router = router;
+        this.loginservices = loginservices;
+    }
+    AuthGuard.prototype.canActivate = function (next, state) {
+        // console.log("AUTH GUARD =>"+this.loginservices.isLoggedIn);
+        // return this.loginservices.isLoggedIn;
+        if (localStorage.getItem('isLoggedIn') === null) {
+            this.router.navigate(['/login']);
+            return false;
+        }
+        else {
+            return true;
+        }
+    };
+    AuthGuard = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _login_login_service__WEBPACK_IMPORTED_MODULE_2__["loginServices"]])
+    ], AuthGuard);
+    return AuthGuard;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/pages/errors/not-found/not-found.component.html":
 /*!*****************************************************************!*\
   !*** ./src/app/pages/errors/not-found/not-found.component.html ***!
@@ -355,6 +413,69 @@ var NotFoundComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/pages/login/login.service.ts":
+/*!**********************************************!*\
+  !*** ./src/app/pages/login/login.service.ts ***!
+  \**********************************************/
+/*! exports provided: loginServices */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loginServices", function() { return loginServices; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var loginServices = /** @class */ (function () {
+    function loginServices(http) {
+        this.http = http;
+        // public general = "http://localhost:55244/api";
+        this.general = "http://192.168.105.53:55245/api";
+        this.url = this.general + "/Auth/";
+        this.loggedInStatus = false;
+        this.headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({ 'Content-Type': 'application/json' });
+    }
+    loginServices.prototype.setLoggedIn = function (value) {
+        console.log("PARAMETRO VALUE => " + value);
+        this.loggedInStatus = value;
+        localStorage.setItem('isLoggedIn', this.loggedInStatus + '');
+        console.log("PARAMETRO LOGGEDINSTATUS => " + this.loggedInStatus);
+    };
+    Object.defineProperty(loginServices.prototype, "isLoggedIn", {
+        get: function () {
+            console.log("LOGGEDINSATATUS DEL SI LOGGEDIND =>" + this.loggedInStatus);
+            return this.loggedInStatus;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    loginServices.prototype.loggedIn = function () {
+        return !!localStorage.getItem('token');
+    };
+    loginServices.prototype.userAuth = function (username, password) {
+        return this.http.get(this.url + "?username=" + username + "&passwordd=" + password);
+    };
+    loginServices = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+    ], loginServices);
+    return loginServices;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/environments/environment.ts":
 /*!*****************************************!*\
   !*** ./src/environments/environment.ts ***!
@@ -414,4 +535,4 @@ module.exports = __webpack_require__(/*! C:\Users\usuario\Documents\GitHub\FGJE\
 /***/ })
 
 },[[0,"runtime","vendor"]]]);
-//# sourceMappingURL=main.ad795aa758c14d86e1a5.js.map
+//# sourceMappingURL=main.3d488b5f9115cdcf0fd3.js.map
