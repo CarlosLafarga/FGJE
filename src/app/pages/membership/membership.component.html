@@ -37,9 +37,11 @@
             </div>
         </div>
 
-        <div class="text-right mb-1 mr-1">
-            <button *ngIf="true" type="button" class="btn btn-success mb-1 mr-1" (click)="openExpPend(expPendientes)">Ver expedientes pendientes</button>
-            <button *ngIf="false" type="button" class="btn btn-danger mb-1 mr-1" (click)="openExpPend(expPendientes)">Ver expedientes pendientes</button>
+        <div class="col-sm-2">
+            <div class="text-right mb-1 ">
+                <button *ngIf="true" type="button" class="btn btn-success mb-1" (click)="openExpPend(expPendientes)">Ver expedientes pendientes</button>
+                <button *ngIf="false" type="button" class="btn btn-danger mb-1" (click)="openExpPend(expPendientes)">Ver expedientes pendientes</button>
+            </div> 
         </div>   
     </div>
 
@@ -311,7 +313,7 @@
                                                             <td>{{ rol.cDescripcionRol }}</td>
                                                             <td> <input type="radio"  name="esPrincipal" class="radio-dark-gray"  [checked]="rol.esPrincipal === 1" id="rol.rol_id"> </td>
                                                             <!-- <td>
-                                                                <input type="radio" name="puesto_val" formControlName="puesto_val"  class="radio-dark-gray" [(ngModel)]="puesto_val" [value]="rol.rol_id" required>
+                                                                <input type="radio" name="puesto_val" formControlName="puesto_val"  class="radio-dark-gray" [(ngModel)]="puesto_val" [value]="rol.rol_id" [checked]="rol.esPrincipal === 1" >
                                                                 <small class="text-danger" *ngIf="form.get('puesto_val').hasError('required')">Por favor seleccione el rol principal</small>
                                                             </td> -->
                                                         </tr>

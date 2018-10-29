@@ -7,11 +7,11 @@ export class ActivosSearchPipe implements PipeTransform {
     let searchActivos = new RegExp(args, 'ig');
     if (value) {
       return value.filter(funcionario => {
-        if (funcionario.bEsActivo) { console.log(funcionario);
+        if (funcionario.bEsActivo) { 
           return funcionario.bEsActivo.search(searchActivos) !== -1;
         }
         else{
-          return funcionario.cNombreFuncionario.search(searchActivos) !== -1;
+          return funcionario.bEsActivo.search(searchActivos) !== -1;
         }
       });
     }

@@ -111,13 +111,10 @@ export class MembershipComponent implements OnInit {
 
   ngOnInit() {
     this.getFuncionarios();
-    console.log(this.funcionarios);
 
     this.getAgencias();
-    console.log(this.agencias);
 
     this.getRoles();
-    console.log(this.roles);
 
     this.formExpPend =  this.fbExpPend.group({
       cambioAdscripcion_id: null,
@@ -183,15 +180,12 @@ export class MembershipComponent implements OnInit {
 
     }).then((result) => {
 
-      console.log(result.value);
-
       if (result.value) {
         // const act = e.target.checked;
         const valor: number = 0;
-        console.log(funcionario);
         funcionario.bEsActivo = 0;
-        console.log("Se desactiva el funcionario => " + funcionario.cNombreFuncionario );
-        console.log(valor);
+        // console.log("Se desactiva el funcionario => " + funcionario.cNombreFuncionario );
+        // console.log(valor);
         var justificacion = result.value;
         var iclaveFuncionarionew = funcionario.iClaveFuncionario;
 
@@ -207,7 +201,6 @@ export class MembershipComponent implements OnInit {
           //  location.reload();
           });
       } else if (result.dismiss === swal.DismissReason.cancel) {
-        console.log("Se cancelo la desactivación" + result)
         this.rev = true; 
       }
     });
@@ -235,10 +228,10 @@ export class MembershipComponent implements OnInit {
       if (result.value) {
         // const inact = e.target.checked;
         const valor: number = 1;
-        console.log(funcionario);
+        // console.log(funcionario);
         funcionario.bEsActivo = 1;
-        console.log("Se activa el funcionario => " + funcionario.cNombreFuncionario);
-        console.log(valor);
+        // console.log("Se activa el funcionario => " + funcionario.cNombreFuncionario);
+        // console.log(valor);
         var justificacion = "";
         var iclaveFuncionarionew = funcionario.iClaveFuncionario;
 
@@ -251,7 +244,7 @@ export class MembershipComponent implements OnInit {
           type: "success"
           }).then(() =>{
           
-          //  location.reload();
+          // location.reload();
           });
       } else if (result.dismiss === swal.DismissReason.cancel) {
         console.log("Se cancelo la activación")
@@ -322,6 +315,37 @@ export class MembershipComponent implements OnInit {
     }
   }
 
+  // public soloActivos( e ) {
+  //   this.mostrarActivos = e.target.checked
+  //   if (!this.mostrarActivos) {
+  //     this.searchActivos = "";
+  //     console.log(this.searchActivos);
+  //   }
+  // }
+
+  // public llamarRoles( clave:number){
+  //   var names = "";
+  //   this.membershipService.getFUsuarioRol(clave).subscribe( funcionarioRol => {
+  //     this.funcionarioRol = funcionarioRol
+  //     //console.log(this.funcionarioRol);
+  //     var roles  = JSON.stringify(this.funcionarioRol);
+
+  //     for(var i = 0; i<funcionarioRol.length; i++){
+  //       names += "<b>" + funcionarioRol[i].cDescripcionRol + "</b><br>";
+  //       //console.log(names);
+  //     }
+  //     //console.log(names);
+      
+  //     swal({
+  //       title: "<b>Roles Del Funcionario</b>", 
+  //       html: "<b>" + names + "</b><br>",  
+  //       confirmButtonText: "Aceptar", 
+  //       confirmButtonColor: "#4BAE4F",
+  //     });
+
+  //   });
+  // }
+
   public llamarRoles( clave:number){
     var names = "";
     this.membershipService.getFUsuarioRol(clave).subscribe( funcionarioRol => {
@@ -330,7 +354,12 @@ export class MembershipComponent implements OnInit {
       var roles  = JSON.stringify(this.funcionarioRol);
 
       for(var i = 0; i<funcionarioRol.length; i++){
-        names += "<b>" + funcionarioRol[i].cDescripcionRol + "</b><br>";
+        if(this.funcionarioRol[i].esPrincipal == 1){
+          names += "<b style= 'color:#ff0000'>" + funcionarioRol[i].cDescripcionRol + "</b><br>";
+        }else{
+          names += "<b>" + funcionarioRol[i].cDescripcionRol + "</b><br>";
+        }
+        
         //console.log(names);
       }
       //console.log(names);
@@ -345,12 +374,11 @@ export class MembershipComponent implements OnInit {
     });
   }
 
-
   // Se cargan los datos del funcionario
   public getFuncionarios(): void {
     this.membershipService.getFuncionarios().subscribe( funcionarios => {
       this.funcionarios = funcionarios
-      console.log(this.funcionarios);
+      // console.log(this.funcionarios);
 
       // for (let j = 0; j < this.funcionarios.length; j++) {
 
@@ -414,7 +442,7 @@ export class MembershipComponent implements OnInit {
   public getFuncionarioRol(funcionario: FuncionariosData): void {
     this.membershipService.getFUsuarioRol(funcionario.iClaveFuncionario).subscribe( funcionarioRol => {
       this.funcionarioRol = funcionarioRol
-      console.log(this.funcionarioRol);
+      // console.log(this.funcionarioRol);
       
       for (let i = 0; i < this.funcionarioRol.length; i++) {
         const elementFR = this.funcionarioRol[i];
@@ -431,7 +459,7 @@ export class MembershipComponent implements OnInit {
   public getCountExp1(funcionario: FuncionariosData){
     this.membershipService.getCountExp(funcionario.iClaveFuncionario,funcionario.catDiscriminante_id).subscribe(
       count =>{ this.count = count
-        console.log("Tiene estos expedientes pendientes => "+this.count);
+        // console.log("Tiene estos expedientes pendientes => "+this.count);
         if(count == 0){
           this.valReasignarExpedientes = false;
           this.valExpPendCheck = false;
@@ -448,7 +476,7 @@ export class MembershipComponent implements OnInit {
       this.agencias = agencias
       
       this.agencias.sort( (a, b) => a.cClaveDiscriminante - b.cClaveDiscriminante );
-      console.log(this.agencias);
+      // console.log(this.agencias);
 
     });
   }
@@ -473,32 +501,32 @@ export class MembershipComponent implements OnInit {
 
   public getCatUIE(valor: number): void {
     if (valor !== undefined) {
-      console.log(valor);
+      // console.log(valor);
       this.membershipService.getcatUIE(valor).subscribe( catUIE => {
         this.catUIE = catUIE
-        console.log(this.catUIE);
+        // console.log(this.catUIE);
         if (this.catUIE.some(cat => cat.catUIE_id !== 0)) {
           this.val = this.catUIE.map(cat => cat.catUIE_id);
-          console.log(this.val);
+          // console.log(this.val);
         } else {
           this.val = [0];
-          console.log(this.val);
+          // console.log(this.val);
         }
       });
     } else {
-      console.log("No se ha seleccionado agencia");
+      // console.log("No se ha seleccionado agencia");
     }
 
     if(valor !== undefined){
       this.membershipService.getfunciMP(valor).subscribe( funciMP => {
         this.funciMP = funciMP
-        console.log(funciMP);
+        // console.log(funciMP);
         if (this.funciMP.some(cat => cat.iClaveFuncionario !== 0)) {
           this.clavedelactaul = this.funciMP.map(cat => cat.iClaveFuncionario);
-          console.log(this.clavedelactaul);
+          // console.log(this.clavedelactaul);
         } else {
           this.clavedelactaul = [0];
-          console.log(this.clavedelactaul);
+          // console.log(this.clavedelactaul);
         }
       });
     }
@@ -509,7 +537,7 @@ export class MembershipComponent implements OnInit {
     this.membershipService.cambioAdscripcion(cambioAdscripcion).subscribe( cambioAdscripcion => {
       this.cambioAdscripcion;
     });
-    console.log("Se ejecuto el cambio de adscripcion: " + cambioAdscripcion.iClaveFuncionarioSolicitante);
+    // console.log("Se ejecuto el cambio de adscripcion: " + cambioAdscripcion.iClaveFuncionarioSolicitante);
     
     swal({
       title:"Registro exitoso...",
@@ -525,7 +553,7 @@ export class MembershipComponent implements OnInit {
     this.membershipService.cambioEstatus(cambioEstatus).subscribe(cambioEstatus =>{
       this.cambioEstatus;
     });
-    console.log("se ejecuto cambio de estatus.");
+    // console.log("se ejecuto cambio de estatus.");
     
   }
 
@@ -536,9 +564,9 @@ export class MembershipComponent implements OnInit {
   // Se dispara con el evento del clic cuando se selecciona un rol del catálogo
   public onSelectRol(r: Roles) {
     this.selectedRol = r.rol_id;
-    console.log("Se selecciono el rol => " + this.selectedRol);
+    // console.log("Se selecciono el rol => " + this.selectedRol);
     this.addRol = r;
-    console.log(this.addRol);
+    // console.log(this.addRol);
 
     this.posicionRol = this.roles.indexOf(this.addRol);
   }
@@ -547,13 +575,12 @@ export class MembershipComponent implements OnInit {
   agregarRol() {
     if (this.posicionRol > -1 && this.selectedRol !== 0) {
       this.funcionarioRol.push(this.addRol);
-      console.log("Funcion agregar:");
-      console.log(this.addRol);
-      console.log("Array funcionarioRol:");
-      console.log(this.funcionarioRol);
+      // console.log("Funcion agregar:");
+      // console.log(this.addRol);
+      // console.log("Array funcionarioRol:");
+      // console.log(this.funcionarioRol);
       this.roles.splice(this.posicionRol, 1);
     } else {
-      console.log("Seleccine un rol a agregar!");
       this.toastrService.warning('Por favor seleccione un rol para agregar!', 'Atención!', {timeOut: 3000});
     }
     
@@ -563,7 +590,7 @@ export class MembershipComponent implements OnInit {
 
   public onSelectFRolF(rol: Roles) {
     this.selectedRolF = rol.rol_id;
-    console.log("Se seleccion de rol del funcionario=> " + this.selectedRolF);
+    // console.log("Se seleccion de rol del funcionario=> " + this.selectedRolF);
     this.delRol = rol;
     console.log(this.delRol);
 
@@ -575,21 +602,20 @@ export class MembershipComponent implements OnInit {
   quitarRol() {
     if (this.posicionRolF > -1 && this.selectedRolF !== 0) {
       if (this.delRol.esPrincipal === 1) {
-        console.log("El rol es principal");
+        // console.log("El rol es principal");
         this.toastrService.warning('no puede eliminar el rol principal! para poder eliminar este rol seleccione otro como principal.', 'Atención!', {timeOut: 3000});
       } else {
         this.roles.push(this.delRol);
         this.rolesEliminados.push(this.delRol);
-        console.log(this.rolesEliminados);
-        console.log("Funcion quitar");
-        console.log(this.delRol);
+        // console.log(this.rolesEliminados);
+        // console.log("Funcion quitar");
+        // console.log(this.delRol);
         this.roles.sort( (a, b) => a.rol_id - b.rol_id );
-        console.log("Array roles:");
-        console.log(this.roles);
+        // console.log("Array roles:");
+        // console.log(this.roles);
         this.funcionarioRol.splice(this.posicionRolF, 1);
       }
     } else {
-      console.log("Seleccione el rol a eliminar!");
       this.toastrService.warning('Por favor seleccione un rol para eliminar!', 'Atención!', {timeOut: 3000});
     }
 
@@ -646,7 +672,6 @@ export class MembershipComponent implements OnInit {
     this.funcionario = null;
     this.rolesEliminados = [];
     this.getRoles();
-    // this.pageRefresh();
     this.selectedRol = 0;
     this.selectedRolF = 0;
     this.getAgencias();
@@ -661,7 +686,6 @@ export class MembershipComponent implements OnInit {
   closeModalExpPend() {
     this.modalExpPend.close();
     this.formExpPend.reset();
-    // this.pageRefresh();
     this.selectedExpPend = 0;
     this.funcinariosAgencia = [];
   }
@@ -719,14 +743,14 @@ export class MembershipComponent implements OnInit {
       var expPendientes: number = 2;
       }
 
-      
+      this.esPrincipal = this.delRol.rol_id;
 
-      rolesFuncionario = this.funcionarioRol;
-      for (let i = 0; i < rolesFuncionario.length; i++) {
-        if (rolesFuncionario[i].esPrincipal === 1) {
-          this.esPrincipal = rolesFuncionario[i].rol_id;
-        }
-      }
+      // rolesFuncionario = this.funcionarioRol;
+      // for (let i = 0; i < rolesFuncionario.length; i++) {
+      //   if (rolesFuncionario[i].esPrincipal === 1) {
+      //     this.esPrincipal = rolesFuncionario[i].rol_id;
+      //   }
+      // }
 
       var id_roles: number[] = [];
 
@@ -736,21 +760,20 @@ export class MembershipComponent implements OnInit {
       esMP = this.esMPNum;
       soloRoles = this.soloRolesNum;
 
-      console.log("iClaveFuncionarioSolicitante => " + iClaveFuncionarioSolicitante);
-      console.log("iClaveFuncionarioAnterior => " + iClaveFuncionarioAnterior);
-      console.log("iClaveFuncionarioExp => " + iClaveFuncionarioExp);
-      console.log("catDiscriminante_id => " + catDiscriminateSolicitante);
-      console.log("catUIE_id => " + catUIE_actual);
-      console.log("catDiscriminante_idNuevo => " + catDiscriminateNuevo);
-      console.log("Jusfificación => " + Justificacion);
-      console.log("Expedientes pendientes => " + expPendientes);
-      console.log("Roles del funcionario => " + rolesFuncionario);
-      console.log("Roles en un string => " + rolesString);
-      console.log("Es principal => " + this.esPrincipal);
+      // console.log("iClaveFuncionarioSolicitante => " + iClaveFuncionarioSolicitante);
+      // console.log("iClaveFuncionarioAnterior => " + iClaveFuncionarioAnterior);
+      // console.log("iClaveFuncionarioExp => " + iClaveFuncionarioExp);
+      // console.log("catDiscriminante_id => " + catDiscriminateSolicitante);
+      // console.log("catUIE_id => " + catUIE_actual);
+      // console.log("catDiscriminante_idNuevo => " + catDiscriminateNuevo);
+      // console.log("Jusfificación => " + Justificacion);
+      // console.log("Expedientes pendientes => " + expPendientes);
+      // console.log("Roles del funcionario => " + rolesFuncionario);
+      // console.log("Roles en un string => " + rolesString);
+      // console.log("Es principal => " + this.esPrincipal);
 
-      console.log("Se envio el formulario:");
-     // console.log(this.form.value);
-     console.log(this.funcionarioRol);
+      // console.log("Se envio el formulario:");
+      // console.log(this.funcionarioRol);
     
      let cambioAdscripcion = new CambioAdscripcion( iClaveFuncionarioSolicitante,
                                                     iClaveFuncionarioAnterior,
@@ -774,9 +797,7 @@ export class MembershipComponent implements OnInit {
 
     this.expPendientes = false;
 
-    //this.modalRef.close();
     this.closeModal();
-    //this.pageRefresh();
   } 
 
   public expPendientesLista: ExpPendientes[] = [];
@@ -817,7 +838,7 @@ export class MembershipComponent implements OnInit {
         }
       }
 
-      console.log(this.expPendientesLista); 
+      // console.log(this.expPendientesLista); 
 
     });
   }
@@ -836,7 +857,6 @@ export class MembershipComponent implements OnInit {
 
   public onSelectExpPend(expPend: ExpPendientes) {
     this.selectedExpPend = expPend.cambioAdscripcionExp_id;
-    console.log("Se seleccionaron los expedientes pendientes => " + this.selectedExpPend);
     this.objExpPend = expPend;
     console.log(this.objExpPend);
     
@@ -853,7 +873,7 @@ export class MembershipComponent implements OnInit {
     this.membershipService.asignarExpPendientes(asignarPendientes).subscribe( asignarPendientes => {
       this.asignarPendientes;
     });
-    console.log("Se ejecuto el asignar expedientes: " + asignarPendientes.iclavefuncionarioNuevo);
+    // console.log("Se ejecuto el asignar expedientes: " + asignarPendientes.iclavefuncionarioNuevo);
     
     swal({
       title:"Se asignaron los expedientes...",
@@ -874,9 +894,9 @@ export class MembershipComponent implements OnInit {
       const iclavefuncionarioNuevo: number = this.objExpPend.iclaveFuncionario;
       const catDiscriminante: number = this.objExpPend.catDiscriminante_anterior;
 
-      console.log(iclavefuncionarioAnt+"             "+iclavefuncionarioNuevo+"       "+catDiscriminante);
+      // console.log(iclavefuncionarioAnt+"             "+iclavefuncionarioNuevo+"       "+catDiscriminante);
 
-      let asignarPendientes = new AsignarPendientes(catDiscriminante,iclavefuncionarioNuevo,iclavefuncionarioAnt);
+      let asignarPendientes = new AsignarPendientes(catDiscriminante, iclavefuncionarioNuevo, iclavefuncionarioAnt);
 
       this.asignarExpPendientes( asignarPendientes );
 
@@ -885,7 +905,6 @@ export class MembershipComponent implements OnInit {
         parentId:0
       });
 
-      console.log("se envia el formulario de expedientes pendientes validado");
       this.closeModalExpPend();
       //this.pageRefresh();
     }
