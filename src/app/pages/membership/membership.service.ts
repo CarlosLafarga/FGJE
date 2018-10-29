@@ -66,12 +66,12 @@ export class MembershipService {
     cambioAdscripcion(cambioAdscripcion:CambioAdscripcion){
         const newpres = JSON.stringify(cambioAdscripcion);
         console.log(newpres);
-        return this.http.post(this.url9, newpres ,{headers: this.headers});
+        return this.http.post(this.url9, newpres, { headers: this.headers });
     }
 
     cambioEstatus(cambioEstatus:cambioEstatus){
         const estatus = JSON.stringify(cambioEstatus);
-        return this.http.post(this.url12,estatus,{headers: this.headers});
+        return this.http.post(this.url12, estatus, { headers: this.headers });
     }
 
     getExpPendientes(): Observable<ExpPendientes[]> {
@@ -81,7 +81,7 @@ export class MembershipService {
     asignarExpPendientes(asignarExpPendientes:AsignarPendientes){
         const newExp = JSON.stringify(asignarExpPendientes);
         console.log(newExp);
-        return this.http.post(this.url11, newExp ,{headers: this.headers});
+        return this.http.post(this.url11, newExp , { headers: this.headers });
     }
 
     

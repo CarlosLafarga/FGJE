@@ -73,7 +73,7 @@
                                                                                         cClaveUsuario: searchText,
                                                                                         cNumeroEmpleado: searchText,
                                                                                         cNombre: searchText}
-                                                                    
+                                                                    | ActivosSearchPipe : {bEsActivo: searchActivos}
                                                                     | paginate: { itemsPerPage: 10, currentPage: p }">
                             <td class="align-middle text-truncate">{{ funcionario.cNumeroEmpleado }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.cNombreFuncionario }}</td>

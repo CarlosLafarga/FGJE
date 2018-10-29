@@ -160,6 +160,7 @@ export class MembershipComponent implements OnInit {
       usuario: null,
       numeroExpediente: null
     });
+
   }
 
   public rev: boolean = true;
@@ -299,7 +300,6 @@ export class MembershipComponent implements OnInit {
       this.valEsMPCheck = true;
       this.valAgenciaSelect = true;
     }
-    //this.checkEPyMP = null;
   }
 
   public searchActivos: string = "1"
@@ -307,21 +307,20 @@ export class MembershipComponent implements OnInit {
   public soloActivos( e ) {
     this.mostrarActivos = e.target.checked
     if (this.mostrarActivos) {
+      // for (let i = 0; i < this.funcionarios.length; i++) {
+      //   if (this.funcionarios[i].bEsActivo === 0) {
+      //     this.funcionarios.splice(i, 1);
+      //   }
+      // }
+      // console.log(this.funcionarios);
       this.searchActivos = "1";
       console.log(this.searchActivos);
     } else if(!this.mostrarActivos) {
+      // this.getFuncionarios();
       this.searchActivos = ""
       console.log(this.searchActivos);
     }
   }
-
-  // public soloActivos( e ) {
-  //   this.mostrarActivos = e.target.checked
-  //   if (!this.mostrarActivos) {
-  //     this.searchActivos = "";
-  //     console.log(this.searchActivos);
-  //   }
-  // }
 
   // public llamarRoles( clave:number){
   //   var names = "";
