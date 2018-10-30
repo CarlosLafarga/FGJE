@@ -290,15 +290,24 @@ export class MembershipComponent implements OnInit {
   public soloRolesCheck( e ) {
     this.soloRoles = e.target.checked;
     if (this.soloRoles) {
+      
       this.valReasignarExpedientes = false;
       this.valExpPendCheck = false;
+     
       this.valEsMPCheck = false;
       this.valAgenciaSelect = false;
+      console.log(this.count);
     } else {
+      if(this.count > 0 ){
       this.valReasignarExpedientes = true;
       this.valExpPendCheck = true;
+      }else{
+        this.valReasignarExpedientes = false;
+      this.valExpPendCheck = false;
+      }
       this.valEsMPCheck = true;
       this.valAgenciaSelect = true;
+      console.log(this.count);
     }
   }
 
@@ -612,7 +621,7 @@ export class MembershipComponent implements OnInit {
   // Se abre el modal y se cargan los datos del funcionario seleccionado
   public openModal(modalContent, funcionario, catUIE) {
     console.log(funcionario);
-
+  
     // this.getAgencias();
     // this.getRoles();
     this.getFuncionarioRol( funcionario );
@@ -690,6 +699,8 @@ export class MembershipComponent implements OnInit {
       } else {
         this.pendientesNum = 0;
       }
+
+      
 
       if (this.esMP) {
         this.esMPNum = 1;
