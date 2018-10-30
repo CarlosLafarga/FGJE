@@ -10562,12 +10562,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _truncate_truncate_pipe__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./truncate/truncate.pipe */ "./src/app/theme/pipes/truncate/truncate.pipe.ts");
 /* harmony import */ var _search_mail_search_pipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./search/mail-search.pipe */ "./src/app/theme/pipes/search/mail-search.pipe.ts");
 /* harmony import */ var _search_funcionario_search_pipe__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./search/funcionario-search.pipe */ "./src/app/theme/pipes/search/funcionario-search.pipe.ts");
+/* harmony import */ var _search_activos_search_pipe__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./search/activos-search.pipe */ "./src/app/theme/pipes/search/activos-search.pipe.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -10591,6 +10593,7 @@ var PipesModule = /** @class */ (function () {
                 _truncate_truncate_pipe__WEBPACK_IMPORTED_MODULE_5__["TruncatePipe"],
                 _search_mail_search_pipe__WEBPACK_IMPORTED_MODULE_6__["MailSearchPipe"],
                 _search_funcionario_search_pipe__WEBPACK_IMPORTED_MODULE_7__["FuncionarioSearchPipe"],
+                _search_activos_search_pipe__WEBPACK_IMPORTED_MODULE_8__["ActivosSearchPipe"]
             ],
             exports: [
                 _profilePicture_profilePicture_pipe__WEBPACK_IMPORTED_MODULE_2__["ProfilePicturePipe"],
@@ -10599,6 +10602,7 @@ var PipesModule = /** @class */ (function () {
                 _truncate_truncate_pipe__WEBPACK_IMPORTED_MODULE_5__["TruncatePipe"],
                 _search_mail_search_pipe__WEBPACK_IMPORTED_MODULE_6__["MailSearchPipe"],
                 _search_funcionario_search_pipe__WEBPACK_IMPORTED_MODULE_7__["FuncionarioSearchPipe"],
+                _search_activos_search_pipe__WEBPACK_IMPORTED_MODULE_8__["ActivosSearchPipe"]
             ]
         })
     ], PipesModule);
@@ -10638,6 +10642,75 @@ var ProfilePicturePipe = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Pipe"])({ name: 'profilePicture' })
     ], ProfilePicturePipe);
     return ProfilePicturePipe;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/theme/pipes/search/activos-search.pipe.ts":
+/*!***********************************************************!*\
+  !*** ./src/app/theme/pipes/search/activos-search.pipe.ts ***!
+  \***********************************************************/
+/*! exports provided: ActivosSearchPipe */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ActivosSearchPipe", function() { return ActivosSearchPipe; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var ActivosSearchPipe = /** @class */ (function () {
+    function ActivosSearchPipe() {
+    }
+    // transform(funcionarios, args?): Array<any> {
+    //   let searchActivos = new RegExp(args, 'ig');
+    //   if (funcionarios) {
+    //     return funcionarios.filter(funcionario => {
+    //       if (funcionario.bEsActivo) { 
+    //         return funcionario.bEsActivo.search(searchActivos) !== -1;
+    //       }
+    //       else{
+    //         return funcionario.bEsActivo.search(searchActivos) !== -1;
+    //       }
+    //     });
+    //   }
+    // }
+    ActivosSearchPipe.prototype.transform = function (funcionarios, searchActivos, defaultFilter) {
+        if (!searchActivos) {
+            return funcionarios;
+        }
+        if (!Array.isArray(funcionarios)) {
+            return funcionarios;
+        }
+        if (searchActivos && Array.isArray(funcionarios)) {
+            var filterKeys_1 = Object.keys(searchActivos);
+            if (defaultFilter) {
+                return funcionarios.filter(function (item) {
+                    return filterKeys_1.reduce(function (x, keyName) {
+                        return (x && new RegExp(searchActivos[keyName], 'gi').test(item[keyName])) || searchActivos[keyName] == "";
+                    }, true);
+                });
+            }
+            else {
+                return funcionarios.filter(function (it) {
+                    return filterKeys_1.some(function (key) {
+                        return new RegExp(searchActivos[key], 'gi').test(it[key]) || searchActivos[key] == "";
+                    });
+                });
+            }
+        }
+    };
+    ActivosSearchPipe = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Pipe"])({ name: 'ActivosSearchPipe', pure: false })
+    ], ActivosSearchPipe);
+    return ActivosSearchPipe;
 }());
 
 
@@ -10906,4 +10979,4 @@ var TruncatePipe = /** @class */ (function () {
 /***/ })
 
 }]);
-//# sourceMappingURL=app-pages-membership-membership-module~app-pages-pages-module.63caa72e3fd71d51b641.js.map
+//# sourceMappingURL=app-pages-membership-membership-module~app-pages-pages-module.fcb32406378804e40799.js.map

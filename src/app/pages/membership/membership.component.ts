@@ -302,24 +302,18 @@ export class MembershipComponent implements OnInit {
     }
   }
 
-  public searchActivos: string = "1"
+  public searchActivos: string = "1";
 
   public soloActivos( e ) {
     this.mostrarActivos = e.target.checked
     if (this.mostrarActivos) {
-      // for (let i = 0; i < this.funcionarios.length; i++) {
-      //   if (this.funcionarios[i].bEsActivo === 0) {
-      //     this.funcionarios.splice(i, 1);
-      //   }
-      // }
-      // console.log(this.funcionarios);
       this.searchActivos = "1";
-      console.log(this.searchActivos);
     } else if(!this.mostrarActivos) {
-      // this.getFuncionarios();
       this.searchActivos = ""
-      console.log(this.searchActivos);
     }
+
+    this.p = 1;
+
   }
 
   // public llamarRoles( clave:number){
@@ -378,13 +372,6 @@ export class MembershipComponent implements OnInit {
     this.membershipService.getFuncionarios().subscribe( funcionarios => {
       this.funcionarios = funcionarios
       // console.log(this.funcionarios);
-
-      // for (let j = 0; j < this.funcionarios.length; j++) {
-
-      //   this.cargarRoles(this.funcionarios[j].iClaveFuncionario);
-
-      //   this.funcionarios[j].usuario.push();
-      // }
 
       for (let i = 0; i < this.funcionarios.length; i++) {
         const ag: number = this.funcionarios[i].catDiscriminante_id;
