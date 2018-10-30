@@ -419,8 +419,7 @@ export class MembershipComponent implements OnInit {
   public getRoles(): void {
     this.membershipService.getRoles().subscribe( roles => {
       this.roles = roles
-      console.log(this.roles);
-
+      // console.log(this.roles);
     });
   }
 
@@ -428,17 +427,18 @@ export class MembershipComponent implements OnInit {
   public getFuncionarioRol(funcionario: FuncionariosData): void {
     this.membershipService.getFUsuarioRol(funcionario.iClaveFuncionario).subscribe( funcionarioRol => {
       this.funcionarioRol = funcionarioRol
-      // console.log(this.funcionarioRol);
+      console.log(this.funcionarioRol);
       
-      for (let i = 0; i < this.funcionarioRol.length; i++) {
-        const elementFR = this.funcionarioRol[i];
-        for (let j = 0; j < this.roles.length; j++) {
-          const elementR = this.roles[j];
-          if ( elementFR.rol_id === elementR.rol_id) {
-            this.roles.splice(j, 1);
-          }
-        }
-      }
+      // for (let i = 0; i < this.funcionarioRol.length; i++) {
+      //   const elementFR = this.funcionarioRol[i];
+      //   for (let j = 0; j < this.roles.length; j++) {
+      //     const elementR = this.roles[j];
+      //     if ( elementFR.rol_id === elementR.rol_id) {
+      //       this.roles.splice(j, 1);
+      //     }
+      //   }
+      // }
+
     });
   }
 
@@ -729,14 +729,16 @@ export class MembershipComponent implements OnInit {
       var expPendientes: number = 2;
       }
 
-      this.esPrincipal = this.delRol.rol_id;
+      this.esPrincipal = this.form.value.puesto_val;
 
-      // rolesFuncionario = this.funcionarioRol;
-      // for (let i = 0; i < rolesFuncionario.length; i++) {
-      //   if (rolesFuncionario[i].esPrincipal === 1) {
-      //     this.esPrincipal = rolesFuncionario[i].rol_id;
-      //   }
-      // }
+      if (this.esPrincipal === null) {
+        rolesFuncionario = this.funcionarioRol;
+        for (let i = 0; i < rolesFuncionario.length; i++) {
+          if (rolesFuncionario[i].esPrincipal === 1) {
+            this.esPrincipal = rolesFuncionario[i].rol_id;
+          }
+        }
+      }
 
       var id_roles: number[] = [];
 
@@ -756,7 +758,7 @@ export class MembershipComponent implements OnInit {
       // console.log("Expedientes pendientes => " + expPendientes);
       // console.log("Roles del funcionario => " + rolesFuncionario);
       // console.log("Roles en un string => " + rolesString);
-      // console.log("Es principal => " + this.esPrincipal);
+      console.log("Es principal => " + this.esPrincipal);
 
       // console.log("Se envio el formulario:");
       // console.log(this.funcionarioRol);

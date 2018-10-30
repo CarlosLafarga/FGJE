@@ -312,11 +312,11 @@
                                                             [ngClass]="{ 'highlight': rol.rol_id === selectedRolF }">
                                                             <!-- <th scope="row">{{ rol.rol_id }}</th> -->
                                                             <td>{{ rol.cDescripcionRol }}</td>
-                                                            <td> <input type="radio"  name="esPrincipal" class="radio-dark-gray"  [checked]="rol.esPrincipal === 1" id="rol.rol_id"> </td>
-                                                            <!-- <td>
-                                                                <input type="radio" name="puesto_val" formControlName="puesto_val"  class="radio-dark-gray" [(ngModel)]="puesto_val" [value]="rol.rol_id" [checked]="rol.esPrincipal === 1" >
+                                                            <!-- <td> <input type="radio"  name="esPrincipal" class="radio-dark-gray"  [checked]="rol.esPrincipal === 1" id="rol.rol_id"> </td> -->
+                                                            <td>
+                                                                <input type="radio" name="puesto_val" formControlName="puesto_val"  class="radio-dark-gray" (ngModel)="puesto_val" [value]="rol.rol_id" [checked]="rol.esPrincipal === 1" id="rol.rol_id">
                                                                 <small class="text-danger" *ngIf="form.get('puesto_val').hasError('required')">Por favor seleccione el rol principal</small>
-                                                            </td> -->
+                                                            </td>
                                                         </tr>
 
                                                     </tbody>
