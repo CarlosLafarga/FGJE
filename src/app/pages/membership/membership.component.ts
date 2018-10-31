@@ -66,25 +66,8 @@ export class MembershipComponent implements OnInit {
   public esPrincipal: number;
   public cambioEstatus1: cambioEstatus[];
   public mostrarActivos: boolean = true;
+  public prueba: boolean = false;
  
-  public menuSelectSettings: IMultiSelectSettings = {
-      enableSearch: true,
-      checkedStyle: 'fontawesome',
-      buttonClasses: 'btn btn-secondary btn-block',
-      dynamicTitleMaxItems: 0,
-      displayAllSelectedText: true,
-      showCheckAll: true,
-      showUncheckAll: true
-  };
-  public menuSelectTexts: IMultiSelectTexts = {
-      checkAll: 'Select all',
-      uncheckAll: 'Unselect all',
-      checked: 'menu item selected',
-      checkedPlural: 'menu items selected',
-      searchPlaceholder: 'Find menu item...',
-      defaultTitle: 'Select menu items for user',
-      allSelected: 'All selected',
-  };
   public menuSelectOptions: IMultiSelectOption[] = [];
   
   constructor(router: Router,
@@ -269,6 +252,11 @@ export class MembershipComponent implements OnInit {
 
   public pendientesCheck( e ) {
     this.expPendientes = e.target.checked;
+
+    if (this.radioAsign || this.expPendientes) {
+      this.prueba = true;
+    }
+    
     if (this.expPendientes) {
       this.valReasignarExpedientes = false;
       this.valSolocambioCheck = false;
@@ -290,6 +278,7 @@ export class MembershipComponent implements OnInit {
   public soloRolesCheck( e ) {
     this.soloRoles = e.target.checked;
     if (this.soloRoles) {
+      this.prueba = true;
       
       this.valReasignarExpedientes = false;
       this.valExpPendCheck = false;
@@ -454,7 +443,7 @@ export class MembershipComponent implements OnInit {
   public getCountExp1(funcionario: FuncionariosData){
     this.membershipService.getCountExp(funcionario.iClaveFuncionario,funcionario.catDiscriminante_id).subscribe(
       count =>{ this.count = count
-        // console.log("Tiene estos expedientes pendientes => "+this.count);
+        // console.log("Tiene estos expedientes pendientes => " + this.count);
         if(count == 0){
           this.valReasignarExpedientes = false;
           this.valExpPendCheck = false;
@@ -663,7 +652,7 @@ export class MembershipComponent implements OnInit {
 
   public closeModal(){
     this.modalRef.close();
-    this.form.reset();
+    // this.form.reset();
     this.funcionario = null;
     this.rolesEliminados = [];
     this.getRoles();
@@ -685,22 +674,28 @@ export class MembershipComponent implements OnInit {
     this.funcinariosAgencia = [];
   }
 
-  // radioChange( e ) {
-  //   console.log("detecte el evento del radio");
-  // }
+  public radioAsign: boolean = false;
+  radioChange( e ) {
+    console.log("detecte el evento del radio");
+    this.radioAsign = true;
+    if (this.radioAsign || this.expPendientes) {
+      this.prueba = true;
+    }
+  }
 
   // Se ejecuta el envio del formulario
   public onSubmit():void {
 
     if (this.form.valid) {
 
+      // if (this.count > 0 && (this.form.value.archivoDigital_id !== null || this.expPendientes === false)) {
+      //   this.prueba = true;
+      
       if (this.expPendientes) {
         this.pendientesNum = 1;
       } else {
         this.pendientesNum = 0;
       }
-
-      
 
       if (this.esMP) {
         this.esMPNum = 1;
@@ -774,7 +769,7 @@ export class MembershipComponent implements OnInit {
       // console.log("Se envio el formulario:");
       // console.log(this.funcionarioRol);
     
-     let cambioAdscripcion = new CambioAdscripcion( iClaveFuncionarioSolicitante,
+      let cambioAdscripcion = new CambioAdscripcion( iClaveFuncionarioSolicitante,
                                                     iClaveFuncionarioAnterior,
                                                     iClaveFuncionarioExp,
                                                     catDiscriminateSolicitante,
@@ -792,8 +787,8 @@ export class MembershipComponent implements OnInit {
         hasSubMenu:false,
         parentId:0
       });
+      // }
     }
-
     this.expPendientes = false;
 
     this.closeModal();

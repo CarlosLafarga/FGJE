@@ -3487,7 +3487,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "routing", function() { return routing; });
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _pages_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pages.component */ "./src/app/pages/pages.component.ts");
-/* harmony import */ var _auth_auth_guard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth/auth.guard */ "./src/app/pages/auth/auth.guard.ts");
+/* harmony import */ var _blank_blank_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./blank/blank.component */ "./src/app/pages/blank/blank.component.ts");
+/* harmony import */ var _auth_auth_guard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./auth/auth.guard */ "./src/app/pages/auth/auth.guard.ts");
+
 
 
 
@@ -3499,7 +3501,17 @@ var routes = [
         children: [
             { path: '', redirectTo: 'login', pathMatch: 'full' },
             // { path: 'dashboard', loadChildren: 'app/pages/dashboard/dashboard.module#DashboardModule', data: { breadcrumb: 'Dashboard' }  },          
-            { path: 'membership', loadChildren: 'app/pages/membership/membership.module#MembershipModule', data: { breadcrumb: 'Cambio de adscripción' }, canActivate: [_auth_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+            { path: 'membership', loadChildren: 'app/pages/membership/membership.module#MembershipModule', data: { breadcrumb: 'Cambio de adscripción' }, canActivate: [_auth_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]] },
+            // { path: 'ui', loadChildren: 'app/pages/ui/ui.module#UiModule', data: { breadcrumb: 'UI' } },
+            // { path: 'form-elements', loadChildren: 'app/pages/form-elements/form-elements.module#FormElementsModule', data: { breadcrumb: 'Form Elements' } },
+            // { path: 'tables', loadChildren: 'app/pages/tables/tables.module#TablesModule', data: { breadcrumb: 'Tables' } },
+            // { path: 'tools', loadChildren: 'app/pages/tools/tools.module#ToolsModule', data: { breadcrumb: 'Tools' } },
+            // { path: 'calendar', loadChildren: 'app/pages/calendar/app-calendar.module#AppCalendarModule', data: { breadcrumb: 'Calendar' } },
+            // { path: 'mailbox', loadChildren: 'app/pages/mailbox/mailbox.module#MailboxModule', data: { breadcrumb: 'Mailbox' } },
+            // { path: 'maps', loadChildren: 'app/pages/maps/maps.module#MapsModule', data: { breadcrumb: 'Maps' } },
+            // { path: 'charts', loadChildren: 'app/pages/charts/charts.module#ChartsModule', data: { breadcrumb: 'Charts' } },
+            // { path: 'dynamic-menu', loadChildren: 'app/pages/dynamic-menu/dynamic-menu.module#DynamicMenuModule', data: { breadcrumb: 'Dynamic Menu' }  },          
+            { path: 'blank', component: _blank_blank_component__WEBPACK_IMPORTED_MODULE_2__["BlankComponent"], data: { breadcrumb: 'Blank page' } },
         ]
     }
 ];
@@ -5152,7 +5164,7 @@ var SidebarComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dropdown d-inline-block\">\r\n    <a class=\"dropdown-toggle no-caret pl-2 pr-2\" id=\"user-menu\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n        <i class=\"fa fa-user-o\" aria-hidden=\"true\"></i>\r\n    </a>\r\n\r\n    <div class=\"dropdown-menu dropdown-menu-right rounded-0 mt-3 p-0 box-shadow\" aria-labelledby=\"user-menu\">\r\n        <div class=\"user-menu\">\r\n            <div class=\"user-info text-center p-3\">\r\n                <img src=\"assets/img/users/user.jpg\" alt=\"user-img\" class=\"user-img rounded-circle\">                    \r\n                <p class=\"mt-1 mb-0\"> \r\n                    Emilio Verdines - Web Developer\r\n                    <small>Member since May. 2016</small>\r\n                </p>\r\n            </div>\r\n            <a class=\"dropdown-item\" routerLink=\"profile\"><i class=\"fa fa-user mr-2\"></i>Profile</a>\r\n            <a class=\"dropdown-item\" routerLink=\"settings\"><i class=\"fa fa-cog mr-2\"></i>Settings</a>\r\n            <a class=\"dropdown-item\" routerLink=\"/\"><i class=\"fa fa-lock mr-2\"></i>Lock screen</a>\r\n            <a class=\"dropdown-item mb-1\" routerLink=\"/login\"><i class=\"fa fa-power-off mr-2\"></i>Log out</a>\r\n           \r\n        </div>\r\n    </div>\r\n</div>\r\n"
+module.exports = "<div class=\"dropdown d-inline-block\">\r\n    <a class=\"dropdown-toggle no-caret pl-2 pr-2\" id=\"user-menu\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n        <i class=\"fa fa-user-o\" aria-hidden=\"true\"></i>\r\n    </a>\r\n\r\n    <div class=\"dropdown-menu dropdown-menu-right rounded-0 mt-3 p-0 box-shadow\" aria-labelledby=\"user-menu\">\r\n        <div class=\"user-menu\">\r\n            <div class=\"user-info text-center p-3\">\r\n                <img src=\"assets/img/users/default-user.jpg\" alt=\"user-img\" class=\"user-img rounded-circle\">                    \r\n                <p class=\"mt-1 mb-0\"> \r\n                    Nombre - Puesto\r\n                    <small>Miembro desde 2016</small>\r\n                </p>\r\n            </div>\r\n            <!-- <a class=\"dropdown-item\" routerLink=\"profile\"><i class=\"fa fa-user mr-2\"></i>Profile</a>\r\n            <a class=\"dropdown-item\" routerLink=\"settings\"><i class=\"fa fa-cog mr-2\"></i>Settings</a>\r\n            <a class=\"dropdown-item\" routerLink=\"/\"><i class=\"fa fa-lock mr-2\"></i>Lock screen</a> -->\r\n            <a class=\"dropdown-item mb-1\" routerLink=\"/login\"><i class=\"fa fa-power-off mr-2\"></i>Log out</a>\r\n           \r\n        </div>\r\n    </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -5210,4 +5222,4 @@ var UserMenuComponent = /** @class */ (function () {
 /***/ })
 
 }]);
-//# sourceMappingURL=app-pages-pages-module.240e6e0f9f81469580d8.js.map
+//# sourceMappingURL=app-pages-pages-module.18ee4943c424d972ce0c.js.map

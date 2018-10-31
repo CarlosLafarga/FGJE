@@ -25,7 +25,7 @@ export const routes: Routes = [
             // { path: 'maps', loadChildren: 'app/pages/maps/maps.module#MapsModule', data: { breadcrumb: 'Maps' } },
             // { path: 'charts', loadChildren: 'app/pages/charts/charts.module#ChartsModule', data: { breadcrumb: 'Charts' } },
             // { path: 'dynamic-menu', loadChildren: 'app/pages/dynamic-menu/dynamic-menu.module#DynamicMenuModule', data: { breadcrumb: 'Dynamic Menu' }  },          
-            // { path: 'blank', component: BlankComponent, data: { breadcrumb: 'Blank page' } },
+            { path: 'blank', component: BlankComponent, data: { breadcrumb: 'Blank page' } },
             // { path: 'search', component: SearchComponent, data: { breadcrumb: 'Search' } },
             
        ]

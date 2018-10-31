@@ -408,7 +408,9 @@
                                                                         <i *ngIf="funagen.esMP === 1" class="fa fa-check mr-2 text-success" placement="bottom"></i>
                                                                         <i *ngIf="funagen.esMP != 1" class="fa fa-close mr-2 text-danger" placement="bottom"></i>
                                                                     </td>
-                                                                    <td ><input type="radio" name="archivoDigital_id" formControlName="archivoDigital_id"  class="radio-dark-gray" [(ngModel)]="archivoDigital_id" [value]="funagen.iClaveFuncionario" > </td>
+                                                                    <td>
+                                                                        <input type="radio" name="archivoDigital_id" formControlName="archivoDigital_id"  class="radio-dark-gray" [(ngModel)]="archivoDigital_id" [value]="funagen.iClaveFuncionario" (change)="radioChange($event)">
+                                                                    </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -455,7 +457,8 @@
                         </div>
 
                         <div class="col-12 bg-white text-center py-1">
-                            <button [disabled]="!form.valid" type="submit" class="btn btn-success mr-1">Aceptar</button>
+                            <button [disabled]="!form.valid || !prueba" type="submit" class="btn btn-success mr-1">Aceptar</button>
+                            <!-- <button [disabled]="!prueba" type="submit" class="btn btn-success mr-1">Aceptar</button> -->
                             <button type="button" class="btn btn-danger" (click)="closeModal()">Cancelar</button>
                         </div>  
                     </form> 
