@@ -26,7 +26,7 @@ export class loginServices {
     }
     
     get isLoggedIn (){
-        console.log("LOGGEDINSATATUS DEL SI LOGGEDIND =>"+this.loggedInStatus);
+        console.log("LOGGEDINSATATUS DEL SI LOGGEDIND =>" + this.loggedInStatus);
         return this.loggedInStatus;
     }
 
@@ -34,8 +34,8 @@ export class loginServices {
 
         return !!localStorage.getItem('token');
     }
-    userAuth(username : string,password: string):Observable <any>{
+    userAuth( username: string, password: string ): Observable <any>{
 
-        return this.http.get<any>(this.url+"?username="+username+"&passwordd="+password);
+        return this.http.get<any>( this.url + "?username=" + username + "&passwordd=" + password);
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, NgForm} from '@angular/forms';
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
@@ -19,7 +19,7 @@ import { $ } from 'protractor';
   encapsulation: ViewEncapsulation.None,
   providers: [ MembershipService, MenuService ]
 })
-export class MembershipComponent implements OnInit {
+export class MembershipComponent implements OnInit, OnDestroy {
 
   public router: Router;
   public titularAgencia: string;
@@ -146,6 +146,10 @@ export class MembershipComponent implements OnInit {
 
   }
 
+  ngOnDestroy() {
+    console.log("onDestroy membership");
+  }
+
   public rev: boolean = true;
   public controlActivos(funcionario) {
 
@@ -240,6 +244,7 @@ export class MembershipComponent implements OnInit {
 
   pageRefresh() {
     this.form.reset();
+    this.router.navigate(['/pages/blank']);
     this.router.navigate(['/pages/membership']);
     // location.reload();
   }
@@ -288,11 +293,11 @@ export class MembershipComponent implements OnInit {
       console.log(this.count);
     } else {
       if(this.count > 0 ){
-      this.valReasignarExpedientes = true;
-      this.valExpPendCheck = true;
+        this.valReasignarExpedientes = true;
+        this.valExpPendCheck = true;
       }else{
         this.valReasignarExpedientes = false;
-      this.valExpPendCheck = false;
+        this.valExpPendCheck = false;
       }
       this.valEsMPCheck = true;
       this.valAgenciaSelect = true;
@@ -556,7 +561,7 @@ export class MembershipComponent implements OnInit {
   }
 
   // Se agrega el rol a los roles del funcionario
-  agregarRol() {
+  public agregarRol() {
     if (this.posicionRol > -1 && this.selectedRol !== 0) {
       this.funcionarioRol.push(this.addRol);
       // console.log("Funcion agregar:");
@@ -583,7 +588,7 @@ export class MembershipComponent implements OnInit {
 
   // Se quita el rol a los roles del funcionario
   public rolesEliminados: Roles[] = [];
-  quitarRol() {
+  public quitarRol() {
     if (this.posicionRolF > -1 && this.selectedRolF !== 0) {
       if (this.delRol.esPrincipal === 1) {
         // console.log("El rol es principal");
@@ -659,6 +664,7 @@ export class MembershipComponent implements OnInit {
     this.selectedRol = 0;
     this.selectedRolF = 0;
     this.getAgencias();
+    this.valAgenciaSelect = true;
 
     this.p2 = 1;
 

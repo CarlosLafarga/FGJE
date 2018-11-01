@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-blank',
@@ -6,10 +6,14 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   styleUrls: ['./blank.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class BlankComponent implements OnInit {
+export class BlankComponent implements OnInit, OnDestroy {
 
   constructor() { }
 
-  ngOnInit() {  }
+  ngOnInit() { }
+
+  ngOnDestroy() {
+    console.log("onDestroy blank");
+  }
 
 }

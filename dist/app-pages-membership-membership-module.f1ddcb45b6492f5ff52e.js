@@ -1130,6 +1130,7 @@ var MembershipComponent = /** @class */ (function () {
         this.selectedRol = 0;
         this.selectedRolF = 0;
         this.getAgencias();
+        this.valAgenciaSelect = true;
         this.p2 = 1;
         this.pageRefresh();
     };
@@ -1682,4 +1683,4 @@ var MembershipService = /** @class */ (function () {
 /***/ })
 
 }]);
-//# sourceMappingURL=app-pages-membership-membership-module.1afbad210ecc244ffea0.js.map
+//# sourceMappingURL=app-pages-membership-membership-module.f1ddcb45b6492f5ff52e.js.map
