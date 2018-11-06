@@ -492,7 +492,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr *ngFor="let expPend of expPendientesLista | paginate: { itemsPerPage: 10, currentPage: p5, id:'ExpPendientes' }" (click)="onSelectExpPend(expPend)"
-                                                        [ngClass]="{ 'highlight': expPend.cambioAdscripcionExp_id === selectedExpPend }">
+                                                        [ngClass]="{ 'highlight': expPend.cambioAdscripcion_id === selectedExpPend }">
                                                         <td class="align-middle text-truncate">{{ expPend.nombreFuncionario }}</td>
                                                         <td class="align-middle text-truncate">{{ expPend.cNombre }}</td>
                                                     </tr>

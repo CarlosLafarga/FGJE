@@ -172,8 +172,8 @@ export class MembershipComponent implements OnInit, OnDestroy {
         // const act = e.target.checked;
         const valor: number = 0;
         funcionario.bEsActivo = 0;
-        // console.log("Se desactiva el funcionario => " + funcionario.cNombreFuncionario );
-        // console.log(valor);
+         console.log("Se desactiva el funcionario => " + funcionario.cNombreFuncionario );
+         console.log(valor);      
         var justificacion = result.value;
         var iclaveFuncionarionew = funcionario.iClaveFuncionario;
 
@@ -760,16 +760,16 @@ export class MembershipComponent implements OnInit, OnDestroy {
       esMP = this.esMPNum;
       soloRoles = this.soloRolesNum;
 
-      // console.log("iClaveFuncionarioSolicitante => " + iClaveFuncionarioSolicitante);
-      // console.log("iClaveFuncionarioAnterior => " + iClaveFuncionarioAnterior);
-      // console.log("iClaveFuncionarioExp => " + iClaveFuncionarioExp);
-      // console.log("catDiscriminante_id => " + catDiscriminateSolicitante);
-      // console.log("catUIE_id => " + catUIE_actual);
-      // console.log("catDiscriminante_idNuevo => " + catDiscriminateNuevo);
-      // console.log("Jusfificación => " + Justificacion);
-      // console.log("Expedientes pendientes => " + expPendientes);
-      // console.log("Roles del funcionario => " + rolesFuncionario);
-      // console.log("Roles en un string => " + rolesString);
+      console.log("iClaveFuncionarioSolicitante => " + iClaveFuncionarioSolicitante);
+      console.log("iClaveFuncionarioAnterior => " + iClaveFuncionarioAnterior);
+      console.log("iClaveFuncionarioExp => " + iClaveFuncionarioExp);
+      console.log("catDiscriminante_id => " + catDiscriminateSolicitante);
+      console.log("catUIE_id => " + catUIE_actual);
+      console.log("catDiscriminante_idNuevo => " + catDiscriminateNuevo);
+      console.log("Jusfificación => " + Justificacion);
+      console.log("Expedientes pendientes => " + expPendientes);
+      console.log("Roles del funcionario => " + rolesFuncionario);
+      console.log("Roles en un string => " + rolesString);
       console.log("Es principal => " + this.esPrincipal);
 
       // console.log("Se envio el formulario:");
@@ -809,7 +809,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
       // console.log(this.expPendientesLista); 
 
       for (let i = 0; i < this.expPendientesLista.length; i++) {
-        const ag: number = this.expPendientesLista[i].catDiscriminante_anterior;
+        const ag: number = this.expPendientesLista[i].catDiscriminanteAnterior;
         for (let j = 0; j < this.agencias.length; j++) {
           if (ag === this.agencias[j].catDiscriminante_id) {
             const agNombre: string = this.agencias[j].cNombre;
@@ -823,7 +823,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
       }
 
       for (let i = 0; i < this.expPendientesLista.length; i++) {
-        const f: number = this.expPendientesLista[i].iclaveFuncionario;
+        const f: number = this.expPendientesLista[i].iClaveFuncionario;
         for (let j = 0; j < this.funcionarios.length; j++) {
           if (f === this.funcionarios[j].iClaveFuncionario) {
             const nombreFuncionario: string = this.funcionarios[j].cNombreFuncionario + " "
@@ -846,7 +846,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public funcinariosAgencia: FunciAgencia[] = [];
 
   public getFuncionariosAg(expPend: ExpPendientes):void {
-    this.membershipService.getFUsuarioAgencia(expPend.catDiscriminante_anterior).subscribe( exp => {
+    this.membershipService.getFUsuarioAgencia(expPend.catDiscriminanteAnterior).subscribe( exp => {
       this.funcinariosAgencia = exp
       console.log(this.funcinariosAgencia);
     });
@@ -856,7 +856,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public objExpPend: ExpPendientes;
 
   public onSelectExpPend(expPend: ExpPendientes) {
-    this.selectedExpPend = expPend.cambioAdscripcionExp_id;
+    this.selectedExpPend = expPend.cambioAdscripcion_id;
     this.objExpPend = expPend;
     console.log(this.objExpPend);
     
@@ -891,8 +891,8 @@ export class MembershipComponent implements OnInit, OnDestroy {
     if (this.formExpPend.valid) {
 
       const iclavefuncionarioAnt: number = this.formExpPend.value.iclaveFuncionarioAsign;
-      const iclavefuncionarioNuevo: number = this.objExpPend.iclaveFuncionario;
-      const catDiscriminante: number = this.objExpPend.catDiscriminante_anterior;
+      const iclavefuncionarioNuevo: number = this.objExpPend.iClaveFuncionario;
+      const catDiscriminante: number = this.objExpPend.catDiscriminanteAnterior;
 
       // console.log(iclavefuncionarioAnt+"             "+iclavefuncionarioNuevo+"       "+catDiscriminante);
 

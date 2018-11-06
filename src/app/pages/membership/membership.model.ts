@@ -177,10 +177,10 @@ export class CambioAdscripcion{
 }
 
 export class ExpPendientes {
-  public cambioAdscripcionExp_id: number;
-  public iclaveFuncionario: number;
-  public catDiscriminante_anterior: number;
-  public catDiscriminante_asignado: number;
+  public cambioAdscripcion_id: number;
+  public iClaveFuncionario: number;
+  public catDiscriminanteAnterior: number;
+  public catDiscriminanteCambio: number;
   public dFechaCreacion: Date;
   public dFechaModificacion: Date;
   public EsMP: number;
