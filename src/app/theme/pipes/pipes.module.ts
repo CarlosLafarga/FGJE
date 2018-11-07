@@ -8,6 +8,12 @@ import { TruncatePipe } from './truncate/truncate.pipe';
 import { MailSearchPipe } from './search/mail-search.pipe';
 import { FuncionarioSearchPipe } from './search/funcionario-search.pipe';
 import { ActivosSearchPipe } from './search/activos-search.pipe';
+import { NumeroempSearchPipe } from './search/numeroemp-search.pipe';
+import { NombreSearchPipe } from './search/nombre-search.pipe';
+import { AppaternoSearchPipe } from './search/appaterno-search.pipe';
+import { ApmaternoSearchPipe } from './search/apmaterno-search.pipe';
+import { NomusuarioSearchPipe } from './search/nomusuario-search.pipe';
+import { AgenciaSearchPipe } from './search/agencia-search.pipe';
 
 @NgModule({
     imports: [ 
@@ -20,7 +26,13 @@ import { ActivosSearchPipe } from './search/activos-search.pipe';
         TruncatePipe,
         MailSearchPipe,
         FuncionarioSearchPipe,
-        ActivosSearchPipe
+        ActivosSearchPipe,
+        NumeroempSearchPipe,
+        NombreSearchPipe,
+        AppaternoSearchPipe,
+        ApmaternoSearchPipe,
+        NomusuarioSearchPipe,
+        AgenciaSearchPipe
     ],
     exports: [
         ProfilePicturePipe,
@@ -29,7 +41,13 @@ import { ActivosSearchPipe } from './search/activos-search.pipe';
         TruncatePipe,
         MailSearchPipe,
         FuncionarioSearchPipe,
-        ActivosSearchPipe
+        ActivosSearchPipe,
+        NumeroempSearchPipe,
+        NombreSearchPipe,
+        AppaternoSearchPipe,
+        ApmaternoSearchPipe,
+        NomusuarioSearchPipe,
+        AgenciaSearchPipe
     ]
 })
 export class PipesModule { }

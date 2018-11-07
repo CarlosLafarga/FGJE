@@ -3213,6 +3213,9 @@ var BlankComponent = /** @class */ (function () {
     function BlankComponent() {
     }
     BlankComponent.prototype.ngOnInit = function () { };
+    BlankComponent.prototype.ngOnDestroy = function () {
+        console.log("onDestroy blank");
+    };
     BlankComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-blank',
@@ -5222,4 +5225,4 @@ var UserMenuComponent = /** @class */ (function () {
 /***/ })
 
 }]);
-//# sourceMappingURL=app-pages-pages-module.18ee4943c424d972ce0c.js.map
+//# sourceMappingURL=app-pages-pages-module.d93ab44aa7da094392d9.js.map

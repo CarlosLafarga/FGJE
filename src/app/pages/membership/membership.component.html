@@ -1,18 +1,22 @@
+    <style>
+        .swal2-container {
+          z-index:1000000;
+         }
+    </style>
+
+
+
     <div class="row mb-1">
         <div class="col">
-            <div class="input-group mb-3 box-shadow"> 
+            <!-- <div class="input-group mb-3 box-shadow"> 
                 <div class="input-group-prepend">
                     <span class="input-group-text border-top-0 border-left-0 border-bottom-0"><i class="fa fa-search"></i></span>
                 </div>                   
                 <input type="text" [(ngModel)]="searchText" placeholder="Buscar por Num. de empleado, Nombre(s), Ap. paterno, Ap materno, Usuario ó Agencia" class="form-control border-0">
                 <div class="input-group-append">
-                    <!--
-                    <span (click)="openModal(modalContent, null)" class="input-group-text border-top-0 border-right-0 border-bottom-0"><i class="fa fa-user-plus"></i></span>
-                    <span (click)="toggle('grid')" class="input-group-text border-top-0 border-right-0 border-bottom-0"><i class="fa fa-th"></i></span>
-                    -->
                     <span (click)="toggle('list')" class="input-group-text border-top-0 border-right-0 border-bottom-0"><i class="fa fa-list"></i></span>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -50,6 +54,7 @@
     <div *ngIf="type=='list'" class="row">
         <div class="col-12">
             <div class="table-responsive bg-white box-shadow">
+
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -66,13 +71,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                       <!-- <tr *ngFor="let funcionario of funcionarios | UserSearchPipe : searchText | paginate: { itemsPerPage: 10, currentPage: p }"> -->
-                        <tr *ngFor="let funcionario of funcionarios | UserSearchPipe : {cNombreFuncionario: searchText,
-                                                                                        cApellidoPaternoFuncionario: searchText,
-                                                                                        cApellidoMaternoFuncionario: searchText,
-                                                                                        cClaveUsuario: searchText,
-                                                                                        cNumeroEmpleado: searchText,
-                                                                                        cNombre: searchText}
+                        <tr>
+                            <td><input type="text" [(ngModel)]="searchNumero" placeholder="Número de empleado" class="form-control border-1"></td>
+                            <td><input type="text" [(ngModel)]="searchNombre" placeholder="Nombre(s)" class="form-control border-1"></td>
+                            <td><input type="text" [(ngModel)]="searchApPaterno" placeholder="Apellido paterno" class="form-control border-1"></td>
+                            <td><input type="text" [(ngModel)]="searchApMaterno" placeholder="Apellido materno" class="form-control border-1"></td>
+                            <td><input type="text" [(ngModel)]="searchUsuario" placeholder="Usuario" class="form-control border-1"></td>
+                            <td></td>
+                            <td></td>
+                            <td><input type="text" [(ngModel)]="searchAgencia" placeholder="Agencia" class="form-control border-1"></td>
+                            <td></td>
+                        </tr>
+                        <tr *ngFor="let funcionario of funcionarios | NumeroempSearchPipe : { cNumeroEmpleado: searchNumero }
+                                                                    | NombreSearchPipe : { cNombreFuncionario: searchNombre }
+                                                                    | AppaternoSearchPipe : { cApellidoPaternoFuncionario: searchApPaterno }
+                                                                    | ApmaternoSearchPipe : { cApellidoMaternoFuncionario: searchApMaterno }
+                                                                    | NomusuarioSearchPipe : { cClaveUsuario: searchUsuario }
+                                                                    | AgenciaSearchPipe : { cNombre: searchAgencia }
                                                                     | ActivosSearchPipe : {bEsActivo: searchActivos}
                                                                     | paginate: { itemsPerPage: 10, currentPage: p }">
                             <td class="align-middle text-truncate">{{ funcionario.cNumeroEmpleado }}</td>
@@ -80,25 +95,6 @@
                             <td class="align-middle text-truncate">{{ funcionario.cApellidoPaternoFuncionario }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.cApellidoMaternoFuncionario }}</td>
                             <td class="align-middle text-truncate">{{ funcionario.cClaveUsuario }}</td>
-                            <!-- <td class="align-middle">
-                                <input *ngIf="funcionario.bEsActivo === 1"
-                                        class="checkbox-success"
-                                        [ngbTooltip]="'Activo'"
-                                        type="checkbox"
-                                        id="checkAct"
-                                        #activo
-                                        (change)="controlActivos($event, funcionario)"
-                                        checked
-                                >
-                                <input *ngIf="funcionario.bEsActivo != 1"
-                                        class="checkbox-danger"
-                                        [ngbTooltip]="'Inactivo'"
-                                        type="checkbox"
-                                        id="checkInact"
-                                        #inactivo
-                                        (change)="controlInactivo($event, funcionario)"
-                                >
-                            </td> -->
                             <td class="align-middle">
                                 <i *ngIf="funcionario.bEsActivo === 1" class="fa fa-user mr-2 text-success" placement="bottom" [ngbTooltip]="'Activo, haga clic para desactivar'" (click)="controlActivos(funcionario)"></i>
                                 <i *ngIf="funcionario.bEsActivo != 1" class="fa fa-user mr-2 text-danger" placement="bottom" [ngbTooltip]="'Inactivo, haga clic para activar'" (click)="controlInactivo(funcionario)"></i>
@@ -115,8 +111,38 @@
                                 </div>
                             </td>
                         </tr>
+                        <!-- <tr *ngFor="let funcionario of funcionarios | UserSearchPipe : {cNombreFuncionario: searchText,
+                                                                                        cApellidoPaternoFuncionario: searchText,
+                                                                                        cApellidoMaternoFuncionario: searchText,
+                                                                                        cClaveUsuario: searchText,
+                                                                                        cNumeroEmpleado: searchText,
+                                                                                        cNombre: searchText}
+                                                                    | ActivosSearchPipe : {bEsActivo: searchActivos}
+                                                                    | paginate: { itemsPerPage: 10, currentPage: p }">
+                            <td class="align-middle text-truncate">{{ funcionario.cNumeroEmpleado }}</td>
+                            <td class="align-middle text-truncate">{{ funcionario.cNombreFuncionario }}</td>
+                            <td class="align-middle text-truncate">{{ funcionario.cApellidoPaternoFuncionario }}</td>
+                            <td class="align-middle text-truncate">{{ funcionario.cApellidoMaternoFuncionario }}</td>
+                            <td class="align-middle text-truncate">{{ funcionario.cClaveUsuario }}</td>
+                            <td class="align-middle">
+                                <i *ngIf="funcionario.bEsActivo === 1" class="fa fa-user mr-2 text-success" placement="bottom" [ngbTooltip]="'Activo, haga clic para desactivar'" (click)="controlActivos(funcionario)"></i>
+                                <i *ngIf="funcionario.bEsActivo != 1" class="fa fa-user mr-2 text-danger" placement="bottom" [ngbTooltip]="'Inactivo, haga clic para activar'" (click)="controlInactivo(funcionario)"></i>
+                            </td>
+                            <td class="align-middle">
+                                <i *ngIf="funcionario.esMP === 1" class="fa fa-check mr-2 text-success" placement="bottom" [ngbTooltip]="'Es MP'"></i>
+                                <i *ngIf="funcionario.esMP != 1" class="fa fa-close mr-2 text-danger" placement="bottom" [ngbTooltip]="'No es MP'"></i>
+                            </td>
+                            <td class="align-middle text-truncate">{{ funcionario.cNombre }}</td>
+                            <td><button #ver value="{{funcionario.iClaveFuncionario}}" class="btn btn-secondary" (click)="llamarRoles(ver.value)">Ver Roles</button></td>
+                            <td class="align-middle">
+                                <div class="btn-group" role="group">
+                                    <button [disabled]="funcionario.bEsActivo != 1" class="btn btn-secondary btn-sm" (click)="openModal(modalContent, funcionario)"><i class="fa fa-check"></i></button>
+                                </div>
+                            </td>
+                        </tr> -->
                     </tbody>
                 </table>
+                
             </div>
         </div>
     </div>
@@ -148,7 +174,8 @@
                             <div class="tab-pane active" id="reubicarFuncionario">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title mb-0">Reubicar funcionario</h5>
+                                        <h4 class="card-title mb-0">Reubicar funcionario</h4>
+                                        <h5 class="card-title mb-0">Agenc&iacute;a actual:&nbsp;<small>{{ nombreAgActual }}</small></h5>
                                     </div>
 
                                     <div class="container">

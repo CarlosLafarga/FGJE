@@ -23,7 +23,6 @@ export class MembershipComponent implements OnInit, OnDestroy {
 
   public router: Router;
   public titularAgencia: string;
-  public buscarFuncionario: string;
   public menuItems: Array<any>;  
   public cambioAdscripcion : CambioAdscripcion[];
   public adscripcion : CambioAdscripcion;
@@ -36,7 +35,6 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public agencia: Agencias;
   public users: User[];
   public user: User;
-  public searchText: string;
   public p: any;
   public type: string = 'list';
   public modalRef: NgbModalRef;
@@ -67,6 +65,19 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public cambioEstatus1: cambioEstatus[];
   public mostrarActivos: boolean = true;
   public prueba: boolean = false;
+
+  // ============variables de filtrado============
+  public searchText: string;
+  public searchActivos: string = "1";
+  public buscarFuncionario: string;
+
+  public searchNumero: string;
+  public searchNombre: string;
+  public searchApPaterno: string;
+  public searchApMaterno: string;
+  public searchUsuario: string;
+  public searchAgencia: string;
+  // =============================================
  
   public menuSelectOptions: IMultiSelectOption[] = [];
   
@@ -304,8 +315,6 @@ export class MembershipComponent implements OnInit, OnDestroy {
       console.log(this.count);
     }
   }
-
-  public searchActivos: string = "1";
 
   public soloActivos( e ) {
     this.mostrarActivos = e.target.checked
@@ -570,7 +579,12 @@ export class MembershipComponent implements OnInit, OnDestroy {
       // console.log(this.funcionarioRol);
       this.roles.splice(this.posicionRol, 1);
     } else {
-      this.toastrService.warning('Por favor seleccione un rol para agregar!', 'Atención!', {timeOut: 3000});
+      //this.toastrService.warning('Por favor seleccione un rol para agregar!', 'Atención!', {timeOut: 3000});
+      swal({
+        title:"Por favor seleccione un rol para agregar!",
+        text: this.titularAgencia,
+        type: "warning"
+        });
     }
     
     this.posicionRol = 0;
@@ -605,7 +619,12 @@ export class MembershipComponent implements OnInit, OnDestroy {
         this.funcionarioRol.splice(this.posicionRolF, 1);
       }
     } else {
-      this.toastrService.warning('Por favor seleccione un rol para eliminar!', 'Atención!', {timeOut: 3000});
+      //this.toastrService.warning('Por favor seleccione un rol para eliminar!', 'Atención!', {timeOut: 3000});
+      swal({
+        title:"Por favor seleccione un rol para eliminar!",
+        text: this.titularAgencia,
+        type: "warning"
+        });
     }
 
     this.posicionRolF = 0;
