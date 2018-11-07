@@ -441,15 +441,15 @@ export class MembershipComponent implements OnInit, OnDestroy {
       this.funcionarioRol = funcionarioRol
       console.log(this.funcionarioRol);
       
-      // for (let i = 0; i < this.funcionarioRol.length; i++) {
-      //   const elementFR = this.funcionarioRol[i];
-      //   for (let j = 0; j < this.roles.length; j++) {
-      //     const elementR = this.roles[j];
-      //     if ( elementFR.rol_id === elementR.rol_id) {
-      //       this.roles.splice(j, 1);
-      //     }
-      //   }
-      // }
+      for (let i = 0; i < this.funcionarioRol.length; i++) {
+        const elementFR = this.funcionarioRol[i];
+        for (let j = 0; j < this.roles.length; j++) {
+          const elementR = this.roles[j];
+          if ( elementFR.rol_id === elementR.rol_id) {
+            this.roles.splice(j, 1);
+          }
+        }
+      }
 
     });
   }
