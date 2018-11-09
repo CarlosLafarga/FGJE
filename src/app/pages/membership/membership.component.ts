@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators, NgForm} from '@angular
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE, CambioAdscripcion, ExpPendientes, AsignarPendientes, cambioEstatus } from './membership.model';
+import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE, CambioAdscripcion, ExpPendientes, AsignarPendientes, cambioEstatus ,cambioMP} from './membership.model';
 import { MembershipService } from './membership.service';
 import { MenuService } from '../../theme/components/menu/menu.service';
 import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
@@ -63,6 +63,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public soloRolesNum: number;
   public esPrincipal: number;
   public cambioEstatus1: cambioEstatus[];
+  public cambioMP : cambioMP[];
   public mostrarActivos: boolean = true;
   public prueba: boolean = false;
 
@@ -231,7 +232,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
         funcionario.bEsActivo = 1;
         // console.log("Se activa el funcionario => " + funcionario.cNombreFuncionario);
         // console.log(valor);
-        var justificacion = "";
+        var justificacion = result.value;
         var iclaveFuncionarionew = funcionario.iClaveFuncionario;
 
 
@@ -251,6 +252,96 @@ export class MembershipComponent implements OnInit, OnDestroy {
       }
     })
 
+  }
+  /*Activar MP*/
+  public rev1: boolean = true;
+  public activarMP(funcionario) {
+
+    swal({
+      title: 'Activar MP ',
+      text: '¿Esta seguro que desea activar al funcionario como MP?',
+      type: 'warning',
+      html: '<b>¿Esta seguro que desea activar al funcionario como MP?</b><br><label><b>Justificacion:</b></label>',
+      input: 'text',
+      inputValidator: (value) => {
+        return !value && 'Por favor ingrese la justificacion.'
+       },
+      showCancelButton: true,
+      confirmButtonText: 'Activar',
+      cancelButtonText: 'Cancelar'
+
+    }).then((result) => {
+
+      if (result.value) {
+        // const act = e.target.checked;
+        const valor: number = 1;
+        funcionario.esMP = 1;
+         console.log("Se Activo el funcionario con la bandera MP => " + funcionario.cNombreFuncionario );
+         console.log(valor);      
+        var justificacion = result.value;
+        var iclaveFuncionarionew = funcionario.iClaveFuncionario;
+
+        let cambioMP2 = new cambioMP(iclaveFuncionarionew, valor, justificacion);
+        this.cambioMP1( cambioMP2 );
+        
+        swal({
+          title:"Funcionario ahora es MP'",
+          text: "Funcionario ahora es MP",
+          type: "success"
+          }).then(() =>{
+          
+          //  location.reload();
+          });
+      } else if (result.dismiss === swal.DismissReason.cancel) {
+        this.rev1 = true; 
+      }
+    });
+    
+  }
+  /*DESACTIVAR MP*/
+  public rev2: boolean = true;
+  public desactivarMP(funcionario) {
+
+    swal({
+      title: 'Desactivar MP ',
+      text: '¿Esta seguro que desea desactivar al funcionario como MP?',
+      type: 'warning',
+      html: '<b>¿Esta seguro que desea desactivar al funcionario como MP?</b><br><label><b>Justificacion:</b></label>',
+      input: 'text',
+      inputValidator: (value) => {
+        return !value && 'Por favor ingrese la justificacion.'
+       },
+      showCancelButton: true,
+      confirmButtonText: 'Desactivar',
+      cancelButtonText: 'Cancelar'
+
+    }).then((result) => {
+
+      if (result.value) {
+        // const act = e.target.checked;
+        const valor: number = 0;
+        funcionario.esMP = 0;
+         console.log("Se desactiva el funcionario con la bandera MP => " + funcionario.cNombreFuncionario );
+         console.log(valor);      
+        var justificacion = result.value;
+        var iclaveFuncionarionew = funcionario.iClaveFuncionario;
+
+        let cambioMP2 = new cambioMP(iclaveFuncionarionew, valor, justificacion);
+        this.cambioMP1( cambioMP2 );
+        
+        swal({
+          title:"Funcionario ahora ya no es MP'",
+          text: "Funcionario ahora ya no es MP",
+          type: "success"
+          }).then(() =>{
+          
+          //  location.reload();
+          });
+      } else if (result.dismiss === swal.DismissReason.cancel) {
+        this.rev2 = true; 
+      }
+    });
+    
   }
 
   pageRefresh() {
@@ -553,6 +644,12 @@ export class MembershipComponent implements OnInit, OnDestroy {
     });
     // console.log("se ejecuto cambio de estatus.");
     
+  }
+
+  public cambioMP1(cambioMP:cambioMP){
+    this.membershipService.cambioMP(cambioMP).subscribe(cambioMP => {
+      this.cambioMP;
+    });
   }
 
   public toggle(type) {

@@ -13,5 +13,5 @@ export const routes: Routes = [
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes, {
     preloadingStrategy: PreloadAllModules,
-   // useHash: true
+    useHash: true
 });

@@ -206,6 +206,13 @@ export class cambioEstatus{
   ){}
 }
 
+export class cambioMP{
+  constructor(
+    public iclavefuncionario:number,
+    public esMP:number,
+    public justificacion:string,
+  ){}
+}
 // export class ExpPendientesTabla {
 //   public iclaveFuncionario: number;
 //   public catDis_ant: string

@@ -6,7 +6,7 @@ import { User, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAg
 @Injectable()
 export class MembershipService {
 
-    // public general = "http://localhost:55244/api";
+  //public general = "http://localhost:55244/api";
     public general = "http://192.168.105.53:55245/api";
     public url2 = this.general + "/funcionarios";
     public url3 = this.general + "/catDiscriminantes";
@@ -20,6 +20,7 @@ export class MembershipService {
     public url11 = this.general + "/CambioExp";
     public url12 = this.general + "/cambiarEstatus";
     public url13 = this.general + "/CountExp/countExp";
+    public url14 = this.general + "/cambioEsMP";
     private headers;
 
     constructor(public http: HttpClient) {
@@ -72,6 +73,10 @@ export class MembershipService {
     cambioEstatus(cambioEstatus:cambioEstatus){
         const estatus = JSON.stringify(cambioEstatus);
         return this.http.post(this.url12, estatus, { headers: this.headers });
+    }
+    cambioMP(cambioMP){
+        const esMP = JSON.stringify(cambioMP);
+        return this.http.post(this.url14,esMP,{headers:this.headers})
     }
 
     getExpPendientes(): Observable<ExpPendientes[]> {

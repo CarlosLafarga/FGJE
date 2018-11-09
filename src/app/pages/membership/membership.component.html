@@ -101,8 +101,8 @@
                                 <i *ngIf="funcionario.bEsActivo != 1" class="fa fa-user mr-2 text-danger" placement="bottom" [ngbTooltip]="'Inactivo, haga clic para activar'" (click)="controlInactivo(funcionario)"></i>
                             </td>
                             <td class="align-middle">
-                                <i *ngIf="funcionario.esMP === 1" class="fa fa-check mr-2 text-success" placement="bottom" [ngbTooltip]="'Es MP'"></i>
-                                <i *ngIf="funcionario.esMP != 1" class="fa fa-close mr-2 text-danger" placement="bottom" [ngbTooltip]="'No es MP'"></i>
+                                <i *ngIf="funcionario.esMP === 1" class="fa fa-check mr-2 text-success" (click)="desactivarMP(funcionario)" placement="bottom" [ngbTooltip]="'Es MP'"></i>
+                                <i *ngIf="funcionario.esMP != 1" class="fa fa-close mr-2 text-danger" (click)="activarMP(funcionario)" placement="bottom" [ngbTooltip]="'No es MP'"></i>
                             </td>
                             <td class="align-middle text-truncate">{{ funcionario.cNombre }}</td>
                             <td><button #ver value="{{funcionario.iClaveFuncionario}}" class="btn btn-secondary" (click)="llamarRoles(ver.value)">Ver Roles</button></td>
