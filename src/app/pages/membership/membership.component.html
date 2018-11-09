@@ -72,14 +72,15 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><input type="text" [(ngModel)]="searchNumero" placeholder="Número de empleado" class="form-control border-1"></td>
-                            <td><input type="text" [(ngModel)]="searchNombre" placeholder="Nombre(s)" class="form-control border-1"></td>
-                            <td><input type="text" [(ngModel)]="searchApPaterno" placeholder="Apellido paterno" class="form-control border-1"></td>
-                            <td><input type="text" [(ngModel)]="searchApMaterno" placeholder="Apellido materno" class="form-control border-1"></td>
-                            <td><input type="text" [(ngModel)]="searchUsuario" placeholder="Usuario" class="form-control border-1"></td>
+                            <td><input type="text" [(ngModel)]="searchNumero" placeholder="" class="form-control border-1"></td>
+                            <td><input type="text" [(ngModel)]="searchNombre" placeholder="" class="form-control border-1"></td>
+                            <td><input type="text" [(ngModel)]="searchApPaterno" placeholder="" class="form-control border-1"></td>
+                            <td><input type="text" [(ngModel)]="searchApMaterno" placeholder="" class="form-control border-1"></td>
+                            <td><input type="text" [(ngModel)]="searchUsuario" placeholder="" class="form-control border-1"></td>
                             <td></td>
                             <td></td>
-                            <td><input type="text" [(ngModel)]="searchAgencia" placeholder="Agencia" class="form-control border-1"></td>
+                            <td><input type="text" [(ngModel)]="searchAgencia" placeholder="" class="form-control border-1"></td>
+                            <td></td>
                             <td></td>
                         </tr>
                         <tr *ngFor="let funcionario of funcionarios | NumeroempSearchPipe : { cNumeroEmpleado: searchNumero }
@@ -281,6 +282,7 @@
 
                                         <div class="row">
                                             <div class="col-xl-5 col-lg-6 mb-4">
+                                                <h5 class="text-center">Catalogo de roles</h5>
                                                 <table class="table table-hover">
                                                     <thead>
                                                         <tr>
@@ -312,12 +314,13 @@
                                             </div>
 
                                             <div class="col-xl-2 col-lg-6 mb-4">
+                                                <br><br>
                                                 <button type="button" class="btn btn-secondary btn-block" (click)="agregarRol()" [ngbTooltip]="'Agregar rol'"> <i class="fa fa-long-arrow-right"></i> </button> <br>
                                                 <button type="button" class="btn btn-secondary btn-block" (click)="quitarRol()" [ngbTooltip]="'Quitar rol'"> <i class="fa fa-long-arrow-left"></i> </button>
                                             </div>
 
                                             <div class="col-xl-5 col-lg-6 mb-4">
-                                                
+                                                <h5 class="text-center">Roles del funcionario</h5>
                                                 <table class="table table-hover">
                                                     <thead>
                                                         <tr>
@@ -341,7 +344,15 @@
                                                             <td>{{ rol.cDescripcionRol }}</td>
                                                             <!-- <td> <input type="radio"  name="esPrincipal" class="radio-dark-gray"  [checked]="rol.esPrincipal === 1" id="rol.rol_id"> </td> -->
                                                             <td>
-                                                                <input type="radio" name="puesto_val" formControlName="puesto_val"  class="radio-dark-gray" (ngModel)="puesto_val" [value]="rol.rol_id" [checked]="rol.esPrincipal === 1" id="rol.rol_id">
+                                                                <input type="radio"
+                                                                    name="puesto_val"
+                                                                    formControlName="puesto_val" 
+                                                                    class="radio-dark-gray"
+                                                                    (ngModel)="puesto_val"
+                                                                    [value]="rol.rol_id"
+                                                                    [checked]="rol.esPrincipal === 1"
+                                                                    id="rol.rol_id"
+                                                                    (change)="rolChange(rol)">
                                                                 <small class="text-danger" *ngIf="form.get('puesto_val').hasError('required')">Por favor seleccione el rol principal</small>
                                                             </td>
                                                         </tr>
@@ -436,7 +447,14 @@
                                                                         <i *ngIf="funagen.esMP != 1" class="fa fa-close mr-2 text-danger" placement="bottom"></i>
                                                                     </td>
                                                                     <td>
-                                                                        <input type="radio" name="archivoDigital_id" formControlName="archivoDigital_id"  class="radio-dark-gray" [(ngModel)]="archivoDigital_id" [value]="funagen.iClaveFuncionario" (change)="radioChange($event)">
+                                                                        <input type="radio"
+                                                                            name="archivoDigital_id"
+                                                                            formControlName="archivoDigital_id" 
+                                                                            class="radio-dark-gray"
+                                                                            [(ngModel)]="archivoDigital_id"
+                                                                            [value]="funagen.iClaveFuncionario"
+                                                                            id="funagen.iClaveFuncionario"
+                                                                            (change)="radioChange($event)">
                                                                     </td>
                                                                 </tr>
                                                             </tbody>

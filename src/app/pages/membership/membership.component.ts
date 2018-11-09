@@ -581,10 +581,11 @@ export class MembershipComponent implements OnInit, OnDestroy {
     } else {
       //this.toastrService.warning('Por favor seleccione un rol para agregar!', 'Atención!', {timeOut: 3000});
       swal({
-        title:"Por favor seleccione un rol para agregar!",
-        text: this.titularAgencia,
+        title: "Por favor seleccione un rol para agregar!",
+        // text: this.titularAgencia,
+        text: "Debe seleccionar un rol del catalogo de roles.",
         type: "warning"
-        });
+      });
     }
     
     this.posicionRol = 0;
@@ -606,7 +607,12 @@ export class MembershipComponent implements OnInit, OnDestroy {
     if (this.posicionRolF > -1 && this.selectedRolF !== 0) {
       if (this.delRol.esPrincipal === 1) {
         // console.log("El rol es principal");
-        this.toastrService.warning('no puede eliminar el rol principal! para poder eliminar este rol seleccione otro como principal.', 'Atención!', {timeOut: 3000});
+        // this.toastrService.warning('no puede eliminar el rol principal! para poder eliminar este rol seleccione otro como principal.', 'Atención!', {timeOut: 3000});
+        swal({
+          title: "no puede eliminar el rol principal!",
+          text: "para poder eliminar este rol seleccione otro como principal.",
+          type: "warning"
+        });
       } else {
         this.roles.push(this.delRol);
         this.rolesEliminados.push(this.delRol);
@@ -621,14 +627,26 @@ export class MembershipComponent implements OnInit, OnDestroy {
     } else {
       //this.toastrService.warning('Por favor seleccione un rol para eliminar!', 'Atención!', {timeOut: 3000});
       swal({
-        title:"Por favor seleccione un rol para eliminar!",
-        text: this.titularAgencia,
+        title: "Por favor seleccione un rol para eliminar!",
+        // text: this.titularAgencia,
+        text: "Debe seleccionar un rol del funcionario.",
         type: "warning"
-        });
+      });
     }
 
     this.posicionRolF = 0;
     this.selectedRolF = 0;
+  }
+
+  rolChange( rol: Roles ) {
+    console.log("detecte el cambio del radio de roles");
+    for (let i = 0; i < this.funcionarioRol.length; i++) {
+      if (this.funcionarioRol[i].rol_id === rol.rol_id) {
+        this.funcionarioRol[i].esPrincipal = 1;
+      } else if (this.funcionarioRol[i].rol_id !== rol.rol_id) {
+        this.funcionarioRol[i].esPrincipal = 0;
+      }
+    }
   }
   
   // Se abre el modal y se cargan los datos del funcionario seleccionado

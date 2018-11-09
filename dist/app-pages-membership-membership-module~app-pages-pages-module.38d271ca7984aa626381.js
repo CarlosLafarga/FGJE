@@ -10563,12 +10563,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _search_mail_search_pipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./search/mail-search.pipe */ "./src/app/theme/pipes/search/mail-search.pipe.ts");
 /* harmony import */ var _search_funcionario_search_pipe__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./search/funcionario-search.pipe */ "./src/app/theme/pipes/search/funcionario-search.pipe.ts");
 /* harmony import */ var _search_activos_search_pipe__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./search/activos-search.pipe */ "./src/app/theme/pipes/search/activos-search.pipe.ts");
+/* harmony import */ var _search_numeroemp_search_pipe__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./search/numeroemp-search.pipe */ "./src/app/theme/pipes/search/numeroemp-search.pipe.ts");
+/* harmony import */ var _search_nombre_search_pipe__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./search/nombre-search.pipe */ "./src/app/theme/pipes/search/nombre-search.pipe.ts");
+/* harmony import */ var _search_appaterno_search_pipe__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./search/appaterno-search.pipe */ "./src/app/theme/pipes/search/appaterno-search.pipe.ts");
+/* harmony import */ var _search_apmaterno_search_pipe__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./search/apmaterno-search.pipe */ "./src/app/theme/pipes/search/apmaterno-search.pipe.ts");
+/* harmony import */ var _search_nomusuario_search_pipe__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./search/nomusuario-search.pipe */ "./src/app/theme/pipes/search/nomusuario-search.pipe.ts");
+/* harmony import */ var _search_agencia_search_pipe__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./search/agencia-search.pipe */ "./src/app/theme/pipes/search/agencia-search.pipe.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
+
+
+
+
 
 
 
@@ -10593,7 +10605,13 @@ var PipesModule = /** @class */ (function () {
                 _truncate_truncate_pipe__WEBPACK_IMPORTED_MODULE_5__["TruncatePipe"],
                 _search_mail_search_pipe__WEBPACK_IMPORTED_MODULE_6__["MailSearchPipe"],
                 _search_funcionario_search_pipe__WEBPACK_IMPORTED_MODULE_7__["FuncionarioSearchPipe"],
-                _search_activos_search_pipe__WEBPACK_IMPORTED_MODULE_8__["ActivosSearchPipe"]
+                _search_activos_search_pipe__WEBPACK_IMPORTED_MODULE_8__["ActivosSearchPipe"],
+                _search_numeroemp_search_pipe__WEBPACK_IMPORTED_MODULE_9__["NumeroempSearchPipe"],
+                _search_nombre_search_pipe__WEBPACK_IMPORTED_MODULE_10__["NombreSearchPipe"],
+                _search_appaterno_search_pipe__WEBPACK_IMPORTED_MODULE_11__["AppaternoSearchPipe"],
+                _search_apmaterno_search_pipe__WEBPACK_IMPORTED_MODULE_12__["ApmaternoSearchPipe"],
+                _search_nomusuario_search_pipe__WEBPACK_IMPORTED_MODULE_13__["NomusuarioSearchPipe"],
+                _search_agencia_search_pipe__WEBPACK_IMPORTED_MODULE_14__["AgenciaSearchPipe"]
             ],
             exports: [
                 _profilePicture_profilePicture_pipe__WEBPACK_IMPORTED_MODULE_2__["ProfilePicturePipe"],
@@ -10602,7 +10620,13 @@ var PipesModule = /** @class */ (function () {
                 _truncate_truncate_pipe__WEBPACK_IMPORTED_MODULE_5__["TruncatePipe"],
                 _search_mail_search_pipe__WEBPACK_IMPORTED_MODULE_6__["MailSearchPipe"],
                 _search_funcionario_search_pipe__WEBPACK_IMPORTED_MODULE_7__["FuncionarioSearchPipe"],
-                _search_activos_search_pipe__WEBPACK_IMPORTED_MODULE_8__["ActivosSearchPipe"]
+                _search_activos_search_pipe__WEBPACK_IMPORTED_MODULE_8__["ActivosSearchPipe"],
+                _search_numeroemp_search_pipe__WEBPACK_IMPORTED_MODULE_9__["NumeroempSearchPipe"],
+                _search_nombre_search_pipe__WEBPACK_IMPORTED_MODULE_10__["NombreSearchPipe"],
+                _search_appaterno_search_pipe__WEBPACK_IMPORTED_MODULE_11__["AppaternoSearchPipe"],
+                _search_apmaterno_search_pipe__WEBPACK_IMPORTED_MODULE_12__["ApmaternoSearchPipe"],
+                _search_nomusuario_search_pipe__WEBPACK_IMPORTED_MODULE_13__["NomusuarioSearchPipe"],
+                _search_agencia_search_pipe__WEBPACK_IMPORTED_MODULE_14__["AgenciaSearchPipe"]
             ]
         })
     ], PipesModule);
@@ -10711,6 +10735,174 @@ var ActivosSearchPipe = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Pipe"])({ name: 'ActivosSearchPipe', pure: false })
     ], ActivosSearchPipe);
     return ActivosSearchPipe;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/theme/pipes/search/agencia-search.pipe.ts":
+/*!***********************************************************!*\
+  !*** ./src/app/theme/pipes/search/agencia-search.pipe.ts ***!
+  \***********************************************************/
+/*! exports provided: AgenciaSearchPipe */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AgenciaSearchPipe", function() { return AgenciaSearchPipe; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var AgenciaSearchPipe = /** @class */ (function () {
+    function AgenciaSearchPipe() {
+    }
+    AgenciaSearchPipe.prototype.transform = function (funcionarios, searchAgencia, defaultFilter) {
+        if (!searchAgencia) {
+            return funcionarios;
+        }
+        if (!Array.isArray(funcionarios)) {
+            return funcionarios;
+        }
+        if (searchAgencia && Array.isArray(funcionarios)) {
+            var filterKeys_1 = Object.keys(searchAgencia);
+            if (defaultFilter) {
+                return funcionarios.filter(function (item) {
+                    return filterKeys_1.reduce(function (x, keyName) {
+                        return (x && new RegExp(searchAgencia[keyName], 'gi').test(item[keyName])) || searchAgencia[keyName] == "";
+                    }, true);
+                });
+            }
+            else {
+                return funcionarios.filter(function (it) {
+                    return filterKeys_1.some(function (key) {
+                        return new RegExp(searchAgencia[key], 'gi').test(it[key]) || searchAgencia[key] == "";
+                    });
+                });
+            }
+        }
+    };
+    AgenciaSearchPipe = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Pipe"])({ name: 'AgenciaSearchPipe', pure: false })
+    ], AgenciaSearchPipe);
+    return AgenciaSearchPipe;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/theme/pipes/search/apmaterno-search.pipe.ts":
+/*!*************************************************************!*\
+  !*** ./src/app/theme/pipes/search/apmaterno-search.pipe.ts ***!
+  \*************************************************************/
+/*! exports provided: ApmaternoSearchPipe */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ApmaternoSearchPipe", function() { return ApmaternoSearchPipe; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var ApmaternoSearchPipe = /** @class */ (function () {
+    function ApmaternoSearchPipe() {
+    }
+    ApmaternoSearchPipe.prototype.transform = function (funcionarios, searchApMaterno, defaultFilter) {
+        if (!searchApMaterno) {
+            return funcionarios;
+        }
+        if (!Array.isArray(funcionarios)) {
+            return funcionarios;
+        }
+        if (searchApMaterno && Array.isArray(funcionarios)) {
+            var filterKeys_1 = Object.keys(searchApMaterno);
+            if (defaultFilter) {
+                return funcionarios.filter(function (item) {
+                    return filterKeys_1.reduce(function (x, keyName) {
+                        return (x && new RegExp(searchApMaterno[keyName], 'gi').test(item[keyName])) || searchApMaterno[keyName] == "";
+                    }, true);
+                });
+            }
+            else {
+                return funcionarios.filter(function (it) {
+                    return filterKeys_1.some(function (key) {
+                        return new RegExp(searchApMaterno[key], 'gi').test(it[key]) || searchApMaterno[key] == "";
+                    });
+                });
+            }
+        }
+    };
+    ApmaternoSearchPipe = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Pipe"])({ name: 'ApmaternoSearchPipe', pure: false })
+    ], ApmaternoSearchPipe);
+    return ApmaternoSearchPipe;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/theme/pipes/search/appaterno-search.pipe.ts":
+/*!*************************************************************!*\
+  !*** ./src/app/theme/pipes/search/appaterno-search.pipe.ts ***!
+  \*************************************************************/
+/*! exports provided: AppaternoSearchPipe */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppaternoSearchPipe", function() { return AppaternoSearchPipe; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var AppaternoSearchPipe = /** @class */ (function () {
+    function AppaternoSearchPipe() {
+    }
+    AppaternoSearchPipe.prototype.transform = function (funcionarios, searchApPaterno, defaultFilter) {
+        if (!searchApPaterno) {
+            return funcionarios;
+        }
+        if (!Array.isArray(funcionarios)) {
+            return funcionarios;
+        }
+        if (searchApPaterno && Array.isArray(funcionarios)) {
+            var filterKeys_1 = Object.keys(searchApPaterno);
+            if (defaultFilter) {
+                return funcionarios.filter(function (item) {
+                    return filterKeys_1.reduce(function (x, keyName) {
+                        return (x && new RegExp(searchApPaterno[keyName], 'gi').test(item[keyName])) || searchApPaterno[keyName] == "";
+                    }, true);
+                });
+            }
+            else {
+                return funcionarios.filter(function (it) {
+                    return filterKeys_1.some(function (key) {
+                        return new RegExp(searchApPaterno[key], 'gi').test(it[key]) || searchApPaterno[key] == "";
+                    });
+                });
+            }
+        }
+    };
+    AppaternoSearchPipe = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Pipe"])({ name: 'AppaternoSearchPipe', pure: false })
+    ], AppaternoSearchPipe);
+    return AppaternoSearchPipe;
 }());
 
 
@@ -10885,6 +11077,174 @@ var MailSearchPipe = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/theme/pipes/search/nombre-search.pipe.ts":
+/*!**********************************************************!*\
+  !*** ./src/app/theme/pipes/search/nombre-search.pipe.ts ***!
+  \**********************************************************/
+/*! exports provided: NombreSearchPipe */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NombreSearchPipe", function() { return NombreSearchPipe; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var NombreSearchPipe = /** @class */ (function () {
+    function NombreSearchPipe() {
+    }
+    NombreSearchPipe.prototype.transform = function (funcionarios, searchNombre, defaultFilter) {
+        if (!searchNombre) {
+            return funcionarios;
+        }
+        if (!Array.isArray(funcionarios)) {
+            return funcionarios;
+        }
+        if (searchNombre && Array.isArray(funcionarios)) {
+            var filterKeys_1 = Object.keys(searchNombre);
+            if (defaultFilter) {
+                return funcionarios.filter(function (item) {
+                    return filterKeys_1.reduce(function (x, keyName) {
+                        return (x && new RegExp(searchNombre[keyName], 'gi').test(item[keyName])) || searchNombre[keyName] == "";
+                    }, true);
+                });
+            }
+            else {
+                return funcionarios.filter(function (it) {
+                    return filterKeys_1.some(function (key) {
+                        return new RegExp(searchNombre[key], 'gi').test(it[key]) || searchNombre[key] == "";
+                    });
+                });
+            }
+        }
+    };
+    NombreSearchPipe = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Pipe"])({ name: 'NombreSearchPipe', pure: false })
+    ], NombreSearchPipe);
+    return NombreSearchPipe;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/theme/pipes/search/nomusuario-search.pipe.ts":
+/*!**************************************************************!*\
+  !*** ./src/app/theme/pipes/search/nomusuario-search.pipe.ts ***!
+  \**************************************************************/
+/*! exports provided: NomusuarioSearchPipe */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NomusuarioSearchPipe", function() { return NomusuarioSearchPipe; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var NomusuarioSearchPipe = /** @class */ (function () {
+    function NomusuarioSearchPipe() {
+    }
+    NomusuarioSearchPipe.prototype.transform = function (funcionarios, searchUsuario, defaultFilter) {
+        if (!searchUsuario) {
+            return funcionarios;
+        }
+        if (!Array.isArray(funcionarios)) {
+            return funcionarios;
+        }
+        if (searchUsuario && Array.isArray(funcionarios)) {
+            var filterKeys_1 = Object.keys(searchUsuario);
+            if (defaultFilter) {
+                return funcionarios.filter(function (item) {
+                    return filterKeys_1.reduce(function (x, keyName) {
+                        return (x && new RegExp(searchUsuario[keyName], 'gi').test(item[keyName])) || searchUsuario[keyName] == "";
+                    }, true);
+                });
+            }
+            else {
+                return funcionarios.filter(function (it) {
+                    return filterKeys_1.some(function (key) {
+                        return new RegExp(searchUsuario[key], 'gi').test(it[key]) || searchUsuario[key] == "";
+                    });
+                });
+            }
+        }
+    };
+    NomusuarioSearchPipe = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Pipe"])({ name: 'NomusuarioSearchPipe', pure: false })
+    ], NomusuarioSearchPipe);
+    return NomusuarioSearchPipe;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/theme/pipes/search/numeroemp-search.pipe.ts":
+/*!*************************************************************!*\
+  !*** ./src/app/theme/pipes/search/numeroemp-search.pipe.ts ***!
+  \*************************************************************/
+/*! exports provided: NumeroempSearchPipe */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NumeroempSearchPipe", function() { return NumeroempSearchPipe; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var NumeroempSearchPipe = /** @class */ (function () {
+    function NumeroempSearchPipe() {
+    }
+    NumeroempSearchPipe.prototype.transform = function (funcionarios, searchNumero, defaultFilter) {
+        if (!searchNumero) {
+            return funcionarios;
+        }
+        if (!Array.isArray(funcionarios)) {
+            return funcionarios;
+        }
+        if (searchNumero && Array.isArray(funcionarios)) {
+            var filterKeys_1 = Object.keys(searchNumero);
+            if (defaultFilter) {
+                return funcionarios.filter(function (item) {
+                    return filterKeys_1.reduce(function (x, keyName) {
+                        return (x && new RegExp(searchNumero[keyName], 'gi').test(item[keyName])) || searchNumero[keyName] == "";
+                    }, true);
+                });
+            }
+            else {
+                return funcionarios.filter(function (it) {
+                    return filterKeys_1.some(function (key) {
+                        return new RegExp(searchNumero[key], 'gi').test(it[key]) || searchNumero[key] == "";
+                    });
+                });
+            }
+        }
+    };
+    NumeroempSearchPipe = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Pipe"])({ name: 'NumeroempSearchPipe', pure: false })
+    ], NumeroempSearchPipe);
+    return NumeroempSearchPipe;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/theme/pipes/search/user-search.pipe.ts":
 /*!********************************************************!*\
   !*** ./src/app/theme/pipes/search/user-search.pipe.ts ***!
@@ -10979,4 +11339,4 @@ var TruncatePipe = /** @class */ (function () {
 /***/ })
 
 }]);
-//# sourceMappingURL=app-pages-membership-membership-module~app-pages-pages-module.fcb32406378804e40799.js.map
+//# sourceMappingURL=app-pages-membership-membership-module~app-pages-pages-module.38d271ca7984aa626381.js.map
