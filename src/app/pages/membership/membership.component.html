@@ -352,7 +352,7 @@
                                                                     [value]="rol.rol_id"
                                                                     [checked]="rol.esPrincipal === 1"
                                                                     id="rol.rol_id"
-                                                                    (change)="rolChange(rol)">
+                                                                    (change)="radioRolChange(rol)">
                                                                 <small class="text-danger" *ngIf="form.get('puesto_val').hasError('required')">Por favor seleccione el rol principal</small>
                                                             </td>
                                                         </tr>
@@ -495,7 +495,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="justificacion">justificación</label>
-                                <textarea id="justificacion" class="form-control" formControlName="cRFC" required></textarea>
+                                <textarea maxlength="150" id="justificacion" class="form-control" formControlName="cRFC" placeholder="Máximo 150 caracteres" required></textarea>
                                 <!-- <textarea id="justificacion" class="form-control" formControlName="cRFC" [(ngModel)]="cRFC" required></textarea> -->
                                 <!-- <small class="text-danger" *ngIf="form.get('cRFC').touched && form.get('cRFC').hasError('required')">Por favor ingrese la justificación</small> -->
                             </div>

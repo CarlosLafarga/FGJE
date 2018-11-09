@@ -222,7 +222,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
 
-      console.log(result.value);
+      // console.log(result.value);
 
       if (result.value) {
         // const inact = e.target.checked;
@@ -246,7 +246,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
           // location.reload();
           });
       } else if (result.dismiss === swal.DismissReason.cancel) {
-        console.log("Se cancelo la activación")
+        // console.log("Se cancelo la activación")
       
       }
     })
@@ -301,7 +301,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
      
       this.valEsMPCheck = false;
       this.valAgenciaSelect = false;
-      console.log(this.count);
+      // console.log(this.count);
     } else {
       if(this.count > 0 ){
         this.valReasignarExpedientes = true;
@@ -312,7 +312,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
       }
       this.valEsMPCheck = true;
       this.valAgenciaSelect = true;
-      console.log(this.count);
+      // console.log(this.count);
     }
   }
 
@@ -439,7 +439,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public getFuncionarioRol(funcionario: FuncionariosData): void {
     this.membershipService.getFUsuarioRol(funcionario.iClaveFuncionario).subscribe( funcionarioRol => {
       this.funcionarioRol = funcionarioRol
-      console.log(this.funcionarioRol);
+      // console.log(this.funcionarioRol);
       
       for (let i = 0; i < this.funcionarioRol.length; i++) {
         const elementFR = this.funcionarioRol[i];
@@ -596,7 +596,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
     this.selectedRolF = rol.rol_id;
     // console.log("Se seleccion de rol del funcionario=> " + this.selectedRolF);
     this.delRol = rol;
-    console.log(this.delRol);
+    // console.log(this.delRol);
 
     this.posicionRolF = this.funcionarioRol.indexOf(this.delRol);
   }
@@ -638,8 +638,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
     this.selectedRolF = 0;
   }
 
-  rolChange( rol: Roles ) {
-    console.log("detecte el cambio del radio de roles");
+  radioRolChange( rol: Roles ) {
     for (let i = 0; i < this.funcionarioRol.length; i++) {
       if (this.funcionarioRol[i].rol_id === rol.rol_id) {
         this.funcionarioRol[i].esPrincipal = 1;
@@ -651,7 +650,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
   
   // Se abre el modal y se cargan los datos del funcionario seleccionado
   public openModal(modalContent, funcionario, catUIE) {
-    console.log(funcionario);
+    // console.log(funcionario);
   
     // this.getAgencias();
     // this.getRoles();
@@ -719,7 +718,6 @@ export class MembershipComponent implements OnInit, OnDestroy {
 
   public radioAsign: boolean = false;
   radioChange( e ) {
-    console.log("detecte el evento del radio");
     this.radioAsign = true;
     if (this.radioAsign || this.expPendientes) {
       this.prueba = true;
@@ -797,17 +795,17 @@ export class MembershipComponent implements OnInit, OnDestroy {
       esMP = this.esMPNum;
       soloRoles = this.soloRolesNum;
 
-      console.log("iClaveFuncionarioSolicitante => " + iClaveFuncionarioSolicitante);
-      console.log("iClaveFuncionarioAnterior => " + iClaveFuncionarioAnterior);
-      console.log("iClaveFuncionarioExp => " + iClaveFuncionarioExp);
-      console.log("catDiscriminante_id => " + catDiscriminateSolicitante);
-      console.log("catUIE_id => " + catUIE_actual);
-      console.log("catDiscriminante_idNuevo => " + catDiscriminateNuevo);
-      console.log("Jusfificación => " + Justificacion);
-      console.log("Expedientes pendientes => " + expPendientes);
-      console.log("Roles del funcionario => " + rolesFuncionario);
-      console.log("Roles en un string => " + rolesString);
-      console.log("Es principal => " + this.esPrincipal);
+      // console.log("iClaveFuncionarioSolicitante => " + iClaveFuncionarioSolicitante);
+      // console.log("iClaveFuncionarioAnterior => " + iClaveFuncionarioAnterior);
+      // console.log("iClaveFuncionarioExp => " + iClaveFuncionarioExp);
+      // console.log("catDiscriminante_id => " + catDiscriminateSolicitante);
+      // console.log("catUIE_id => " + catUIE_actual);
+      // console.log("catDiscriminante_idNuevo => " + catDiscriminateNuevo);
+      // console.log("Jusfificación => " + Justificacion);
+      // console.log("Expedientes pendientes => " + expPendientes);
+      // console.log("Roles del funcionario => " + rolesFuncionario);
+      // console.log("Roles en un string => " + rolesString);
+      // console.log("Es principal => " + this.esPrincipal);
 
       // console.log("Se envio el formulario:");
       // console.log(this.funcionarioRol);
@@ -824,7 +822,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
                                                     this.esPrincipal,
                                                     esMP,
                                                     soloRoles );
-      console.log(cambioAdscripcion);
+      // console.log(cambioAdscripcion);
       this.cambioAdscripcion1(cambioAdscripcion);
       this.form.reset({
         hasSubMenu:false,
@@ -885,7 +883,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public getFuncionariosAg(expPend: ExpPendientes):void {
     this.membershipService.getFUsuarioAgencia(expPend.catDiscriminanteAnterior).subscribe( exp => {
       this.funcinariosAgencia = exp
-      console.log(this.funcinariosAgencia);
+      // console.log(this.funcinariosAgencia);
     });
   }
 
@@ -895,7 +893,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public onSelectExpPend(expPend: ExpPendientes) {
     this.selectedExpPend = expPend.cambioAdscripcion_id;
     this.objExpPend = expPend;
-    console.log(this.objExpPend);
+    // console.log(this.objExpPend);
     
     this.getFuncionariosAg(this.objExpPend);
 
