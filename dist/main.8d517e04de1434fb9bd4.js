@@ -218,6 +218,7 @@ var routes = [
 ];
 var routing = _angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"].forRoot(routes, {
     preloadingStrategy: _angular_router__WEBPACK_IMPORTED_MODULE_0__["PreloadAllModules"],
+    useHash: true
 });
 
 
@@ -535,4 +536,4 @@ module.exports = __webpack_require__(/*! C:\Users\usuario\Documents\GitHub\FGJE\
 /***/ })
 
 },[[0,"runtime","vendor"]]]);
-//# sourceMappingURL=main.3d488b5f9115cdcf0fd3.js.map
+//# sourceMappingURL=main.8d517e04de1434fb9bd4.js.map

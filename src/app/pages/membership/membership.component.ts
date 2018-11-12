@@ -346,9 +346,9 @@ export class MembershipComponent implements OnInit, OnDestroy {
 
   pageRefresh() {
     this.form.reset();
-    this.router.navigate(['/pages/blank']);
-    this.router.navigate(['/pages/membership']);
-    // location.reload();
+    // this.router.navigate(['/pages/blank']);
+    // this.router.navigate(['/pages/membership']);
+    location.reload();
   }
 
   public valReasignarExpedientes: boolean = true;
@@ -482,8 +482,6 @@ export class MembershipComponent implements OnInit, OnDestroy {
           if (ag === this.agencias[j].catDiscriminante_id) {
             const agNombre: string = this.agencias[j].cNombre;
             this.funcionarios[i].cNombre = agNombre;
-
-            this.funcionarios[i].cNombre = agNombre;
           }
         }
       }
@@ -501,22 +499,6 @@ export class MembershipComponent implements OnInit, OnDestroy {
   }
 
   public rolesSR: Roles[] = [];
-  
-  // Se cargan los roles del catalogo
-  // public getRoles(): void {
-  //   var hash = {}
-  //   this.membershipService.getRoles().subscribe( roles => {
-  //     this.roles = roles.filter(function(current){
-  //       var exists = !hash[current.rol_id] || false;
-  //       hash[current.rol_id] = true;
-  //       // console.log("Este es el arreglo ya formateado:=>"+exists);
-  //       return exists;
-  //     });
-  //     console.log("Estos son los roles");
-  //     console.log(this.roles);
-
-  //   });
-  // }
 
   public cont: number;
   public getRoles(): void {
@@ -573,17 +555,41 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public nombreAgActual: string;
   public nAgActual: string[];
 
-  public getFuncionarioAgencia(funcionario:FuncionariosData):void{
+  public getFuncionarioAgencia(funcionario: FuncionariosData):void{
     this.membershipService.getFUsuarioAgencia(funcionario.catDiscriminante_id).subscribe( funciAgencia => {
       this.funciAgencia = funciAgencia
       this.nAgActual = this.funciAgencia.map(a => a.cNombre);
       this.nombreAgActual = this.nAgActual[0];
 
-      for (let i = 0; i < this.funciAgencia.length; i++) {
-        if (this.funcionario.iClaveFuncionario === this.funciAgencia[i].iClaveFuncionario) {
-          this.funciAgencia.splice( i, 1);
+      for (let i = 0; i < this.funcionarios.length; i++) {
+        for (let j = 0; j < this.funciAgencia.length; j++) {
+          if (this.funcionarios[i].iClaveFuncionario === this.funciAgencia[j].iClaveFuncionario) {
+            this.funciAgencia[j].bEsActivo = this.funcionarios[i].bEsActivo;
+            break;
+          }
         }
       }
+
+      // for (let i = 0; i < this.funciAgencia.length; i++) {
+      //   if (funcionario.iClaveFuncionario === this.funciAgencia[i].iClaveFuncionario ||
+      //       this.funciAgencia[i].bEsActivo === 0) {
+      //     this.funciAgencia.splice( i, 1 );
+      //   }
+      // }
+
+      for (let i = 0; i < this.funciAgencia.length; i++) {
+        if (funcionario.iClaveFuncionario === this.funciAgencia[i].iClaveFuncionario) {
+          this.funciAgencia.splice( i, 1 );
+        }
+      }
+
+      for (let i = 0; i < this.funciAgencia.length; i++) {
+        if (this.funciAgencia[i].bEsActivo === 0) {
+          this.funciAgencia.splice( i, 1 );
+        }
+      }
+
+      console.log(this.funciAgencia);
 
     });
   }
@@ -633,7 +639,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
       text: this.titularAgencia,
       type: "success"
       }).then(() =>{
-      
+        this.pageRefresh();
         this.router.navigate(['/pages/membership']);
       });
   }
@@ -748,7 +754,6 @@ export class MembershipComponent implements OnInit, OnDestroy {
   // Se abre el modal y se cargan los datos del funcionario seleccionado
   public openModal(modalContent, funcionario, catUIE) {
     // console.log(funcionario);
-  
     // this.getAgencias();
     // this.getRoles();
     this.getFuncionarioRol( funcionario );
@@ -929,7 +934,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
     }
     this.expPendientes = false;
 
-    this.closeModal();
+    // this.closeModal();
   } 
 
   public expPendientesLista: ExpPendientes[] = [];

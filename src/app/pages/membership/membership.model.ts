@@ -155,6 +155,7 @@ export class FunciAgencia {
   cAPellidoMaternoFuncionario: string;
   cNombre: string;
   EsMP: number;
+  bEsActivo: number;
 }
 
 
