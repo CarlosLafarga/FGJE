@@ -589,7 +589,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
         }
       }
 
-      console.log(this.funciAgencia);
+      // console.log(this.funciAgencia);
 
     });
   }

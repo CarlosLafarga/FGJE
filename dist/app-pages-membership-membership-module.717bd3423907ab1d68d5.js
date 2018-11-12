@@ -985,7 +985,6 @@ var MembershipComponent = /** @class */ (function () {
                     if (ag === _this.agencias[j].catDiscriminante_id) {
                         var agNombre = _this.agencias[j].cNombre;
                         _this.funcionarios[i].cNombre = agNombre;
-                        _this.funcionarios[i].cNombre = agNombre;
                     }
                 }
             }
@@ -1052,19 +1051,31 @@ var MembershipComponent = /** @class */ (function () {
             _this.funciAgencia = funciAgencia;
             _this.nAgActual = _this.funciAgencia.map(function (a) { return a.cNombre; });
             _this.nombreAgActual = _this.nAgActual[0];
-            for (var i = 0; i < _this.funciAgencia.length; i++) {
-                for (var j = 0; j < _this.funcionarios.length; j++) {
-                    if (_this.funciAgencia[i].iClaveFuncionario === _this.funcionarios[j].iClaveFuncionario) {
-                        _this.funciAgencia[i].bEsActivo === _this.funcionarios[j].bEsActivo;
+            for (var i = 0; i < _this.funcionarios.length; i++) {
+                for (var j = 0; j < _this.funciAgencia.length; j++) {
+                    if (_this.funcionarios[i].iClaveFuncionario === _this.funciAgencia[j].iClaveFuncionario) {
+                        _this.funciAgencia[j].bEsActivo = _this.funcionarios[i].bEsActivo;
+                        break;
                     }
                 }
             }
+            // for (let i = 0; i < this.funciAgencia.length; i++) {
+            //   if (funcionario.iClaveFuncionario === this.funciAgencia[i].iClaveFuncionario ||
+            //       this.funciAgencia[i].bEsActivo === 0) {
+            //     this.funciAgencia.splice( i, 1 );
+            //   }
+            // }
             for (var i = 0; i < _this.funciAgencia.length; i++) {
-                if (_this.funcionario.iClaveFuncionario === _this.funciAgencia[i].iClaveFuncionario ||
-                    _this.funciAgencia[i].bEsActivo === 0) {
+                if (funcionario.iClaveFuncionario === _this.funciAgencia[i].iClaveFuncionario) {
                     _this.funciAgencia.splice(i, 1);
                 }
             }
+            for (var i = 0; i < _this.funciAgencia.length; i++) {
+                if (_this.funciAgencia[i].bEsActivo === 0) {
+                    _this.funciAgencia.splice(i, 1);
+                }
+            }
+            console.log(_this.funciAgencia);
         });
     };
     MembershipComponent.prototype.getCatUIE = function (valor) {
@@ -1218,8 +1229,8 @@ var MembershipComponent = /** @class */ (function () {
     };
     // Se abre el modal y se cargan los datos del funcionario seleccionado
     MembershipComponent.prototype.openModal = function (modalContent, funcionario, catUIE) {
-        // console.log(funcionario);
         var _this = this;
+        // console.log(funcionario);
         // this.getAgencias();
         // this.getRoles();
         this.getFuncionarioRol(funcionario);
@@ -1824,4 +1835,4 @@ var MembershipService = /** @class */ (function () {
 /***/ })
 
 }]);
-//# sourceMappingURL=app-pages-membership-membership-module.3714e7e29989d423eee2.js.map
+//# sourceMappingURL=app-pages-membership-membership-module.717bd3423907ab1d68d5.js.map
