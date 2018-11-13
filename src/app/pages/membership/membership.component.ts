@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators, NgForm} from '@angular
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE, CambioAdscripcion, ExpPendientes, AsignarPendientes, cambioEstatus ,cambioMP} from './membership.model';
+import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE, CambioAdscripcion, ExpPendientes, AsignarPendientes, cambioEstatus ,cambioMP, usuario, usuarioRol} from './membership.model';
 import { MembershipService } from './membership.service';
 import { MenuService } from '../../theme/components/menu/menu.service';
 import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
@@ -253,96 +253,110 @@ export class MembershipComponent implements OnInit, OnDestroy {
     })
 
   }
-  /*Activar MP*/
-  public rev1: boolean = true;
-  public activarMP(funcionario) {
+/*Activar MP*/
+public rev1: boolean = true;
+public rev2: boolean = true;
+public activarMP(funcionario) {
+  
+ if(funcionario.esMP === 0){
+  swal({
+    title: 'Activar MP ',
+    text: '¿Esta seguro que desea activar al funcionario como MP?',
+    type: 'warning',
+    html: '<b>¿Esta seguro que desea activar al funcionario como MP?</b><br><label><b>Justificacion:</b></label>',
+    input: 'text',
+    inputValidator: (value) => {
+      return !value && 'Por favor ingrese la justificacion.'
+     },
+    showCancelButton: true,
+    confirmButtonText: 'Activar',
+    cancelButtonText: 'Cancelar'
 
-    swal({
-      title: 'Activar MP ',
-      text: '¿Esta seguro que desea activar al funcionario como MP?',
-      type: 'warning',
-      html: '<b>¿Esta seguro que desea activar al funcionario como MP?</b><br><label><b>Justificacion:</b></label>',
-      input: 'text',
-      inputValidator: (value) => {
-        return !value && 'Por favor ingrese la justificacion.'
-       },
-      showCancelButton: true,
-      confirmButtonText: 'Activar',
-      cancelButtonText: 'Cancelar'
+  }).then((result) => {
 
-    }).then((result) => {
+    if (result.value) {
+      // const act = e.target.checked;
+      const valor: number = 1;
+      funcionario.esMP = 1;
+       console.log("Se Activo el funcionario con la bandera MP => " + funcionario.cNombreFuncionario );
+       console.log(valor);      
+      var justificacion = result.value;
+      var iclaveFuncionarionew = funcionario.iClaveFuncionario;
 
-      if (result.value) {
-        // const act = e.target.checked;
-        const valor: number = 1;
-        funcionario.esMP = 1;
-         console.log("Se Activo el funcionario con la bandera MP => " + funcionario.cNombreFuncionario );
-         console.log(valor);      
-        var justificacion = result.value;
-        var iclaveFuncionarionew = funcionario.iClaveFuncionario;
-
-        let cambioMP2 = new cambioMP(iclaveFuncionarionew, valor, justificacion);
-        this.cambioMP1( cambioMP2 );
+      let cambioMP2 = new cambioMP(iclaveFuncionarionew, valor, justificacion);
+      this.cambioMP1( cambioMP2 );
+      
+      swal({
+        title:"Funcionario ahora es MP'",
+        text: "Funcionario ahora es MP",
+        type: "success"
+        }).then(() =>{
         
-        swal({
-          title:"Funcionario ahora es MP'",
-          text: "Funcionario ahora es MP",
-          type: "success"
-          }).then(() =>{
-          
-          //  location.reload();
-          });
-      } else if (result.dismiss === swal.DismissReason.cancel) {
-        this.rev1 = true; 
-      }
-    });
-    
-  }
-  /*DESACTIVAR MP*/
-  public rev2: boolean = true;
-  public desactivarMP(funcionario) {
+        //  location.reload();
+        });
+    } else if (result.dismiss === swal.DismissReason.cancel) {
+      this.rev1 = true; 
+    }
+  
+  });
+}else{
+  
+  swal({
+    title: 'Desactivar MP ',
+    text: '¿Esta seguro que desea desactivar al funcionario como MP?',
+    type: 'warning',
+    html: '<b>¿Esta seguro que desea desactivar al funcionario como MP?</b><br><label><b>Justificacion:</b></label>',
+    input: 'text',
+    inputValidator: (value) => {
+      return !value && 'Por favor ingrese la justificacion.'
+     },
+    showCancelButton: true,
+    confirmButtonText: 'Desactivar',
+    cancelButtonText: 'Cancelar'
 
-    swal({
-      title: 'Desactivar MP ',
-      text: '¿Esta seguro que desea desactivar al funcionario como MP?',
-      type: 'warning',
-      html: '<b>¿Esta seguro que desea desactivar al funcionario como MP?</b><br><label><b>Justificacion:</b></label>',
-      input: 'text',
-      inputValidator: (value) => {
-        return !value && 'Por favor ingrese la justificacion.'
-       },
-      showCancelButton: true,
-      confirmButtonText: 'Desactivar',
-      cancelButtonText: 'Cancelar'
+  }).then((result) => {
 
-    }).then((result) => {
+    if (result.value) {
+      // const act = e.target.checked;
+      const valor: number = 0;
+      funcionario.esMP = 0;
+       console.log("Se desactiva el funcionario con la bandera MP => " + funcionario.cNombreFuncionario );
+       console.log(valor);      
+      var justificacion = result.value;
+      var iclaveFuncionarionew = funcionario.iClaveFuncionario;
 
-      if (result.value) {
-        // const act = e.target.checked;
-        const valor: number = 0;
-        funcionario.esMP = 0;
-         console.log("Se desactiva el funcionario con la bandera MP => " + funcionario.cNombreFuncionario );
-         console.log(valor);      
-        var justificacion = result.value;
-        var iclaveFuncionarionew = funcionario.iClaveFuncionario;
-
-        let cambioMP2 = new cambioMP(iclaveFuncionarionew, valor, justificacion);
-        this.cambioMP1( cambioMP2 );
+      let cambioMP2 = new cambioMP(iclaveFuncionarionew, valor, justificacion);
+      this.cambioMP1( cambioMP2 );
+      
+      swal({
+        title:"Funcionario ahora ya no es MP'",
+        text: "Funcionario ahora ya no es MP",
+        type: "success"
+        }).then(() =>{
         
-        swal({
-          title:"Funcionario ahora ya no es MP'",
-          text: "Funcionario ahora ya no es MP",
-          type: "success"
-          }).then(() =>{
-          
-          //  location.reload();
-          });
-      } else if (result.dismiss === swal.DismissReason.cancel) {
-        this.rev2 = true; 
-      }
-    });
+        //  location.reload();
+        });
+    } else if (result.dismiss === swal.DismissReason.cancel) {
+      this.rev2 = true; 
+    }
+  });
+
+}
+}
+/*DESACTIVAR MP*/
+
+public desactivarMP() {
+
+  swal({
+    title: 'Cuidado!!',
+    text: '¿Solo los funcionarios activos pueden acceder a esta funcion.?',
+    type: 'warning',
+    confirmButtonText: 'Aceptar',
     
-  }
+  });
+  
+}
+
 
   pageRefresh() {
     this.form.reset();
@@ -558,17 +572,17 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public getFuncionarioAgencia(funcionario: FuncionariosData):void{
     this.membershipService.getFUsuarioAgencia(funcionario.catDiscriminante_id).subscribe( funciAgencia => {
       this.funciAgencia = funciAgencia
+      console.log(this.funciAgencia);
       this.nAgActual = this.funciAgencia.map(a => a.cNombre);
       this.nombreAgActual = this.nAgActual[0];
 
-      for (let i = 0; i < this.funcionarios.length; i++) {
-        for (let j = 0; j < this.funciAgencia.length; j++) {
-          if (this.funcionarios[i].iClaveFuncionario === this.funciAgencia[j].iClaveFuncionario) {
-            this.funciAgencia[j].bEsActivo = this.funcionarios[i].bEsActivo;
-            break;
-          }
-        }
-      }
+      // for (let i = 0; i < this.funcionarios.length; i++) {
+      //   for (let j = 0; j < this.funciAgencia.length; j++) {
+      //     if (this.funcionarios[i].iClaveFuncionario === this.funciAgencia[j].iClaveFuncionario) {
+      //       this.funciAgencia[j].bEsActivo = this.funcionarios[i].bEsActivo;
+      //     }
+      //   }
+      // }
 
       // for (let i = 0; i < this.funciAgencia.length; i++) {
       //   if (funcionario.iClaveFuncionario === this.funciAgencia[i].iClaveFuncionario ||
@@ -584,14 +598,40 @@ export class MembershipComponent implements OnInit, OnDestroy {
       }
 
       for (let i = 0; i < this.funciAgencia.length; i++) {
-        if (this.funciAgencia[i].bEsActivo === 0) {
-          this.funciAgencia.splice( i, 1 );
-        }
+        // if (this.funciAgencia[i].usuario.bEsActivo != 0) {
+          console.log(this.funciAgencia[i].usuario.bEsActivo);
+        //   this.funciAgencia.splice( i, 1 );
+        // }
       }
 
-      // console.log(this.funciAgencia);
+      // for (let i = 0; i < this.funciAgencia.length; i++) {
+      //   for (let j = 0; j < this.funciAgencia[i].usuario.usuarioRol.length; j++) {
+      //     console.log("mostrando roles => " + this.funciAgencia[i].usuario.usuarioRol);
+      //     console.log(this.funciAgencia[i].usuario.usuarioRol[j].Rol_id);
+      //   }
+      // }
+
+      console.log(this.funciAgencia);
 
     });
+  }
+
+  public limpiarFunciAgencia( funciAgencia: FunciAgencia[], funcionario: FuncionariosData ) {
+
+    console.log(funciAgencia);
+    console.log(funcionario);
+
+    for (let i = 0; i < funciAgencia.length; i++) {
+      if (funcionario.iClaveFuncionario === this.funciAgencia[i].iClaveFuncionario) {
+        this.funciAgencia.splice( i, 1 );
+      }
+    }
+
+    for (let i = 0; i < this.funciAgencia.length; i++) {
+      if (this.funciAgencia[i].bEsActivo === 0) {
+        this.funciAgencia.splice( i, 1 );
+      }
+    }
   }
 
   public getCatUIE(valor: number): void {
@@ -760,6 +800,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
     this.getFuncionarioAgencia( funcionario );
     this.getCatUIE(catUIE);
     this.getCountExp1(funcionario);
+    // this.limpiarFunciAgencia(this.funciAgencia, funcionario);
     
     if(funcionario){
       const catDis: number = funcionario.catDiscriminante_id

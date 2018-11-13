@@ -156,9 +156,31 @@ export class FunciAgencia {
   cNombre: string;
   EsMP: number;
   bEsActivo: number;
+  usuario: usuario;
 }
 
+export class usuario {
+  Usuario_id: number;
+  cClaveUsuario: string;
+  cPalabraSecreta: string;
+  iClaveFuncionario: number;
+  password: string;
+  cllave: string;
+  iSesion: number;
+  iIntentos: number;
+  cIP: string;
+  bEsActivo: number;
+  idSesionServer;
+  usuarioRol: usuarioRol[];
+}
 
+export class usuarioRol {
+  Usuario_id: number;
+  Rol_id: number;
+  dFechaInicio: Date;
+  dFechaFin: Date;
+  esPrincipal: number;
+}
 
 export class CambioAdscripcion{
  constructor(

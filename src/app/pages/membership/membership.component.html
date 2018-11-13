@@ -8,6 +8,7 @@
 
     <div class="row mb-1">
         <div class="col">
+
             <!-- <div class="input-group mb-3 box-shadow"> 
                 <div class="input-group-prepend">
                     <span class="input-group-text border-top-0 border-left-0 border-bottom-0"><i class="fa fa-search"></i></span>
@@ -17,6 +18,7 @@
                     <span (click)="toggle('list')" class="input-group-text border-top-0 border-right-0 border-bottom-0"><i class="fa fa-list"></i></span>
                 </div>
             </div> -->
+
         </div>
     </div>
 
@@ -101,8 +103,14 @@
                                 <i *ngIf="funcionario.bEsActivo != 1" class="fa fa-user mr-2 text-danger" placement="bottom" [ngbTooltip]="'Inactivo, haga clic para activar'" (click)="controlInactivo(funcionario)"></i>
                             </td>
                             <td class="align-middle">
-                                <i *ngIf="funcionario.esMP === 1" class="fa fa-check mr-2 text-success" (click)="desactivarMP(funcionario)" placement="bottom" [ngbTooltip]="'Es MP'"></i>
-                                <i *ngIf="funcionario.esMP != 1" class="fa fa-close mr-2 text-danger" (click)="activarMP(funcionario)" placement="bottom" [ngbTooltip]="'No es MP'"></i>
+                                <div *ngIf="funcionario.bEsActivo === 1">
+                                    <i *ngIf="funcionario.esMP === 1" class="fa fa-check mr-2 text-success" (click)="activarMP(funcionario)" placement="bottom" [ngbTooltip]="'Es MP'"></i>
+                                    <i *ngIf="funcionario.esMP != 1" class="fa fa-close mr-2 text-danger" (click)="activarMP(funcionario)" placement="bottom" [ngbTooltip]="'No es MP'"></i>
+                                </div>
+                                <div *ngIf="funcionario.bEsActivo != 1">
+                                    <i *ngIf="funcionario.esMP === 1" class="fa fa-check mr-2 text-success" (click)="desactivarMP()" placement="bottom" [ngbTooltip]="'Es MP'"></i>
+                                    <i *ngIf="funcionario.esMP != 1" class="fa fa-close mr-2 text-danger" (click)="desactivarMP()" placement="bottom" [ngbTooltip]="'No es MP'"></i>
+                                </div>
                             </td>
                             <td class="align-middle text-truncate">{{ funcionario.cNombre }}</td>
                             <td><button #ver value="{{funcionario.iClaveFuncionario}}" class="btn btn-secondary" (click)="llamarRoles(ver.value)">Ver Roles</button></td>
