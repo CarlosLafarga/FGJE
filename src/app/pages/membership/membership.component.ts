@@ -573,16 +573,23 @@ public desactivarMP() {
     this.membershipService.getFUsuarioAgencia(funcionario.catDiscriminante_id).subscribe( funciAgencia => {
       this.funciAgencia = funciAgencia
       console.log(this.funciAgencia);
+
       this.nAgActual = this.funciAgencia.map(a => a.cNombre);
       this.nombreAgActual = this.nAgActual[0];
 
-      // for (let i = 0; i < this.funcionarios.length; i++) {
-      //   for (let j = 0; j < this.funciAgencia.length; j++) {
-      //     if (this.funcionarios[i].iClaveFuncionario === this.funciAgencia[j].iClaveFuncionario) {
-      //       this.funciAgencia[j].bEsActivo = this.funcionarios[i].bEsActivo;
-      //     }
-      //   }
-      // }
+      for (let i = 0; i < this.funcionarios.length; i++) {
+        for (let j = 0; j < this.funciAgencia.length; j++) {
+          if (this.funcionarios[i].iClaveFuncionario === this.funciAgencia[j].iClaveFuncionario) {
+            this.funciAgencia[j].bEsActivo = this.funcionarios[i].bEsActivo;
+          }
+          if (funcionario.iClaveFuncionario === this.funciAgencia[j].iClaveFuncionario) {
+            this.funciAgencia.splice( j, 1 );
+          }
+          if (this.funciAgencia[j].bEsActivo === 0) {
+            this.funciAgencia.splice( j, 1 );
+          }
+        }
+      }
 
       // for (let i = 0; i < this.funciAgencia.length; i++) {
       //   if (funcionario.iClaveFuncionario === this.funciAgencia[i].iClaveFuncionario ||
@@ -591,18 +598,19 @@ public desactivarMP() {
       //   }
       // }
 
-      for (let i = 0; i < this.funciAgencia.length; i++) {
-        if (funcionario.iClaveFuncionario === this.funciAgencia[i].iClaveFuncionario) {
-          this.funciAgencia.splice( i, 1 );
-        }
-      }
+      // for (let i = 0; i < this.funciAgencia.length; i++) {
+      //   if (funcionario.iClaveFuncionario === this.funciAgencia[i].iClaveFuncionario) {
+      //     this.funciAgencia.splice( i, 1 );
+      //   }
+      // }
 
-      for (let i = 0; i < this.funciAgencia.length; i++) {
-        // if (this.funciAgencia[i].usuario.bEsActivo != 0) {
-          console.log(this.funciAgencia[i].usuario.bEsActivo);
-        //   this.funciAgencia.splice( i, 1 );
-        // }
-      }
+      // for (let i = 0; i <= this.funciAgencia.length; i++) {
+      //   var num: number = this.funciAgencia[i].bEsActivo;
+      //   console.log(num);
+      //   if (this.funciAgencia[i].bEsActivo == 0) {
+      //     this.funciAgencia.splice( i, 1 );
+      //   }
+      // }
 
       // for (let i = 0; i < this.funciAgencia.length; i++) {
       //   for (let j = 0; j < this.funciAgencia[i].usuario.usuarioRol.length; j++) {
@@ -847,7 +855,7 @@ public desactivarMP() {
 
     this.p2 = 1;
 
-    this.pageRefresh();
+    // this.pageRefresh();
 
   }
 

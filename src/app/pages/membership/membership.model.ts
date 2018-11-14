@@ -74,7 +74,7 @@ export class FuncionariosData {
   bEsActivo: number;
   cClaveUsuario: string;
   cNombre: string;
-  usuario: string[];
+  usuario: usuario;
   numeroExpediente: number[];
 }
 
