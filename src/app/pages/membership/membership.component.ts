@@ -1034,7 +1034,19 @@ public desactivarMP() {
   public getFuncionariosAg(expPend: ExpPendientes):void {
     this.membershipService.getFUsuarioAgencia(expPend.catDiscriminanteAnterior).subscribe( exp => {
       this.funcinariosAgencia = exp
-      // console.log(this.funcinariosAgencia);
+      console.log(this.funcinariosAgencia);
+
+      for (let i = 0; i < this.funcionarios.length; i++) {
+        for (let j = 0; j < this.funcinariosAgencia.length; j++) {
+          if (this.funcionarios[i].iClaveFuncionario === this.funcinariosAgencia[j].iClaveFuncionario) {
+            this.funcinariosAgencia[j].bEsActivo = this.funcionarios[i].bEsActivo;
+          }
+          if (this.funcinariosAgencia[j].bEsActivo === 0) {
+            this.funcinariosAgencia.splice( j, 1 );
+          }
+        }
+      }
+
     });
   }
 
