@@ -583,29 +583,28 @@ public desactivarMP() {
             this.funciAgencia[i].usuario[0].bEsActivo === 0) {
           this.funciAgencia.splice( i, 1 );
         }
+
         var rolIdArray: number[] = [];
         for (let j = 0; j < this.funciAgencia[i].usuario[0].usuarioRol.length; j++) {
           rolIdArray.push(this.funciAgencia[i].usuario[0].usuarioRol[j].rol_id);
         }
-        // console.log(this.funciAgencia[i].cNombreFuncionario);
-        // console.log(rolIdArray);
-        if (rolIdArray.length === 1) {
-          // console.log("detecte 1 rol nada mas");
-          // console.log(rolIdArray);
-          if (rolIdArray[0] === 57) {
-            // console.log("detecte 1 rol 57");
-            // console.log(rolIdArray);
-            this.funciAgencia.splice( i, 1 );
+
+        var cont: number = 0;
+        for (let k = 0; k < rolIdArray.length; k++) {
+          if (rolIdArray[k] === 8 ||
+              rolIdArray[k] === 7 ||
+              rolIdArray[k] === 6 ||
+              rolIdArray[k] === 5 ||
+              rolIdArray[k] === 3 ||
+              rolIdArray[k] === 2) {
+            cont = cont + 1;
           }
         }
-      }
 
-      // for (let i = 0; i < this.funciAgencia.length; i++) {
-      //   for (let j = 0; j < this.funciAgencia[i].usuario.usuarioRol.length; j++) {
-      //     console.log("mostrando roles => " + this.funciAgencia[i].usuario.usuarioRol);
-      //     console.log(this.funciAgencia[i].usuario.usuarioRol[j].Rol_id);
-      //   }
-      // }
+        if (cont <= 0) {
+          this.funciAgencia.splice( i, 1 );
+        }
+      }
 
       // console.log(this.funciAgencia);
 
@@ -1003,24 +1002,34 @@ public desactivarMP() {
   public getFuncionariosAg(expPend: ExpPendientes):void {
     this.membershipService.getFUsuarioAgencia(expPend.catDiscriminanteAnterior).subscribe( exp => {
       this.funcinariosAgencia = exp
-      // console.log(this.funcinariosAgencia);
+      console.log(this.funcinariosAgencia);
 
-      for (let i = 0; i < this.funcionarios.length; i++) {
-        for (let j = 0; j < this.funcinariosAgencia.length; j++) {
-          if (this.funcionarios[i].iClaveFuncionario === this.funcinariosAgencia[j].iClaveFuncionario) {
-            this.funcinariosAgencia[j].bEsActivo = this.funcionarios[i].bEsActivo;
+      for (let i = 0; i < this.funcinariosAgencia.length; i++) {
+        if (this.funcinariosAgencia[i].usuario[0].bEsActivo === 0) {
+          this.funcinariosAgencia.splice( i, 1 );
+        }
+
+        var rolIdArray: number[] = [];
+        for (let j = 0; j < this.funcinariosAgencia[i].usuario[0].usuarioRol.length; j++) {
+          rolIdArray.push(this.funcinariosAgencia[i].usuario[0].usuarioRol[j].rol_id);
+        }
+
+        var cont: number = 0;
+        for (let k = 0; k < rolIdArray.length; k++) {
+          if (rolIdArray[k] === 8 ||
+              rolIdArray[k] === 7 ||
+              rolIdArray[k] === 6 ||
+              rolIdArray[k] === 5 ||
+              rolIdArray[k] === 3 ||
+              rolIdArray[k] === 2) {
+            cont = cont + 1;
           }
-          if (this.funcinariosAgencia[j].bEsActivo === 0) {
-            this.funcinariosAgencia.splice( j, 1 );
-          }
+        }
 
-          // for (let k = 0; k < this.funcinariosAgencia[j].length; k++) {
-          //   console.log(this.funcinariosAgencia[0].usuario[0].bEsActivo);
-          // }
-
+        if (cont <= 0) {
+          this.funcinariosAgencia.splice( i, 1 );
         }
       }
-      // console.log(this.funcinariosAgencia[13].usuario[0].usuarioRol[0].Rol_id);
 
     });
   }

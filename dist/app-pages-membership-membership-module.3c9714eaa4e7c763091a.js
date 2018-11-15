@@ -730,8 +730,8 @@ var MembershipComponent = /** @class */ (function () {
                 // const act = e.target.checked;
                 var valor = 0;
                 funcionario.bEsActivo = 0;
-                console.log("Se desactiva el funcionario => " + funcionario.cNombreFuncionario);
-                console.log(valor);
+                //  console.log("Se desactiva el funcionario => " + funcionario.cNombreFuncionario );
+                //  console.log(valor);      
                 var justificacion = result.value;
                 var iclaveFuncionarionew = funcionario.iClaveFuncionario;
                 var cambioEstatus1 = new _membership_model__WEBPACK_IMPORTED_MODULE_4__["cambioEstatus"](iclaveFuncionarionew, valor, justificacion);
@@ -809,8 +809,8 @@ var MembershipComponent = /** @class */ (function () {
                     // const act = e.target.checked;
                     var valor = 1;
                     funcionario.esMP = 1;
-                    console.log("Se Activo el funcionario con la bandera MP => " + funcionario.cNombreFuncionario);
-                    console.log(valor);
+                    //  console.log("Se Activo el funcionario con la bandera MP => " + funcionario.cNombreFuncionario );
+                    //  console.log(valor);      
                     var justificacion = result.value;
                     var iclaveFuncionarionew = funcionario.iClaveFuncionario;
                     var cambioMP2 = new _membership_model__WEBPACK_IMPORTED_MODULE_4__["cambioMP"](iclaveFuncionarionew, valor, justificacion);
@@ -846,8 +846,8 @@ var MembershipComponent = /** @class */ (function () {
                     // const act = e.target.checked;
                     var valor = 0;
                     funcionario.esMP = 0;
-                    console.log("Se desactiva el funcionario con la bandera MP => " + funcionario.cNombreFuncionario);
-                    console.log(valor);
+                    //  console.log("Se desactiva el funcionario con la bandera MP => " + funcionario.cNombreFuncionario );
+                    //  console.log(valor);      
                     var justificacion = result.value;
                     var iclaveFuncionarionew = funcionario.iClaveFuncionario;
                     var cambioMP2 = new _membership_model__WEBPACK_IMPORTED_MODULE_4__["cambioMP"](iclaveFuncionarionew, valor, justificacion);
@@ -1058,62 +1058,38 @@ var MembershipComponent = /** @class */ (function () {
         var _this = this;
         this.membershipService.getFUsuarioAgencia(funcionario.catDiscriminante_id).subscribe(function (funciAgencia) {
             _this.funciAgencia = funciAgencia;
-            console.log(_this.funciAgencia);
+            // console.log(this.funciAgencia);
             _this.nAgActual = _this.funciAgencia.map(function (a) { return a.cNombre; });
             _this.nombreAgActual = _this.nAgActual[0];
-            for (var i = 0; i < _this.funcionarios.length; i++) {
-                for (var j = 0; j < _this.funciAgencia.length; j++) {
-                    if (_this.funcionarios[i].iClaveFuncionario === _this.funciAgencia[j].iClaveFuncionario) {
-                        _this.funciAgencia[j].bEsActivo = _this.funcionarios[i].bEsActivo;
-                    }
-                    if (funcionario.iClaveFuncionario === _this.funciAgencia[j].iClaveFuncionario) {
-                        _this.funciAgencia.splice(j, 1);
-                    }
-                    if (_this.funciAgencia[j].bEsActivo === 0) {
-                        _this.funciAgencia.splice(j, 1);
+            for (var i = 0; i < _this.funciAgencia.length; i++) {
+                if (funcionario.iClaveFuncionario === _this.funciAgencia[i].iClaveFuncionario ||
+                    _this.funciAgencia[i].usuario[0].bEsActivo === 0) {
+                    _this.funciAgencia.splice(i, 1);
+                }
+                var rolIdArray = [];
+                for (var j = 0; j < _this.funciAgencia[i].usuario[0].usuarioRol.length; j++) {
+                    rolIdArray.push(_this.funciAgencia[i].usuario[0].usuarioRol[j].rol_id);
+                }
+                // console.log(this.funciAgencia[i].cNombreFuncionario);
+                // console.log(rolIdArray);
+                if (rolIdArray.length === 1) {
+                    // console.log("detecte 1 rol nada mas");
+                    // console.log(rolIdArray);
+                    if (rolIdArray[0] === 57) {
+                        // console.log("detecte 1 rol 57");
+                        // console.log(rolIdArray);
+                        _this.funciAgencia.splice(i, 1);
                     }
                 }
             }
-            // for (let i = 0; i < this.funciAgencia.length; i++) {
-            //   if (funcionario.iClaveFuncionario === this.funciAgencia[i].iClaveFuncionario ||
-            //       this.funciAgencia[i].bEsActivo === 0) {
-            //     this.funciAgencia.splice( i, 1 );
-            //   }
-            // }
-            // for (let i = 0; i < this.funciAgencia.length; i++) {
-            //   if (funcionario.iClaveFuncionario === this.funciAgencia[i].iClaveFuncionario) {
-            //     this.funciAgencia.splice( i, 1 );
-            //   }
-            // }
-            // for (let i = 0; i <= this.funciAgencia.length; i++) {
-            //   var num: number = this.funciAgencia[i].bEsActivo;
-            //   console.log(num);
-            //   if (this.funciAgencia[i].bEsActivo == 0) {
-            //     this.funciAgencia.splice( i, 1 );
-            //   }
-            // }
             // for (let i = 0; i < this.funciAgencia.length; i++) {
             //   for (let j = 0; j < this.funciAgencia[i].usuario.usuarioRol.length; j++) {
             //     console.log("mostrando roles => " + this.funciAgencia[i].usuario.usuarioRol);
             //     console.log(this.funciAgencia[i].usuario.usuarioRol[j].Rol_id);
             //   }
             // }
-            console.log(_this.funciAgencia);
+            // console.log(this.funciAgencia);
         });
-    };
-    MembershipComponent.prototype.limpiarFunciAgencia = function (funciAgencia, funcionario) {
-        console.log(funciAgencia);
-        console.log(funcionario);
-        for (var i = 0; i < funciAgencia.length; i++) {
-            if (funcionario.iClaveFuncionario === this.funciAgencia[i].iClaveFuncionario) {
-                this.funciAgencia.splice(i, 1);
-            }
-        }
-        for (var i = 0; i < this.funciAgencia.length; i++) {
-            if (this.funciAgencia[i].bEsActivo === 0) {
-                this.funciAgencia.splice(i, 1);
-            }
-        }
     };
     MembershipComponent.prototype.getCatUIE = function (valor) {
         var _this = this;
@@ -1274,7 +1250,6 @@ var MembershipComponent = /** @class */ (function () {
         this.getFuncionarioAgencia(funcionario);
         this.getCatUIE(catUIE);
         this.getCountExp1(funcionario);
-        // this.limpiarFunciAgencia(this.funciAgencia, funcionario);
         if (funcionario) {
             var catDis = funcionario.catDiscriminante_id;
             for (var i = 0; i < this.agencias.length; i++) {
@@ -1450,6 +1425,20 @@ var MembershipComponent = /** @class */ (function () {
         this.membershipService.getFUsuarioAgencia(expPend.catDiscriminanteAnterior).subscribe(function (exp) {
             _this.funcinariosAgencia = exp;
             // console.log(this.funcinariosAgencia);
+            for (var i = 0; i < _this.funcionarios.length; i++) {
+                for (var j = 0; j < _this.funcinariosAgencia.length; j++) {
+                    if (_this.funcionarios[i].iClaveFuncionario === _this.funcinariosAgencia[j].iClaveFuncionario) {
+                        _this.funcinariosAgencia[j].bEsActivo = _this.funcionarios[i].bEsActivo;
+                    }
+                    if (_this.funcinariosAgencia[j].bEsActivo === 0) {
+                        _this.funcinariosAgencia.splice(j, 1);
+                    }
+                    // for (let k = 0; k < this.funcinariosAgencia[j].length; k++) {
+                    //   console.log(this.funcinariosAgencia[0].usuario[0].bEsActivo);
+                    // }
+                }
+            }
+            // console.log(this.funcinariosAgencia[13].usuario[0].usuarioRol[0].Rol_id);
         });
     };
     MembershipComponent.prototype.onSelectExpPend = function (expPend) {
@@ -1887,4 +1876,4 @@ var MembershipService = /** @class */ (function () {
 /***/ })
 
 }]);
-//# sourceMappingURL=app-pages-membership-membership-module.53385cedd37d942eeb32.js.map
+//# sourceMappingURL=app-pages-membership-membership-module.3c9714eaa4e7c763091a.js.map
