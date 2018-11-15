@@ -300,7 +300,7 @@ public activarMP(funcionario) {
     }
   
   });
-}else{
+} else {
   
   swal({
     title: 'Desactivar MP ',
@@ -409,12 +409,14 @@ public desactivarMP() {
       this.valAgenciaSelect = false;
       // console.log(this.count);
     } else {
-      if(this.count > 0 ){
+      this.prueba = false;
+      if( this.count > 0 ){
         this.valReasignarExpedientes = true;
         this.valExpPendCheck = true;
       }else{
         this.valReasignarExpedientes = false;
         this.valExpPendCheck = false;
+        this.prueba = true;
       }
       this.valEsMPCheck = true;
       this.valAgenciaSelect = true;
@@ -549,6 +551,7 @@ public desactivarMP() {
         if(count == 0){
           this.valReasignarExpedientes = false;
           this.valExpPendCheck = false;
+          this.prueba = true;
         }else if(count > 0){
           this.valReasignarExpedientes = true;
           this.valExpPendCheck = true;
@@ -777,6 +780,10 @@ public desactivarMP() {
     this.getFuncionarioAgencia( funcionario );
     this.getCatUIE(catUIE);
     this.getCountExp1(funcionario);
+
+    if (this.count <= 0) {
+      this.prueba = true;
+    }
     
     if(funcionario){
       const catDis: number = funcionario.catDiscriminante_id
@@ -850,6 +857,7 @@ public desactivarMP() {
 
       // if (this.count > 0 && (this.form.value.archivoDigital_id !== null || this.expPendientes === false)) {
       //   this.prueba = true;
+      // }
       
       if (this.expPendientes) {
         this.pendientesNum = 1;
