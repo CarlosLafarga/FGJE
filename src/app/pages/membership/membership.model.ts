@@ -156,7 +156,7 @@ export class FunciAgencia {
   cNombre: string;
   EsMP: number;
   bEsActivo: number;
-  usuario: usuario;
+  usuario: usuario[];
 }
 
 export class usuario {
@@ -176,7 +176,7 @@ export class usuario {
 
 export class usuarioRol {
   Usuario_id: number;
-  Rol_id: number;
+  rol_id: number;
   dFechaInicio: Date;
   dFechaFin: Date;
   esPrincipal: number;

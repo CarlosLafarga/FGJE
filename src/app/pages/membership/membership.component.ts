@@ -11,6 +11,7 @@ import { RouteConfigLoadStart, Router } from '@angular/router';
 import swal from 'sweetalert2';
 import { Location } from '@angular/common';
 import { $ } from 'protractor';
+import { SSL_OP_NO_SSLv2 } from 'constants';
  
 @Component({
   selector: 'app-membership',
@@ -577,40 +578,27 @@ public desactivarMP() {
       this.nAgActual = this.funciAgencia.map(a => a.cNombre);
       this.nombreAgActual = this.nAgActual[0];
 
-      for (let i = 0; i < this.funcionarios.length; i++) {
-        for (let j = 0; j < this.funciAgencia.length; j++) {
-          if (this.funcionarios[i].iClaveFuncionario === this.funciAgencia[j].iClaveFuncionario) {
-            this.funciAgencia[j].bEsActivo = this.funcionarios[i].bEsActivo;
-          }
-          if (funcionario.iClaveFuncionario === this.funciAgencia[j].iClaveFuncionario) {
-            this.funciAgencia.splice( j, 1 );
-          }
-          if (this.funciAgencia[j].bEsActivo === 0) {
-            this.funciAgencia.splice( j, 1 );
+      for (let i = 0; i < this.funciAgencia.length; i++) {
+        if (funcionario.iClaveFuncionario === this.funciAgencia[i].iClaveFuncionario ||
+            this.funciAgencia[i].usuario[0].bEsActivo === 0) {
+          this.funciAgencia.splice( i, 1 );
+        }
+        var rolIdArray: number[] = [];
+        for (let j = 0; j < this.funciAgencia[i].usuario[0].usuarioRol.length; j++) {
+          rolIdArray.push(this.funciAgencia[i].usuario[0].usuarioRol[j].rol_id);
+        }
+        // console.log(this.funciAgencia[i].cNombreFuncionario);
+        // console.log(rolIdArray);
+        if (rolIdArray.length === 1) {
+          // console.log("detecte 1 rol nada mas");
+          // console.log(rolIdArray);
+          if (rolIdArray[0] === 57) {
+            // console.log("detecte 1 rol 57");
+            // console.log(rolIdArray);
+            this.funciAgencia.splice( i, 1 );
           }
         }
       }
-
-      // for (let i = 0; i < this.funciAgencia.length; i++) {
-      //   if (funcionario.iClaveFuncionario === this.funciAgencia[i].iClaveFuncionario ||
-      //       this.funciAgencia[i].bEsActivo === 0) {
-      //     this.funciAgencia.splice( i, 1 );
-      //   }
-      // }
-
-      // for (let i = 0; i < this.funciAgencia.length; i++) {
-      //   if (funcionario.iClaveFuncionario === this.funciAgencia[i].iClaveFuncionario) {
-      //     this.funciAgencia.splice( i, 1 );
-      //   }
-      // }
-
-      // for (let i = 0; i <= this.funciAgencia.length; i++) {
-      //   var num: number = this.funciAgencia[i].bEsActivo;
-      //   console.log(num);
-      //   if (this.funciAgencia[i].bEsActivo == 0) {
-      //     this.funciAgencia.splice( i, 1 );
-      //   }
-      // }
 
       // for (let i = 0; i < this.funciAgencia.length; i++) {
       //   for (let j = 0; j < this.funciAgencia[i].usuario.usuarioRol.length; j++) {
@@ -1044,8 +1032,14 @@ public desactivarMP() {
           if (this.funcinariosAgencia[j].bEsActivo === 0) {
             this.funcinariosAgencia.splice( j, 1 );
           }
+
+          // for (let k = 0; k < this.funcinariosAgencia[j].length; k++) {
+          //   console.log(this.funcinariosAgencia[0].usuario[0].bEsActivo);
+          // }
+
         }
       }
+      // console.log(this.funcinariosAgencia[13].usuario[0].usuarioRol[0].Rol_id);
 
     });
   }
