@@ -185,8 +185,8 @@ export class MembershipComponent implements OnInit, OnDestroy {
         // const act = e.target.checked;
         const valor: number = 0;
         funcionario.bEsActivo = 0;
-         console.log("Se desactiva el funcionario => " + funcionario.cNombreFuncionario );
-         console.log(valor);      
+        //  console.log("Se desactiva el funcionario => " + funcionario.cNombreFuncionario );
+        //  console.log(valor);      
         var justificacion = result.value;
         var iclaveFuncionarionew = funcionario.iClaveFuncionario;
 
@@ -279,8 +279,8 @@ public activarMP(funcionario) {
       // const act = e.target.checked;
       const valor: number = 1;
       funcionario.esMP = 1;
-       console.log("Se Activo el funcionario con la bandera MP => " + funcionario.cNombreFuncionario );
-       console.log(valor);      
+      //  console.log("Se Activo el funcionario con la bandera MP => " + funcionario.cNombreFuncionario );
+      //  console.log(valor);      
       var justificacion = result.value;
       var iclaveFuncionarionew = funcionario.iClaveFuncionario;
 
@@ -321,8 +321,8 @@ public activarMP(funcionario) {
       // const act = e.target.checked;
       const valor: number = 0;
       funcionario.esMP = 0;
-       console.log("Se desactiva el funcionario con la bandera MP => " + funcionario.cNombreFuncionario );
-       console.log(valor);      
+      //  console.log("Se desactiva el funcionario con la bandera MP => " + funcionario.cNombreFuncionario );
+      //  console.log(valor);      
       var justificacion = result.value;
       var iclaveFuncionarionew = funcionario.iClaveFuncionario;
 
@@ -573,7 +573,7 @@ public desactivarMP() {
   public getFuncionarioAgencia(funcionario: FuncionariosData):void{
     this.membershipService.getFUsuarioAgencia(funcionario.catDiscriminante_id).subscribe( funciAgencia => {
       this.funciAgencia = funciAgencia
-      console.log(this.funciAgencia);
+      // console.log(this.funciAgencia);
 
       this.nAgActual = this.funciAgencia.map(a => a.cNombre);
       this.nombreAgActual = this.nAgActual[0];
@@ -607,27 +607,9 @@ public desactivarMP() {
       //   }
       // }
 
-      console.log(this.funciAgencia);
+      // console.log(this.funciAgencia);
 
     });
-  }
-
-  public limpiarFunciAgencia( funciAgencia: FunciAgencia[], funcionario: FuncionariosData ) {
-
-    console.log(funciAgencia);
-    console.log(funcionario);
-
-    for (let i = 0; i < funciAgencia.length; i++) {
-      if (funcionario.iClaveFuncionario === this.funciAgencia[i].iClaveFuncionario) {
-        this.funciAgencia.splice( i, 1 );
-      }
-    }
-
-    for (let i = 0; i < this.funciAgencia.length; i++) {
-      if (this.funciAgencia[i].bEsActivo === 0) {
-        this.funciAgencia.splice( i, 1 );
-      }
-    }
   }
 
   public getCatUIE(valor: number): void {
@@ -796,7 +778,6 @@ public desactivarMP() {
     this.getFuncionarioAgencia( funcionario );
     this.getCatUIE(catUIE);
     this.getCountExp1(funcionario);
-    // this.limpiarFunciAgencia(this.funciAgencia, funcionario);
     
     if(funcionario){
       const catDis: number = funcionario.catDiscriminante_id
@@ -1022,7 +1003,7 @@ public desactivarMP() {
   public getFuncionariosAg(expPend: ExpPendientes):void {
     this.membershipService.getFUsuarioAgencia(expPend.catDiscriminanteAnterior).subscribe( exp => {
       this.funcinariosAgencia = exp
-      console.log(this.funcinariosAgencia);
+      // console.log(this.funcinariosAgencia);
 
       for (let i = 0; i < this.funcionarios.length; i++) {
         for (let j = 0; j < this.funcinariosAgencia.length; j++) {
