@@ -4,7 +4,7 @@ import { FuncionariosData } from 'app/pages/membership/membership.model';
 @Pipe({ name: 'AgenciaSearchPipe', pure: false })
 export class AgenciaSearchPipe implements PipeTransform {
 
-  public defaultDiacriticsRemovalMap: any = [
+  public defaultAccentsRemovalMap: any = [
     { 'base': 'A', 'letters': '\u0041\u24B6\uFF21\u00C0\u00C1\u00C2\u1EA6\u1EA4\u1EAA\u1EA8\u00C3\u0100\u0102\u1EB0\u1EAE\u1EB4\u1EB2\u0226\u01E0\u00C4\u01DE\u1EA2\u00C5\u01FA\u01CD\u0200\u0202\u1EA0\u1EAC\u1EB6\u1E00\u0104\u023A\u2C6F' },
     { 'base': 'AA', 'letters': '\uA732' },
     { 'base': 'AE', 'letters': '\u00C6\u01FC\u01E2' },
@@ -93,20 +93,20 @@ export class AgenciaSearchPipe implements PipeTransform {
     { 'base': 'z', 'letters': '\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763' }
   ];
 
-  public diacriticsMap: any = {};
+  public AccentsMap: any = {};
 
   constructor() {
-    for (var i = 0; i < this.defaultDiacriticsRemovalMap.length; i++) {
-      var letters = this.defaultDiacriticsRemovalMap[i].letters;
+    for (var i = 0; i < this.defaultAccentsRemovalMap.length; i++) {
+      var letters = this.defaultAccentsRemovalMap[i].letters;
       for (var j = 0; j < letters.length; j++) {
-        this.diacriticsMap[letters[j]] = this.defaultDiacriticsRemovalMap[i].base;
+        this.AccentsMap[letters[j]] = this.defaultAccentsRemovalMap[i].base;
       }
     }
   }
 
-  public removeDiacritics(str): string {
+  public removeAccents(str): string {
     return str.replace(/[^\u0000-\u007E]/g, function(a) {
-      return this.diacriticsMap[a] || a;
+      return this.AccentsMap[a] || a;
     }.bind(this));
   }
 
@@ -125,12 +125,12 @@ export class AgenciaSearchPipe implements PipeTransform {
       if(defaultFilter) {
         return funcionarios.filter( it => {
           filtrados.reduce(( x, nombre ) => 
-          (x && new RegExp( searchAgencia[nombre], 'gi' ).test( this.removeDiacritics( it[nombre]) )) || searchAgencia[nombre] == "", true );
+          (x && new RegExp( searchAgencia[nombre], 'gi' ).test( this.removeAccents( it[nombre]) )) || searchAgencia[nombre] == "", true );
         });
       } else {
         return funcionarios.filter( it => {
           return filtrados.some(( key ) => {
-            return new RegExp( searchAgencia[key], 'gi' ).test( this.removeDiacritics( it[key] ) ) || searchAgencia[key] == "";
+            return new RegExp( searchAgencia[key], 'gi' ).test( this.removeAccents( it[key] ) ) || searchAgencia[key] == "";
           });
         });
       }
