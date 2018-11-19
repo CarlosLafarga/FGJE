@@ -254,6 +254,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
     })
 
   }
+
 /*Activar MP*/
 public rev1: boolean = true;
 public rev2: boolean = true;
@@ -344,8 +345,8 @@ public activarMP(funcionario) {
 
 }
 }
-/*DESACTIVAR MP*/
 
+/*DESACTIVAR MP*/
 public desactivarMP() {
 
   swal({
@@ -357,7 +358,6 @@ public desactivarMP() {
   });
   
 }
-
 
   pageRefresh() {
     this.form.reset();
@@ -505,6 +505,18 @@ public desactivarMP() {
 
     });
   }
+
+//   let sinDiacriticos = (function(){
+//     let de = 'ÁÃÀÄÂÉËÈÊÍÏÌÎÓÖÒÔÚÜÙÛÑÇáãàäâéëèêíïìîóöòôúüùûñç',
+//          a = 'AAAAAEEEEIIIIOOOOUUUUNCaaaaaeeeeiiiioooouuuunc',
+//         re = new RegExp('['+de+']' , 'ug');
+
+//     return texto =>
+//         texto.replace(
+//             re, 
+//             match => a.charAt(de.indexOf(match))
+//         );
+// })();
 
   public rolesFunci: Roles[] = [];
 

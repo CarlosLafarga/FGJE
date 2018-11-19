@@ -21,6 +21,7 @@ import {AuthGuard} from './pages/auth/auth.guard';
   declarations: [
     AppComponent,
     NotFoundComponent
+    
   ],
   imports: [
     BrowserModule,

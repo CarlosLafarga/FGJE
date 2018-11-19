@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgPipesModule } from 'ngx-pipes';
 
 import { ProfilePicturePipe } from './profilePicture/profilePicture.pipe';
 import { ChatPersonSearchPipe } from './search/chat-person-search.pipe';
@@ -14,10 +15,12 @@ import { AppaternoSearchPipe } from './search/appaterno-search.pipe';
 import { ApmaternoSearchPipe } from './search/apmaterno-search.pipe';
 import { NomusuarioSearchPipe } from './search/nomusuario-search.pipe';
 import { AgenciaSearchPipe } from './search/agencia-search.pipe';
+import { LatinisePipe } from 'ngx-pipes';
 
 @NgModule({
     imports: [ 
-        CommonModule 
+        CommonModule,
+        NgPipesModule
     ],
     declarations: [
         ProfilePicturePipe,
