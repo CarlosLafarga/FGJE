@@ -487,6 +487,10 @@ public desactivarMP() {
     });
   }
 
+  public recargarFuncionarios() {
+    this.getFuncionarios();
+  }
+
   // Se cargan los datos del funcionario
   public getFuncionarios(): void {
     this.membershipService.getFuncionarios().subscribe( funcionarios => {
