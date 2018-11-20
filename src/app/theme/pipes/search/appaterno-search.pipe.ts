@@ -108,9 +108,12 @@ export class AppaternoSearchPipe implements PipeTransform {
     //   return this.AccentsMap[a] || a;
     // }.bind(this));
 
-    return str.normalize('NFD')
+    if (str) {
+      return str.normalize('NFD')
            .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
            .normalize();
+    }
+    
   }
 
   transform(funcionarios: any, searchApPaterno: string, defaultFilter: boolean): Array<any> {
@@ -128,12 +131,12 @@ export class AppaternoSearchPipe implements PipeTransform {
       if (defaultFilter) {
         return funcionarios.filter( item =>
             filterKeys.reduce(( x, keyName ) =>
-                (x && new RegExp( searchApPaterno[keyName], 'gi' ).test( item[keyName] )) || searchApPaterno[keyName] == "", true));
+                (x && new RegExp( searchApPaterno[keyName], 'gi' ).test( this.removeAccents(item[keyName])  )) || searchApPaterno[keyName] == "", true));
       }
       else {
         return funcionarios.filter( it => {
           return filterKeys.some(( key ) => {
-            return new RegExp( searchApPaterno[key], 'gi' ).test( it[key] ) || searchApPaterno[key] == "";
+            return new RegExp( searchApPaterno[key], 'gi' ).test( this.removeAccents(it[key])  ) || searchApPaterno[key] == "";
           });
         });
       }

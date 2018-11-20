@@ -14721,9 +14721,19 @@ var AgenciaSearchPipe = /** @class */ (function () {
         }
     }
     AgenciaSearchPipe.prototype.removeAccents = function (str) {
-        return str.replace(/[^\u0000-\u007E]/g, function (a) {
-            return this.AccentsMap[a] || a;
-        }.bind(this));
+        // return str.replace(/[^\u0000-\u007E]/g, function(a) {
+        //   return this.AccentsMap[a] || a;
+        // }.bind(this));
+        return str.normalize('NFD')
+            .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi, "$1")
+            .normalize();
+        // return str
+        //         .replace(/á/g, 'a')            
+        //         .replace(/é/g, 'e')
+        //         .replace(/í/g, 'i')
+        //         .replace(/ó/g, 'o')
+        //         .replace(/ú/g, 'u')
+        //         .replace(/Ú/g, 'U');
     };
     AgenciaSearchPipe.prototype.transform = function (funcionarios, searchAgencia, defaultFilter) {
         var _this = this;
@@ -14882,9 +14892,12 @@ var ApmaternoSearchPipe = /** @class */ (function () {
         }
     }
     ApmaternoSearchPipe.prototype.removeAccents = function (str) {
-        return str.replace(/[^\u0000-\u007E]/g, function (a) {
-            return this.AccentsMap[a] || a;
-        }.bind(this));
+        // return str.replace(/[^\u0000-\u007E]/g, function(a) {
+        //   return this.AccentsMap[a] || a;
+        // }.bind(this));
+        return str.normalize('NFD')
+            .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi, "$1")
+            .normalize();
     };
     ApmaternoSearchPipe.prototype.transform = function (funcionarios, searchApMaterno, defaultFilter) {
         var _this = this;
@@ -15043,11 +15056,17 @@ var AppaternoSearchPipe = /** @class */ (function () {
         }
     }
     AppaternoSearchPipe.prototype.removeAccents = function (str) {
-        return str.replace(/[^\u0000-\u007E]/g, function (a) {
-            return this.AccentsMap[a] || a;
-        }.bind(this));
+        // return str.replace(/[^\u0000-\u007E]/g, function(a) {
+        //   return this.AccentsMap[a] || a;
+        // }.bind(this));
+        if (str) {
+            return str.normalize('NFD')
+                .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi, "$1")
+                .normalize();
+        }
     };
     AppaternoSearchPipe.prototype.transform = function (funcionarios, searchApPaterno, defaultFilter) {
+        var _this = this;
         if (!searchApPaterno) {
             return funcionarios;
         }
@@ -15059,14 +15078,14 @@ var AppaternoSearchPipe = /** @class */ (function () {
             if (defaultFilter) {
                 return funcionarios.filter(function (item) {
                     return filterKeys_1.reduce(function (x, keyName) {
-                        return (x && new RegExp(searchApPaterno[keyName], 'gi').test(item[keyName])) || searchApPaterno[keyName] == "";
+                        return (x && new RegExp(searchApPaterno[keyName], 'gi').test(_this.removeAccents(item[keyName]))) || searchApPaterno[keyName] == "";
                     }, true);
                 });
             }
             else {
                 return funcionarios.filter(function (it) {
                     return filterKeys_1.some(function (key) {
-                        return new RegExp(searchApPaterno[key], 'gi').test(it[key]) || searchApPaterno[key] == "";
+                        return new RegExp(searchApPaterno[key], 'gi').test(_this.removeAccents(it[key])) || searchApPaterno[key] == "";
                     });
                 });
             }
@@ -15371,9 +15390,12 @@ var NombreSearchPipe = /** @class */ (function () {
         }
     }
     NombreSearchPipe.prototype.removeAccents = function (str) {
-        return str.replace(/[^\u0000-\u007E]/g, function (a) {
-            return this.AccentsMap[a] || a;
-        }.bind(this));
+        // return str.replace(/[^\u0000-\u007E]/g, function(a) {
+        //   return this.AccentsMap[a] || a;
+        // }.bind(this));
+        return str.normalize('NFD')
+            .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi, "$1")
+            .normalize();
     };
     NombreSearchPipe.prototype.transform = function (funcionarios, searchNombre, defaultFilter) {
         var _this = this;
@@ -15618,4 +15640,4 @@ var TruncatePipe = /** @class */ (function () {
 /***/ })
 
 }]);
-//# sourceMappingURL=app-pages-membership-membership-module~app-pages-pages-module.898633032414bb6c42a6.js.map
+//# sourceMappingURL=app-pages-membership-membership-module~app-pages-pages-module.f2fc40c8cca0a3afef85.js.map

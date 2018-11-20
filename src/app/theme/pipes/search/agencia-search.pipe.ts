@@ -112,6 +112,14 @@ export class AgenciaSearchPipe implements PipeTransform {
     return str.normalize('NFD')
            .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
            .normalize();
+
+    // return str
+    //         .replace(/á/g, 'a')            
+    //         .replace(/é/g, 'e')
+    //         .replace(/í/g, 'i')
+    //         .replace(/ó/g, 'o')
+    //         .replace(/ú/g, 'u')
+    //         .replace(/Ú/g, 'U');
   }
 
   transform(funcionarios: any[], searchAgencia: string, defaultFilter: boolean): Array<any> {
@@ -129,7 +137,7 @@ export class AgenciaSearchPipe implements PipeTransform {
       if(defaultFilter) {
         return funcionarios.filter( it => {
           filtrados.reduce(( x, nombre ) => 
-          (x && new RegExp( searchAgencia[nombre], 'gi' ).test( this.removeAccents( it[nombre]) )) || searchAgencia[nombre] == "", true );
+          (x && new RegExp( searchAgencia[nombre], 'gi' ).test( this.removeAccents( it[nombre] ) )) || searchAgencia[nombre] == "", true );
         });
       } else {
         return funcionarios.filter( it => {
