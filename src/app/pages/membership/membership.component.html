@@ -82,10 +82,10 @@
                             <td></td>
                             <td></td>
                             <td><input type="text" [(ngModel)]="searchAgencia" placeholder="" class="form-control border-1"></td>
-                            <td></td>
                             <td>
-                                <button class="btn btn-success btn-sm" (click)="recargarFuncionarios()"><i class="fa fa-refresh"></i></button>
+                                <button class="btn btn-success btn-block" (click)="recargarFuncionarios()"><i class="fa fa-refresh"></i> Actualizar</button>
                             </td>
+                            <td></td>
                         </tr>
                         <tr *ngFor="let funcionario of funcionarios 
                                                                     | NumeroempSearchPipe : { cNumeroEmpleado: searchNumero }

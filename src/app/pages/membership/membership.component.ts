@@ -73,12 +73,12 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public searchActivos: string = "1";
   public buscarFuncionario: string;
 
-  public searchNumero: string;
-  public searchNombre: string;
-  public searchApPaterno: string;
-  public searchApMaterno: string;
-  public searchUsuario: string;
-  public searchAgencia: string;
+  public searchNumero: string = "";
+  public searchNombre: string = "";
+  public searchApPaterno: string = "";
+  public searchApMaterno: string = "";
+  public searchUsuario: string = "";
+  public searchAgencia: string = "";
   // =============================================
  
   public menuSelectOptions: IMultiSelectOption[] = [];
