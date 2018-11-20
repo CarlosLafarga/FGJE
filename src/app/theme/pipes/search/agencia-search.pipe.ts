@@ -105,9 +105,13 @@ export class AgenciaSearchPipe implements PipeTransform {
   }
 
   public removeAccents(str): string {
-    return str.replace(/[^\u0000-\u007E]/g, function(a) {
-      return this.AccentsMap[a] || a;
-    }.bind(this));
+    // return str.replace(/[^\u0000-\u007E]/g, function(a) {
+    //   return this.AccentsMap[a] || a;
+    // }.bind(this));
+
+    return str.normalize('NFD')
+           .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
+           .normalize();
   }
 
   transform(funcionarios: any[], searchAgencia: string, defaultFilter: boolean): Array<any> {
@@ -136,5 +140,32 @@ export class AgenciaSearchPipe implements PipeTransform {
       }
     }
   }
+
+  // transform(funcionarios: any[], searchAgencia: string, defaultFilter: boolean): Array<any> {
+  //   if (!searchAgencia){
+  //     return funcionarios;
+  //   }
+
+  //   if (!Array.isArray(funcionarios)){
+  //     return funcionarios;
+  //   }
+
+  //   if (searchAgencia && Array.isArray( funcionarios )) {
+  //     let filtrados = Object.keys( searchAgencia );
+
+  //     if(defaultFilter) {
+  //       return funcionarios.filter( it => {
+  //         filtrados.reduce(( x, nombre ) => 
+  //         (x && new RegExp( searchAgencia[nombre], 'giy' ).test( it[nombre] )) || searchAgencia[nombre] == "", true );
+  //       });
+  //     } else {
+  //       return funcionarios.filter( it => {
+  //         return filtrados.some(( key ) => {
+  //           return new RegExp( searchAgencia[key], 'giy' ).test(  it[key]  ) || searchAgencia[key] == "";
+  //         });
+  //       });
+  //     }
+  //   }
+  // }
 
 }

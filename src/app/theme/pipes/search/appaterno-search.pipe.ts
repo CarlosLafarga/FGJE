@@ -104,9 +104,13 @@ export class AppaternoSearchPipe implements PipeTransform {
   }
 
   public removeAccents(str): string {
-    return str.replace(/[^\u0000-\u007E]/g, function(a) {
-      return this.AccentsMap[a] || a;
-    }.bind(this));
+    // return str.replace(/[^\u0000-\u007E]/g, function(a) {
+    //   return this.AccentsMap[a] || a;
+    // }.bind(this));
+
+    return str.normalize('NFD')
+           .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
+           .normalize();
   }
 
   transform(funcionarios: any, searchApPaterno: string, defaultFilter: boolean): Array<any> {
