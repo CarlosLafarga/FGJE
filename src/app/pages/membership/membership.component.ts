@@ -32,6 +32,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public roles: Roles[] = [];
   public funcionarioRol: Roles[] = [];
   public count : number;
+  public countHelper : number;
   public agencias: Agencias[] = [];
   public agencia: Agencias;
   public users: User[];
@@ -636,10 +637,10 @@ public desactivarMP() {
       this.membershipService.getcatUIE(valor).subscribe( catUIE => {
         this.catUIE = catUIE
         // console.log(this.catUIE);
-        if (this.catUIE.some(cat => cat.catUIE_id !== 0)) {
+        if(this.catUIE.some(cat => cat.catUIE_id !== 0)) {
           this.val = this.catUIE.map(cat => cat.catUIE_id);
-          // console.log(this.val);
-        } else {
+          console.log("");
+        }else{
           this.val = [0];
           // console.log(this.val);
         }
@@ -651,13 +652,32 @@ public desactivarMP() {
     if(valor !== undefined){
       this.membershipService.getfunciMP(valor).subscribe( funciMP => {
         this.funciMP = funciMP
-        // console.log(funciMP);
+        console.log("Este es el valor que comparan => "+valor);
         if (this.funciMP.some(cat => cat.iClaveFuncionario !== 0)) {
           this.clavedelactaul = this.funciMP.map(cat => cat.iClaveFuncionario);
           // console.log(this.clavedelactaul);
         } else {
           this.clavedelactaul = [0];
           // console.log(this.clavedelactaul);
+        }
+      });
+    }
+
+    if(valor !==undefined){
+      
+      var clave  = parseInt((<HTMLInputElement>document.getElementById("iclavefuncionarioselect")).value);
+      console.log(clave);
+      this.membershipService.getCounthelper(clave,valor).subscribe(countHelper =>{
+        this.countHelper = countHelper
+        console.log(countHelper);
+        if(this.countHelper >0){
+          swal({
+            title:"CUIDADO!!",
+            text: "Cuidado este funcionario cuenta con expedientes pendientes por reasignar en esta agencia.",
+            type: "warning"
+            }).then(() =>{
+              this.pageRefresh();
+            });
         }
       });
     }

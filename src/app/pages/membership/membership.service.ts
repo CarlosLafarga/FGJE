@@ -21,6 +21,7 @@ export class MembershipService {
     public url12 = this.general + "/cambiarEstatus";
     public url13 = this.general + "/CountExp/countExp";
     public url14 = this.general + "/cambioEsMP";
+    public url15 = this.general + "/HelperAgencia"
     private headers;
 
     constructor(public http: HttpClient) {
@@ -49,6 +50,10 @@ export class MembershipService {
 
     getCountExp(iclave: number,catdis:number):Observable<any>{
         return this.http.get(this.url13+"?iclavefuncionario="+iclave+"+&catdiscriminate="+catdis);
+    }
+
+    getCounthelper(iclave: number,catdis:number):Observable<any>{
+        return this.http.get(this.url15+"?iclavefuncionario="+iclave+"+&catdiscriminate="+catdis);
     }
 
     getcatUIE( catdis: number ): Observable<catUIE[]> {

@@ -194,11 +194,13 @@
                                         <label class="text-gray">Nombre del funcionario seleccionado:</label>
 
                                         <div class="row">
-
+                                            
+                                                    <input id="iclavefuncionarioselect" hidden formControlName="iClaveFuncionario" class="form-control" type="text" readonly>
+                                               
                                             <div class="col-sm-3">
                                                 <div class="form-group">
                                                     <label class="text-gray">Nombre</label>
-                                                    <input formControlName="cNombreFuncionario" class="form-control" type="text" readonly>
+                                                    <input #nombreFunciModal formControlName="cNombreFuncionario" class="form-control" type="text" readonly>
                                                 </div>
                                             </div>
 
