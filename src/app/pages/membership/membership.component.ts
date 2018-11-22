@@ -601,7 +601,7 @@ public desactivarMP() {
   public getFuncionarioAgencia(funcionario: FuncionariosData):void{
     this.membershipService.getFUsuarioAgencia(funcionario.catDiscriminante_id).subscribe( funciAgencia => {
       this.funciAgencia = funciAgencia
-      // console.log(this.funciAgencia);
+      console.log(this.funciAgencia);
 
       this.nAgActual = this.funciAgencia.map(a => a.cNombre);
       this.nombreAgActual = this.nAgActual[0];
@@ -679,29 +679,29 @@ public desactivarMP() {
         this.countHelper = countHelper
         console.log(countHelper);
         if(this.countHelper > 0){
-          swal({
-            title:"CUIDADO!!",
-            text: "Cuidado este funcionario cuenta con expedientes pendientes por reasignar en esta agencia.",
-            type: "warning"
-            }).then(() =>{
-              this.pageRefresh();
-            });
+          // swal({
+          //   title:"CUIDADO!!",
+          //   text: "Cuidado este funcionario cuenta con expedientes pendientes por reasignar en esta agencia.",
+          //   type: "warning"
+          //   }).then(() =>{
+          //     this.pageRefresh();
+          //   });
 
-          swal({
-            title: 'Multiple inputs',
-            html:
-              '<input id="swal-input1" class="swal2-input">' +
-              '<input id="swal-input2" class="swal2-input">',
-            focusConfirm: false,
-            preConfirm: () => {
-              return [
-                document.getElementById('swal-input1'),
-                document.getElementById('swal-input2')
-              ]
-            }
-          }).then(function(result) {
-              swal(JSON.stringify(result));
-              });
+          // swal({
+          //   title: 'Multiple inputs',
+          //   html:
+          //     '<input id="swal-input1" class="swal2-input">' +
+          //     '<input id="swal-input2" class="swal2-input">',
+          //   focusConfirm: false,
+          //   preConfirm: () => {
+          //     return [
+          //       document.getElementById('swal-input1'),
+          //       document.getElementById('swal-input2')
+          //     ]
+          //   }
+          // }).then(function(result) {
+          //     swal(JSON.stringify(result));
+          //     });
 
           // swal({
           //   title: 'Multiple inputs',
@@ -727,60 +727,66 @@ public desactivarMP() {
           //   swal(JSON.stringify(result));
           //   })
             
+        
+        var inputOptions = {};
+        for (let j = 0; j < this.funciAgencia.length; j++) {
+         
+        var id = this.funciAgencia[j].iClaveFuncionario;
+        var name = this.funciAgencia[j].cNombreFuncionario+" "+this.funciAgencia[j].cApellidoPaternoFuncionario;
+
+        inputOptions[id] = name;
+        }
+        
           
-          // swal({
-          //   title: 'CUIDADO!',
-          //   text: "El usuario tiene espedientes en la agencia seleccionada," +
-          //   "si lo cambia a esta agencia tomara el control de los mismos," +
-          //   "¿desea continuar?",
-          //   type: 'warning',
-          //   showCancelButton: true,
-          //   confirmButtonColor: '#3085d6',
-          //   cancelButtonColor: '#aaa',
-          //   confirmButtonText: 'Aceptar',
-          //   cancelButtonText: 'Reasignar expedientes'
-          // }).then((result) => {
-          //   if (result.value) {
-          //     swal(
-          //       'Confirmado',
-          //       'El funcionario podrá ver sus anteriores expedientes',
-          //       'success'
-          //     )
-          //   } else if (result.dismiss === swal.DismissReason.cancel) {
-          //     swal({
-          //       title: 'Reasignar',
-          //       text: "Seleccione un funcinario para continuar con la reasignación",
-          //       type: 'warning',
-          //       input: 'select',
-          //       inputOptions: {
-          //         '1': 'Funcionario 1',
-          //         '2': 'Funcionario 2',
-          //         '3': 'Funcionario 3',
-          //         'n': 'Funcionario n'
-          //       },
-          //       inputPlaceholder: 'Seleccione un funcionario',
-          //       showCancelButton: true,
-          //       confirmButtonColor: '#3085d6',
-          //       cancelButtonColor: '#d33',
-          //       confirmButtonText: 'Reasignar',
-          //       cancelButtonText: 'Cancelar'
-          //     }).then((result) => {
-          //       if (result.value) {
-          //         swal(
-          //           'Confirmado',
-          //           'Se reasignaron los expedientes...',
-          //           'success'
-          //         )
-          //       } else if (result.dismiss === swal.DismissReason.cancel) {
-          //         swal(
-          //           'Cancelado',
-          //           'Se cancelo la reasignacion de funcinario',
-          //           'error'
-          //         )
-          //       }
-          //     });
-          //   }
-          // });
+          console.log(inputOptions);
+          swal({
+            title: 'CUIDADO!',
+            text: "El usuario tiene expedientes en la agencia seleccionada," +
+            "si lo cambia a esta agencia tomara el control de los mismos," +
+            "¿desea continuar?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#aaa',
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Reasignar expedientes'
+          }).then((result) => {
+            if (result.value) {
+              swal(
+                'Confirmado',
+                'El funcionario podrá ver sus anteriores expedientes',
+                'success'
+              )
+            } else if (result.dismiss === swal.DismissReason.cancel) {
+              swal({
+                title: 'Reasignar',
+                text: "Seleccione un funcinario para continuar con la reasignación",
+                type: 'warning',
+                input: 'select',
+                inputOptions: inputOptions,
+                inputPlaceholder: 'Seleccione un funcionario',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Reasignar',
+                cancelButtonText: 'Cancelar'
+              }).then((result) => {
+                if (result.value) {
+                  swal(
+                    'Confirmado',
+                    'Se reasignaron los expedientes...',
+                    'success'
+                  )
+                } else if (result.dismiss === swal.DismissReason.cancel) {
+                  swal(
+                    'Cancelado',
+                    'Se cancelo la reasignacion de funcinario',
+                    'error'
+                  )
+                }
+              });
+            }
+          });
 
         }
       });
