@@ -754,36 +754,68 @@ public desactivarMP() {
             if (result.value) {
               swal(
                 'Confirmado',
-                'El funcionario podrá ver sus anteriores expedientes',
+                'Puede seguir con el proceso.',
                 'success'
               )
             } else if (result.dismiss === swal.DismissReason.cancel) {
-              swal({
+              swal.mixin({
                 title: 'Reasignar',
                 text: "Seleccione un funcinario para continuar con la reasignación",
                 type: 'warning',
                 input: 'select',
                 inputOptions: inputOptions,
                 inputPlaceholder: 'Seleccione un funcionario',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Reasignar',
-                cancelButtonText: 'Cancelar'
-              }).then((result) => {
-                if (result.value) {
-                  swal(
-                    'Confirmado',
-                    'Se reasignaron los expedientes...',
-                    'success'
-                  )
-                } else if (result.dismiss === swal.DismissReason.cancel) {
-                  swal(
-                    'Cancelado',
-                    'Se cancelo la reasignacion de funcinario',
-                    'error'
-                  )
-                }
+                confirmButtonText: 'Siguiente &rarr;',
+                progressSteps:['1','2'],
+                inputValidator: (value) => {
+                  return !value && 'Favor de escoger al funcionario a quien reasignara expedientes.'
+                 },
+              }).queue([
+                  {
+                    
+                  },
+                  {
+                    title:'Justificacion',
+                    inputPlaceholder: 'Justificacion',
+                    text:'Justifique el motivo de la reasignacion de expedientes.',
+                    input:'text',
+                    inputValidator: (value) => {
+                      return !value && 'Por favor ingrese la justificacion.'
+                     },
+                    
+                  }
+              ]).then((result) => {
+                
+                  swal({
+                    title: 'Datos Generales',
+                    html:
+                      ': <pre><code>' +
+                        JSON.stringify(result.value) +
+                      '</code></pre>',
+                      
+                    confirmButtonText: 'Aceptar',
+                    showCancelButton: true,
+                    cancelButtonText:'Cancelar',
+                    confirmButtonColor: '#4BAE4F',
+                    cancelButtonColor: '#d33',
+                  }).then((result) =>{
+                    if (result.value) {
+                      swal(
+                        'Confirmado',
+                        'El funcionario podrá ver sus anteriores expedientes',
+                        'success'
+                      )
+                    } else if (result.dismiss === swal.DismissReason.cancel) {
+
+                      swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                      });
+                    }
+                  });
+                
+               
               });
             }
           });
