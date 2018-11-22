@@ -53,7 +53,7 @@ export class MembershipService {
     }
 
     getCounthelper(iclave: number,catdis:number):Observable<any>{
-        return this.http.get(this.url15+"?iclavefuncionario="+iclave+"+&catdiscriminate="+catdis);
+        return this.http.get(this.url15+"?iclavefuncionario=" + iclave + "+&catdiscriminate=" + catdis);
     }
 
     getcatUIE( catdis: number ): Observable<catUIE[]> {
