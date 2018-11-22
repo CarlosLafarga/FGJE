@@ -676,68 +676,30 @@ public desactivarMP() {
       var clave  = parseInt((<HTMLInputElement>document.getElementById("iclavefuncionarioselect")).value);
       console.log(clave);
       this.membershipService.getCounthelper( clave, valor ).subscribe( countHelper => {
-        this.countHelper = countHelper
-        console.log(countHelper);
-        if(this.countHelper > 0){
-          // swal({
-          //   title:"CUIDADO!!",
-          //   text: "Cuidado este funcionario cuenta con expedientes pendientes por reasignar en esta agencia.",
-          //   type: "warning"
-          //   }).then(() =>{
-          //     this.pageRefresh();
-          //   });
-
-          // swal({
-          //   title: 'Multiple inputs',
-          //   html:
-          //     '<input id="swal-input1" class="swal2-input">' +
-          //     '<input id="swal-input2" class="swal2-input">',
-          //   focusConfirm: false,
-          //   preConfirm: () => {
-          //     return [
-          //       document.getElementById('swal-input1'),
-          //       document.getElementById('swal-input2')
-          //     ]
-          //   }
-          // }).then(function(result) {
-          //     swal(JSON.stringify(result));
-          //     });
-
-          // swal({
-          //   title: 'Multiple inputs',
-          //   html:
-          //   '<h2>Login details for waybill generation</h2>'+
-          //   '<select id="iclaveFuncionario" class="swal2-input">' +
-          //     '<option>-- Seleccione --</option>' +
-          //     '<option *ngFor="let funsAg of funcinariosAgencia"> {{ funsAg.cNombreFuncionario }} </option>' +
-          //   '</select>' +
-          //   '<input id="swal-input1" class="swal2-input" autofocus placeholder="User ID">' +
-          //   '<input id="swal-input2" class="swal2-input" placeholder="Password">',
-          //    preConfirm: function() {
-          //      return new Promise(function(resolve) {
-          //      if (true) {
-          //       resolve([
-          //         document.getElementById('swal-input1'),
-          //         document.getElementById('swal-input2')
-          //       ]);
-          //     }
-          //     });
-          //    }
-          // }).then(function(result) {
-          //   swal(JSON.stringify(result));
-          //   })
-            
+      this.countHelper = countHelper
+      console.log(countHelper);
+      if(this.countHelper > 0){
         
         var inputOptions = {};
-        for (let j = 0; j < this.funciAgencia.length; j++) {
-         
-        var id = this.funciAgencia[j].iClaveFuncionario;
-        var name = this.funciAgencia[j].cNombreFuncionario+" "+this.funciAgencia[j].cApellidoPaternoFuncionario;
 
-        inputOptions[id] = name;
+        // for (let j = 0; j < this.funciAgencia.length; j++) {
+         
+        // var id = this.funciAgencia[j].iClaveFuncionario;
+        // var name = this.funciAgencia[j].cNombreFuncionario+" "+this.funciAgencia[j].cApellidoPaternoFuncionario;
+
+        // inputOptions[id] = name;
+        // }
+
+        this.getFunAgPendientes(valor);
+
+        for (let j = 0; j < this.FunAgPendientes.length; j++) {
+          
+          var id = this.FunAgPendientes[j].iClaveFuncionario;
+          var name = this.FunAgPendientes[j].cNombreFuncionario+" "+this.FunAgPendientes[j].cApellidoPaternoFuncionario;
+
+          inputOptions[id] = name;
         }
         
-          
           console.log(inputOptions);
           swal({
             title: 'CUIDADO!',
@@ -781,7 +743,7 @@ public desactivarMP() {
                     input:'text',
                     inputValidator: (value) => {
                       return !value && 'Por favor ingrese la justificacion.'
-                     },
+                    },
                     
                   }
               ]).then((result) => {
@@ -814,7 +776,6 @@ public desactivarMP() {
                       });
                     }
                   });
-                
                
               });
             }
@@ -823,6 +784,43 @@ public desactivarMP() {
         }
       });
     }
+  }
+
+  public FunAgPendientes: FunciAgencia[] = [];
+
+  public getFunAgPendientes(catDiscriminantePendientes: number):void {
+    this.membershipService.getFUsuarioAgencia(catDiscriminantePendientes).subscribe( exp => {
+      this.FunAgPendientes = exp
+      console.log(this.FunAgPendientes);
+
+      for (let i = 0; i < this.FunAgPendientes.length; i++) {
+        if (this.FunAgPendientes[i].usuario[0].bEsActivo === 0) {
+          this.FunAgPendientes.splice( i, 1 );
+        }
+
+        var rolIdArray: number[] = [];
+        for (let j = 0; j < this.FunAgPendientes[i].usuario[0].usuarioRol.length; j++) {
+          rolIdArray.push(this.FunAgPendientes[i].usuario[0].usuarioRol[j].rol_id);
+        }
+
+        var cont: number = 0;
+        for (let k = 0; k < rolIdArray.length; k++) {
+          if (rolIdArray[k] === 8 ||
+              rolIdArray[k] === 7 ||
+              rolIdArray[k] === 6 ||
+              rolIdArray[k] === 5 ||
+              rolIdArray[k] === 3 ||
+              rolIdArray[k] === 2) {
+            cont = cont + 1;
+          }
+        }
+
+        if (cont <= 0) {
+          this.FunAgPendientes.splice( i, 1 );
+        }
+      }
+
+    });
   }
   
   // Se actualiza el funcionario seleccionado
