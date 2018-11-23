@@ -708,6 +708,7 @@ public desactivarMP() {
             "¿desea continuar?",
             type: 'warning',
             showCancelButton: true,
+            allowEscapeKey : false,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#aaa',
             confirmButtonText: 'Aceptar',
@@ -724,6 +725,7 @@ public desactivarMP() {
                 title: 'Reasignar',
                 text: "Seleccione un funcinario para continuar con la reasignación",
                 type: 'warning',
+                allowEscapeKey : false,
                 input: 'select',
                 inputOptions: inputOptions,
                 inputPlaceholder: 'Seleccione un funcionario',
@@ -757,6 +759,7 @@ public desactivarMP() {
                       
                     confirmButtonText: 'Aceptar',
                     showCancelButton: true,
+                    allowEscapeKey : false,
                     cancelButtonText:'Cancelar',
                     confirmButtonColor: '#4BAE4F',
                     cancelButtonColor: '#d33',
