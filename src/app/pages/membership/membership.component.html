@@ -283,7 +283,7 @@
                                                     formControlName="catDiscriminante_id"
                                                     (change)="getCatUIE($event.target.value)"
                                                     [disabled]="valAgenciaSelect">
-                                                <option selected>-- Seleccione una agencia --</option>
+                                                <!-- <option selected>-- Seleccione una agencia --</option> -->
                                                 <option *ngFor="let agencia of agencias" [value]="agencia.catDiscriminante_id">{{ agencia.cClaveDiscriminante }} - {{ agencia.cNombre }}</option>
                                             </select><br><br>
                                             
@@ -539,7 +539,7 @@
 
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-10">
+                                        <div class="col-9">
 
                                             <table class="table table-hover">
                                                 <thead>
@@ -552,7 +552,7 @@
                                                     <tr *ngFor="let expPend of expPendientesLista | paginate: { itemsPerPage: 10, currentPage: p5, id:'ExpPendientes' }" (click)="onSelectExpPend(expPend)"
                                                         [ngClass]="{ 'highlight': expPend.cambioAdscripcion_id === selectedExpPend }">
                                                         <td class="align-middle text-truncate">{{ expPend.nombreFuncionario }}</td>
-                                                        <td class="align-middle text-truncate">{{ expPend.cNombre }}</td>
+                                                        <td class="align-middle">{{ expPend.cNombre }}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -566,7 +566,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-2">
+                                        <div class="col-3">
                                             <div class="form-group">
                                                 <label for="iclaveFuncionarioAsign">Selccione el funcionario de la agencia</label>
                                                 <select class="form-control custom-select"
@@ -574,7 +574,7 @@
                                                         formControlName="iclaveFuncionarioAsign"
                                                         [(ngModel)]="iclaveFuncionarioAsign"
                                                         required>
-                                                    <option selected>-- Seleccione un funcionario --</option>
+                                                    <!-- <option [value]="0" selected>-- Seleccione un funcionario --</option> -->
                                                     <option *ngFor="let funsAg of funcinariosAgencia" [value]="funsAg.iClaveFuncionario">{{ funsAg.cNombreFuncionario }} {{ funsAg.cApellidoPaternoFuncionario }} {{ funsAg.cAPellidoMaternoFuncionario }}</option>
                                                 </select>
                                             </div>

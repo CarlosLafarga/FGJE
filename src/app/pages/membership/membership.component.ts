@@ -209,50 +209,210 @@ export class MembershipComponent implements OnInit, OnDestroy {
     
   }
 
+  public countHelperExp: number = 0;
+
   public controlInactivo(funcionario) {
 
-    swal({
-      title: 'Activar usuario',
-      text: '¿Esta seguro que desea activar al usuario?',
-      type: 'warning',
-      html: '<b>¿Esta seguro que desea Activar al usuario?</b><br><label><b>Justificacion:</b></label>',
-      input: 'text',
-      inputValidator: (value) => {
-        return !value && 'Por favor ingrese la justificacion.'
-       },
-      showCancelButton: true,
-      confirmButtonText: 'Activar',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
+    // console.log(funcionario);
+    var iclaveFunSelect: number = funcionario.iClaveFuncionario;
+    var catDisc: number = funcionario.catDiscriminante_id
+    // console.log(iclaveFunSelect + " " + catDisc);
+    
+    this.membershipService.getCounthelper( iclaveFunSelect, catDisc ).subscribe( countHelperExp => {
+      this.countHelperExp = countHelperExp
 
-      // console.log(result.value);
+      if (this.countHelperExp > 0) {
+        this.getFunAgPendientes(catDisc);
+        
+          swal({
+            title: 'CUIDADO!',
+            text: "El funcionario tiene expedientes en la agencia seleccionada, " +
+            "si lo cambia a esta agencia tomará el control de los mismos, " +
+            "¿desea continuar?",
+            type: 'warning',
+            showCancelButton: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#aaa',
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Reasignar expedientes'
+          }).then((result) => {
+            if (result.value) {
+              swal(
+                'Confirmado',
+                'Puede seguir con el proceso.',
+                'success'
+              )
 
-      if (result.value) {
-        // const inact = e.target.checked;
-        const valor: number = 1;
-        // console.log(funcionario);
-        funcionario.bEsActivo = 1;
-        // console.log("Se activa el funcionario => " + funcionario.cNombreFuncionario);
-        // console.log(valor);
-        var justificacion = result.value;
-        var iclaveFuncionarionew = funcionario.iClaveFuncionario;
-
-
-        let cambioEstatus1 = new cambioEstatus(iclaveFuncionarionew,valor,justificacion);
-        this.cambioEstatus(cambioEstatus1);
-        swal({
-          title:"Usuario Activado",
-          text: "Activacion exitosa",
-          type: "success"
-          }).then(() =>{
+              swal({
+                title: 'Activar usuario',
+                text: '¿Esta seguro que desea activar al usuario?',
+                type: 'warning',
+                html: '<b>¿Esta seguro que desea Activar al usuario?</b><br><label><b>Justificacion:</b></label>',
+                input: 'text',
+                inputValidator: (value) => {
+                  return !value && 'Por favor ingrese la justificacion.'
+                 },
+                showCancelButton: true,
+                confirmButtonText: 'Activar',
+                cancelButtonText: 'Cancelar'
+              }).then((result) => {
           
-          // location.reload();
+                // console.log(result.value);
+          
+                if (result.value) {
+                  // const inact = e.target.checked;
+                  const valor: number = 1;
+                  // console.log(funcionario);
+                  funcionario.bEsActivo = 1;
+                  // console.log("Se activa el funcionario => " + funcionario.cNombreFuncionario);
+                  // console.log(valor);
+                  var justificacion = result.value;
+                  var iclaveFuncionarionew = funcionario.iClaveFuncionario;
+          
+          
+                  let cambioEstatus1 = new cambioEstatus(iclaveFuncionarionew,valor,justificacion);
+                  this.cambioEstatus(cambioEstatus1);
+                  swal({
+                    title:"Usuario Activado",
+                    text: "Activacion exitosa",
+                    type: "success"
+                    }).then(() =>{
+                    
+                    // location.reload();
+                    });
+                } else if (result.dismiss === swal.DismissReason.cancel) {
+                  // console.log("Se cancelo la activación")
+                
+                }
+              });
+
+            } else if (result.dismiss === swal.DismissReason.cancel) {
+              swal.mixin({
+                title: 'Reasignar',
+                text: "Seleccione un funcinario para continuar con la reasignación.",
+                type: 'warning',
+                allowOutsideClick: false,
+                allowEscapeKey : false,
+                input: 'select',
+                inputOptions: this.inputOptions,
+                inputPlaceholder: 'Seleccione un funcionario',
+                showCancelButton: true,
+                confirmButtonText: 'Siguiente &rarr;',
+                cancelButtonText: 'Cancelar',
+                progressSteps:['1','2'],
+                inputValidator: (value) => {
+                  return !value && 'Favor de escoger al funcionario a quien reasignara expedientes.'
+                 },
+              }).queue([
+                  {
+                    
+                  },
+                  {
+                    title:'Justificacion',
+                    inputPlaceholder: 'Justificación',
+                    text:'Justifique el motivo de la reasignación de expedientes.',
+                    input:'text',
+                    inputValidator: (value) => {
+                      return !value && 'Por favor ingrese la justificacion.'
+                    },
+                    
+                  }
+              ]).then((result) => {
+                if (result.value) {
+                  var iclaveFNuevo = parseInt(result.value[0]);
+                
+                  swal({
+                    title: 'Confirmar',
+                    text: "¿Esta usted seguro(a) de continuar con la reasignación de los expedientes?",
+                    confirmButtonText: 'Aceptar',
+                    showCancelButton: true,
+                    allowOutsideClick: false,
+                    allowEscapeKey : false,
+                    cancelButtonText:'Cancelar',
+                    confirmButtonColor: '#4BAE4F',
+                    cancelButtonColor: '#d33',
+                  }).then((result) =>{
+                    if (result.value) {
+                      // const iclaveFAnt: number = clave;
+
+                      let asignar = new AsignarPendientes(catDisc, iclaveFNuevo, iclaveFunSelect);
+                      console.log(asignar);
+                      this.asignarExpPendientes( asignar );
+
+                      swal(
+                        'Confirmado',
+                        'Los expedientes se han reasignado correctamente.',
+                        'success'
+                      )
+                    } else if (result.dismiss === swal.DismissReason.cancel) {
+
+                      swal({
+                        type: 'error',
+                        title: 'Cancelado',
+                        text: 'Se ha cancelado la reasignación de los expedientes.',
+                      });
+                    }
+                  });
+                } else if (result.dismiss === swal.DismissReason.cancel) {
+                  swal({
+                    type: 'error',
+                    title: 'Cancelado',
+                    text: 'Se ha cancelado la reasignación de los expedientes.',
+                  });
+                }
+              });
+            }
           });
-      } else if (result.dismiss === swal.DismissReason.cancel) {
-        // console.log("Se cancelo la activación")
-      
+      } else {
+        swal({
+          title: 'Activar usuario',
+          text: '¿Esta seguro que desea activar al usuario?',
+          type: 'warning',
+          html: '<b>¿Esta seguro que desea Activar al usuario?</b><br><label><b>Justificacion:</b></label>',
+          input: 'text',
+          inputValidator: (value) => {
+            return !value && 'Por favor ingrese la justificacion.'
+           },
+          showCancelButton: true,
+          confirmButtonText: 'Activar',
+          cancelButtonText: 'Cancelar'
+        }).then((result) => {
+    
+          // console.log(result.value);
+    
+          if (result.value) {
+            // const inact = e.target.checked;
+            const valor: number = 1;
+            // console.log(funcionario);
+            funcionario.bEsActivo = 1;
+            // console.log("Se activa el funcionario => " + funcionario.cNombreFuncionario);
+            // console.log(valor);
+            var justificacion = result.value;
+            var iclaveFuncionarionew = funcionario.iClaveFuncionario;
+    
+    
+            let cambioEstatus1 = new cambioEstatus(iclaveFuncionarionew,valor,justificacion);
+            this.cambioEstatus(cambioEstatus1);
+            swal({
+              title:"Usuario Activado",
+              text: "Activacion exitosa",
+              type: "success"
+              }).then(() =>{
+              
+              // location.reload();
+              });
+          } else if (result.dismiss === swal.DismissReason.cancel) {
+            // console.log("Se cancelo la activación")
+          
+          }
+        });
       }
-    })
+
+      this.inputOptions = {};
+
+    });
 
   }
 
@@ -679,36 +839,18 @@ public desactivarMP() {
       this.countHelper = countHelper
       console.log(countHelper);
       if(this.countHelper > 0){
-        
-        var inputOptions = {};
-
-        // for (let j = 0; j < this.funciAgencia.length; j++) {
-         
-        // var id = this.funciAgencia[j].iClaveFuncionario;
-        // var name = this.funciAgencia[j].cNombreFuncionario+" "+this.funciAgencia[j].cApellidoPaternoFuncionario;
-
-        // inputOptions[id] = name;
-        // }
 
         this.getFunAgPendientes(valor);
-
-        for (let j = 0; j < this.FunAgPendientes.length; j++) {
-          
-          var id = this.FunAgPendientes[j].iClaveFuncionario;
-          var name = this.FunAgPendientes[j].cNombreFuncionario+" "+this.FunAgPendientes[j].cApellidoPaternoFuncionario;
-
-          inputOptions[id] = name;
-        }
         
-          console.log(inputOptions);
           swal({
             title: 'CUIDADO!',
-            text: "El usuario tiene expedientes en la agencia seleccionada," +
-            "si lo cambia a esta agencia tomara el control de los mismos," +
+            text: "El funcionario tiene expedientes en la agencia seleccionada, " +
+            "si lo cambia a esta agencia tomará el control de los mismos, " +
             "¿desea continuar?",
             type: 'warning',
             showCancelButton: true,
-            allowEscapeKey : false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#aaa',
             confirmButtonText: 'Aceptar',
@@ -723,13 +865,16 @@ public desactivarMP() {
             } else if (result.dismiss === swal.DismissReason.cancel) {
               swal.mixin({
                 title: 'Reasignar',
-                text: "Seleccione un funcinario para continuar con la reasignación",
+                text: "Seleccione un funcinario para continuar con la reasignación.",
                 type: 'warning',
+                allowOutsideClick: false,
                 allowEscapeKey : false,
                 input: 'select',
-                inputOptions: inputOptions,
+                inputOptions: this.inputOptions,
                 inputPlaceholder: 'Seleccione un funcionario',
+                showCancelButton: true,
                 confirmButtonText: 'Siguiente &rarr;',
+                cancelButtonText: 'Cancelar',
                 progressSteps:['1','2'],
                 inputValidator: (value) => {
                   return !value && 'Favor de escoger al funcionario a quien reasignara expedientes.'
@@ -740,8 +885,8 @@ public desactivarMP() {
                   },
                   {
                     title:'Justificacion',
-                    inputPlaceholder: 'Justificacion',
-                    text:'Justifique el motivo de la reasignacion de expedientes.',
+                    inputPlaceholder: 'Justificación',
+                    text:'Justifique el motivo de la reasignación de expedientes.',
                     input:'text',
                     inputValidator: (value) => {
                       return !value && 'Por favor ingrese la justificacion.'
@@ -749,52 +894,68 @@ public desactivarMP() {
                     
                   }
               ]).then((result) => {
+                if (result.value) {
+                  var catDis: number = valor;
+                  var iclaveFNuevo = parseInt(result.value[0]);
                 
                   swal({
-                    title: 'Datos Generales',
-                    html:
-                      ': <pre><code>' +
-                        JSON.stringify(result.value) +
-                      '</code></pre>',
-                      
+                    title: 'Confirmar',
+                    text: "¿Esta usted seguro(a) de continuar con la reasignación de los expedientes?",
                     confirmButtonText: 'Aceptar',
                     showCancelButton: true,
+                    allowOutsideClick: false,
                     allowEscapeKey : false,
                     cancelButtonText:'Cancelar',
                     confirmButtonColor: '#4BAE4F',
                     cancelButtonColor: '#d33',
                   }).then((result) =>{
                     if (result.value) {
+                      const iclaveFAnt: number = clave;
+
+                      let asignar = new AsignarPendientes(catDis, iclaveFNuevo, iclaveFAnt);
+                      // console.log(asignar);
+                      this.asignarExpPendientes( asignar );
+
                       swal(
                         'Confirmado',
-                        'El funcionario podrá ver sus anteriores expedientes',
+                        'Los expedientes se han reasignado correctamente.',
                         'success'
                       )
                     } else if (result.dismiss === swal.DismissReason.cancel) {
 
                       swal({
                         type: 'error',
-                        title: 'Oops...',
-                        text: 'Something went wrong!',
+                        title: 'Cancelado',
+                        text: 'Se ha cancelado la reasignación de los expedientes.',
                       });
                     }
                   });
-               
+                } else if (result.dismiss === swal.DismissReason.cancel) {
+                  swal({
+                    type: 'error',
+                    title: 'Cancelado',
+                    text: 'Se ha cancelado la reasignación de los expedientes.',
+                  });
+                }
               });
             }
           });
 
         }
+
+        this.inputOptions = {};
+
       });
     }
   }
 
+  public inputOptions = {};
   public FunAgPendientes: FunciAgencia[] = [];
 
   public getFunAgPendientes(catDiscriminantePendientes: number):void {
     this.membershipService.getFUsuarioAgencia(catDiscriminantePendientes).subscribe( exp => {
       this.FunAgPendientes = exp
-      console.log(this.FunAgPendientes);
+      // console.log(this.FunAgPendientes);
 
       for (let i = 0; i < this.FunAgPendientes.length; i++) {
         if (this.FunAgPendientes[i].usuario[0].bEsActivo === 0) {
@@ -822,6 +983,13 @@ public desactivarMP() {
           this.FunAgPendientes.splice( i, 1 );
         }
       }
+
+      for (let j = 0; j < this.FunAgPendientes.length; j++) {
+        var id = this.FunAgPendientes[j].iClaveFuncionario;
+        var name = this.FunAgPendientes[j].cNombreFuncionario+" "+this.FunAgPendientes[j].cApellidoPaternoFuncionario;
+        this.inputOptions[id] = name;
+      }
+      // console.log(this.inputOptions);
 
     });
   }
@@ -950,8 +1118,10 @@ public desactivarMP() {
     }
   }
   
+  public funcionarioSeleccionado: string = "";
   // Se abre el modal y se cargan los datos del funcionario seleccionado
   public openModal(modalContent, funcionario, catUIE) {
+    this.funcionarioSeleccionado = funcionario.iclaveFuncionario;
     // console.log(funcionario);
     // this.getAgencias();
     // this.getRoles();
