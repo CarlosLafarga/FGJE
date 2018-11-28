@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators, NgForm} from '@angular
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE, CambioAdscripcion, ExpPendientes, AsignarPendientes, cambioEstatus ,cambioMP, usuario, usuarioRol} from './membership.model';
+import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE, CambioAdscripcion, ExpPendientes, AsignarPendientes, cambioEstatus ,cambioMP, usuario, usuarioRol,listarExp} from './membership.model';
 import { MembershipService } from './membership.service';
 import { MenuService } from '../../theme/components/menu/menu.service';
 import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
@@ -28,6 +28,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public cambioAdscripcion : CambioAdscripcion[];
   public adscripcion : CambioAdscripcion;
   public funcionarios: FuncionariosData[] = [];
+  public listaExp: listarExp[] = [];
   public funcionario: FuncionariosData;
   public roles: Roles[] = [];
   public funcionarioRol: Roles[] = [];
@@ -68,6 +69,8 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public cambioMP : cambioMP[];
   public mostrarActivos: boolean = true;
   public prueba: boolean = false;
+  public claveglobal:number;
+  public catDisGlobal:number;
 
   // ============variables de filtrado============
   public searchText: string;
@@ -1417,6 +1420,7 @@ public desactivarMP() {
 
   public onSelectAgencia(catDiscriminanteAnterior: number) {
     console.log("valor select agencia => " + catDiscriminanteAnterior);
+    this.catDisGlobal = catDiscriminanteAnterior;
     this.membershipService.getFUsuarioAgencia(catDiscriminanteAnterior).subscribe( exp => {
       this.funcinariosAgencia = exp
       console.log(this.funcinariosAgencia);
@@ -1463,14 +1467,29 @@ public desactivarMP() {
 
   public onSelectFuncionario(iclaveFuncionarioAsign: number) {
     console.log("valor select funcionario => " + iclaveFuncionarioAsign);
+    this.claveglobal = iclaveFuncionarioAsign;
     this.membershipService.getFUsuarioRol(iclaveFuncionarioAsign).subscribe( roles => {
       this.rolesFun = roles;
       console.log(this.rolesFun);
     });
   }
-
+/*------------------** --------------------------------------------------------------------------------------------------------------*/
+/*----------------- ** --------------------------------------------------------------------------------------------------------------*/
+/*------------------** --------------------------------------------------------------------------------------------------------------*/
+/*------------------** --------------------------------------------------------------------------------------------------------------*/
+/*------------------** --------------------------------------------------------------------------------------------------------------*/
+/*------------------** --------------------------------------------------------------------------------------------------------------*/
   public onSelectRoles(value: number) {
+    const iclave = this.claveglobal;
+    const catDis = this.catDisGlobal;
     console.log("valor select rol => " + value);
+    console.log("valor select iclave => " + iclave);
+    console.log("valor select catDis => " + catDis);
+    this.membershipService.getListarExp(iclave,catDis).subscribe(listaExp =>{
+      this.listaExp = listaExp
+      console.log(listaExp);
+    });
+
   }
 
   public asignarPendientes : AsignarPendientes[];

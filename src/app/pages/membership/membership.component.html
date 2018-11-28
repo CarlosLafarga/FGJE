@@ -591,15 +591,17 @@
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
+                                                    <th>#<input type="checkbox" name="check" id="check" class="form-control"></th>
                                                     <th>Número de expediente</th>
                                                     <th>Número único de caso</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let expPend of expPendientesLista | paginate: { itemsPerPage: 10, currentPage: p5, id:'ExpPendientes' }" (click)="onSelectExpPend(expPend)"
-                                                    [ngClass]="{ 'highlight': expPend.cambioAdscripcion_id === selectedExpPend }">
-                                                    <td class="align-middle text-truncate">Aqui los expedientes</td>
-                                                    <td class="align-middle">Aquí el NUC</td>
+                                                <tr *ngFor="let list of listaExp | paginate: { itemsPerPage: 10, currentPage: p5, id:'ExpPendientes' }" (click)="onSelectExpPend(expPend)"
+                                                    >
+                                                    <td><input type="checkbox" name="check" id="check" class="form-control"></td>
+                                                    <td class="align-middle text-truncate">{{list.cNumeroExpediente}}</td>
+                                                    <td class="align-middle">{{list.cNumeroGeneralCaso}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>

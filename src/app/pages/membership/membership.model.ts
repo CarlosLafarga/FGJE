@@ -236,6 +236,25 @@ export class cambioMP{
     public justificacion:string,
   ){}
 }
+
+export class listarExp{
+  public dFechaCreacion :Date;
+  public dFechaCierre:Date;
+  public caso_id:number;
+  public expediente_id:number;
+  public cDescNarrativa:any;
+  public estatus_val: number;
+  public tipoExpediente_val:number;
+  public origen_val:number;
+  public confInstitucion_id:number;
+  public catDiscriminante_id:number;
+  public bEsReplicado: number;
+  public catUIE_id:number;
+  public cNumeroGeneralCaso: string;
+  public cNumeroExpediente:string;
+  public jerarquiaOrganizacional_id:number;
+  public numeroExpediente_id:number;
+}
 // export class ExpPendientesTabla {
 //   public iclaveFuncionario: number;
 //   public catDis_ant: string

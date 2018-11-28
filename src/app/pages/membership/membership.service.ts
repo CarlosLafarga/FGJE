@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { User, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE , CambioAdscripcion, ExpPendientes, AsignarPendientes , cambioEstatus} from './membership.model';
+import { Observable, observable } from 'rxjs';
+import { User, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE , CambioAdscripcion, ExpPendientes, AsignarPendientes , cambioEstatus,listarExp} from './membership.model';
 
 @Injectable()
 export class MembershipService {
 
-  public general = "http://localhost:55244/api";
+    public general = "http://localhost:55244/api";
     // public general = "http://192.168.105.53:55245/api";
     public url2 = this.general + "/funcionarios";
     public url3 = this.general + "/catDiscriminantes";
@@ -22,6 +22,7 @@ export class MembershipService {
     public url13 = this.general + "/CountExp/countExp";
     public url14 = this.general + "/cambioEsMP";
     public url15 = this.general + "/HelperAgencia"
+    public url16 = this.general + "/listarExp/GetExpedientes?"
     private headers;
 
     constructor(public http: HttpClient) {
@@ -54,6 +55,10 @@ export class MembershipService {
 
     getCounthelper(iclave: number,catdis:number):Observable<any>{
         return this.http.get(this.url15+"?iclavefuncionario=" + iclave + "+&catdiscriminate=" + catdis);
+    }
+
+    getListarExp(iclave:number,catdis:number):Observable<any>{
+        return this.http.get(this.url16+"clavefunci="+iclave+"&catDis="+catdis);
     }
 
     getcatUIE( catdis: number ): Observable<catUIE[]> {
