@@ -539,6 +539,80 @@
 
                                 <div class="container">
                                     <div class="row">
+                                        <div class="col-xl-6 col-lg-6 mb-6">
+                                            <div class="form-group">
+                                                <label for="catDiscriminanteAnt"><h6>Seleccione la agencia:</h6></label>
+                                                <select class="form-control"
+                                                        id="catDiscriminanteAnt"
+                                                        formControlName="catDiscriminanteAnt"
+                                                        [(ngModel)]="catDiscriminanteAnt"
+                                                        (change)="onSelectAgencia($event.target.value)">
+                                                    <!-- <option selected [value]="0">-- Seleccione una agencia --</option> -->
+                                                    <option *ngFor="let expPend of expPendientesLista"
+                                                            [value]="expPend.catDiscriminanteAnterior"> {{ expPend.cNombre }} 
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-6 mb-3">
+                                            <div class="form-group">
+                                                <label for="iclaveFuncionarioAsign"><h6>Seleccione el funcionario:</h6></label>
+                                                <select class="form-control"
+                                                        id="iclaveFuncionarioAsign"
+                                                        formControlName="iclaveFuncionarioAsign"
+                                                        [(ngModel)]="iclaveFuncionarioAsign"
+                                                        (change)="onSelectFuncionario($event.target.value)">
+                                                    <option selected [value]="0">-- Seleccione un funcionario --</option>
+                                                    <option *ngFor="let funAg of funcinariosAgencia"
+                                                            [value]="funAg.iClaveFuncionario"> {{ funAg.cNombreFuncionario }} 
+                                                                                                {{ funAg.cApellidoPaternoFuncionario }} 
+                                                                                                {{ funAg.cAPellidoMaternoFuncionario }} 
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-6 mb-3">
+                                            <div class="form-group">
+                                                <label for="exampleSelect3"><h6>Seleccione el rol:</h6></label>
+                                                <select class="form-control"
+                                                        id="exampleSelect3"
+                                                        formControlName="rolesFAsign"
+                                                        [(ngModel)]="rolesFAsign"
+                                                        (change)="onSelectRoles($event.target.value)">
+                                                    <option selected [value]="0">-- Seleccione un rol --</option>
+                                                    <option *ngFor="let rol of rolesFun"
+                                                            [value]="rol.rol_id"> {{ rol.cDescripcionRol }} 
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Número de expediente</th>
+                                                    <th>Número único de caso</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let expPend of expPendientesLista | paginate: { itemsPerPage: 10, currentPage: p5, id:'ExpPendientes' }" (click)="onSelectExpPend(expPend)"
+                                                    [ngClass]="{ 'highlight': expPend.cambioAdscripcion_id === selectedExpPend }">
+                                                    <td class="align-middle text-truncate">Aqui los expedientes</td>
+                                                    <td class="align-middle">Aquí el NUC</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <div class="bg-white text-center">
+                                                    <pagination-controls autoHide="true" (pageChange)="p5 = $event" id='ExpPendientes' maxSize="10" previousLabel="" nextLabel=""></pagination-controls>
+                                                </div>        
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="row">
                                         <div class="col-9">
 
                                             <table class="table table-hover">
@@ -574,12 +648,11 @@
                                                         formControlName="iclaveFuncionarioAsign"
                                                         [(ngModel)]="iclaveFuncionarioAsign"
                                                         required>
-                                                    <!-- <option [value]="0" selected>-- Seleccione un funcionario --</option> -->
                                                     <option *ngFor="let funsAg of funcinariosAgencia" [value]="funsAg.iClaveFuncionario">{{ funsAg.cNombreFuncionario }} {{ funsAg.cApellidoPaternoFuncionario }} {{ funsAg.cAPellidoMaternoFuncionario }}</option>
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
 
                             </div>

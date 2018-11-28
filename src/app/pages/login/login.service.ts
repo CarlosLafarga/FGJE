@@ -6,11 +6,11 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class loginServices {
     
-    // public general = "http://localhost:55244/api";
-    public general = "http://192.168.105.53:55245/api";
+    public general = "http://localhost:55244/api";
+    // public general = "http://192.168.105.53:55245/api";
     public url = this.general+"/Auth/";
     public headers;
-    public loggedInStatus:boolean = false ;
+    public loggedInStatus:boolean = false;
 
     constructor(public http: HttpClient ) {
         this.headers = new HttpHeaders({ 'Content-Type': 'application/json' }); 
@@ -18,15 +18,15 @@ export class loginServices {
     }
 
       setLoggedIn(value:boolean){
-        console.log("PARAMETRO VALUE => "+value);
+        console.log("PARAMETRO VALUE => " + value);
         this.loggedInStatus = value;
         localStorage.setItem('isLoggedIn', this.loggedInStatus + '');
-        console.log("PARAMETRO LOGGEDINSTATUS => "+this.loggedInStatus)
+        console.log("PARAMETRO LOGGEDINSTATUS => "+this.loggedInStatus);
         
     }
     
     get isLoggedIn (){
-        console.log("LOGGEDINSATATUS DEL SI LOGGEDIND =>" + this.loggedInStatus);
+        console.log("LOGGEDINSATATUS DEL SI LOGGEDIND => " + this.loggedInStatus);
         return this.loggedInStatus;
     }
 

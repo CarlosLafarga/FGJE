@@ -122,7 +122,9 @@ export class MembershipComponent implements OnInit, OnDestroy {
       fecha_modificacion: null,
       esEmp: null,
       Asignados: null,
-      iclaveFuncionarioAsign: null
+      iclaveFuncionarioAsign: 0,
+      catDiscriminanteAnt: null,
+      rolesFAsign: 0
     });
     
     this.form = this.fbf.group({
@@ -1317,7 +1319,7 @@ public desactivarMP() {
   public getExpPendientes(): void {
     this.membershipService.getExpPendientes().subscribe( eP => {
       this.expPendientesLista = eP
-      // console.log(this.expPendientesLista); 
+      console.log(this.expPendientesLista); 
 
       for (let i = 0; i < this.expPendientesLista.length; i++) {
         const ag: number = this.expPendientesLista[i].catDiscriminanteAnterior;
@@ -1411,6 +1413,66 @@ public desactivarMP() {
 
   }
 
+  public funcinarioAgencia: FunciAgencia[] = [];
+
+  public onSelectAgencia(catDiscriminanteAnterior: number) {
+    console.log("valor select agencia => " + catDiscriminanteAnterior);
+    this.membershipService.getFUsuarioAgencia(catDiscriminanteAnterior).subscribe( exp => {
+      this.funcinariosAgencia = exp
+      console.log(this.funcinariosAgencia);
+
+      for (let i = 0; i < this.funcinariosAgencia.length; i++) {
+        if (this.funcinariosAgencia[i].usuario[0].bEsActivo === 0) {
+          this.funcinariosAgencia.splice( i, 1 );
+        }
+
+        var rolIdArray: number[] = [];
+        for (let j = 0; j < this.funcinariosAgencia[i].usuario[0].usuarioRol.length; j++) {
+          rolIdArray.push(this.funcinariosAgencia[i].usuario[0].usuarioRol[j].rol_id);
+        }
+
+        var cont: number = 0;
+        for (let k = 0; k < rolIdArray.length; k++) {
+          if (rolIdArray[k] === 8 ||
+              rolIdArray[k] === 7 ||
+              rolIdArray[k] === 6 ||
+              rolIdArray[k] === 5 ||
+              rolIdArray[k] === 3 ||
+              rolIdArray[k] === 2) {
+            cont = cont + 1;
+          }
+        }
+
+        if (cont <= 0) {
+          this.funcinariosAgencia.splice( i, 1 );
+        }
+      }
+
+    });
+
+    // for (let i = 0; i < this.expPendientesLista.length; i++) {
+    //   if (this.expPendientesLista[i].catDiscriminanteAnterior === catDiscriminanteAnterior) {
+    //     this.funcinarioAgencia[0].iClaveFuncionario = this.expPendientesLista[i].iClaveFuncionario;
+    //     this.funcinarioAgencia[0].cNombreFuncionario = this.expPendientesLista[i].nombreFuncionario;
+    //   }
+    // }
+    // console.log(this.funcinarioAgencia);
+  }
+
+  public rolesFun: Roles[] = [];
+
+  public onSelectFuncionario(iclaveFuncionarioAsign: number) {
+    console.log("valor select funcionario => " + iclaveFuncionarioAsign);
+    this.membershipService.getFUsuarioRol(iclaveFuncionarioAsign).subscribe( roles => {
+      this.rolesFun = roles;
+      console.log(this.rolesFun);
+    });
+  }
+
+  public onSelectRoles(value: number) {
+    console.log("valor select rol => " + value);
+  }
+
   public asignarPendientes : AsignarPendientes[];
 
   // Se actualiza el funcionario seleccionado
@@ -1428,7 +1490,6 @@ public desactivarMP() {
       
         this.router.navigate(['/pages/membership']);
       });
-    
     
   }
 
