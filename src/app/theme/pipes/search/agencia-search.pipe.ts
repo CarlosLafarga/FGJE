@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { FuncionariosData } from 'app/pages/membership/membership.model';
-import { timingSafeEqual } from 'crypto';
 
 @Pipe({ name: 'AgenciaSearchPipe', pure: false })
 export class AgenciaSearchPipe implements PipeTransform {

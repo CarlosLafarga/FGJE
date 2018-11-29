@@ -547,7 +547,7 @@
                                                         formControlName="catDiscriminanteAnt"
                                                         [(ngModel)]="catDiscriminanteAnt"
                                                         (change)="onSelectAgencia($event.target.value)">
-                                                    <!-- <option selected [value]="0">-- Seleccione una agencia --</option> -->
+                                                    <option selected [value]="0">-- Seleccione una agencia --</option>
                                                     <option *ngFor="let expPend of expPendientesLista"
                                                             [value]="expPend.catDiscriminanteAnterior"> {{ expPend.cNombre }} 
                                                     </option>
@@ -563,7 +563,7 @@
                                                         [(ngModel)]="iclaveFuncionarioAsign"
                                                         (change)="onSelectFuncionario($event.target.value)">
                                                     <option selected [value]="0">-- Seleccione un funcionario --</option>
-                                                    <option *ngFor="let funAg of funcinariosAgencia"
+                                                    <option *ngFor="let funAg of funcinarioAgencia"
                                                             [value]="funAg.iClaveFuncionario"> {{ funAg.cNombreFuncionario }} 
                                                                                                 {{ funAg.cApellidoPaternoFuncionario }} 
                                                                                                 {{ funAg.cAPellidoMaternoFuncionario }} 
@@ -573,9 +573,9 @@
                                         </div>
                                         <div class="col-xl-3 col-lg-6 mb-3">
                                             <div class="form-group">
-                                                <label for="exampleSelect3"><h6>Seleccione el rol:</h6></label>
+                                                <label for="rolesFAsign"><h6>Seleccione el rol:</h6></label>
                                                 <select class="form-control"
-                                                        id="exampleSelect3"
+                                                        id="rolesFAsign"
                                                         formControlName="rolesFAsign"
                                                         [(ngModel)]="rolesFAsign"
                                                         (change)="onSelectRoles($event.target.value)">
@@ -587,6 +587,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="row">
                                         <table class="table table-hover">
                                             <thead>
@@ -614,6 +615,68 @@
                                             </div>
                                         </div>
                                     </div>
+
+<!-- =====================================================pruebas ngx-datatable====================================== -->
+                                    <!-- <ngx-datatable
+                                        #table
+                                        class="material"
+                                        [headerHeight]="40"
+                                        [limit]="10"
+                                        [columnMode]="'force'"
+                                        [footerHeight]="50"
+                                        [rowHeight]="'auto'"
+                                        [rows]="rows"
+                                        [loadingIndicator]="loadingIndicator"
+                                        [selected]="selected"
+                                        [selectionType]="'checkbox'"
+                                        (activate)="onActivate($event)"
+                                        (select)='onSelect($event)'>
+                                        <ngx-datatable-column
+                                            [width]="30"
+                                            [sortable]="false"
+                                            [canAutoResize]="false"
+                                            [draggable]="true"
+                                            [resizeable]="false"
+                                            [headerCheckboxable]="true"
+                                            [checkboxable]="true">
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Name">
+                                            <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+                                                <span
+                                                title="Double click to edit"
+                                                (dblclick)="editing[row.$$index + '-name'] = true"
+                                                *ngIf="!editing[row.$$index + '-name']">
+                                                {{value}}
+                                                </span>
+                                                <input
+                                                autofocus
+                                                (blur)="updateValue($event, 'name', value, row)"
+                                                *ngIf="editing[row.$$index + '-name']"
+                                                type="text"
+                                                [value]="value"
+                                                />
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Gender">
+                                            <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
+                                                <span
+                                                title="Double click to edit"
+                                                (dblclick)="editing[row.$$index + '-gender'] = true"
+                                                *ngIf="!editing[row.$$index + '-gender']">
+                                                {{value}}
+                                                </span>
+                                                <select
+                                                *ngIf="editing[row.$$index + '-gender']"
+                                                (change)="updateValue($event, 'gender', value, row)"
+                                                [value]="value">
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                                </select>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                    </ngx-datatable>    -->
+<!-- =====================================================pruebas ngx-datatable====================================== -->
+
                                     <!-- <div class="row">
                                         <div class="col-9">
 
@@ -657,6 +720,43 @@
                                     </div> -->
                                 </div>
 
+                            </div>
+                        </div>
+
+                        <div class="col-12 bg-white py-1">
+                            <h5>Reasignar expedientes</h5>
+
+                            <br>
+
+                            <div class="col-xl-3 col-lg-6 mb-3">
+                                <div class="form-group">
+                                    <label for="iclaveFuncionarioDestino"><h6>Seleccione el funcionario para reasignar:</h6></label>
+                                    <select class="form-control"
+                                            id="iclaveFuncionarioDestino"
+                                            formControlName="iclaveFuncionarioDestino"
+                                            [(ngModel)]="iclaveFuncionarioDestino"
+                                            (change)="onSelectFuncionario($event.target.value)"
+                                            required>
+                                        <option selected [value]="0">-- Seleccione un funcionario --</option>
+                                        <option *ngFor="let funAg of funcinariosAgencia"
+                                                [value]="funAg.iClaveFuncionario"> {{ funAg.cNombreFuncionario }} 
+                                                                                    {{ funAg.cApellidoPaternoFuncionario }} 
+                                                                                    {{ funAg.cAPellidoMaternoFuncionario }} 
+                                        </option>
+                                    </select>
+                                 </div>
+                            </div>
+                        </div>
+    
+                        <br><br><br>
+    
+                        <div class="col-12 bg-white py-1">
+                            <div *ngIf="formExpPend.get('justificacion').hasError('required')" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Atencion!</strong> Por favor ingrese la justificación.
+                            </div>
+                            <div class="form-group">
+                                <label for="justificacion">justificación</label>
+                                <textarea maxlength="150" id="justificacion" class="form-control" formControlName="justificacion" placeholder="Máximo 150 caracteres" required></textarea>
                             </div>
                         </div>
 

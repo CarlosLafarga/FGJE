@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, OnDestroy} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy, ViewChild} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, NgForm} from '@angular/forms';
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
@@ -10,8 +10,7 @@ import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
 import { RouteConfigLoadStart, Router } from '@angular/router';
 import swal from 'sweetalert2';
 import { Location } from '@angular/common';
-import { $ } from 'protractor';
-import { SSL_OP_NO_SSLv2 } from 'constants';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
  
 @Component({
   selector: 'app-membership',
@@ -105,7 +104,13 @@ export class MembershipComponent implements OnInit, OnDestroy {
         name: item.title
       }
       this.menuSelectOptions.push(menu);
-    })
+    });
+
+    this.fetch((data) => {
+      this.temp = [...data];
+      this.rows = data;
+      setTimeout(() => { this.loadingIndicator = false; }, 1500);
+    });
 
   }
 
@@ -125,9 +130,11 @@ export class MembershipComponent implements OnInit, OnDestroy {
       fecha_modificacion: null,
       esEmp: null,
       Asignados: null,
-      iclaveFuncionarioAsign: 0,
+      iclaveFuncionarioAsign: null,
       catDiscriminanteAnt: null,
-      rolesFAsign: 0
+      rolesFAsign: null,
+      justificacion: null,
+      iclaveFuncionarioDestino: null
     });
     
     this.form = this.fbf.group({
@@ -1416,11 +1423,14 @@ public desactivarMP() {
 
   }
 
-  public funcinarioAgencia: FunciAgencia[] = [];
+  public funcinarioAgencia: FuncionariosData[] = [];
 
   public onSelectAgencia(catDiscriminanteAnterior: number) {
+    this.funcinarioAgencia = [];
+    this.rolesFun = [];
     console.log("valor select agencia => " + catDiscriminanteAnterior);
     this.catDisGlobal = catDiscriminanteAnterior;
+
     this.membershipService.getFUsuarioAgencia(catDiscriminanteAnterior).subscribe( exp => {
       this.funcinariosAgencia = exp
       console.log(this.funcinariosAgencia);
@@ -1454,13 +1464,17 @@ public desactivarMP() {
 
     });
 
-    // for (let i = 0; i < this.expPendientesLista.length; i++) {
-    //   if (this.expPendientesLista[i].catDiscriminanteAnterior === catDiscriminanteAnterior) {
-    //     this.funcinarioAgencia[0].iClaveFuncionario = this.expPendientesLista[i].iClaveFuncionario;
-    //     this.funcinarioAgencia[0].cNombreFuncionario = this.expPendientesLista[i].nombreFuncionario;
-    //   }
-    // }
-    // console.log(this.funcinarioAgencia);
+    for (let i = 0; i < this.expPendientesLista.length; i++) {
+      if (this.expPendientesLista[i].catDiscriminanteAnterior == catDiscriminanteAnterior) {
+        var flag: number = this.expPendientesLista[i].iClaveFuncionario;
+        for (let j = 0; j < this.funcionarios.length; j++) {
+          if (this.funcionarios[j].iClaveFuncionario === flag) {
+            this.funcinarioAgencia.push(this.funcionarios[j]);
+          }
+        }
+      }
+    }
+    console.log(this.funcinarioAgencia);
   }
 
   public rolesFun: Roles[] = [];
@@ -1489,8 +1503,56 @@ public desactivarMP() {
       this.listaExp = listaExp
       console.log(listaExp);
     });
-
   }
+
+  /*======================================pruebas ngx-datatable========================================*/
+  editing = {};
+  rows = [];
+  temp = [];
+  selected = [];
+  loadingIndicator: boolean = true;
+  reorderable: boolean = true;
+
+  @ViewChild(DatatableComponent) table: DatatableComponent;
+
+  columns = [
+    { prop: 'expediente' },
+    { name: 'nuc' },
+  ];
+
+  fetch(data) {
+    const req = new XMLHttpRequest();
+    req.open('GET', 'assets/data/company.json'); 
+    req.onload = () => {
+      data(JSON.parse(req.response));
+    };
+    req.send();
+  }
+
+  updateFilter(event) {
+    const val = event.target.value.toLowerCase();
+    const temp = this.temp.filter(function(d) {
+      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+    this.rows = temp;
+    this.table.offset = 0;
+  }
+
+  updateValue(event, cell, cellValue, row) {
+    this.editing[row.$$index + '-' + cell] = false;
+    this.rows[row.$$index][cell] = event.target.value;
+  }
+
+  onSelect({ selected }) {
+    console.log('Select Event', selected, this.selected);
+    this.selected.splice(0, this.selected.length);
+    this.selected.push(...selected);
+  }
+
+  onActivate(event) {
+    console.log('Activate Event', event);
+  }
+  /*===================================================================================================*/
 
   public asignarPendientes : AsignarPendientes[];
 

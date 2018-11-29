@@ -9,6 +9,7 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PipesModule } from '../../theme/pipes/pipes.module';
 import { MembershipComponent } from './membership.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 //import { MembershipData } from './membership.data';
 
 export const routes = [
@@ -26,7 +27,8 @@ export const routes = [
     NgbModule,
     MultiselectDropdownModule,
     NgxPaginationModule,
-    PipesModule
+    PipesModule,
+    NgxDatatableModule
   ],
   declarations: [
     MembershipComponent
