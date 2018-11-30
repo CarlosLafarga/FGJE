@@ -1491,13 +1491,12 @@ public desactivarMP() {
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
   public iclave: number = 0;
-  public catdis: number = 0;
+  public catDis: number = 0;
   public jerarquiaOrg: number = 0;
 
   public onSelectRoles(value: number) {
-    this.catdis =  value;
     this.iclave = this.claveglobal;
-    const catDis = this.catDisGlobal;
+    this.catDis = this.catDisGlobal;
     for (let i = 0; i< this.rolesFun.length; i++){
       
       var objeto = this.rolesFun[i];
@@ -1509,11 +1508,11 @@ public desactivarMP() {
       
     }
     console.log("Este es el rol => " + rol);
-    console.log("Esta es la jerarquia => " + jerarquia);
+    console.log("Esta es la jerarquia => " + this.jerarquiaOrg);
     console.log("valor select rol => " + value);
     console.log("valor select iclave => " + this.iclave);
-    console.log("valor select catDis => " + catDis);
-    this.membershipService.getListarExp(this.iclave,catDis,this.jerarquiaOrg).subscribe(listaExp =>{
+    console.log("valor select catDis => " + this.catDis);
+    this.membershipService.getListarExp(this.iclave, this.catDis, this.jerarquiaOrg).subscribe( listaExp => {
        this.listaExp = listaExp
        console.log(listaExp);
     });
@@ -1522,7 +1521,7 @@ public desactivarMP() {
       this.temp = [...data];
       this.rows = data;
       setTimeout(() => { this.loadingIndicator = false; }, 1500);
-    });
+    }, this.iclave, this.catDis, this.jerarquiaOrg);
   }
 
   /*======================================pruebas ngx-datatable========================================*/
@@ -1542,15 +1541,20 @@ public desactivarMP() {
 
   public listaExp1 = JSON.stringify(this.listaExp);
 
-  fetch(data) {
+  fetch(data, clave, cat, jerarquiaOrg) {
+    console.log(data);
+    console.log(clave);
+    console.log(cat);
+    console.log(jerarquiaOrg);
     const req = new XMLHttpRequest();
-    req.open('GET', 'http://localhost:55244/api/listarExp/GetExpedientes?clavefunci=' + this.iclave
-                    + '&catDis=' + this.catdis
-                    + '&jerarquia=' + this.jerarquiaOrg); 
+    req.open('GET', 'http://localhost:55244/api/listarExp/GetExpedientes?clavefunci=' + clave
+                    + '&catDis=' + cat
+                    + '&jerarquia=' + jerarquiaOrg); 
     req.onload = () => {
       data(JSON.parse(req.response));
     };
     req.send();
+    console.log(req);
   }
 
   updateFilter(event) {
