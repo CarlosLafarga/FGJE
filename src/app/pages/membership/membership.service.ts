@@ -23,6 +23,7 @@ export class MembershipService {
     public url14 = this.general + "/cambioEsMP";
     public url15 = this.general + "/HelperAgencia"
     public url16 = this.general + "/listarExp/GetExpedientes?"
+    public url17 = this.general + "/ObtJerarquia/ObtJerarquia?"
     private headers;
 
     constructor(public http: HttpClient) {
@@ -53,12 +54,16 @@ export class MembershipService {
         return this.http.get(this.url13+"?iclavefuncionario="+iclave+"+&catdiscriminate="+catdis);
     }
 
+    getJerarquia(rol:number):Observable<any>{
+        return this.http.get(this.url17+"rol="+rol);
+    }
+
     getCounthelper(iclave: number,catdis:number):Observable<any>{
         return this.http.get(this.url15+"?iclavefuncionario=" + iclave + "+&catdiscriminate=" + catdis);
     }
 
-    getListarExp(iclave:number,catdis:number):Observable<any>{
-        return this.http.get(this.url16+"clavefunci="+iclave+"&catDis="+catdis);
+    getListarExp(iclave:number,catdis:number,jerarquia:number):Observable<any>{
+        return this.http.get(this.url16+"clavefunci="+iclave+"&catDis="+catdis+"&jerarquia="+jerarquia);
     }
 
     getcatUIE( catdis: number ): Observable<catUIE[]> {

@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators, NgForm} from '@angular
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE, CambioAdscripcion, ExpPendientes, AsignarPendientes, cambioEstatus ,cambioMP, usuario, usuarioRol,listarExp} from './membership.model';
+import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAgencia, catUIE, CambioAdscripcion, ExpPendientes, AsignarPendientes, cambioEstatus ,cambioMP, usuario, usuarioRol,listarExp,jerarquia} from './membership.model';
 import { MembershipService } from './membership.service';
 import { MenuService } from '../../theme/components/menu/menu.service';
 import { gridSize } from '../../../../node_modules/@swimlane/ngx-charts';
@@ -70,6 +70,8 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public prueba: boolean = false;
   public claveglobal:number;
   public catDisGlobal:number;
+  public myobjJson:string;
+  public jerarquia : jerarquia[]= [];
 
   // ============variables de filtrado============
   public searchText: string;
@@ -1485,6 +1487,7 @@ public desactivarMP() {
     this.membershipService.getFUsuarioRol(iclaveFuncionarioAsign).subscribe( roles => {
       this.rolesFun = roles;
       console.log(this.rolesFun);
+      this.myobjJson = JSON.stringify(this.rolesFun);
     });
   }
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
@@ -1496,12 +1499,24 @@ public desactivarMP() {
   public onSelectRoles(value: number) {
     const iclave = this.claveglobal;
     const catDis = this.catDisGlobal;
+    for (let i = 0; i< this.rolesFun.length; i++){
+      
+      var objeto = this.rolesFun[i];
+      var rol = objeto.rol_id;
+      if(rol == value){
+      var jerarquia = objeto.jerarquiaOrganizacional_id;
+      break;
+      }
+      
+    }
+    console.log("Este es el rol => "+rol);
+    console.log("Esta es la jerarquia => "+ jerarquia);
     console.log("valor select rol => " + value);
     console.log("valor select iclave => " + iclave);
     console.log("valor select catDis => " + catDis);
-    this.membershipService.getListarExp(iclave,catDis).subscribe(listaExp =>{
-      this.listaExp = listaExp
-      console.log(listaExp);
+    this.membershipService.getListarExp(iclave,catDis,jerarquia).subscribe(listaExp =>{
+       this.listaExp = listaExp
+       console.log(listaExp);
     });
   }
 

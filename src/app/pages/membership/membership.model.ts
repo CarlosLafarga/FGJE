@@ -237,6 +237,10 @@ export class cambioMP{
   ){}
 }
 
+export class jerarquia{
+  public jerarquiaOrganizacional_id:number;
+}
+
 export class listarExp{
   public dFechaCreacion :Date;
   public dFechaCierre:Date;
