@@ -108,12 +108,6 @@ export class MembershipComponent implements OnInit, OnDestroy {
       this.menuSelectOptions.push(menu);
     });
 
-    this.fetch((data) => {
-      this.temp = [...data];
-      this.rows = data;
-      setTimeout(() => { this.loadingIndicator = false; }, 1500);
-    });
-
   }
 
   ngOnInit() {
@@ -1496,27 +1490,38 @@ public desactivarMP() {
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
+  public iclave: number = 0;
+  public catdis: number = 0;
+  public jerarquiaOrg: number = 0;
+
   public onSelectRoles(value: number) {
-    const iclave = this.claveglobal;
+    this.catdis =  value;
+    this.iclave = this.claveglobal;
     const catDis = this.catDisGlobal;
     for (let i = 0; i< this.rolesFun.length; i++){
       
       var objeto = this.rolesFun[i];
       var rol = objeto.rol_id;
       if(rol == value){
-      var jerarquia = objeto.jerarquiaOrganizacional_id;
+      this.jerarquiaOrg = objeto.jerarquiaOrganizacional_id;
       break;
       }
       
     }
-    console.log("Este es el rol => "+rol);
-    console.log("Esta es la jerarquia => "+ jerarquia);
+    console.log("Este es el rol => " + rol);
+    console.log("Esta es la jerarquia => " + jerarquia);
     console.log("valor select rol => " + value);
-    console.log("valor select iclave => " + iclave);
+    console.log("valor select iclave => " + this.iclave);
     console.log("valor select catDis => " + catDis);
-    this.membershipService.getListarExp(iclave,catDis,jerarquia).subscribe(listaExp =>{
+    this.membershipService.getListarExp(this.iclave,catDis,this.jerarquiaOrg).subscribe(listaExp =>{
        this.listaExp = listaExp
        console.log(listaExp);
+    });
+
+    this.fetch((data) => {
+      this.temp = [...data];
+      this.rows = data;
+      setTimeout(() => { this.loadingIndicator = false; }, 1500);
     });
   }
 
@@ -1535,9 +1540,13 @@ public desactivarMP() {
     { name: 'nuc' },
   ];
 
+  public listaExp1 = JSON.stringify(this.listaExp);
+
   fetch(data) {
     const req = new XMLHttpRequest();
-    req.open('GET', 'assets/data/company.json'); 
+    req.open('GET', 'http://localhost:55244/api/listarExp/GetExpedientes?clavefunci=' + this.iclave
+                    + '&catDis=' + this.catdis
+                    + '&jerarquia=' + this.jerarquiaOrg); 
     req.onload = () => {
       data(JSON.parse(req.response));
     };
@@ -1564,9 +1573,9 @@ public desactivarMP() {
     this.selected.push(...selected);
   }
 
-  onActivate(event) {
-    console.log('Activate Event', event);
-  }
+  // onActivate(event) {
+  //   console.log('Activate Event', event);
+  // }
   /*===================================================================================================*/
 
   public asignarPendientes : AsignarPendientes[];
