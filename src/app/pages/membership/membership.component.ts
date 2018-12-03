@@ -1512,10 +1512,10 @@ public desactivarMP() {
     console.log("valor select rol => " + value);
     console.log("valor select iclave => " + this.iclave);
     console.log("valor select catDis => " + this.catDis);
-    this.membershipService.getListarExp(this.iclave, this.catDis, this.jerarquiaOrg).subscribe( listaExp => {
-       this.listaExp = listaExp
-       console.log(listaExp);
-    });
+    // this.membershipService.getListarExp(this.iclave, this.catDis, this.jerarquiaOrg).subscribe( listaExp => {
+    //    this.listaExp = listaExp
+    //    console.log(listaExp);
+    // });
 
     this.fetch((data) => {
       this.temp = [...data];
@@ -1525,11 +1525,10 @@ public desactivarMP() {
   }
 
   /*======================================pruebas ngx-datatable========================================*/
-  editing = {};
-  rows = [];
-  temp = [];
-  selected = [];
-  loadingIndicator: boolean = true;
+  public rows = [];
+  public temp = [];
+  public selected = [];
+  public loadingIndicator: boolean = true;
   reorderable: boolean = true;
 
   @ViewChild(DatatableComponent) table: DatatableComponent;
@@ -1542,10 +1541,6 @@ public desactivarMP() {
   public listaExp1 = JSON.stringify(this.listaExp);
 
   fetch(data, clave, cat, jerarquiaOrg) {
-    console.log(data);
-    console.log(clave);
-    console.log(cat);
-    console.log(jerarquiaOrg);
     const req = new XMLHttpRequest();
     req.open('GET', 'http://localhost:55244/api/listarExp/GetExpedientes?clavefunci=' + clave
                     + '&catDis=' + cat
@@ -1557,29 +1552,11 @@ public desactivarMP() {
     console.log(req);
   }
 
-  updateFilter(event) {
-    const val = event.target.value.toLowerCase();
-    const temp = this.temp.filter(function(d) {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.rows = temp;
-    this.table.offset = 0;
-  }
-
-  updateValue(event, cell, cellValue, row) {
-    this.editing[row.$$index + '-' + cell] = false;
-    this.rows[row.$$index][cell] = event.target.value;
-  }
-
   onSelect({ selected }) {
-    console.log('Select Event', selected, this.selected);
+    console.log('Select Event', this.selected);
     this.selected.splice(0, this.selected.length);
     this.selected.push(...selected);
   }
-
-  // onActivate(event) {
-  //   console.log('Activate Event', event);
-  // }
   /*===================================================================================================*/
 
   public asignarPendientes : AsignarPendientes[];

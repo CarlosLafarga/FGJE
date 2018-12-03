@@ -629,7 +629,6 @@
                                         [loadingIndicator]="loadingIndicator"
                                         [selected]="selected"
                                         [selectionType]="'checkbox'"
-                                        (activate)="onActivate($event)"
                                         (select)='onSelect($event)'>
                                         <ngx-datatable-column
                                             [width]="30"
@@ -640,38 +639,24 @@
                                             [headerCheckboxable]="true"
                                             [checkboxable]="true">
                                         </ngx-datatable-column>
-                                        <ngx-datatable-column name="Name">
+                                        <ngx-datatable-column name="cNumeroExpediente">
+                                            <ng-template ngx-datatable-header-template>
+                                                <span>Número de expediente</span>
+                                            </ng-template>
                                             <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
-                                                <span
-                                                title="Double click to edit"
-                                                (dblclick)="editing[row.$$index + '-name'] = true"
-                                                *ngIf="!editing[row.$$index + '-name']">
-                                                {{value}}
+                                                <span>
+                                                    {{value}}
                                                 </span>
-                                                <input
-                                                autofocus
-                                                (blur)="updateValue($event, 'name', value, row)"
-                                                *ngIf="editing[row.$$index + '-name']"
-                                                type="text"
-                                                [value]="value"
-                                                />
                                             </ng-template>
                                         </ngx-datatable-column>
-                                        <ngx-datatable-column name="Gender">
+                                        <ngx-datatable-column name="cNumeroGeneralCaso">
+                                            <ng-template ngx-datatable-header-template>
+                                                <span>Número único de caso</span>
+                                            </ng-template>
                                             <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
-                                                <span
-                                                title="Double click to edit"
-                                                (dblclick)="editing[row.$$index + '-gender'] = true"
-                                                *ngIf="!editing[row.$$index + '-gender']">
-                                                {{value}}
+                                                <span>
+                                                    {{value}}
                                                 </span>
-                                                <select
-                                                *ngIf="editing[row.$$index + '-gender']"
-                                                (change)="updateValue($event, 'gender', value, row)"
-                                                [value]="value">
-                                                <option value="male">Male</option>
-                                                <option value="female">Female</option>
-                                                </select>
                                             </ng-template>
                                         </ngx-datatable-column>
                                     </ngx-datatable>   
