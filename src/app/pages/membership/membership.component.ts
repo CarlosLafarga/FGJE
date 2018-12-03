@@ -1482,17 +1482,27 @@ public desactivarMP() {
     console.log("valor select funcionario => " + iclaveFuncionarioAsign);
     this.claveglobal = iclaveFuncionarioAsign;
     this.catDis = this.catDisGlobal;
-    this.membershipService.getFUsuarioRol(iclaveFuncionarioAsign).subscribe( roles => {
-      this.rolesFun = roles;
-      console.log(this.rolesFun);
-      this.myobjJson = JSON.stringify(this.rolesFun);
-
-      
-    });
+    this.getRoles();
+    console.log(this.roles);
+    // this.membershipService.getFUsuarioRol(iclaveFuncionarioAsign).subscribe( roles => {
+    //   this.rolesFun = roles;
+    //   console.log(this.rolesFun);
+    // });
 
     this.fetch2((data) => {
       this.temp = [...data];
       this.rows = data;
+      console.log(this.rows);
+
+      for (let i = 0; i < this.rows.length; i++) {
+        for (let j = 0; j < this.roles.length; j++) {
+          if (!(this.rows[i].jerarquiaOrganizacional_id == this.roles[j].jerarquiaOrganizacional_id)) {
+            this.roles.splice( j, 1 );
+          }
+        }
+      }
+      console.log(this.roles);
+
       setTimeout(() => { this.loadingIndicator = false; }, 1500);
     }, this.claveglobal, this.catDis);
   }
