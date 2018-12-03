@@ -72,6 +72,9 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public catDisGlobal:number;
   public myobjJson:string;
   public jerarquia : jerarquia[]= [];
+  public iclave: number = 0;
+  public catDis: number = 0;
+  public jerarquiaOrg: number = 0;
 
   // ============variables de filtrado============
   public searchText: string;
@@ -1478,11 +1481,20 @@ public desactivarMP() {
   public onSelectFuncionario(iclaveFuncionarioAsign: number) {
     console.log("valor select funcionario => " + iclaveFuncionarioAsign);
     this.claveglobal = iclaveFuncionarioAsign;
+    this.catDis = this.catDisGlobal;
     this.membershipService.getFUsuarioRol(iclaveFuncionarioAsign).subscribe( roles => {
       this.rolesFun = roles;
       console.log(this.rolesFun);
       this.myobjJson = JSON.stringify(this.rolesFun);
+
+      
     });
+
+    this.fetch2((data) => {
+      this.temp = [...data];
+      this.rows = data;
+      setTimeout(() => { this.loadingIndicator = false; }, 1500);
+    }, this.claveglobal, this.catDis);
   }
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
 /*----------------- ** --------------------------------------------------------------------------------------------------------------*/
@@ -1490,9 +1502,7 @@ public desactivarMP() {
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
-  public iclave: number = 0;
-  public catDis: number = 0;
-  public jerarquiaOrg: number = 0;
+ 
 
   public onSelectRoles(value: number) {
     this.iclave = this.claveglobal;
@@ -1545,6 +1555,16 @@ public desactivarMP() {
     req.open('GET', 'http://localhost:55244/api/listarExp/GetExpedientes?clavefunci=' + clave
                     + '&catDis=' + cat
                     + '&jerarquia=' + jerarquiaOrg); 
+    req.onload = () => {
+      data(JSON.parse(req.response));
+    };
+    req.send();
+    console.log(req);
+  }
+  fetch2(data, clave, cat) {
+    const req = new XMLHttpRequest();
+    req.open('GET', 'http://localhost:55244/api/listarExp/GetExpedientesSinJera?clavefunci=' + clave
+                    + '&catDis=' + cat); 
     req.onload = () => {
       data(JSON.parse(req.response));
     };
