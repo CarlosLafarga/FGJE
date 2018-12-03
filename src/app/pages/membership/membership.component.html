@@ -588,6 +588,19 @@
                                         </div>
                                     </div>
 
+                                    <hr>
+
+                                    <div class="row">
+                                        <div class="col-xl-6 col-lg-6 mb-6">
+                                            <input class="form-control" type="text" placeholder="Filtrar por número de expediente" (keyup)="FiltrarExpediente($event)"/>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 mb-6">
+                                            <input class="form-control" type="text" placeholder="Filtrar por número de NUC" (keyup)="FiltrarNuc($event)"/>
+                                        </div>
+                                    </div>
+
+                                    <br>
+
                                     <!-- <div class="row">
                                         <table class="table table-hover">
                                             <thead>
@@ -720,7 +733,6 @@
                                             id="iclaveFuncionarioDestino"
                                             formControlName="iclaveFuncionarioDestino"
                                             [(ngModel)]="iclaveFuncionarioDestino"
-                                            (change)="onSelectFuncionario($event.target.value)"
                                             required>
                                         <option selected [value]="0">-- Seleccione un funcionario --</option>
                                         <option *ngFor="let funAg of funcinariosAgencia"

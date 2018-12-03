@@ -1572,6 +1572,22 @@ public desactivarMP() {
     console.log(req);
   }
 
+  FiltrarExpediente(event) {
+    const val = event.target.value.toLowerCase();
+    const temp = this.temp.filter(function(numExp) {
+      return numExp.cNumeroExpediente.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+    this.rows = temp;
+  }
+
+  FiltrarNuc(event) {
+    const val = event.target.value.toLowerCase();
+    const temp = this.temp.filter(function(nNuc) {
+      return nNuc.cNumeroGeneralCaso.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+    this.rows = temp;
+  }
+
   onSelect({ selected }) {
     console.log('Select Event', this.selected);
     this.selected.splice(0, this.selected.length);
