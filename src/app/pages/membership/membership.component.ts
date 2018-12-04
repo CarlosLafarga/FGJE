@@ -1482,26 +1482,27 @@ public desactivarMP() {
     console.log("valor select funcionario => " + iclaveFuncionarioAsign);
     this.claveglobal = iclaveFuncionarioAsign;
     this.catDis = this.catDisGlobal;
-    this.getRoles();
-    console.log(this.roles);
-    // this.membershipService.getFUsuarioRol(iclaveFuncionarioAsign).subscribe( roles => {
-    //   this.rolesFun = roles;
-    //   console.log(this.rolesFun);
-    // });
+    // this.getRoles();
+    // console.log(this.roles);
+    this.membershipService.getFUsuarioRol(iclaveFuncionarioAsign).subscribe( roles => {
+      this.rolesFun = roles;
+      console.log(this.rolesFun);
+    });
+
+    var arrTemp: number[] = []
 
     this.fetch2((data) => {
       this.temp = [...data];
       this.rows = data;
+
       console.log(this.rows);
 
-      for (let i = 0; i < this.rows.length; i++) {
-        for (let j = 0; j < this.roles.length; j++) {
-          if (!(this.rows[i].jerarquiaOrganizacional_id == this.roles[j].jerarquiaOrganizacional_id)) {
-            this.roles.splice( j, 1 );
-          }
-        }
-      }
-      console.log(this.roles);
+      // for (let i = 0; i < this.rows.length; i++) {
+      //   var temp: number = this.rows[i].jerarquiaOrganizacional_id
+      //   arrTemp.push(temp);
+      // }
+      // console.log(temp);
+      // console.log(this.roles);
 
       setTimeout(() => { this.loadingIndicator = false; }, 1500);
     }, this.claveglobal, this.catDis);
@@ -1512,21 +1513,20 @@ public desactivarMP() {
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
- 
-
   public onSelectRoles(value: number) {
     this.iclave = this.claveglobal;
     this.catDis = this.catDisGlobal;
     for (let i = 0; i< this.rolesFun.length; i++){
-      
       var objeto = this.rolesFun[i];
       var rol = objeto.rol_id;
       if(rol == value){
       this.jerarquiaOrg = objeto.jerarquiaOrganizacional_id;
       break;
       }
-      
     }
+
+    this.FiltrarJerarquia(this.jerarquiaOrg.toString());
+
     console.log("Este es el rol => " + rol);
     console.log("Esta es la jerarquia => " + this.jerarquiaOrg);
     console.log("valor select rol => " + value);
@@ -1537,11 +1537,11 @@ public desactivarMP() {
     //    console.log(listaExp);
     // });
 
-    this.fetch((data) => {
-      this.temp = [...data];
-      this.rows = data;
-      setTimeout(() => { this.loadingIndicator = false; }, 1500);
-    }, this.iclave, this.catDis, this.jerarquiaOrg);
+    // this.fetch((data) => {
+    //   this.temp = [...data];
+    //   this.rows = data;
+    //   setTimeout(() => { this.loadingIndicator = false; }, 1500);
+    // }, this.iclave, this.catDis, this.jerarquiaOrg);
   }
 
   /*======================================pruebas ngx-datatable========================================*/
@@ -1571,6 +1571,7 @@ public desactivarMP() {
     req.send();
     console.log(req);
   }
+
   fetch2(data, clave, cat) {
     const req = new XMLHttpRequest();
     req.open('GET', 'http://localhost:55244/api/listarExp/GetExpedientesSinJera?clavefunci=' + clave
@@ -1596,6 +1597,15 @@ public desactivarMP() {
       return nNuc.cNumeroGeneralCaso.toLowerCase().indexOf(val) !== -1 || !val;
     });
     this.rows = temp;
+  }
+
+  FiltrarJerarquia(valor: string) {
+    const val = valor.toLowerCase();
+    const temp = this.temp.filter(function(jerarquia) {
+      return (jerarquia.jerarquiaOrganizacional_id).toString().toLowerCase().indexOf(val) !== -1 || !val;
+    });
+    this.rows = temp;
+    console.log("filtre jerarquia");
   }
 
   onSelect({ selected }) {

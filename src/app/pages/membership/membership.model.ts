@@ -221,6 +221,16 @@ export class AsignarPendientes {
    ){}
 }
 
+export class cambioExpPendientes{
+  constructor(
+    public iclavefuncionarioAnt:number,
+    public iclavefuncionarioNuevo:number,
+    public expedientestring,
+    public catDiscrminante_id: number,
+    public justificaciontring,
+  ){}
+}
+
 export class cambioEstatus{
   constructor(
     public iclavefuncionario:number,

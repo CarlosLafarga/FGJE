@@ -580,7 +580,7 @@
                                                         [(ngModel)]="rolesFAsign"
                                                         (change)="onSelectRoles($event.target.value)">
                                                     <option selected [value]="0">-- Seleccione un rol --</option>
-                                                    <option *ngFor="let rol of roles"
+                                                    <option *ngFor="let rol of rolesFun"
                                                             [value]="rol.rol_id"> {{ rol.cDescripcionRol }} 
                                                     </option>
                                                 </select>
