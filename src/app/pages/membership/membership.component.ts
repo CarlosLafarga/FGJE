@@ -1200,6 +1200,7 @@ public desactivarMP() {
     this.formExpPend.reset();
     this.selectedExpPend = 0;
     this.funcinariosAgencia = [];
+    this.rows = [];
   }
 
   public radioAsign: boolean = false;
@@ -1425,6 +1426,7 @@ public desactivarMP() {
   public funcinarioAgencia: FuncionariosData[] = [];
 
   public onSelectAgencia(catDiscriminanteAnterior: number) {
+    this.rows = [];
     this.funcinarioAgencia = [];
     this.rolesFun = [];
     console.log("valor select agencia => " + catDiscriminanteAnterior);
@@ -1513,6 +1515,7 @@ public desactivarMP() {
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
+  public jerarqVal: string = "";
   public onSelectRoles(value: number) {
     this.iclave = this.claveglobal;
     this.catDis = this.catDisGlobal;
@@ -1523,6 +1526,31 @@ public desactivarMP() {
       this.jerarquiaOrg = objeto.jerarquiaOrganizacional_id;
       break;
       }
+    }
+
+    switch (value) {
+      case value = 2:
+        this.jerarqVal = "45"
+        break;
+      case value = 3:
+        this.jerarqVal = "44"
+        break;
+      case value = 5:
+        this.jerarqVal = "11"
+        break;
+      case value = 6:
+        this.jerarqVal = "7"
+        break;
+      case value = 7:
+        this.jerarqVal = "10"
+        break;
+      case value = 8:
+        this.jerarqVal = "9"
+        break;
+    
+      default:
+        this.jerarqVal = ""
+        break;
     }
 
     this.FiltrarJerarquia(this.jerarquiaOrg.toString());

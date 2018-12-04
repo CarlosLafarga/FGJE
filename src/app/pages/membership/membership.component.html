@@ -545,7 +545,6 @@
                                                 <select class="form-control"
                                                         id="catDiscriminanteAnt"
                                                         formControlName="catDiscriminanteAnt"
-                                                        [(ngModel)]="catDiscriminanteAnt"
                                                         (change)="onSelectAgencia($event.target.value)">
                                                     <option selected [value]="0">-- Seleccione una agencia --</option>
                                                     <option *ngFor="let expPend of expPendientesLista"
@@ -560,7 +559,6 @@
                                                 <select class="form-control"
                                                         id="iclaveFuncionarioAsign"
                                                         formControlName="iclaveFuncionarioAsign"
-                                                        [(ngModel)]="iclaveFuncionarioAsign"
                                                         (change)="onSelectFuncionario($event.target.value)">
                                                     <option selected [value]="0">-- Seleccione un funcionario --</option>
                                                     <option *ngFor="let funAg of funcinarioAgencia"
@@ -577,7 +575,6 @@
                                                 <select class="form-control"
                                                         id="rolesFAsign"
                                                         formControlName="rolesFAsign"
-                                                        [(ngModel)]="rolesFAsign"
                                                         (change)="onSelectRoles($event.target.value)">
                                                     <option selected [value]="0">-- Seleccione un rol --</option>
                                                     <option *ngFor="let rol of rolesFun"
