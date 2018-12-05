@@ -1429,6 +1429,7 @@ public desactivarMP() {
     this.rows = [];
     this.funcinarioAgencia = [];
     this.rolesFun = [];
+    this.rolesFun2 = [];
     console.log("valor select agencia => " + catDiscriminanteAnterior);
     this.catDisGlobal = catDiscriminanteAnterior;
 
@@ -1479,19 +1480,46 @@ public desactivarMP() {
   }
 
   public rolesFun: Roles[] = [];
+  public rolesFun2: Roles[] = [];
+  public arrTempJerar: number[] = [];
 
   public onSelectFuncionario(iclaveFuncionarioAsign: number) {
+    this.rolesFun2 = [];
+    this.arrTempJerar = [];
     console.log("valor select funcionario => " + iclaveFuncionarioAsign);
     this.claveglobal = iclaveFuncionarioAsign;
     this.catDis = this.catDisGlobal;
     // this.getRoles();
     // console.log(this.roles);
-    this.membershipService.getFUsuarioRol(iclaveFuncionarioAsign).subscribe( roles => {
-      this.rolesFun = roles;
+
+    this.membershipService.getRoles().subscribe( roles => {
+      this.rolesFun = roles
       console.log(this.rolesFun);
+
+      for (let i = 0; i < this.rolesFun.length; i++) {
+        if (this.rolesFun[i].rol_id == 8 ||
+            this.rolesFun[i].rol_id == 7 ||
+            this.rolesFun[i].rol_id == 6 ||
+            this.rolesFun[i].rol_id == 5 ||
+            this.rolesFun[i].rol_id == 3 ||
+            this.rolesFun[i].rol_id == 2) {
+            this.rolesFun2.push(this.rolesFun[i]);
+        }
+        
+        // var idRol: number = this.rolesFun[i].rol_id;
+        // if (this.rolesFun[i].rol_id !== 8) {
+        //       this.rolesFun.splice( i, 1 );
+        // }
+      }
+
+      // console.log(this.rolesFun);
     });
 
-    var arrTemp: number[] = []
+    // console.log(this.roles);
+    // this.membershipService.getFUsuarioRol(iclaveFuncionarioAsign).subscribe( roles => {
+    //   this.rolesFun = roles;
+    //   console.log(this.rolesFun);
+    // });
 
     this.fetch2((data) => {
       this.temp = [...data];
@@ -1500,14 +1528,19 @@ public desactivarMP() {
       console.log(this.rows);
 
       // for (let i = 0; i < this.rows.length; i++) {
-      //   var temp: number = this.rows[i].jerarquiaOrganizacional_id
-      //   arrTemp.push(temp);
+      //   for (let j = 0; j < this.roles.length; j++) {
+      //     if (this.rows[i].jerarquiaOrganizacional_id === this.roles[j].jerarquiaOrganizacional_id) {
+      //       console.log("se queda");
+      //     } else {
+      //       console.log("se va!");
+      //       this.roles.splice( j, 1 );
+      //     }
+      //   }
       // }
-      // console.log(temp);
-      // console.log(this.roles);
 
       setTimeout(() => { this.loadingIndicator = false; }, 1500);
     }, this.claveglobal, this.catDis);
+    // console.log(this.arrTempJerar);
   }
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
 /*----------------- ** --------------------------------------------------------------------------------------------------------------*/
@@ -1519,41 +1552,17 @@ public desactivarMP() {
   public onSelectRoles(value: number) {
     this.iclave = this.claveglobal;
     this.catDis = this.catDisGlobal;
-    for (let i = 0; i< this.rolesFun.length; i++){
-      var objeto = this.rolesFun[i];
+    for (let i = 0; i< this.roles.length; i++){
+      var objeto = this.roles[i];
       var rol = objeto.rol_id;
       if(rol == value){
       this.jerarquiaOrg = objeto.jerarquiaOrganizacional_id;
+      this.jerarqVal = this.jerarquiaOrg.toString();
       break;
       }
     }
 
-    switch (value) {
-      case value = 2:
-        this.jerarqVal = "45"
-        break;
-      case value = 3:
-        this.jerarqVal = "44"
-        break;
-      case value = 5:
-        this.jerarqVal = "11"
-        break;
-      case value = 6:
-        this.jerarqVal = "7"
-        break;
-      case value = 7:
-        this.jerarqVal = "10"
-        break;
-      case value = 8:
-        this.jerarqVal = "9"
-        break;
-    
-      default:
-        this.jerarqVal = ""
-        break;
-    }
-
-    this.FiltrarJerarquia(this.jerarquiaOrg.toString());
+    this.FiltrarJerarquia(this.jerarqVal);
 
     console.log("Este es el rol => " + rol);
     console.log("Esta es la jerarquia => " + this.jerarquiaOrg);
@@ -1633,7 +1642,6 @@ public desactivarMP() {
       return (jerarquia.jerarquiaOrganizacional_id).toString().toLowerCase().indexOf(val) !== -1 || !val;
     });
     this.rows = temp;
-    console.log("filtre jerarquia");
   }
 
   onSelect({ selected }) {

@@ -577,7 +577,7 @@
                                                         formControlName="rolesFAsign"
                                                         (change)="onSelectRoles($event.target.value)">
                                                     <option selected [value]="0">-- Seleccione un rol --</option>
-                                                    <option *ngFor="let rol of rolesFun"
+                                                    <option *ngFor="let rol of rolesFun2"
                                                             [value]="rol.rol_id"> {{ rol.cDescripcionRol }} 
                                                     </option>
                                                 </select>
