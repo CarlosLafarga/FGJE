@@ -1208,8 +1208,11 @@ public desactivarMP() {
     this.modalExpPend.close();
     this.formExpPend.reset();
     this.selectedExpPend = 0;
-    this.funcinariosAgencia = [];
+    this.funcinariosAgencia1 = [];
     this.rows = [];
+    this.funcinarioAgencia = [];
+    this.rolesFun2 = [];
+    this.selected = [];
   }
 
   public radioAsign: boolean = false;
@@ -1720,7 +1723,7 @@ public desactivarMP() {
       text: this.titularAgencia,
       type: "success"
       }).then(() =>{
-      
+        this.closeModalExpPend();
         this.router.navigate(['/pages/membership']);
       });
     
@@ -1729,7 +1732,6 @@ public desactivarMP() {
   onSubmitExpPend(): void {
     if (this.formExpPend.valid) {
 
-    
       this.arrayExp = this.selected.map(uno => uno.expediente_id);
       var stringArray = String(this.arrayExp);
       const iclavefuncionarioAnt: number = this.formExpPend.value.iclaveFuncionarioAsign;
@@ -1739,7 +1741,11 @@ public desactivarMP() {
 
       console.log(iclavefuncionarioAnt+"             "+iclavefuncionarioNuevo+"   "+ stringArray+"       "+catDiscriminante +"         "+justificacion);
 
-      let asignarPendientes = new AsignarPendientes(iclavefuncionarioAnt, iclavefuncionarioNuevo,stringArray,this.catDis,justificacion);
+      let asignarPendientes = new AsignarPendientes(iclavefuncionarioAnt,
+                                                    iclavefuncionarioNuevo,
+                                                    stringArray,
+                                                    catDiscriminante,
+                                                    justificacion);
 
       this.asignarExpPendientes( asignarPendientes );
 
