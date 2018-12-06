@@ -640,7 +640,7 @@ public desactivarMP() {
 
       for(var i = 0; i<funcionarioRol.length; i++){
         if(this.funcionarioRol[i].esPrincipal == 1){
-          names += "<b style= 'color:#ff0000'>" + funcionarioRol[i].cDescripcionRol + "</b><br>";
+          names += "<b style= 'color:#4BAE4F'>" + funcionarioRol[i].cDescripcionRol + "</b><br>";
         }else{
           names += "<b>" + funcionarioRol[i].cDescripcionRol + "</b><br>";
         }
@@ -662,10 +662,11 @@ public desactivarMP() {
   public recargarFuncionarios() {
 
     swal({
+      title:"Cargando...",
       position: 'center',
       type: 'success',
       showConfirmButton: false,
-      timer: 3000
+      timer: 2000
     })
 
     this.getFuncionarios();
@@ -852,105 +853,112 @@ public desactivarMP() {
       if(this.countHelper > 0){
 
         this.getFunAgPendientes(valor);
-        
-          swal({
-            title: 'CUIDADO!',
-            text: "El funcionario tiene expedientes en la agencia seleccionada, " +
-            "si lo cambia a esta agencia tomará el control de los mismos, " +
-            "¿desea continuar?",
-            type: 'warning',
-            showCancelButton: true,
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#aaa',
-            confirmButtonText: 'Aceptar',
-            cancelButtonText: 'Reasignar expedientes'
-          }).then((result) => {
-            if (result.value) {
-              swal(
-                'Confirmado',
-                'Puede seguir con el proceso.',
-                'success'
-              )
-            } else if (result.dismiss === swal.DismissReason.cancel) {
-              swal.mixin({
-                title: 'Reasignar',
-                text: "Seleccione un funcinario para continuar con la reasignación.",
-                type: 'warning',
-                allowOutsideClick: false,
-                allowEscapeKey : false,
-                input: 'select',
-                inputOptions: this.inputOptions,
-                inputPlaceholder: 'Seleccione un funcionario',
-                showCancelButton: true,
-                confirmButtonText: 'Siguiente &rarr;',
-                cancelButtonText: 'Cancelar',
-                progressSteps:['1','2'],
-                inputValidator: (value) => {
-                  return !value && 'Favor de escoger al funcionario a quien reasignara expedientes.'
-                 },
-              }).queue([
-                  {
-                    
-                  },
-                  {
-                    title:'Justificacion',
-                    inputPlaceholder: 'Justificación',
-                    text:'Justifique el motivo de la reasignación de expedientes.',
-                    input:'text',
-                    inputValidator: (value) => {
-                      return !value && 'Por favor ingrese la justificacion.'
-                    },
-                    
-                  }
-              ]).then((result) => {
-                if (result.value) {
-                  var catDis: number = valor;
-                  var iclaveFNuevo = parseInt(result.value[0]);
-                
-                  swal({
-                    title: 'Confirmar',
-                    text: "¿Esta usted seguro(a) de continuar con la reasignación de los expedientes?",
-                    confirmButtonText: 'Aceptar',
-                    showCancelButton: true,
-                    allowOutsideClick: false,
-                    allowEscapeKey : false,
-                    cancelButtonText:'Cancelar',
-                    confirmButtonColor: '#4BAE4F',
-                    cancelButtonColor: '#d33',
-                  }).then((result) =>{
-                    if (result.value) {
-                      const iclaveFAnt: number = clave;
-
-                      let asignar = new AsignarPendientes(catDis, iclaveFNuevo, iclaveFAnt);
-                      // console.log(asignar);
-                      this.asignarExpPendientes( asignar );
-
-                      swal(
-                        'Confirmado',
-                        'Los expedientes se han reasignado correctamente.',
-                        'success'
-                      )
-                    } else if (result.dismiss === swal.DismissReason.cancel) {
-
-                      swal({
-                        type: 'error',
-                        title: 'Cancelado',
-                        text: 'Se ha cancelado la reasignación de los expedientes.',
-                      });
-                    }
-                  });
-                } else if (result.dismiss === swal.DismissReason.cancel) {
-                  swal({
-                    type: 'error',
-                    title: 'Cancelado',
-                    text: 'Se ha cancelado la reasignación de los expedientes.',
-                  });
-                }
-              });
-            }
+        swal({
+          title:"Cuidado",
+          text: "Este funcionario cuenta con expedientes pendientes en la agencia seleccionada, necesita asignar los expedientes para realizar el cambio de adscripción o cualquier otra acción.",
+          type: "info"
+          }).then(() =>{
+            this.pageRefresh();
+            this.router.navigate(['/pages/membership']);
           });
+          // swal({
+          //   title: 'CUIDADO!',
+          //   text: "El funcionario tiene expedientes en la agencia seleccionada, " +
+          //   "si lo cambia a esta agencia tomará el control de los mismos, " +
+          //   "¿desea continuar?",
+          //   type: 'warning',
+          //   showCancelButton: true,
+          //   allowOutsideClick: false,
+          //   allowEscapeKey: false,
+          //   confirmButtonColor: '#3085d6',
+          //   cancelButtonColor: '#aaa',
+          //   confirmButtonText: 'Aceptar',
+          //   cancelButtonText: 'Reasignar expedientes'
+          // }).then((result) => {
+          //   if (result.value) {
+          //     swal(
+          //       'Confirmado',
+          //       'Puede seguir con el proceso.',
+          //       'success'
+          //     )
+          //   } else if (result.dismiss === swal.DismissReason.cancel) {
+          //     swal.mixin({
+          //       title: 'Reasignar',
+          //       text: "Seleccione un funcinario para continuar con la reasignación.",
+          //       type: 'warning',
+          //       allowOutsideClick: false,
+          //       allowEscapeKey : false,
+          //       input: 'select',
+          //       inputOptions: this.inputOptions,
+          //       inputPlaceholder: 'Seleccione un funcionario',
+          //       showCancelButton: true,
+          //       confirmButtonText: 'Siguiente &rarr;',
+          //       cancelButtonText: 'Cancelar',
+          //       progressSteps:['1','2'],
+          //       inputValidator: (value) => {
+          //         return !value && 'Favor de escoger al funcionario a quien reasignara expedientes.'
+          //        },
+          //     }).queue([
+          //         {
+                    
+          //         },
+          //         {
+          //           title:'Justificacion',
+          //           inputPlaceholder: 'Justificación',
+          //           text:'Justifique el motivo de la reasignación de expedientes.',
+          //           input:'text',
+          //           inputValidator: (value) => {
+          //             return !value && 'Por favor ingrese la justificacion.'
+          //           },
+                    
+          //         }
+          //     ]).then((result) => {
+          //       if (result.value) {
+          //         var catDis: number = valor;
+          //         var iclaveFNuevo = parseInt(result.value[0]);
+                
+          //         swal({
+          //           title: 'Confirmar',
+          //           text: "¿Esta usted seguro(a) de continuar con la reasignación de los expedientes?",
+          //           confirmButtonText: 'Aceptar',
+          //           showCancelButton: true,
+          //           allowOutsideClick: false,
+          //           allowEscapeKey : false,
+          //           cancelButtonText:'Cancelar',
+          //           confirmButtonColor: '#4BAE4F',
+          //           cancelButtonColor: '#d33',
+          //         }).then((result) =>{
+          //           if (result.value) {
+          //             const iclaveFAnt: number = clave;
+
+          //             let asignar = new AsignarPendientes(catDis, iclaveFNuevo, iclaveFAnt);
+          //             // console.log(asignar);
+          //             this.asignarExpPendientes( asignar );
+
+          //             swal(
+          //               'Confirmado',
+          //               'Los expedientes se han reasignado correctamente.',
+          //               'success'
+          //             )
+          //           } else if (result.dismiss === swal.DismissReason.cancel) {
+
+          //             swal({
+          //               type: 'error',
+          //               title: 'Cancelado',
+          //               text: 'Se ha cancelado la reasignación de los expedientes.',
+          //             });
+          //           }
+          //         });
+          //       } else if (result.dismiss === swal.DismissReason.cancel) {
+          //         swal({
+          //           type: 'error',
+          //           title: 'Cancelado',
+          //           text: 'Se ha cancelado la reasignación de los expedientes.',
+          //         });
+          //       }
+          //     });
+          //   }
+          // });
 
         }
 
