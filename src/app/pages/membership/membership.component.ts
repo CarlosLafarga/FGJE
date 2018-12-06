@@ -1433,38 +1433,38 @@ public desactivarMP() {
     console.log("valor select agencia => " + catDiscriminanteAnterior);
     this.catDisGlobal = catDiscriminanteAnterior;
 
-    this.membershipService.getFUsuarioAgencia(catDiscriminanteAnterior).subscribe( exp => {
-      this.funcinariosAgencia = exp
-      console.log(this.funcinariosAgencia);
+    // this.membershipService.getFUsuarioAgencia(catDiscriminanteAnterior).subscribe( exp => {
+    //   this.funcinariosAgencia = exp
+    //   console.log(this.funcinariosAgencia);
 
-      for (let i = 0; i < this.funcinariosAgencia.length; i++) {
-        if (this.funcinariosAgencia[i].usuario[0].bEsActivo === 0) {
-          this.funcinariosAgencia.splice( i, 1 );
-        }
+    //   for (let i = 0; i < this.funcinariosAgencia.length; i++) {
+    //     if (this.funcinariosAgencia[i].usuario[0].bEsActivo === 0) {
+    //       this.funcinariosAgencia.splice( i, 1 );
+    //     }
 
-        var rolIdArray: number[] = [];
-        for (let j = 0; j < this.funcinariosAgencia[i].usuario[0].usuarioRol.length; j++) {
-          rolIdArray.push(this.funcinariosAgencia[i].usuario[0].usuarioRol[j].rol_id);
-        }
+    //     var rolIdArray: number[] = [];
+    //     for (let j = 0; j < this.funcinariosAgencia[i].usuario[0].usuarioRol.length; j++) {
+    //       rolIdArray.push(this.funcinariosAgencia[i].usuario[0].usuarioRol[j].rol_id);
+    //     }
 
-        var cont: number = 0;
-        for (let k = 0; k < rolIdArray.length; k++) {
-          if (rolIdArray[k] === 8 ||
-              rolIdArray[k] === 7 ||
-              rolIdArray[k] === 6 ||
-              rolIdArray[k] === 5 ||
-              rolIdArray[k] === 3 ||
-              rolIdArray[k] === 2) {
-            cont = cont + 1;
-          }
-        }
+    //     var cont: number = 0;
+    //     for (let k = 0; k < rolIdArray.length; k++) {
+    //       if (rolIdArray[k] === 8 ||
+    //           rolIdArray[k] === 7 ||
+    //           rolIdArray[k] === 6 ||
+    //           rolIdArray[k] === 5 ||
+    //           rolIdArray[k] === 3 ||
+    //           rolIdArray[k] === 2) {
+    //         cont = cont + 1;
+    //       }
+    //     }
 
-        if (cont <= 0) {
-          this.funcinariosAgencia.splice( i, 1 );
-        }
-      }
+    //     if (cont <= 0) {
+    //       this.funcinariosAgencia.splice( i, 1 );
+    //     }
+    //   }
 
-    });
+    // });
 
     for (let i = 0; i < this.expPendientesLista.length; i++) {
       if (this.expPendientesLista[i].catDiscriminanteAnterior == catDiscriminanteAnterior) {
@@ -1486,61 +1486,68 @@ public desactivarMP() {
   public onSelectFuncionario(iclaveFuncionarioAsign: number) {
     this.rolesFun2 = [];
     this.arrTempJerar = [];
+    var arrTemp: number[] = [];
     console.log("valor select funcionario => " + iclaveFuncionarioAsign);
     this.claveglobal = iclaveFuncionarioAsign;
     this.catDis = this.catDisGlobal;
     // this.getRoles();
     // console.log(this.roles);
 
-    this.membershipService.getRoles().subscribe( roles => {
-      this.rolesFun = roles
-      console.log(this.rolesFun);
-
-      for (let i = 0; i < this.rolesFun.length; i++) {
-        if (this.rolesFun[i].rol_id == 8 ||
-            this.rolesFun[i].rol_id == 7 ||
-            this.rolesFun[i].rol_id == 6 ||
-            this.rolesFun[i].rol_id == 5 ||
-            this.rolesFun[i].rol_id == 3 ||
-            this.rolesFun[i].rol_id == 2) {
-            this.rolesFun2.push(this.rolesFun[i]);
-        }
-        
-        // var idRol: number = this.rolesFun[i].rol_id;
-        // if (this.rolesFun[i].rol_id !== 8) {
-        //       this.rolesFun.splice( i, 1 );
-        // }
-      }
-
-      // console.log(this.rolesFun);
-    });
-
-    // console.log(this.roles);
-    // this.membershipService.getFUsuarioRol(iclaveFuncionarioAsign).subscribe( roles => {
-    //   this.rolesFun = roles;
-    //   console.log(this.rolesFun);
-    // });
-
+    this.loadingIndicator = true;
     this.fetch2((data) => {
       this.temp = [...data];
       this.rows = data;
 
       console.log(this.rows);
+      var introducido: number = 0;
+      for (let i = 0; i < this.rows.length; i++) {
+        arrTemp.push(this.rows[i].jerarquiaOrganizacional_id);
+      }
 
-      // for (let i = 0; i < this.rows.length; i++) {
-      //   for (let j = 0; j < this.roles.length; j++) {
-      //     if (this.rows[i].jerarquiaOrganizacional_id === this.roles[j].jerarquiaOrganizacional_id) {
-      //       console.log("se queda");
-      //     } else {
-      //       console.log("se va!");
-      //       this.roles.splice( j, 1 );
-      //     }
-      //   }
-      // }
+      const distinct = (value, index, self)=> {
+        return self.indexOf(value) === index;
+      }
+      this.arrTempJerar = arrTemp.filter(distinct);
+      console.log(this.arrTempJerar);
+
+      this.membershipService.getRoles().subscribe( roles => {
+        this.rolesFun = roles
+        console.log(this.rolesFun);
+  
+        for (let j = 0; j < this.arrTempJerar.length; j++) {
+          for (let k = 0; k < this.rolesFun.length; k++) {
+            if ((this.rolesFun[k].jerarquiaOrganizacional_id) == this.arrTempJerar[j]) {
+              if (this.rolesFun[k].rol_id == 8 ||
+                  this.rolesFun[k].rol_id == 7 ||
+                  this.rolesFun[k].rol_id == 6 ||
+                  this.rolesFun[k].rol_id == 5 ||
+                  this.rolesFun[k].rol_id == 3 ||
+                  this.rolesFun[k].rol_id == 2) {
+                this.rolesFun2.push(this.rolesFun[k]);
+              }
+            }
+          }
+        }
+        // console.log(this.rolesFun2);
+  
+        // for (let i = 0; i < this.rolesFun.length; i++) {
+        //   if (this.rolesFun[i].rol_id == 8 ||
+        //       this.rolesFun[i].rol_id == 7 ||
+        //       this.rolesFun[i].rol_id == 6 ||
+        //       this.rolesFun[i].rol_id == 5 ||
+        //       this.rolesFun[i].rol_id == 3 ||
+        //       this.rolesFun[i].rol_id == 2) {
+        //       this.rolesFun2.push(this.rolesFun[i]);
+        //   }
+        // }
+  
+        // console.log(this.rolesFun);
+      });
 
       setTimeout(() => { this.loadingIndicator = false; }, 1500);
     }, this.claveglobal, this.catDis);
     // console.log(this.arrTempJerar);
+
   }
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
 /*----------------- ** --------------------------------------------------------------------------------------------------------------*/
@@ -1549,12 +1556,14 @@ public desactivarMP() {
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
   public jerarqVal: string = "";
+  public funcinariosAgencia1: FunciAgencia[] = [];
   public onSelectRoles(value: number) {
+    this.funcinariosAgencia1 = [];
     this.iclave = this.claveglobal;
     this.catDis = this.catDisGlobal;
     for (let i = 0; i< this.roles.length; i++){
       var objeto = this.roles[i];
-      var rol = objeto.rol_id;
+      var rol: number = objeto.rol_id;
       if(rol == value){
       this.jerarquiaOrg = objeto.jerarquiaOrganizacional_id;
       this.jerarqVal = this.jerarquiaOrg.toString();
@@ -1569,6 +1578,40 @@ public desactivarMP() {
     console.log("valor select rol => " + value);
     console.log("valor select iclave => " + this.iclave);
     console.log("valor select catDis => " + this.catDis);
+
+    this.membershipService.getFUsuarioAgencia(this.catDis).subscribe( exp => {
+      this.funcinariosAgencia = exp
+      console.log(this.funcinariosAgencia);
+
+      for (let i:number = 0; i < this.funcinariosAgencia.length; i++) {
+        // if (this.funcinariosAgencia[i].usuario[0].bEsActivo === 0) {
+        //   this.funcinariosAgencia.splice( i, 1 );
+        // }
+
+        var rolIdArray: number[] = [];
+        for (let j:number = 0; j < this.funcinariosAgencia[i].usuario[0].usuarioRol.length; j++) {
+          rolIdArray.push(this.funcinariosAgencia[i].usuario[0].usuarioRol[j].rol_id);
+        }
+        console.log(rolIdArray);
+
+        var cont: boolean = false;
+        for (let k = 0; k < rolIdArray.length; k++) {
+          if (rolIdArray[k] === rol) {
+            cont = true;
+          }
+        }
+        console.log(cont);
+        console.log("posicion => " + i);
+
+        if (cont) {
+          this.funcinariosAgencia1.push(this.funcinariosAgencia[i]);
+        }
+      }
+
+      console.log(this.funcinariosAgencia1);
+
+    });
+
     // this.membershipService.getListarExp(this.iclave, this.catDis, this.jerarquiaOrg).subscribe( listaExp => {
     //    this.listaExp = listaExp
     //    console.log(listaExp);
@@ -1585,7 +1628,7 @@ public desactivarMP() {
   public rows = [];
   public temp = [];
   public selected = [];
-  public loadingIndicator: boolean = true;
+  public loadingIndicator: boolean = false;
   reorderable: boolean = true;
 
   @ViewChild(DatatableComponent) table: DatatableComponent;
