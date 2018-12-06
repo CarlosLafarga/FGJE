@@ -214,10 +214,11 @@ export class ExpPendientes {
 
 export class AsignarPendientes {
   constructor(
-    public catDiscriminante: number,
-    public iclavefuncionarioAnt: number,
-    public iclavefuncionarioNuevo: number,
-    
+    public iclavefuncionarioAnt:number,
+    public iclavefuncionarioNuevo:number,
+    public expedientestring,
+    public catDiscrminante_id: number,
+    public justificaciontring,
    ){}
 }
 
