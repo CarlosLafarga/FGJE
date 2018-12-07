@@ -76,6 +76,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public catDis: number = 0;
   public jerarquiaOrg: number = 0;
   public arrayExp:any[]= [];
+  public jeraTabla : number = 0;
 
   // ============variables de filtrado============
   public searchText: string;
@@ -1445,38 +1446,7 @@ public desactivarMP() {
     console.log("valor select agencia => " + catDiscriminanteAnterior);
     this.catDisGlobal = catDiscriminanteAnterior;
 
-    // this.membershipService.getFUsuarioAgencia(catDiscriminanteAnterior).subscribe( exp => {
-    //   this.funcinariosAgencia = exp
-    //   console.log(this.funcinariosAgencia);
-
-    //   for (let i = 0; i < this.funcinariosAgencia.length; i++) {
-    //     if (this.funcinariosAgencia[i].usuario[0].bEsActivo === 0) {
-    //       this.funcinariosAgencia.splice( i, 1 );
-    //     }
-
-    //     var rolIdArray: number[] = [];
-    //     for (let j = 0; j < this.funcinariosAgencia[i].usuario[0].usuarioRol.length; j++) {
-    //       rolIdArray.push(this.funcinariosAgencia[i].usuario[0].usuarioRol[j].rol_id);
-    //     }
-
-    //     var cont: number = 0;
-    //     for (let k = 0; k < rolIdArray.length; k++) {
-    //       if (rolIdArray[k] === 8 ||
-    //           rolIdArray[k] === 7 ||
-    //           rolIdArray[k] === 6 ||
-    //           rolIdArray[k] === 5 ||
-    //           rolIdArray[k] === 3 ||
-    //           rolIdArray[k] === 2) {
-    //         cont = cont + 1;
-    //       }
-    //     }
-
-    //     if (cont <= 0) {
-    //       this.funcinariosAgencia.splice( i, 1 );
-    //     }
-    //   }
-
-    // });
+   
 
     for (let i = 0; i < this.expPendientesLista.length; i++) {
       if (this.expPendientesLista[i].catDiscriminanteAnterior == catDiscriminanteAnterior) {
@@ -1504,11 +1474,23 @@ public desactivarMP() {
     this.catDis = this.catDisGlobal;
     // this.getRoles();
     // console.log(this.roles);
-
+/*------------------------------------------------------------------------------------------------------------------------------------*/
+    for(let h = 0; h<this.expPendientesLista.length; h++){
+      if(this.expPendientesLista[h].iClaveFuncionario == iclaveFuncionarioAsign){
+        
+      this.jeraTabla = this.expPendientesLista[h].jerarquiaOrganizacional_id;
+      }
+     
+    }
+   
+    
+    if(this.jeraTabla == null){
     this.loadingIndicator = true;
     this.fetch2((data) => {
       this.temp = [...data];
       this.rows = data;
+
+
 
       console.log(this.rows);
       var introducido: number = 0;
@@ -1540,26 +1522,57 @@ public desactivarMP() {
             }
           }
         }
-        // console.log(this.rolesFun2);
-  
-        // for (let i = 0; i < this.rolesFun.length; i++) {
-        //   if (this.rolesFun[i].rol_id == 8 ||
-        //       this.rolesFun[i].rol_id == 7 ||
-        //       this.rolesFun[i].rol_id == 6 ||
-        //       this.rolesFun[i].rol_id == 5 ||
-        //       this.rolesFun[i].rol_id == 3 ||
-        //       this.rolesFun[i].rol_id == 2) {
-        //       this.rolesFun2.push(this.rolesFun[i]);
-        //   }
-        // }
-  
-        // console.log(this.rolesFun);
+        
       });
 
       setTimeout(() => { this.loadingIndicator = false; }, 1500);
     }, this.claveglobal, this.catDis);
     // console.log(this.arrTempJerar);
+  }else{
 
+    this.loadingIndicator = true;
+    this.fetch((data) => {
+      this.temp = [...data];
+      this.rows = data;
+
+
+
+      console.log(this.rows);
+      var introducido: number = 0;
+      for (let i = 0; i < this.rows.length; i++) {
+        arrTemp.push(this.rows[i].jerarquiaOrganizacional_id);
+      }
+
+      const distinct = (value, index, self)=> {
+        return self.indexOf(value) === index;
+      }
+      this.arrTempJerar = arrTemp.filter(distinct);
+      console.log(this.arrTempJerar);
+
+      this.membershipService.getRoles().subscribe( roles => {
+        this.rolesFun = roles
+        console.log(this.rolesFun);
+  
+        for (let j = 0; j < this.arrTempJerar.length; j++) {
+          for (let k = 0; k < this.rolesFun.length; k++) {
+            if ((this.rolesFun[k].jerarquiaOrganizacional_id) == this.arrTempJerar[j]) {
+              if (this.rolesFun[k].rol_id == 8 ||
+                  this.rolesFun[k].rol_id == 7 ||
+                  this.rolesFun[k].rol_id == 6 ||
+                  this.rolesFun[k].rol_id == 5 ||
+                  this.rolesFun[k].rol_id == 3 ||
+                  this.rolesFun[k].rol_id == 2) {
+                this.rolesFun2.push(this.rolesFun[k]);
+              }
+            }
+          }
+        }
+        
+      });
+
+      setTimeout(() => { this.loadingIndicator = false; }, 1500);
+    }, this.claveglobal, this.catDis,this.jeraTabla);
+  }
   }
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
 /*----------------- ** --------------------------------------------------------------------------------------------------------------*/
