@@ -1732,7 +1732,7 @@ public desactivarMP() {
   onSubmitExpPend(): void {
     if (this.formExpPend.valid) {
 
-      this.arrayExp = this.selected.map(uno => uno.expediente_id);
+      this.arrayExp = this.selected.map(uno => uno.numeroExpediente_id);
       var stringArray = String(this.arrayExp);
       const iclavefuncionarioAnt: number = this.formExpPend.value.iclaveFuncionarioAsign;
       const iclavefuncionarioNuevo: number = this.formExpPend.value.iclaveFuncionarioDestino;
