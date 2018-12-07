@@ -210,6 +210,7 @@ export class ExpPendientes {
   public bAsignados: number;
   public cNombre: string;
   public nombreFuncionario: string;
+  public JerarquiaOrganizacional_id: number;
 }
 
 export class AsignarPendientes {
