@@ -25,6 +25,7 @@ export class MembershipService {
     public url16 = this.general + "/listarExp/GetExpedientes?"
     public url17 = this.general + "/ObtJerarquia/ObtJerarquia?"
     public url18 = this.general + "istarExp/GetExpedientesSinJera?";
+    public url19 = this.general + "/ExisteRol/countRolAgencia?";
     private headers;
 
     constructor(public http: HttpClient) {
@@ -107,6 +108,10 @@ export class MembershipService {
         const newExp = JSON.stringify(asignarExpPendientes);
         console.log(newExp);
         return this.http.post(this.url11, newExp , { headers: this.headers });
+    }
+
+    getCountRoles(iclaveFun:number,catdis:number,rolId:number):Observable<any>{
+        return this.http.get(this.url19+"iclavefuncionario="+iclaveFun+"&catdiscriminante="+catdis+"&rolId="+rolId);
     }
 
 } 

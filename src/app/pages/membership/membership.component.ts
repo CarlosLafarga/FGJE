@@ -1090,13 +1090,29 @@ public desactivarMP() {
     // console.log(this.delRol);
 
     this.posicionRolF = this.funcionarioRol.indexOf(this.delRol);
+
+    this.membershipService.getCountRoles( this.funcionario.iClaveFuncionario,
+                                          this.funcionario.catDiscriminante_id,
+                                          this.selectedRolF).subscribe( revision => {
+      this.revisarRoles = revision
+      console.log(this.revisarRoles);
+    });
   }
 
   // Se quita el rol a los roles del funcionario
   public rolesEliminados: Roles[] = [];
+  public revisarRoles: number = 0;
+
   public quitarRol() {
     if (this.posicionRolF > -1 && this.selectedRolF !== 0) {
-      if (this.delRol.esPrincipal === 1) {
+      if (this.revisarRoles <= 0) {
+        swal({
+          title: "Rol eliminado!",
+          text: "Este funcionario es el único en la agencia que cuentaba con el rol eliminado. " +
+                "si tenia expedientes pendientes a su cargo los puede ver en expedientes pendientes",
+          type: "warning"
+        });
+      } else if (this.delRol.esPrincipal === 1) {
         // console.log("El rol es principal");
         // this.toastrService.warning('no puede eliminar el rol principal! para poder eliminar este rol seleccione otro como principal.', 'Atención!', {timeOut: 3000});
         swal({
@@ -1115,6 +1131,26 @@ public desactivarMP() {
         // console.log(this.roles);
         this.funcionarioRol.splice(this.posicionRolF, 1);
       }
+
+      // if (this.delRol.esPrincipal === 1) {
+      //   // console.log("El rol es principal");
+      //   // this.toastrService.warning('no puede eliminar el rol principal! para poder eliminar este rol seleccione otro como principal.', 'Atención!', {timeOut: 3000});
+      //   swal({
+      //     title: "no puede eliminar el rol principal!",
+      //     text: "para poder eliminar este rol seleccione otro como principal.",
+      //     type: "warning"
+      //   });
+      // } else {
+      //   this.roles.push(this.delRol);
+      //   this.rolesEliminados.push(this.delRol);
+      //   // console.log(this.rolesEliminados);
+      //   // console.log("Funcion quitar");
+      //   // console.log(this.delRol);
+      //   this.roles.sort( (a, b) => a.rol_id - b.rol_id );
+      //   // console.log("Array roles:");
+      //   // console.log(this.roles);
+      //   this.funcionarioRol.splice(this.posicionRolF, 1);
+      // }
     } else {
       //this.toastrService.warning('Por favor seleccione un rol para eliminar!', 'Atención!', {timeOut: 3000});
       swal({
@@ -1127,6 +1163,7 @@ public desactivarMP() {
 
     this.posicionRolF = 0;
     this.selectedRolF = 0;
+    this.revisarRoles = 0;
   }
 
   radioRolChange( rol: Roles ) {
@@ -1440,7 +1477,7 @@ public desactivarMP() {
 
   public onSelectAgencia(catDiscriminanteAnterior: number) {
     this.rows = [];
-    this.funcinarioAgencia = [];
+    this.funcinariosAgencia1 = [];
     this.rolesFun = [];
     this.rolesFun2 = [];
     console.log("valor select agencia => " + catDiscriminanteAnterior);
