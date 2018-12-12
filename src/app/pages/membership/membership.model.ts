@@ -270,6 +270,7 @@ export class listarExp{
   public cNumeroExpediente:string;
   public jerarquiaOrganizacional_id:number;
   public numeroExpediente_id:number;
+  public forma_id: number;
 }
 // export class ExpPendientesTabla {
 //   public iclaveFuncionario: number;

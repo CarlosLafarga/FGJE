@@ -1094,9 +1094,9 @@ public desactivarMP() {
     this.membershipService.getCountRoles( this.funcionario.iClaveFuncionario,
                                           this.funcionario.catDiscriminante_id,
                                           this.selectedRolF).subscribe( revision => {
-      this.revisarRoles = revision
-      console.log(this.revisarRoles);
-    });
+                                            this.revisarRoles = revision
+                                            console.log(this.revisarRoles);
+                                          });
   }
 
   // Se quita el rol a los roles del funcionario
@@ -1175,6 +1175,15 @@ public desactivarMP() {
       }
     }
   }
+
+  public expSinAsignar: listarExp[] = [];
+
+  public ExpSinAsignar( agencia: number ) {
+    this.membershipService.getExisteExp( agencia ).subscribe( existentes => {
+      this.expSinAsignar = existentes
+      console.log(this.expSinAsignar);
+    });
+  }
   
   public funcionarioSeleccionado: string = "";
   // Se abre el modal y se cargan los datos del funcionario seleccionado
@@ -1187,29 +1196,63 @@ public desactivarMP() {
     this.getFuncionarioAgencia( funcionario );
     this.getCatUIE(catUIE);
     this.getCountExp1(funcionario);
+    this.ExpSinAsignar( funcionario.catDiscriminante_id );
 
-    if (this.count <= 0) {
-      this.prueba = true;
-    }
-    
-    if(funcionario){
-      const catDis: number = funcionario.catDiscriminante_id
-      for (let i = 0; i < this.agencias.length; i++) {
-        if (catDis === this.agencias[i].catDiscriminante_id) {
-          this.agencias.splice(i, 1);
+    if (this.expSinAsignar) {
+      swal({
+        title: 'Expedientes sin asignar',
+        text: 'Existen expedientes sin asignar en esta agencia, ¿desea continuar con el proceso?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Continuar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.value) {
+
+          swal({
+            title:"Ha decidido continuar",
+            text: "Al continuar, el proceso de cambio seguira de manera avitual",
+            type: "success"
+            }).then(() =>{
+
+              if (this.count <= 0) {
+                this.prueba = true;
+              }
+              
+              if(funcionario){
+                const catDis: number = funcionario.catDiscriminante_id
+                for (let i = 0; i < this.agencias.length; i++) {
+                  if (catDis === this.agencias[i].catDiscriminante_id) {
+                    this.agencias.splice(i, 1);
+                  }
+                }
+                this.funcionario = funcionario;
+                this.form.setValue(funcionario);
+              } 
+          
+              this.modalRef = this.modalService.open(modalContent, { size: 'lg', container: '.app', backdrop: 'static', keyboard: false });
+          
+              this.modalRef.result.then((result) => {
+                this.form.reset();
+              }, (reason) => {
+                this.form.reset();
+              });
+            
+            //  location.reload();
+            });
+        } else if (result.dismiss === swal.DismissReason.cancel) {
+
+          swal({
+            title:"Proceso cancelado",
+            text: "El proceso se ha cancelado debido a que en esta agencia existen expedientes sin asignar.",
+            type: "error"
+            }).then(() =>{
+            //  location.reload();
+            });
+
         }
-      }
-      this.funcionario = funcionario;
-      this.form.setValue(funcionario);
-    } 
-    
-    this.modalRef = this.modalService.open(modalContent, { size: 'lg', container: '.app', backdrop: 'static', keyboard: false });
-
-    this.modalRef.result.then((result) => {
-      this.form.reset();
-    }, (reason) => {
-      this.form.reset();
-    });
+      });
+    }
   }
 
   // Se abre el modal y se cargan los los expedientes pendientes

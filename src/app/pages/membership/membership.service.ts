@@ -26,6 +26,7 @@ export class MembershipService {
     public url17 = this.general + "/ObtJerarquia/ObtJerarquia?"
     public url18 = this.general + "istarExp/GetExpedientesSinJera?";
     public url19 = this.general + "/ExisteRol/countRolAgencia?";
+    public url20 = this.general + "/listarExp/GetExpedientesSinJA";
     private headers;
 
     constructor(public http: HttpClient) {
@@ -110,8 +111,12 @@ export class MembershipService {
         return this.http.post(this.url11, newExp , { headers: this.headers });
     }
 
-    getCountRoles(iclaveFun:number,catdis:number,rolId:number):Observable<any>{
-        return this.http.get(this.url19+"iclavefuncionario="+iclaveFun+"&catdiscriminante="+catdis+"&rolId="+rolId);
+    getCountRoles( iclaveFun: number, catdis: number, rolId: number ):Observable<any>{
+        return this.http.get( this.url19 + "iclavefuncionario=" + iclaveFun + "&catdiscriminante=" + catdis + "&rolId=" + rolId );
+    }
+
+    getExisteExp( catdis: number ):Observable<any>{
+        return this.http.get( this.url20 + "?catDis=" + catdis );
     }
 
 } 
