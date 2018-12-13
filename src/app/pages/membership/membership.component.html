@@ -176,10 +176,10 @@
                             <li class="nav-item bg-light">
                                 <a class="nav-link active" href="#reubicarFuncionario" data-toggle="tab">Reubicar funcionario</a>
                             </li>
-                            <li class="nav-item bg-light">
+                            <!-- <li class="nav-item bg-light">
                                 <a *ngIf="valReasignarExpedientes" class="nav-link" href="#reasignarExpedientes" data-toggle="tab">Reasignar expedientes</a>
                                 <a *ngIf="!valReasignarExpedientes" class="nav-link disabled" href="#reasignarExpedientes" data-toggle="tab">Reasignar expedientes</a>
-                            </li>
+                            </li> -->
                         </ul>
                         <div class="tab-content col-10 border-0">
 
@@ -224,6 +224,7 @@
                                         
                                         <hr>
 
+                                        <!-- [disabled]="!valExpPendCheck" -->
                                         <div class="row">
                                             <div class="col-sm-3">
                                                 <div class="form-group">
@@ -233,7 +234,8 @@
                                                                 class="custom-control-input checkbox-primary"
                                                                 id="expedientesPendientes"
                                                                 (change)="pendientesCheck($event)"
-                                                                [disabled]="!valExpPendCheck"
+                                                                [disabled]="true"
+                                                                [checked]="true"
                                                                 required>
                                                         <label class="custom-control-label" for="expedientesPendientes">Expedientes pendientes</label>
                                                     </div>
@@ -390,30 +392,13 @@
                                 </div>
                             </div>
 
-                            <div class="tab-pane" id="reasignarExpedientes">
+                            <!-- <div class="tab-pane" id="reasignarExpedientes">
                                 <div class="card">                        
                                     <div class="card-body">
                                         <h5 class="card-title mb-0">Reasignar expedientes en agencia actual: <small>{{ nombreAgActual }}</small></h5>
                                     </div>
                                     <div class="container">
                                         <div id="accordion" role="tablist" aria-multiselectable="true">
-
-                                            <!-- <div class="card border-0">
-                                                <div class="card-header transparent" role="tab" id="headingOne">
-                                                    <h6 class="mb-0">
-                                                        <a class="text-primary" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                            Titular de la agencia
-                                                        </a>
-                                                    </h6>
-                                                </div>
-                    
-                                                <div id="collapseOne" class="collapse show" data-parent="#accordion" role="tabpanel" aria-labelledby="headingOne">
-                                                    <div class="card-body">
-                                                        <h6>Nombre del funcionario titular de la agencia: </h6>
-                                                        <p>(mostrar el nombre del titular de la agencia)</p> 
-                                                    </div>
-                                                </div>
-                                            </div> -->
 
                                             <div class="card border-0">
                                                 <div class="card-header transparent" role="tab" id="headingTwo">
@@ -440,7 +425,6 @@
                                                                     <th>Nombre</th>
                                                                     <th>Apellido paterno</th>
                                                                     <th>Apellido materno</th>
-                                                                    <!-- <th>Nombre Agencia</th> -->
                                                                     <th>Titular</th>
                                                                     <th></th>
                                                                 </tr>
@@ -454,7 +438,6 @@
                                                                     <td>{{ funagen.cNombreFuncionario }}</td>
                                                                     <td>{{ funagen.cApellidoPaternoFuncionario }}</td>
                                                                     <td>{{ funagen.cApellidoMaternoFuncionario }}</td>
-                                                                    <!-- <td>{{ funagen.cNombre }}</td>  -->
                                                                     <td>
                                                                         <i *ngIf="funagen.esMP === 1" class="fa fa-check mr-2 text-success" placement="bottom"></i>
                                                                         <i *ngIf="funagen.esMP != 1" class="fa fa-close mr-2 text-danger" placement="bottom"></i>
@@ -488,7 +471,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- <pre>
                                 {{ roles | json }}

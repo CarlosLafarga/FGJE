@@ -1177,15 +1177,10 @@ public desactivarMP() {
   }
 
   public expSinAsignar: listarExp[] = [];
-
-  public ExpSinAsignar( agencia: number ) {
-    this.membershipService.getExisteExp( agencia ).subscribe( existentes => {
-      this.expSinAsignar = existentes
-      console.log(this.expSinAsignar);
-    });
-  }
-  
+  public valorExpSinAsignar: number = 0;
   public funcionarioSeleccionado: string = "";
+  public rolesAMPFac: number = 0;
+  
   // Se abre el modal y se cargan los datos del funcionario seleccionado
   public openModal(modalContent, funcionario, catUIE) {
     this.funcionarioSeleccionado = funcionario.iclaveFuncionario;
@@ -1196,63 +1191,70 @@ public desactivarMP() {
     this.getFuncionarioAgencia( funcionario );
     this.getCatUIE(catUIE);
     this.getCountExp1(funcionario);
-    this.ExpSinAsignar( funcionario.catDiscriminante_id );
+    // this.ExpSinAsignar( funcionario );
+    
+    this.membershipService.getExisteExp( funcionario.catDiscriminante_id ).subscribe( existentes => {
+      this.expSinAsignar = existentes
+      console.log(this.expSinAsignar);
+      this.valorExpSinAsignar = this.expSinAsignar.length;
+      console.log(this.valorExpSinAsignar);
 
-    if (this.expSinAsignar) {
-      swal({
-        title: 'Expedientes sin asignar',
-        text: 'Existen expedientes sin asignar en esta agencia, ¿desea continuar con el proceso?',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Continuar',
-        cancelButtonText: 'Cancelar'
-      }).then((result) => {
-        if (result.value) {
+        this.membershipService.getCountRoles( funcionario.iClaveFuncionario,
+          funcionario.catDiscriminante_id,
+          6 ).subscribe( roles => {
+            this.rolesAMPFac = roles;
+            console.log(this.rolesAMPFac);
 
+        if (this.valorExpSinAsignar > 0 && this.rolesAMPFac <= 0) {
           swal({
-            title:"Ha decidido continuar",
-            text: "Al continuar, el proceso de cambio seguira de manera avitual",
-            type: "success"
-            }).then(() =>{
-
-              if (this.count <= 0) {
-                this.prueba = true;
-              }
-              
-              if(funcionario){
-                const catDis: number = funcionario.catDiscriminante_id
-                for (let i = 0; i < this.agencias.length; i++) {
-                  if (catDis === this.agencias[i].catDiscriminante_id) {
-                    this.agencias.splice(i, 1);
-                  }
-                }
-                this.funcionario = funcionario;
-                this.form.setValue(funcionario);
-              } 
-          
-              this.modalRef = this.modalService.open(modalContent, { size: 'lg', container: '.app', backdrop: 'static', keyboard: false });
-          
-              this.modalRef.result.then((result) => {
-                this.form.reset();
-              }, (reason) => {
-                this.form.reset();
+            title: 'Expedientes sin asignar',
+            text: 'Existen expedientes sin asignar en esta agencia, ¿desea continuar con el proceso?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Continuar',
+            cancelButtonText: 'Cancelar'
+          }).then((result) => {
+            if (result.value) {
+    
+              swal({
+                title:"Ha decidido continuar",
+                text: "Al continuar, el proceso de cambio seguira de manera avitual",
+                type: "success"
+              }).then(() => {
+                
               });
-            
-            //  location.reload();
-            });
-        } else if (result.dismiss === swal.DismissReason.cancel) {
-
-          swal({
-            title:"Proceso cancelado",
-            text: "El proceso se ha cancelado debido a que en esta agencia existen expedientes sin asignar.",
-            type: "error"
-            }).then(() =>{
-            //  location.reload();
-            });
-
+            } else if (result.dismiss === swal.DismissReason.cancel) {
+              
+              this.closeModal();
+              
+            }
+          });
         }
+
+        if (this.count <= 0) {
+          this.prueba = true;
+        }
+        
+        if(funcionario){
+          const catDis: number = funcionario.catDiscriminante_id
+          for (let i = 0; i < this.agencias.length; i++) {
+            if (catDis === this.agencias[i].catDiscriminante_id) {
+              this.agencias.splice(i, 1);
+            }
+          }
+          this.funcionario = funcionario;
+          this.form.setValue(funcionario);
+        } 
+    
+        this.modalRef = this.modalService.open(modalContent, { size: 'lg', container: '.app', backdrop: 'static', keyboard: false });
+    
+        this.modalRef.result.then((result) => {
+          this.form.reset();
+        }, (reason) => {
+          this.form.reset();
+        });
       });
-    }
+    });
   }
 
   // Se abre el modal y se cargan los los expedientes pendientes
@@ -1264,7 +1266,6 @@ public desactivarMP() {
   }
 
   // Cerrar el modal
-
   public p2: number;
 
   public closeModal(){
@@ -1565,26 +1566,26 @@ public desactivarMP() {
    
     
     if(this.jeraTabla == null){
-    this.loadingIndicator = true;
-    this.fetch2((data) => {
-      this.temp = [...data];
-      this.rows = data;
+      this.loadingIndicator = true;
+      this.fetch2((data) => {
+        this.temp = [...data];
+        this.rows = data;
 
 
 
-      console.log(this.rows);
-      var introducido: number = 0;
-      for (let i = 0; i < this.rows.length; i++) {
-        arrTemp.push(this.rows[i].jerarquiaOrganizacional_id);
-      }
+        console.log(this.rows);
+        var introducido: number = 0;
+        for (let i = 0; i < this.rows.length; i++) {
+          arrTemp.push(this.rows[i].jerarquiaOrganizacional_id);
+        }
 
-      const distinct = (value, index, self)=> {
-        return self.indexOf(value) === index;
-      }
-      this.arrTempJerar = arrTemp.filter(distinct);
-      console.log(this.arrTempJerar);
+        const distinct = (value, index, self)=> {
+          return self.indexOf(value) === index;
+        }
+        this.arrTempJerar = arrTemp.filter(distinct);
+        console.log(this.arrTempJerar);
 
-      this.membershipService.getRoles().subscribe( roles => {
+        this.membershipService.getRoles().subscribe( roles => {
         this.rolesFun = roles
         console.log(this.rolesFun);
   
