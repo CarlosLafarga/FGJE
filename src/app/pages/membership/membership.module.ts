@@ -11,7 +11,7 @@ import { PipesModule } from '../../theme/pipes/pipes.module';
 import { MembershipComponent } from './membership.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 //import { MembershipData } from './membership.data';
-import { NgxLoadingModule } from 'ngx-loading';
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 
 export const routes = [
   { path: '', component: MembershipComponent, pathMatch: 'full' }
@@ -30,7 +30,14 @@ export const routes = [
     NgxPaginationModule,
     PipesModule,
     NgxDatatableModule,
-    NgxLoadingModule.forRoot({})
+    NgxLoadingModule.forRoot({
+      animationType: ngxLoadingAnimationTypes.circleSwish,
+      backdropBackgroundColour: 'rgba(0,0,0,0.1)', 
+      backdropBorderRadius: '4px',
+      primaryColour: '#333300', 
+      secondaryColour: '#663300', 
+      tertiaryColour: '#ffffff'
+    })
   ],
   declarations: [
     MembershipComponent

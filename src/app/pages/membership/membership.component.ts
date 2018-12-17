@@ -11,6 +11,7 @@ import { RouteConfigLoadStart, Router } from '@angular/router';
 import swal from 'sweetalert2';
 import { Location } from '@angular/common';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { BytesPipe } from 'ngx-pipes';
  
 @Component({
   selector: 'app-membership',
@@ -575,7 +576,7 @@ public desactivarMP() {
 
   public soloRolesCheck( e ) {
     this.soloRoles = e.target.checked;
-    if (this.soloRoles) {
+    if (this.soloRoles || this.contEsMP > 0) {
       this.prueba = true;
       
       this.valReasignarExpedientes = false;
@@ -773,8 +774,12 @@ public desactivarMP() {
 
   public nombreAgActual: string;
   public nAgActual: string[];
+  public contEsMP: number = 0;
+
+  
 
   public getFuncionarioAgencia(funcionario: FuncionariosData):void{
+    this.contEsMP = 0;
     this.membershipService.getFUsuarioAgencia(funcionario.catDiscriminante_id).subscribe( funciAgencia => {
       this.funciAgencia = funciAgencia
       console.log(this.funciAgencia);
@@ -786,6 +791,10 @@ public desactivarMP() {
         if (funcionario.iClaveFuncionario === this.funciAgencia[i].iClaveFuncionario ||
             this.funciAgencia[i].usuario[0].bEsActivo === 0) {
           this.funciAgencia.splice( i, 1 );
+        }
+
+        if (this.funciAgencia[i].esMP == 1) {
+          this.contEsMP ++;
         }
 
         var rolIdArray: number[] = [];
@@ -810,6 +819,7 @@ public desactivarMP() {
         }
       }
 
+      console.log(this.contEsMP);
       // console.log(this.funciAgencia);
 
     });
@@ -1201,7 +1211,6 @@ public desactivarMP() {
       this.expSinAsignar = existentes
       console.log(this.expSinAsignar);
       this.valorExpSinAsignar = this.expSinAsignar.length;
-      console.log(this.valorExpSinAsignar);
 
         this.membershipService.getCountRoles( funcionario.iClaveFuncionario,
           funcionario.catDiscriminante_id,

@@ -6,8 +6,8 @@ import { User, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAg
 @Injectable()
 export class MembershipService {
 
-    public general = "http://localhost:55244/api";
-    // public general = "http://192.168.105.53:55245/api";
+    // public general = "http://localhost:55244/api";
+    public general = "http://192.168.105.53:55245/api";
     public url2 = this.general + "/funcionarios";
     public url3 = this.general + "/catDiscriminantes";
     public url4 = this.general + "/Roles";

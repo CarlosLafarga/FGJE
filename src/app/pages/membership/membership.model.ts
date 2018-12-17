@@ -154,7 +154,7 @@ export class FunciAgencia {
   cApellidoPaternoFuncionario: string;
   cAPellidoMaternoFuncionario: string;
   cNombre: string;
-  EsMP: number;
+  esMP: number;
   bEsActivo: number;
   usuario: usuario[];
 }

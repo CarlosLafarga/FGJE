@@ -267,7 +267,7 @@
                                                                 class="custom-control-input checkbox-primary"
                                                                 id="EsMP"
                                                                 (change)="esMPCheck($event)"
-                                                                [disabled]="!valEsMPCheck"
+                                                                [disabled]="!valEsMPCheck || contEsMP != 0"
                                                                 [checked]="funcionario.esMP === 1">
                                                         <label class="custom-control-label" for="EsMP">es MP</label>
                                                     </div>
