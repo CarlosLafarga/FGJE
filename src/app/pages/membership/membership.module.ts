@@ -11,6 +11,7 @@ import { PipesModule } from '../../theme/pipes/pipes.module';
 import { MembershipComponent } from './membership.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 //import { MembershipData } from './membership.data';
+import { NgxLoadingModule } from 'ngx-loading';
 
 export const routes = [
   { path: '', component: MembershipComponent, pathMatch: 'full' }
@@ -28,7 +29,8 @@ export const routes = [
     MultiselectDropdownModule,
     NgxPaginationModule,
     PipesModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    NgxLoadingModule.forRoot({})
   ],
   declarations: [
     MembershipComponent

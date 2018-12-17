@@ -51,11 +51,27 @@
         </div>   
     </div>
 
-    
+    <div class="my-container">
+        <ng-template #customLoadingTemplate>
+            <div class="custom-class">
+                <h3>
+                    Cargando...
+                </h3>
+                <!-- <button (click)="showAlert()">
+                    Click me!
+                </button> -->
+            </div>
+        </ng-template>
+                 
+        <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '4px' }" [template]="customLoadingTemplate"></ngx-loading>
+            <!-- //... -->
+    </div>
     
     <div *ngIf="type=='list'" class="row">
         <div class="col-12">
             <div class="table-responsive bg-white box-shadow">
+
+                
 
                 <table class="table table-hover">
                     <thead>

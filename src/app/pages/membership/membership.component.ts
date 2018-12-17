@@ -1182,6 +1182,7 @@ public desactivarMP() {
   public valorExpSinAsignar: number = 0;
   public funcionarioSeleccionado: string = "";
   public rolesAMPFac: number = 0;
+  public loading: boolean = false;
   
   // Se abre el modal y se cargan los datos del funcionario seleccionado
   public openModal(modalContent, funcionario, catUIE) {
@@ -1194,6 +1195,7 @@ public desactivarMP() {
     this.getCatUIE(catUIE);
     this.getCountExp1(funcionario);
     // this.ExpSinAsignar( funcionario );
+    this.loading = true;
     
     this.membershipService.getExisteExp( funcionario.catDiscriminante_id ).subscribe( existentes => {
       this.expSinAsignar = existentes
@@ -1256,6 +1258,7 @@ public desactivarMP() {
           this.form.reset();
         });
       });
+      this.loading = false;
     });
   }
 
@@ -1543,12 +1546,15 @@ public desactivarMP() {
   }
 
   public funcinarioAgencia: FuncionariosData[] = [];
+  public arrTempFun: number[] = [];
+  public arrTempFunSinRep: number[] = [];
 
   public onSelectAgencia(catDiscriminanteAnterior: number) {
     this.rows = [];
     this.funcinarioAgencia = [];
     this.rolesFun = [];
     this.rolesFun2 = [];
+    this.arrTempFun = [];
     console.log("valor select agencia => " + catDiscriminanteAnterior);
     this.catDisGlobal = catDiscriminanteAnterior;
 
@@ -1557,10 +1563,19 @@ public desactivarMP() {
     for (let i = 0; i < this.expPendientesLista.length; i++) {
       if (this.expPendientesLista[i].catDiscriminanteAnterior == catDiscriminanteAnterior) {
         var flag: number = this.expPendientesLista[i].iClaveFuncionario;
-        for (let j = 0; j < this.funcionarios.length; j++) {
-          if (this.funcionarios[j].iClaveFuncionario === flag) {
-            this.funcinarioAgencia.push(this.funcionarios[j]);
-          }
+        this.arrTempFun.push(flag);
+      }
+    }
+
+    const distinct = (value, index, self) => {
+      return self.indexOf(value) === index;
+    }
+    this.arrTempFunSinRep = this.arrTempFun.filter( distinct );
+
+    for (let j = 0; j < this.funcionarios.length; j++) {
+      for (let k = 0; k < this.arrTempFunSinRep.length; k++) {
+        if (this.funcionarios[j].iClaveFuncionario === this.arrTempFunSinRep[k]) {
+          this.funcinarioAgencia.push(this.funcionarios[j]);
         }
       }
     }
@@ -1595,7 +1610,6 @@ public desactivarMP() {
         this.rows = data;
 
         console.log(this.rows);
-        var introducido: number = 0;
         for (let i = 0; i < this.rows.length; i++) {
           arrTemp.push(this.rows[i].jerarquiaOrganizacional_id);
         }
@@ -1639,7 +1653,6 @@ public desactivarMP() {
 
 
         console.log(this.rows);
-        var introducido: number = 0;
         for (let i = 0; i < this.rows.length; i++) {
           arrTemp.push(this.rows[i].jerarquiaOrganizacional_id);
         }

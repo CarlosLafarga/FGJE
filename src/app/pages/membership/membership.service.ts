@@ -6,8 +6,8 @@ import { User, FuncionariosData, Roles, Agencias, FuncionarioUsuarioRol, FunciAg
 @Injectable()
 export class MembershipService {
 
-    // public general = "http://localhost:55244/api";
-    public general = "http://192.168.105.53:55245/api";
+    public general = "http://localhost:55244/api";
+    // public general = "http://192.168.105.53:55245/api";
     public url2 = this.general + "/funcionarios";
     public url3 = this.general + "/catDiscriminantes";
     public url4 = this.general + "/Roles";
@@ -41,7 +41,7 @@ export class MembershipService {
         return this.http.get<Agencias[]>(this.url3);
     }
 
-    getFUsuarioAgencia( catdis: number ) : Observable<FunciAgencia[]> {
+    getFUsuarioAgencia( catdis: number ): Observable<FunciAgencia[]> {
         return this.http.get<FunciAgencia[]>(this.url6 + "?catdis=" + catdis);
     }
 
@@ -57,11 +57,11 @@ export class MembershipService {
         return this.http.get(this.url13+"?iclavefuncionario="+iclave+"+&catdiscriminate="+catdis);
     }
 
-    getJerarquia(rol:number):Observable<any>{
+    getJerarquia(rol: number):Observable<any>{
         return this.http.get(this.url17+"rol="+rol);
     }
 
-    getCounthelper(iclave: number,catdis:number):Observable<any>{
+    getCounthelper(iclave: number, catdis: number):Observable<any>{
         return this.http.get(this.url15+"?iclavefuncionario=" + iclave + "+&catdiscriminate=" + catdis);
     }
     /* ----------------------------------------------------------------------------------------------------------------*/
