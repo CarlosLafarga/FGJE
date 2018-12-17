@@ -11,7 +11,7 @@ import { RouteConfigLoadStart, Router } from '@angular/router';
 import swal from 'sweetalert2';
 import { Location } from '@angular/common';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { BytesPipe } from 'ngx-pipes';
+import { BytesPipe, NgBooleanPipesModule } from 'ngx-pipes';
  
 @Component({
   selector: 'app-membership',
@@ -478,49 +478,49 @@ public activarMP(funcionario) {
     }
   
   });
-} else {
-  
-  swal({
-    title: 'Desactivar MP ',
-    text: '¿Esta seguro que desea desactivar al funcionario como MP?',
-    type: 'warning',
-    html: '<b>¿Esta seguro que desea desactivar al funcionario como MP?</b><br><label><b>Justificacion:</b></label>',
-    input: 'text',
-    inputValidator: (value) => {
-      return !value && 'Por favor ingrese la justificacion.'
-     },
-    showCancelButton: true,
-    confirmButtonText: 'Desactivar',
-    cancelButtonText: 'Cancelar'
+  } else {
+    
+    swal({
+      title: 'Desactivar MP ',
+      text: '¿Esta seguro que desea desactivar al funcionario como MP?',
+      type: 'warning',
+      html: '<b>¿Esta seguro que desea desactivar al funcionario como MP?</b><br><label><b>Justificacion:</b></label>',
+      input: 'text',
+      inputValidator: (value) => {
+        return !value && 'Por favor ingrese la justificacion.'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Desactivar',
+      cancelButtonText: 'Cancelar'
 
-  }).then((result) => {
+    }).then((result) => {
 
-    if (result.value) {
-      // const act = e.target.checked;
-      const valor: number = 0;
-      funcionario.esMP = 0;
-      //  console.log("Se desactiva el funcionario con la bandera MP => " + funcionario.cNombreFuncionario );
-      //  console.log(valor);      
-      var justificacion = result.value;
-      var iclaveFuncionarionew = funcionario.iClaveFuncionario;
+      if (result.value) {
+        // const act = e.target.checked;
+        const valor: number = 0;
+        funcionario.esMP = 0;
+        //  console.log("Se desactiva el funcionario con la bandera MP => " + funcionario.cNombreFuncionario );
+        //  console.log(valor);      
+        var justificacion = result.value;
+        var iclaveFuncionarionew = funcionario.iClaveFuncionario;
 
-      let cambioMP2 = new cambioMP(iclaveFuncionarionew, valor, justificacion);
-      this.cambioMP1( cambioMP2 );
-      
-      swal({
-        title:"Funcionario ahora ya no es MP'",
-        text: "Funcionario ahora ya no es MP",
-        type: "success"
-        }).then(() =>{
+        let cambioMP2 = new cambioMP(iclaveFuncionarionew, valor, justificacion);
+        this.cambioMP1( cambioMP2 );
         
-        //  location.reload();
-        });
-    } else if (result.dismiss === swal.DismissReason.cancel) {
-      this.rev2 = true; 
-    }
-  });
+        swal({
+          title:"Funcionario ahora ya no es MP'",
+          text: "Funcionario ahora ya no es MP",
+          type: "success"
+          }).then(() =>{
+          
+          //  location.reload();
+          });
+      } else if (result.dismiss === swal.DismissReason.cancel) {
+        this.rev2 = true; 
+      }
+    });
 
-}
+  }
 }
 
 /*DESACTIVAR MP*/
@@ -666,19 +666,20 @@ public desactivarMP() {
 
   public recargarFuncionarios() {
 
-    swal({
-      title:"Cargando...",
-      position: 'center',
-      type: 'success',
-      showConfirmButton: false,
-      timer: 2000
-    })
+    // swal({
+    //   title:"Cargando...",
+    //   position: 'center',
+    //   type: 'success',
+    //   showConfirmButton: false,
+    //   timer: 2000
+    // });
 
     this.getFuncionarios();
   }
 
   // Se cargan los datos del funcionario
   public getFuncionarios(): void {
+    this.loading = true;
     this.membershipService.getFuncionarios().subscribe( funcionarios => {
       this.funcionarios = funcionarios
       // console.log(this.funcionarios);
@@ -692,21 +693,19 @@ public desactivarMP() {
           }
         }
       }
-
+      this.loading = false;
+    }, err => {
+      swal({
+        title:"Error al cargar funcionarios",
+        position: 'center',
+        // text: "Ocurrió un error: " + err.message + " verifique su conección o los permisos de acceso de la red.",
+        html: "Ocurrió un error: <br> <strong style= 'color:#FD2D00'>" + err.message + "</strong>. <br><br> verifique su conección o los permisos de acceso de la red.",
+        type: 'error',
+        showConfirmButton: true
+      });
+      this.loading = false;
     });
   }
-
-//   let sinDiacriticos = (function(){
-//     let de = 'ÁÃÀÄÂÉËÈÊÍÏÌÎÓÖÒÔÚÜÙÛÑÇáãàäâéëèêíïìîóöòôúüùûñç',
-//          a = 'AAAAAEEEEIIIIOOOOUUUUNCaaaaaeeeeiiiioooouuuunc',
-//         re = new RegExp('['+de+']' , 'ug');
-
-//     return texto =>
-//         texto.replace(
-//             re, 
-//             match => a.charAt(de.indexOf(match))
-//         );
-// })();
 
   public rolesFunci: Roles[] = [];
 
@@ -822,6 +821,15 @@ public desactivarMP() {
       console.log(this.contEsMP);
       // console.log(this.funciAgencia);
 
+    }, err => {
+      swal({
+        title:"Error al cargar",
+        text: err.message,
+        position: 'center',
+        type: 'error',
+        showConfirmButton: false
+      });
+      this.loading = false;
     });
   }
 
@@ -1029,19 +1037,40 @@ public desactivarMP() {
   
   // Se actualiza el funcionario seleccionado
   public cambioAdscripcion1(cambioAdscripcion:CambioAdscripcion) {
+    this.loading = true;
     this.membershipService.cambioAdscripcion(cambioAdscripcion).subscribe( cambioAdscripcion => {
       this.cambioAdscripcion;
+      swal({
+        title:"Cambio exitoso",
+        position: 'center',
+        text: "El cambio de adscripcioón se ha llevado con exito.",
+        type: 'success',
+        timer: 3000
+      });
+      this.loading = false;
+      this.pageRefresh();
+      this.router.navigate(['/pages/membership']);
+    }, err => {
+      swal({
+        title:"Error en el cambio de adscripción",
+        position: 'center',
+        // text: "Ocurrió un error: " + err.message + " verifique su conección o los permisos de acceso de la red.",
+        html: "Ocurrió un error: <br> <strong style= 'color:#FD2D00'>" + err.message + "</strong>",
+        type: 'error',
+        showConfirmButton: true
+      });
+      this.loading = false;
     });
     // console.log("Se ejecuto el cambio de adscripcion: " + cambioAdscripcion.iClaveFuncionarioSolicitante);
     
-    swal({
-      title:"Registro exitoso...",
-      text: this.titularAgencia,
-      type: "success"
-      }).then(() =>{
-        this.pageRefresh();
-        this.router.navigate(['/pages/membership']);
-      });
+    // swal({
+    //   title:"Registro exitoso...",
+    //   text: this.titularAgencia,
+    //   type: "success"
+    //   }).then(() =>{
+    //     this.pageRefresh();
+    //     this.router.navigate(['/pages/membership']);
+    //   });
   }
 
   public cambioEstatus(cambioEstatus: cambioEstatus){
@@ -1095,6 +1124,8 @@ public desactivarMP() {
     this.selectedRol = 0;
   }
 
+  public valido: boolean = false;
+
   public onSelectFRolF(rol: Roles) {
     this.selectedRolF = rol.rol_id;
     // console.log("Se seleccion de rol del funcionario=> " + this.selectedRolF);
@@ -1108,6 +1139,18 @@ public desactivarMP() {
                                           this.selectedRolF).subscribe( revision => {
                                             this.revisarRoles = revision
                                             console.log(this.revisarRoles);
+
+                                            if (this.selectedRolF == 8 ||
+                                                this.selectedRolF == 7 ||
+                                                this.selectedRolF == 6 ||
+                                                this.selectedRolF == 5 ||
+                                                this.selectedRolF == 3 ||
+                                                this.selectedRolF == 2) {
+                                              this.valido = true;
+                                            } else {
+                                              this.valido = false
+                                            }
+
                                           });
   }
 
@@ -1117,7 +1160,7 @@ public desactivarMP() {
 
   public quitarRol() {
     if (this.posicionRolF > -1 && this.selectedRolF !== 0) {
-      if (this.revisarRoles <= 0) {
+      if (this.revisarRoles <= 0 && this.valido) {
         swal({
           title: "No se puede eliminar el rol!",
           text: "Este funcionario es el único en la agencia que cuentaba con el rol seleccionado. " +
@@ -1197,7 +1240,7 @@ public desactivarMP() {
   // Se abre el modal y se cargan los datos del funcionario seleccionado
   public openModal(modalContent, funcionario, catUIE) {
     this.funcionarioSeleccionado = funcionario.iclaveFuncionario;
-    // console.log(funcionario);
+    console.log(funcionario);
     // this.getAgencias();
     // this.getRoles();
     this.getFuncionarioRol( funcionario );
@@ -1366,8 +1409,9 @@ public desactivarMP() {
       catDiscriminateNuevo = this.form.value.catDiscriminante_id;
       Justificacion = this.form.value.cRFC;
 
-      if(this.count >0){
-      var  expPendientes: number = this.pendientesNum;
+      if(this.count > 0){
+        var  expPendientes: number = 1;
+      // var  expPendientes: number = this.pendientesNum;
       }else{
       var expPendientes: number = 2;
       }
