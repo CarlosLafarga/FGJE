@@ -1273,6 +1273,7 @@ public desactivarMP() {
             confirmButtonText: 'Continuar',
             allowOutsideClick: false,
             allowEscapeKey: false,
+            allowEnterKey: true
           }).then((result) => {
             if (result.value) {
     
