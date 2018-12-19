@@ -53,7 +53,7 @@
 
     <div class="my-container">
         <ng-template #customLoadingTemplate>
-            <div class="custom-class text-danger">
+            <div class="custom-class text-success">
                 <h3>
                     Cargando...
                 </h3>
@@ -100,8 +100,7 @@
                             </td>
                             <td></td>
                         </tr>
-                        <tr *ngFor="let funcionario of funcionarios 
-                                                                    | NumeroempSearchPipe : { cNumeroEmpleado: searchNumero }
+                        <tr *ngFor="let funcionario of funcionarios | NumeroempSearchPipe : { cNumeroEmpleado: searchNumero }
                                                                     | NombreSearchPipe : { cNombreFuncionario: searchNombre }
                                                                     | AppaternoSearchPipe : { cApellidoPaternoFuncionario: searchApPaterno }
                                                                     | ApmaternoSearchPipe : { cApellidoMaternoFuncionario: searchApMaterno }

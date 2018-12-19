@@ -31,11 +31,11 @@ export const routes = [
     PipesModule,
     NgxDatatableModule,
     NgxLoadingModule.forRoot({
-      animationType: ngxLoadingAnimationTypes.circleSwish,
+      animationType: ngxLoadingAnimationTypes.cubeGrid,
       backdropBackgroundColour: 'rgba(0,0,0,0.1)', 
       backdropBorderRadius: '4px',
-      primaryColour: '#333300', 
-      secondaryColour: '#663300', 
+      primaryColour: '#5B3131', 
+      secondaryColour: '#AD7E7E', 
       tertiaryColour: '#ffffff'
     })
   ],

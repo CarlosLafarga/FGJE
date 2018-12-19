@@ -665,15 +665,6 @@ public desactivarMP() {
   }
 
   public recargarFuncionarios() {
-
-    // swal({
-    //   title:"Cargando...",
-    //   position: 'center',
-    //   type: 'success',
-    //   showConfirmButton: false,
-    //   timer: 2000
-    // });
-
     this.getFuncionarios();
   }
 
@@ -693,6 +684,13 @@ public desactivarMP() {
           }
         }
       }
+      // swal({
+      //   title:"Cargando...",
+      //   position: 'center',
+      //   type: 'success',
+      //   showConfirmButton: false,
+      //   timer: 2000
+      // });
       this.loading = false;
     }, err => {
       swal({
@@ -701,7 +699,8 @@ public desactivarMP() {
         // text: "Ocurrió un error: " + err.message + " verifique su conección o los permisos de acceso de la red.",
         html: "Ocurrió un error: <br> <strong style= 'color:#FD2D00'>" + err.message + "</strong>. <br><br> verifique su conección o los permisos de acceso de la red.",
         type: 'error',
-        showConfirmButton: true
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar'
       });
       this.loading = false;
     });
@@ -824,10 +823,11 @@ public desactivarMP() {
     }, err => {
       swal({
         title:"Error al cargar",
-        text: err.message,
+        html: "Ocurrió un error al cargar los datos: <br> <strong style= 'color:#FD2D00'>" + err.message + "</strong>",
         position: 'center',
         type: 'error',
-        showConfirmButton: false
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar'
       });
       this.loading = false;
     });
@@ -1163,7 +1163,7 @@ public desactivarMP() {
       if (this.revisarRoles <= 0 && this.valido) {
         swal({
           title: "No se puede eliminar el rol!",
-          text: "Este funcionario es el único en la agencia que cuentaba con el rol seleccionado. " +
+          text: "Este funcionario es el único en la agencia que cuenta con el rol seleccionado. " +
                 "para poder eliminarlo por favor asegurese que alguien mas tenga este rol.",
           type: "warning"
         });
@@ -1240,7 +1240,7 @@ public desactivarMP() {
   // Se abre el modal y se cargan los datos del funcionario seleccionado
   public openModal(modalContent, funcionario, catUIE) {
     this.funcionarioSeleccionado = funcionario.iclaveFuncionario;
-    console.log(funcionario);
+    // console.log(funcionario);
     // this.getAgencias();
     // this.getRoles();
     this.getFuncionarioRol( funcionario );
@@ -1264,23 +1264,18 @@ public desactivarMP() {
         if (this.valorExpSinAsignar > 0 && this.rolesAMPFac <= 0) {
           swal({
             title: 'Expedientes sin asignar',
-            text: 'Existen expedientes sin asignar en esta agencia, ¿desea continuar con el proceso?',
+            text: 'Existen expedientes sin asignar en esta agencia que solo éste funcionario, '
+                  + 'puede ver, asegurese de que los asigne antes de cambiarlo o agregar el rol ' 
+                  + 'a alguien mas para que pueda ver los expedientes sin asignar.',
             type: 'warning',
-            showCancelButton: true,
+            showCancelButton: false,
+            showConfirmButton: true,
             confirmButtonText: 'Continuar',
-            cancelButtonText: 'Cancelar'
+            allowOutsideClick: false,
+            allowEscapeKey: false,
           }).then((result) => {
             if (result.value) {
     
-              swal({
-                title:"Ha decidido continuar",
-                text: "Al continuar, el proceso de cambio seguira de manera avitual",
-                type: "success"
-              }).then(() => {
-                
-              });
-            } else if (result.dismiss === swal.DismissReason.cancel) {
-              
               this.closeModal();
               
             }
@@ -1347,7 +1342,7 @@ public desactivarMP() {
     this.modalExpPend.close();
     this.formExpPend.reset();
     this.selectedExpPend = 0;
-    this.funcinariosAgencia1 = [];
+    this.funcionariosAgencia1 = [];
     this.rows = [];
     this.funcinarioAgencia = [];
     this.rolesFun2 = [];
@@ -1484,6 +1479,7 @@ public desactivarMP() {
     this.arrAgTemp = [];
     this.arrAgSinRepetir = [];
     this.agenciasExpPend1 = [];
+    this.loading = true;
     this.membershipService.getExpPendientes().subscribe( eP => {
       this.expPendientesLista = eP
       console.log(this.expPendientesLista); 
@@ -1537,25 +1533,36 @@ public desactivarMP() {
           }
         }
       }
-
+      this.loading = false;
+    }, err => {
+      swal({
+        title:"Error al cargar expedientes pendientes",
+        position: 'center',
+        // text: "Ocurrió un error: " + err.message + " verifique su conección o los permisos de acceso de la red.",
+        html: "Ocurrió un error: <br> <strong style= 'color:#FD2D00'>" + err.message + "</strong>. <br><br> verifique su conección o los permisos de acceso de la red.",
+        type: 'error',
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar'
+      });
+      this.loading = false;
     });
   }
 
-  public funcinariosAgencia: FunciAgencia[] = [];
+  public funcionariosAgencia: FunciAgencia[] = [];
 
   public getFuncionariosAg(expPend: ExpPendientes):void {
     this.membershipService.getFUsuarioAgencia(expPend.catDiscriminanteAnterior).subscribe( exp => {
-      this.funcinariosAgencia = exp
-      console.log(this.funcinariosAgencia);
+      this.funcionariosAgencia = exp
+      console.log(this.funcionariosAgencia);
 
-      for (let i = 0; i < this.funcinariosAgencia.length; i++) {
-        if (this.funcinariosAgencia[i].usuario[0].bEsActivo === 0) {
-          this.funcinariosAgencia.splice( i, 1 );
+      for (let i = 0; i < this.funcionariosAgencia.length; i++) {
+        if (this.funcionariosAgencia[i].usuario[0].bEsActivo === 0) {
+          this.funcionariosAgencia.splice( i, 1 );
         }
 
         var rolIdArray: number[] = [];
-        for (let j = 0; j < this.funcinariosAgencia[i].usuario[0].usuarioRol.length; j++) {
-          rolIdArray.push(this.funcinariosAgencia[i].usuario[0].usuarioRol[j].rol_id);
+        for (let j = 0; j < this.funcionariosAgencia[i].usuario[0].usuarioRol.length; j++) {
+          rolIdArray.push(this.funcionariosAgencia[i].usuario[0].usuarioRol[j].rol_id);
         }
 
         var cont: number = 0;
@@ -1571,7 +1578,7 @@ public desactivarMP() {
         }
 
         if (cont <= 0) {
-          this.funcinariosAgencia.splice( i, 1 );
+          this.funcionariosAgencia.splice( i, 1 );
         }
       }
 
@@ -1588,9 +1595,9 @@ public desactivarMP() {
     
     this.getFuncionariosAg(this.objExpPend);
 
-    for (let i = 0; i < this.funcinariosAgencia.length; i++) {
-      if (this.objExpPend.iClaveFuncionario === this.funcinariosAgencia[i].iClaveFuncionario) {
-        this.funcinariosAgencia.splice( i, 1);
+    for (let i = 0; i < this.funcionariosAgencia.length; i++) {
+      if (this.objExpPend.iClaveFuncionario === this.funcionariosAgencia[i].iClaveFuncionario) {
+        this.funcionariosAgencia.splice( i, 1);
       }
     }
 
@@ -1748,9 +1755,10 @@ public desactivarMP() {
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
   public jerarqVal: string = "";
-  public funcinariosAgencia1: FunciAgencia[] = [];
+  public funcionariosAgencia1: FunciAgencia[] = [];
+
   public onSelectRoles(value: number) {
-    
+    this.funcionariosAgencia1 = [];
     this.iclave = this.claveglobal;
     this.catDis = this.catDisGlobal;
     for (let i = 0; i< this.roles.length; i++){
@@ -1772,17 +1780,17 @@ public desactivarMP() {
     console.log("valor select catDis => " + this.catDis);
 
     this.membershipService.getFUsuarioAgencia(this.catDis).subscribe( exp => {
-      this.funcinariosAgencia = exp
-      console.log(this.funcinariosAgencia);
+      this.funcionariosAgencia = exp
+      console.log(this.funcionariosAgencia);
 
-      for (let i:number = 0; i < this.funcinariosAgencia.length; i++) {
+      for (let i:number = 0; i < this.funcionariosAgencia.length; i++) {
         // if (this.funcinariosAgencia[i].usuario[0].bEsActivo === 0) {
         //   this.funcinariosAgencia.splice( i, 1 );
         // }
 
         var rolIdArray: number[] = [];
-        for (let j:number = 0; j < this.funcinariosAgencia[i].usuario[0].usuarioRol.length; j++) {
-          rolIdArray.push(this.funcinariosAgencia[i].usuario[0].usuarioRol[j].rol_id);
+        for (let j:number = 0; j < this.funcionariosAgencia[i].usuario[0].usuarioRol.length; j++) {
+          rolIdArray.push(this.funcionariosAgencia[i].usuario[0].usuarioRol[j].rol_id);
         }
         console.log(rolIdArray);
 
@@ -1796,24 +1804,13 @@ public desactivarMP() {
         console.log("posicion => " + i);
 
         if (cont) {
-          this.funcinariosAgencia1.push(this.funcinariosAgencia[i]);
+          this.funcionariosAgencia1.push(this.funcionariosAgencia[i]);
         }
       }
 
-      console.log(this.funcinariosAgencia1);
+      console.log(this.funcionariosAgencia1);
 
     });
-
-    // this.membershipService.getListarExp(this.iclave, this.catDis, this.jerarquiaOrg).subscribe( listaExp => {
-    //    this.listaExp = listaExp
-    //    console.log(listaExp);
-    // });
-
-    // this.fetch((data) => {
-    //   this.temp = [...data];
-    //   this.rows = data;
-    //   setTimeout(() => { this.loadingIndicator = false; }, 1500);
-    // }, this.iclave, this.catDis, this.jerarquiaOrg);
   }
 
   /*======================================pruebas ngx-datatable========================================*/
@@ -1893,19 +1890,33 @@ public desactivarMP() {
 
   // Se actualiza el funcionario seleccionado
   public asignarExpPendientes(asignarPendientes: AsignarPendientes) {
+    this.loading = true;
     this.membershipService.asignarExpPendientes(asignarPendientes).subscribe( asignarPendientes => {
       this.asignarPendientes;
-    });
-    // console.log("Se ejecuto el asignar expedientes: " + asignarPendientes.iclavefuncionarioNuevo);
-    
-    swal({
-      title:"Se asignaron los expedientes...",
-      text: this.titularAgencia,
-      type: "success"
+      swal({
+        title:"Se asignaron los expedientes...",
+        text: this.titularAgencia,
+        type: "success"
       }).then(() =>{
         this.closeModalExpPend();
         this.router.navigate(['/pages/membership']);
       });
+      this.loading = false;
+    }, err => {
+      swal({
+        title:"Error en reasignación",
+        position: 'center',
+        // text: "Ocurrió un error: " + err.message + " verifique su conección o los permisos de acceso de la red.",
+        html: "Ocurrió un error al reasignar los expedientes: <br> <strong style= 'color:#FD2D00'>" + err.message + "</strong>",
+        type: 'error',
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar'
+      });
+      this.loading = false;
+    });
+    // console.log("Se ejecuto el asignar expedientes: " + asignarPendientes.iclavefuncionarioNuevo);
+    
+    
     
   }
 
