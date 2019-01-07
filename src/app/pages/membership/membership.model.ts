@@ -152,7 +152,7 @@ export class FunciAgencia {
   iClaveFuncionario: number;
   cNombreFuncionario: string;
   cApellidoPaternoFuncionario: string;
-  cAPellidoMaternoFuncionario: string;
+  cApellidoMaternoFuncionario: string;
   cNombre: string;
   esMP: number;
   bEsActivo: number;

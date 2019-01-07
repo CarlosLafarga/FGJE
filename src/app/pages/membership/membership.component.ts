@@ -28,6 +28,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public cambioAdscripcion : CambioAdscripcion[];
   public adscripcion : CambioAdscripcion;
   public funcionarios: FuncionariosData[] = [];
+  public funcionarioss: FuncionariosData[] = [];
   public listaExp: listarExp[] = [];
   public funcionario: FuncionariosData;
   public roles: Roles[] = [];
@@ -78,6 +79,9 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public jerarquiaOrg: number = 0;
   public arrayExp:any[]= [];
   public jeraTabla : number = 0;
+  public contEsMP: number = 0;
+  public esmp : any[] = [];
+  public numMP : number;
 
   // ============variables de filtrado============
   public searchText: string;
@@ -435,92 +439,142 @@ export class MembershipComponent implements OnInit, OnDestroy {
 /*Activar MP*/
 public rev1: boolean = true;
 public rev2: boolean = true;
-public activarMP(funcionario) {
-  
- if(funcionario.esMP === 0){
-  swal({
-    title: 'Activar MP ',
-    text: '¿Esta seguro que desea activar al funcionario como MP?',
-    type: 'warning',
-    html: '<b>¿Esta seguro que desea activar al funcionario como MP?</b><br><label><b>Justificacion:</b></label>',
-    input: 'text',
-    inputValidator: (value) => {
-      return !value && 'Por favor ingrese la justificacion.'
-     },
-    showCancelButton: true,
-    confirmButtonText: 'Activar',
-    cancelButtonText: 'Cancelar'
 
-  }).then((result) => {
-
-    if (result.value) {
-      // const act = e.target.checked;
-      const valor: number = 1;
-      funcionario.esMP = 1;
-      //  console.log("Se Activo el funcionario con la bandera MP => " + funcionario.cNombreFuncionario );
-      //  console.log(valor);      
-      var justificacion = result.value;
-      var iclaveFuncionarionew = funcionario.iClaveFuncionario;
-
-      let cambioMP2 = new cambioMP(iclaveFuncionarionew, valor, justificacion);
-      this.cambioMP1( cambioMP2 );
-      
-      swal({
-        title:"Funcionario ahora es MP'",
-        text: "Funcionario ahora es MP",
-        type: "success"
-        }).then(() =>{
-        
-        //  location.reload();
-        });
-    } else if (result.dismiss === swal.DismissReason.cancel) {
-      this.rev1 = true; 
-    }
-  
+public checarMP (catDis:number){
+  this.numMP = 0;
+  this.membershipService.getfunciMP(catDis).subscribe( (esmp:any) => {
+    this.funcionarioss = esmp
+    this.numMP = this.funcionarioss.length;
   });
-  } else {
+  console.log(this.numMP);
+  return this.numMP;
+}
+
+public activarMP(funcionario) {
+  this.contEsMP = 0;
+  this.membershipService.getFUsuarioAgencia(funcionario.catDiscriminante_id).subscribe( funciAgencia => {
+    this.funciAgencia = funciAgencia
     
-    swal({
-      title: 'Desactivar MP ',
-      text: '¿Esta seguro que desea desactivar al funcionario como MP?',
-      type: 'warning',
-      html: '<b>¿Esta seguro que desea desactivar al funcionario como MP?</b><br><label><b>Justificacion:</b></label>',
-      input: 'text',
-      inputValidator: (value) => {
-        return !value && 'Por favor ingrese la justificacion.'
-      },
-      showCancelButton: true,
-      confirmButtonText: 'Desactivar',
-      cancelButtonText: 'Cancelar'
 
-    }).then((result) => {
-
-      if (result.value) {
-        // const act = e.target.checked;
-        const valor: number = 0;
-        funcionario.esMP = 0;
-        //  console.log("Se desactiva el funcionario con la bandera MP => " + funcionario.cNombreFuncionario );
-        //  console.log(valor);      
-        var justificacion = result.value;
-        var iclaveFuncionarionew = funcionario.iClaveFuncionario;
-
-        let cambioMP2 = new cambioMP(iclaveFuncionarionew, valor, justificacion);
-        this.cambioMP1( cambioMP2 );
-        
-        swal({
-          title:"Funcionario ahora ya no es MP'",
-          text: "Funcionario ahora ya no es MP",
-          type: "success"
-          }).then(() =>{
-          
-          //  location.reload();
-          });
-      } else if (result.dismiss === swal.DismissReason.cancel) {
-        this.rev2 = true; 
+    for (let i = 0; i < this.funciAgencia.length; i++) {
+      
+      if (this.funciAgencia[i].esMP == 1) {
+        this.contEsMP ++;
       }
-    });
+    }
 
-  }
+    console.log("Existe un mp => "+this.contEsMP);
+    // console.log(this.funciAgencia);
+    /*--------------------------------------------------------------------------------------------------------*/
+    
+
+      if(funcionario.esMP === 0){
+        if(this.contEsMP != 1 ){
+        swal({
+          title: 'Activar MP ',
+          text: '¿Esta seguro que desea activar al funcionario como MP?',
+          type: 'warning',
+          html: '<b>¿Esta seguro que desea activar al funcionario como MP?</b><br><label><b>Justificacion:</b></label>',
+          input: 'text',
+          inputValidator: (value) => {
+            return !value && 'Por favor ingrese la justificacion.'
+          },
+          showCancelButton: true,
+          confirmButtonText: 'Activar',
+          cancelButtonText: 'Cancelar'
+      
+          }).then((result) => {
+      
+          if (result.value) {
+            // const act = e.target.checked;
+            const valor: number = 1;
+            funcionario.esMP = 1;
+            //  console.log("Se Activo el funcionario con la bandera MP => " + funcionario.cNombreFuncionario );
+            //  console.log(valor);      
+            var justificacion = result.value;
+            var iclaveFuncionarionew = funcionario.iClaveFuncionario;
+      
+            let cambioMP2 = new cambioMP(iclaveFuncionarionew, valor, justificacion);
+            this.cambioMP1( cambioMP2 );
+            
+            swal({
+              title:"Funcionario ahora es MP'",
+              text: "Funcionario ahora es MP",
+              type: "success"
+              }).then(() =>{
+              
+              //  location.reload();
+              });
+             } else if (result.dismiss === swal.DismissReason.cancel) {
+               this.rev1 = true; 
+            } 
+        
+            });
+            
+          }else{
+      
+            swal({
+              title:"ATENCIÓN",
+              text: "Ya existe un MP en esta agencia.",
+              type: "warning"
+              }).then(() =>{
+              
+              //  location.reload();
+              });
+
+            }
+
+
+            } else {
+          
+            swal({
+            title: 'Desactivar MP ',
+            text: '¿Esta seguro que desea desactivar al funcionario como MP?',
+            type: 'warning',
+            html: '<b>¿Esta seguro que desea desactivar al funcionario como MP?</b><br><label><b>Justificacion:</b></label>',
+            input: 'text',
+            inputValidator: (value) => {
+              return !value && 'Por favor ingrese la justificacion.'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Desactivar',
+            cancelButtonText: 'Cancelar'
+      
+           }).then((result) => {
+      
+            if (result.value) {
+              // const act = e.target.checked;
+              const valor: number = 0;
+              funcionario.esMP = 0;
+              //  console.log("Se desactiva el funcionario con la bandera MP => " + funcionario.cNombreFuncionario );
+              //  console.log(valor);      
+              var justificacion = result.value;
+              var iclaveFuncionarionew = funcionario.iClaveFuncionario;
+      
+              let cambioMP2 = new cambioMP(iclaveFuncionarionew, valor, justificacion);
+              this.cambioMP1( cambioMP2 );
+              
+              swal({
+                title:"Funcionario ahora ya no es MP'",
+                text: "Funcionario ahora ya no es MP",
+                type: "success"
+                }).then(() =>{
+                
+                //  location.reload();
+                });
+            } else if (result.dismiss === swal.DismissReason.cancel) {
+              this.rev2 = true; 
+            }
+          });
+      
+            }
+        
+  });
+  
+  
+
+    
+
 }
 
 /*DESACTIVAR MP*/
@@ -576,7 +630,7 @@ public desactivarMP() {
 
   public soloRolesCheck( e ) {
     this.soloRoles = e.target.checked;
-    if (this.soloRoles || this.contEsMP > 0) {
+    if (this.soloRoles ) {
       this.prueba = true;
       
       this.valReasignarExpedientes = false;
@@ -585,6 +639,7 @@ public desactivarMP() {
       this.valEsMPCheck = false;
       this.valAgenciaSelect = false;
       // console.log(this.count);
+      console.log(false);
     } else {
       this.prueba = false;
       if( this.count > 0 ){
@@ -597,6 +652,7 @@ public desactivarMP() {
       }
       this.valEsMPCheck = true;
       this.valAgenciaSelect = true;
+      console.log(true);
       // console.log(this.count);
     }
   }
@@ -772,7 +828,7 @@ public desactivarMP() {
 
   public nombreAgActual: string;
   public nAgActual: string[];
-  public contEsMP: number = 0;
+  
 
   
 
@@ -817,7 +873,7 @@ public desactivarMP() {
         }
       }
 
-      console.log(this.contEsMP);
+      console.log("Existe un mp => "+this.contEsMP);
       // console.log(this.funciAgencia);
 
     }, err => {
@@ -883,104 +939,7 @@ public desactivarMP() {
             this.pageRefresh();
             this.router.navigate(['/pages/membership']);
           });
-          // swal({
-          //   title: 'CUIDADO!',
-          //   text: "El funcionario tiene expedientes en la agencia seleccionada, " +
-          //   "si lo cambia a esta agencia tomará el control de los mismos, " +
-          //   "¿desea continuar?",
-          //   type: 'warning',
-          //   showCancelButton: true,
-          //   allowOutsideClick: false,
-          //   allowEscapeKey: false,
-          //   confirmButtonColor: '#3085d6',
-          //   cancelButtonColor: '#aaa',
-          //   confirmButtonText: 'Aceptar',
-          //   cancelButtonText: 'Reasignar expedientes'
-          // }).then((result) => {
-          //   if (result.value) {
-          //     swal(
-          //       'Confirmado',
-          //       'Puede seguir con el proceso.',
-          //       'success'
-          //     )
-          //   } else if (result.dismiss === swal.DismissReason.cancel) {
-          //     swal.mixin({
-          //       title: 'Reasignar',
-          //       text: "Seleccione un funcinario para continuar con la reasignación.",
-          //       type: 'warning',
-          //       allowOutsideClick: false,
-          //       allowEscapeKey : false,
-          //       input: 'select',
-          //       inputOptions: this.inputOptions,
-          //       inputPlaceholder: 'Seleccione un funcionario',
-          //       showCancelButton: true,
-          //       confirmButtonText: 'Siguiente &rarr;',
-          //       cancelButtonText: 'Cancelar',
-          //       progressSteps:['1','2'],
-          //       inputValidator: (value) => {
-          //         return !value && 'Favor de escoger al funcionario a quien reasignara expedientes.'
-          //        },
-          //     }).queue([
-          //         {
-                    
-          //         },
-          //         {
-          //           title:'Justificacion',
-          //           inputPlaceholder: 'Justificación',
-          //           text:'Justifique el motivo de la reasignación de expedientes.',
-          //           input:'text',
-          //           inputValidator: (value) => {
-          //             return !value && 'Por favor ingrese la justificacion.'
-          //           },
-                    
-          //         }
-          //     ]).then((result) => {
-          //       if (result.value) {
-          //         var catDis: number = valor;
-          //         var iclaveFNuevo = parseInt(result.value[0]);
-                
-          //         swal({
-          //           title: 'Confirmar',
-          //           text: "¿Esta usted seguro(a) de continuar con la reasignación de los expedientes?",
-          //           confirmButtonText: 'Aceptar',
-          //           showCancelButton: true,
-          //           allowOutsideClick: false,
-          //           allowEscapeKey : false,
-          //           cancelButtonText:'Cancelar',
-          //           confirmButtonColor: '#4BAE4F',
-          //           cancelButtonColor: '#d33',
-          //         }).then((result) =>{
-          //           if (result.value) {
-          //             const iclaveFAnt: number = clave;
-
-          //             let asignar = new AsignarPendientes(catDis, iclaveFNuevo, iclaveFAnt);
-          //             // console.log(asignar);
-          //             this.asignarExpPendientes( asignar );
-
-          //             swal(
-          //               'Confirmado',
-          //               'Los expedientes se han reasignado correctamente.',
-          //               'success'
-          //             )
-          //           } else if (result.dismiss === swal.DismissReason.cancel) {
-
-          //             swal({
-          //               type: 'error',
-          //               title: 'Cancelado',
-          //               text: 'Se ha cancelado la reasignación de los expedientes.',
-          //             });
-          //           }
-          //         });
-          //       } else if (result.dismiss === swal.DismissReason.cancel) {
-          //         swal({
-          //           type: 'error',
-          //           title: 'Cancelado',
-          //           text: 'Se ha cancelado la reasignación de los expedientes.',
-          //         });
-          //       }
-          //     });
-          //   }
-          // });
+          
 
         }
 
@@ -1046,21 +1005,12 @@ public desactivarMP() {
         text: "El cambio de adscripcioón se ha llevado con exito.",
         type: 'success',
         timer: 3000
+        }).then(() =>{
+          this.pageRefresh();
+          this.router.navigate(['/pages/membership']);
+        });
+
       });
-      this.loading = false;
-      this.pageRefresh();
-      this.router.navigate(['/pages/membership']);
-    }, err => {
-      swal({
-        title:"Error en el cambio de adscripción",
-        position: 'center',
-        // text: "Ocurrió un error: " + err.message + " verifique su conección o los permisos de acceso de la red.",
-        html: "Ocurrió un error: <br> <strong style= 'color:#FD2D00'>" + err.message + "</strong>",
-        type: 'error',
-        showConfirmButton: true
-      });
-      this.loading = false;
-    });
     // console.log("Se ejecuto el cambio de adscripcion: " + cambioAdscripcion.iClaveFuncionarioSolicitante);
     
     // swal({
