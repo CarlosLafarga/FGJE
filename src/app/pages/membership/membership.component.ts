@@ -70,6 +70,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public cambioMP : cambioMP[];
   public mostrarActivos: boolean = true;
   public prueba: boolean = false;
+  public validarModal: boolean = false;
   public claveglobal:number;
   public catDisGlobal:number;
   public myobjJson:string;
@@ -629,9 +630,11 @@ public desactivarMP() {
   }
 
   public soloRolesCheck( e ) {
+    // this.validarModal = !this.validarModal;
     this.soloRoles = e.target.checked;
     if (this.soloRoles ) {
       this.prueba = true;
+      this.validarModal = true;
       
       this.valReasignarExpedientes = false;
       this.valExpPendCheck = false;
@@ -641,6 +644,7 @@ public desactivarMP() {
       // console.log(this.count);
       console.log(false);
     } else {
+      this.validarModal = false;
       this.prueba = false;
       if( this.count > 0 ){
         this.valReasignarExpedientes = true;
@@ -873,8 +877,7 @@ public desactivarMP() {
         }
       }
 
-      console.log("Existe un mp => "+this.contEsMP);
-      // console.log(this.funciAgencia);
+      console.log("Existe un mp => " + this.contEsMP);
 
     }, err => {
       swal({
@@ -891,6 +894,7 @@ public desactivarMP() {
 
   public getCatUIE(valor: number): void {
     if (valor !== undefined) {
+      this.validarModal = true;
       // console.log(valor);
       this.membershipService.getcatUIE(valor).subscribe( catUIE => {
         this.catUIE = catUIE
@@ -1010,6 +1014,16 @@ public desactivarMP() {
           this.router.navigate(['/pages/membership']);
         });
 
+      }, err => {
+        swal({
+          title:"Error al modificar",
+          html: "Ocurrió un error al modificar los datos: <br> <strong style= 'color:#FD2D00'>" + err.message + "</strong>",
+          position: 'center',
+          type: 'error',
+          showConfirmButton: true,
+          confirmButtonText: 'Aceptar'
+        });
+        this.loading = false;
       });
     // console.log("Se ejecuto el cambio de adscripcion: " + cambioAdscripcion.iClaveFuncionarioSolicitante);
     
@@ -1189,6 +1203,7 @@ public desactivarMP() {
   
   // Se abre el modal y se cargan los datos del funcionario seleccionado
   public openModal(modalContent, funcionario, catUIE) {
+    console.log(this.validarModal);
     this.funcionarioSeleccionado = funcionario.iclaveFuncionario;
     // console.log(funcionario);
     // this.getAgencias();
@@ -1198,6 +1213,11 @@ public desactivarMP() {
     this.getCatUIE(catUIE);
     this.getCountExp1(funcionario);
     // this.ExpSinAsignar( funcionario );
+    for (let i = 0; i < this.agencias.length; i++) {
+      if (funcionario.catDiscriminante_id === this.agencias[i].catDiscriminante_id) {
+        var tipoUnidadAdmva = this.agencias[i].iTipoUnidadAdministrativa
+      }
+    }
     this.loading = true;
     
     this.membershipService.getExisteExp( funcionario.catDiscriminante_id ).subscribe( existentes => {
@@ -1211,7 +1231,7 @@ public desactivarMP() {
             this.rolesAMPFac = roles;
             console.log(this.rolesAMPFac);
 
-        if (this.valorExpSinAsignar > 0 && this.rolesAMPFac <= 0) {
+        if (this.valorExpSinAsignar > 0 && this.rolesAMPFac <= 0 && tipoUnidadAdmva == 3) {
           swal({
             title: 'Expedientes sin asignar',
             text: 'Existen expedientes sin asignar en esta agencia que solo éste funcionario, '
@@ -1220,7 +1240,7 @@ public desactivarMP() {
             type: 'warning',
             showCancelButton: false,
             showConfirmButton: true,
-            confirmButtonText: 'Continuar',
+            confirmButtonText: 'Aceptar',
             allowOutsideClick: false,
             allowEscapeKey: false,
             allowEnterKey: true
@@ -1349,7 +1369,7 @@ public desactivarMP() {
 
       iClaveFuncionarioSolicitante = this.form.value.iClaveFuncionario;
       iClaveFuncionarioAnterior = this.clavedelactaul[0];
-      iClaveFuncionarioExp = this.form.value.archivoDigital_id;
+      // iClaveFuncionarioExp = this.form.value.archivoDigital_id;
       catDiscriminateSolicitante = this.funcionario.catDiscriminante_id;
       catUIE_actual = this.val[0];
       catDiscriminateNuevo = this.form.value.catDiscriminante_id;

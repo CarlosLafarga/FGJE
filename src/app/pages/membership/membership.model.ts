@@ -110,6 +110,7 @@ export class Agencias {
   cNombre: string;
   iTipo: number;
   catDelegacion_id: number;
+  iTipoUnidadAdministrativa: number;
 }
 
 export class catUIE {

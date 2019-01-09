@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class loginServices {
     
-   // public general = "http://localhost:55244/api";
-     public general = "http://192.168.105.53:55245/api";
+   public general = "http://localhost:55244/api";
+    //  public general = "http://192.168.105.53:55245/api";
     public url = this.general+"/Auth/";
     public headers;
     public loggedInStatus:boolean = false;
