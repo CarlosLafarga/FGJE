@@ -440,8 +440,8 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var loginServices = /** @class */ (function () {
     function loginServices(http) {
         this.http = http;
-        this.general = "http://localhost:55244/api";
-        //  public general = "http://192.168.105.53:55245/api";
+        //    public general = "http://localhost:55244/api";
+        this.general = "http://192.168.105.53:55245/api";
         this.url = this.general + "/Auth/";
         this.loggedInStatus = false;
         this.headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({ 'Content-Type': 'application/json' });
@@ -536,4 +536,4 @@ module.exports = __webpack_require__(/*! C:\Users\usuario\Documents\GitHub\FGJE\
 /***/ })
 
 },[[0,"runtime","vendor"]]]);
-//# sourceMappingURL=main.91740beeb0ce873c53f9.js.map
+//# sourceMappingURL=main.729eec0da8e78f2f11a1.js.map

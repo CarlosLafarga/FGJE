@@ -9827,8 +9827,8 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var MembershipService = /** @class */ (function () {
     function MembershipService(http) {
         this.http = http;
-        this.general = "http://localhost:55244/api";
-        // public general = "http://192.168.105.53:55245/api";
+        //    public general = "http://localhost:55244/api";
+        this.general = "http://192.168.105.53:55245/api";
         this.url2 = this.general + "/funcionarios";
         this.url3 = this.general + "/catDiscriminantes";
         this.url4 = this.general + "/Roles";
@@ -9931,4 +9931,4 @@ var MembershipService = /** @class */ (function () {
 /***/ })
 
 }]);
-//# sourceMappingURL=app-pages-membership-membership-module.2599ddb0b0130134bb12.js.map
+//# sourceMappingURL=app-pages-membership-membership-module.0d22aa5ec10dc79686fb.js.map

@@ -932,19 +932,50 @@ public desactivarMP() {
       this.membershipService.getCounthelper( clave, valor ).subscribe( countHelper => {
       this.countHelper = countHelper
       console.log(countHelper);
+
       if(this.countHelper > 0){
-
         this.getFunAgPendientes(valor);
-        swal({
-          title:"Cuidado",
-          text: "Este funcionario cuenta con expedientes pendientes en la agencia seleccionada, necesita asignar los expedientes para realizar el cambio de adscripción o cualquier otra acción.",
-          type: "info"
-          }).then(() =>{
-            this.pageRefresh();
-            this.router.navigate(['/pages/membership']);
-          });
-          
 
+        swal({
+          title: 'CUIDADO!',
+          text: "El funcionario tiene expedientes en la agencia seleccionada, " +
+          "si lo cambia tomará el control de los mismos expedientes, " +
+          "para reasignarlos antes de cambiarlo, dirijase a 'Ver expedientes pendientes' " +
+          "¿desea continuar?",
+          type: 'warning',
+          showCancelButton: true,
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#aaa',
+          confirmButtonText: 'Continuar',
+          cancelButtonText: 'Cancelar'
+        }).then((result) => {
+          if (result.value) {
+
+            swal({
+              title:"Continuar",
+              text: "ha decidido continuar con el proceso, el funcionario podra ver sus expedientes en la agencia destino.",
+              confirmButtonText: 'Aceptar',
+              type: "success"
+              });
+
+          } else if (result.dismiss === swal.DismissReason.cancel) {
+            
+            this.closeModal();
+          
+          }
+        });
+
+        // swal({
+        //   title:"Cuidado",
+        //   text: "Este funcionario cuenta con expedientes pendientes en la agencia seleccionada, necesita asignar los expedientes para realizar el cambio de adscripción o cualquier otra acción.",
+        //   type: "info"
+        //   }).then(() =>{
+        //     this.pageRefresh();
+        //     this.router.navigate(['/pages/membership']);
+        //   });
+          
         }
 
         this.inputOptions = {};
@@ -1042,7 +1073,6 @@ public desactivarMP() {
       this.cambioEstatus;
     });
     // console.log("se ejecuto cambio de estatus.");
-    
   }
 
   public cambioMP1(cambioMP:cambioMP){
@@ -1203,9 +1233,8 @@ public desactivarMP() {
   
   // Se abre el modal y se cargan los datos del funcionario seleccionado
   public openModal(modalContent, funcionario, catUIE) {
-    console.log(this.validarModal);
     this.funcionarioSeleccionado = funcionario.iclaveFuncionario;
-    // console.log(funcionario);
+    console.log(funcionario);
     // this.getAgencias();
     // this.getRoles();
     this.getFuncionarioRol( funcionario );
