@@ -122,10 +122,9 @@ export class MembershipComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
     this.getFuncionarios();
-
     this.getAgencias();
-
     this.getRoles();
 
     this.formExpPend =  this.fbExpPend.group({
@@ -893,6 +892,7 @@ public desactivarMP() {
   }
 
   public getCatUIE(valor: number): void {
+    console.log(valor);
     if (valor !== undefined) {
       this.validarModal = true;
       // console.log(valor);
@@ -933,49 +933,49 @@ public desactivarMP() {
       this.countHelper = countHelper
       console.log(countHelper);
 
-      if(this.countHelper > 0){
-        this.getFunAgPendientes(valor);
+        if(this.countHelper > 0){
+          this.getFunAgPendientes(valor);
 
-        swal({
-          title: 'CUIDADO!',
-          text: "El funcionario tiene expedientes en la agencia seleccionada, " +
-          "si lo cambia tomará el control de los mismos expedientes, " +
-          "para reasignarlos antes de cambiarlo, dirijase a 'Ver expedientes pendientes' " +
-          "¿desea continuar?",
-          type: 'warning',
-          showCancelButton: true,
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#aaa',
-          confirmButtonText: 'Continuar',
-          cancelButtonText: 'Cancelar'
-        }).then((result) => {
-          if (result.value) {
+          swal({
+            title: 'CUIDADO!',
+            text: "El funcionario tiene expedientes en la agencia seleccionada, " +
+            "si lo cambia tomará el control de los mismos expedientes, " +
+            "para reasignarlos antes de cambiarlo, dirijase a 'Ver expedientes pendientes' " +
+            "¿desea continuar?",
+            type: 'warning',
+            showCancelButton: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#aaa',
+            confirmButtonText: 'Continuar',
+            cancelButtonText: 'Cancelar'
+          }).then((result) => {
+            if (result.value) {
 
-            swal({
-              title:"Continuar",
-              text: "ha decidido continuar con el proceso, el funcionario podra ver sus expedientes en la agencia destino.",
-              confirmButtonText: 'Aceptar',
-              type: "success"
-              });
+              swal({
+                title:"Continuar",
+                text: "ha decidido continuar con el proceso, el funcionario podra ver sus expedientes en la agencia destino.",
+                confirmButtonText: 'Aceptar',
+                type: "success"
+                });
 
-          } else if (result.dismiss === swal.DismissReason.cancel) {
+            } else if (result.dismiss === swal.DismissReason.cancel) {
+              
+              this.closeModal();
             
-            this.closeModal();
-          
-          }
-        });
+            }
+          });
 
-        // swal({
-        //   title:"Cuidado",
-        //   text: "Este funcionario cuenta con expedientes pendientes en la agencia seleccionada, necesita asignar los expedientes para realizar el cambio de adscripción o cualquier otra acción.",
-        //   type: "info"
-        //   }).then(() =>{
-        //     this.pageRefresh();
-        //     this.router.navigate(['/pages/membership']);
-        //   });
-          
+          // swal({
+          //   title:"Cuidado",
+          //   text: "Este funcionario cuenta con expedientes pendientes en la agencia seleccionada, necesita asignar los expedientes para realizar el cambio de adscripción o cualquier otra acción.",
+          //   type: "info"
+          //   }).then(() =>{
+          //     this.pageRefresh();
+          //     this.router.navigate(['/pages/membership']);
+          //   });
+            
         }
 
         this.inputOptions = {};

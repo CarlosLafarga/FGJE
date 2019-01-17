@@ -31,7 +31,7 @@ export class MembershipService {
 
     constructor(public http: HttpClient) {
         this.headers = new HttpHeaders({ 'Content-Type': 'application/json' }); 
-     }
+    }
 
     getFuncionarios(): Observable<FuncionariosData[]> {
         return this.http.get<FuncionariosData[]>(this.url2);

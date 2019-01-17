@@ -8633,6 +8633,7 @@ var MembershipComponent = /** @class */ (function () {
     };
     MembershipComponent.prototype.getCatUIE = function (valor) {
         var _this = this;
+        console.log(valor);
         if (valor !== undefined) {
             this.validarModal = true;
             // console.log(valor);
@@ -8675,13 +8676,40 @@ var MembershipComponent = /** @class */ (function () {
                 if (_this.countHelper > 0) {
                     _this.getFunAgPendientes(valor);
                     sweetalert2__WEBPACK_IMPORTED_MODULE_8___default()({
-                        title: "Cuidado",
-                        text: "Este funcionario cuenta con expedientes pendientes en la agencia seleccionada, necesita asignar los expedientes para realizar el cambio de adscripción o cualquier otra acción.",
-                        type: "info"
-                    }).then(function () {
-                        _this.pageRefresh();
-                        _this.router.navigate(['/pages/membership']);
+                        title: 'CUIDADO!',
+                        text: "El funcionario tiene expedientes en la agencia seleccionada, " +
+                            "si lo cambia tomará el control de los mismos expedientes, " +
+                            "para reasignarlos antes de cambiarlo, dirijase a 'Ver expedientes pendientes' " +
+                            "¿desea continuar?",
+                        type: 'warning',
+                        showCancelButton: true,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#aaa',
+                        confirmButtonText: 'Continuar',
+                        cancelButtonText: 'Cancelar'
+                    }).then(function (result) {
+                        if (result.value) {
+                            sweetalert2__WEBPACK_IMPORTED_MODULE_8___default()({
+                                title: "Continuar",
+                                text: "ha decidido continuar con el proceso, el funcionario podra ver sus expedientes en la agencia destino.",
+                                confirmButtonText: 'Aceptar',
+                                type: "success"
+                            });
+                        }
+                        else if (result.dismiss === sweetalert2__WEBPACK_IMPORTED_MODULE_8___default.a.DismissReason.cancel) {
+                            _this.closeModal();
+                        }
                     });
+                    // swal({
+                    //   title:"Cuidado",
+                    //   text: "Este funcionario cuenta con expedientes pendientes en la agencia seleccionada, necesita asignar los expedientes para realizar el cambio de adscripción o cualquier otra acción.",
+                    //   type: "info"
+                    //   }).then(() =>{
+                    //     this.pageRefresh();
+                    //     this.router.navigate(['/pages/membership']);
+                    //   });
                 }
                 _this.inputOptions = {};
             });
@@ -8905,9 +8933,8 @@ var MembershipComponent = /** @class */ (function () {
     // Se abre el modal y se cargan los datos del funcionario seleccionado
     MembershipComponent.prototype.openModal = function (modalContent, funcionario, catUIE) {
         var _this = this;
-        console.log(this.validarModal);
         this.funcionarioSeleccionado = funcionario.iclaveFuncionario;
-        // console.log(funcionario);
+        console.log(funcionario);
         // this.getAgencias();
         // this.getRoles();
         this.getFuncionarioRol(funcionario);
@@ -9931,4 +9958,4 @@ var MembershipService = /** @class */ (function () {
 /***/ })
 
 }]);
-//# sourceMappingURL=app-pages-membership-membership-module.0d22aa5ec10dc79686fb.js.map
+//# sourceMappingURL=app-pages-membership-membership-module.88bd72062e3018990563.js.map
