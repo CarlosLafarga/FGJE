@@ -1153,14 +1153,15 @@ public desactivarMP() {
 
   public quitarRol() {
     if (this.posicionRolF > -1 && this.selectedRolF !== 0) {
-      if (this.revisarRoles <= 0 && this.valido) {
-        swal({
-          title: "No se puede eliminar el rol!",
-          text: "Este funcionario es el único en la agencia que cuenta con el rol seleccionado. " +
-                "para poder eliminarlo por favor asegurese que alguien mas tenga este rol.",
-          type: "warning"
-        });
-      } else if (this.delRol.esPrincipal === 1) {
+      // if (this.revisarRoles <= 0 && this.valido) {
+      //   swal({
+      //     title: "No se puede eliminar el rol!",
+      //     text: "Este funcionario es el único en la agencia que cuenta con el rol seleccionado. " +
+      //           "para poder eliminarlo por favor asegurese que alguien mas tenga este rol.",
+      //     type: "warning"
+      //   });
+      // } else 
+      if (this.delRol.esPrincipal === 1) {
         // console.log("El rol es principal");
         // this.toastrService.warning('no puede eliminar el rol principal! para poder eliminar este rol seleccione otro como principal.', 'Atención!', {timeOut: 3000});
         swal({
