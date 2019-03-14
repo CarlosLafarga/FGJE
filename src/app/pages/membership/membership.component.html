@@ -38,7 +38,7 @@
                             name="soloActivos"
                             [(ngModel)]="mostrarActivos"
                     >
-                    <label class="custom-control-label" for="soloActivos">Mostrar solo usuarios activos</label>
+                    <label class="custom-control-label" for="soloActivos">Mostrar sólo usuarios activos</label>
                 </div>
             </div>
         </div>
@@ -86,7 +86,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr class="bg-gray">
                             <td><input type="text" [(ngModel)]="searchNumero" placeholder="" class="form-control border-1"></td>
                             <td><input type="text" [(ngModel)]="searchNombre" placeholder="" class="form-control border-1"></td>
                             <td><input type="text" [(ngModel)]="searchApPaterno" placeholder="" class="form-control border-1"></td>
@@ -184,19 +184,19 @@
             <div class="row">
                 <div class="col-12 vertical-tabs">
                     <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="row px-3" #datos2="ngForm">
-                        <ul class="nav flex-column left col-2 border-0 rounded-0 mr-0 bg-light">              
+                        <!-- <ul class="nav flex-column left col-2 border-0 rounded-0 mr-0 bg-light">              
                             <li class="nav-item bg-light">
                                 <a class="nav-link active" href="#reubicarFuncionario" data-toggle="tab">Reubicar funcionario</a>
                             </li>
-                            <!-- <li class="nav-item bg-light">
+                            <li class="nav-item bg-light">
                                 <a *ngIf="valReasignarExpedientes" class="nav-link" href="#reasignarExpedientes" data-toggle="tab">Reasignar expedientes</a>
                                 <a *ngIf="!valReasignarExpedientes" class="nav-link disabled" href="#reasignarExpedientes" data-toggle="tab">Reasignar expedientes</a>
-                            </li> -->
-                        </ul>
-                        <div class="tab-content col-10 border-0">
+                            </li>
+                        </ul> -->
+                        <!-- <div class="tab-content col-12 border-0"> -->
 
-                            <div class="tab-pane active" id="reubicarFuncionario">
-                                <div class="card">
+                            <!-- <div class="tab-pane active" id="reubicarFuncionario"> -->
+                                <div class="card col-12">
                                     <div class="card-body">
                                         <h4 class="card-title mb-0">Reubicar funcionario</h4>
                                         <h5 class="card-title mb-0">Agenc&iacute;a actual:&nbsp;<small>{{ nombreAgActual }}</small></h5>
@@ -402,7 +402,7 @@
                                     </div>
 
                                 </div>
-                            </div>
+                            <!-- </div> -->
 
                             <!-- <div class="tab-pane" id="reasignarExpedientes">
                                 <div class="card">                        
@@ -495,7 +495,7 @@
                                    {{ form.value | json }}
                             </pre> -->
                                   
-                        </div>
+                        <!-- </div> -->
 
                         <div class="col-12 bg-white py-1">
                             <div *ngIf="form.get('cRFC').hasError('required')" class="alert alert-danger alert-dismissible fade show" role="alert">

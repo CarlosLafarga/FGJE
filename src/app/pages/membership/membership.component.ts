@@ -179,7 +179,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log("onDestroy membership");
+    // console.log("onDestroy membership");
   }
 
   public rev: boolean = true;
@@ -1792,7 +1792,7 @@ public desactivarMP() {
         for (let j:number = 0; j < this.funcionariosAgencia[i].usuario[0].usuarioRol.length; j++) {
           rolIdArray.push(this.funcionariosAgencia[i].usuario[0].usuarioRol[j].rol_id);
         }
-        console.log(rolIdArray);
+        // console.log(rolIdArray);
 
         var cont: boolean = false;
         for (let k = 0; k < rolIdArray.length; k++) {
@@ -1800,7 +1800,7 @@ public desactivarMP() {
             cont = true;
           }
         }
-        console.log(cont);
+        // console.log(cont);
         console.log("posicion => " + i);
 
         if (cont) {
