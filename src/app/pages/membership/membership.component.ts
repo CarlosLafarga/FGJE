@@ -463,7 +463,7 @@ public activarMP(funcionario) {
       }
     }
 
-    console.log("Existe un mp => "+this.contEsMP);
+    // console.log("Existe un mp => "+this.contEsMP);
     // console.log(this.funciAgencia);
     /*--------------------------------------------------------------------------------------------------------*/
     
@@ -641,7 +641,7 @@ public desactivarMP() {
       this.valEsMPCheck = false;
       this.valAgenciaSelect = false;
       // console.log(this.count);
-      console.log(false);
+      // console.log(false);
     } else {
       this.validarModal = false;
       this.prueba = false;
@@ -655,7 +655,7 @@ public desactivarMP() {
       }
       this.valEsMPCheck = true;
       this.valAgenciaSelect = true;
-      console.log(true);
+      // console.log(true);
       // console.log(this.count);
     }
   }
@@ -839,7 +839,7 @@ public desactivarMP() {
     this.contEsMP = 0;
     this.membershipService.getFUsuarioAgencia(funcionario.catDiscriminante_id).subscribe( funciAgencia => {
       this.funciAgencia = funciAgencia
-      console.log(this.funciAgencia);
+      // console.log(this.funciAgencia);
 
       this.nAgActual = this.funciAgencia.map(a => a.cNombre);
       this.nombreAgActual = this.nAgActual[0];
@@ -876,7 +876,7 @@ public desactivarMP() {
         }
       }
 
-      console.log("Existe un mp => " + this.contEsMP);
+      // console.log("Existe un mp => " + this.contEsMP);
 
     }, err => {
       swal({
@@ -892,7 +892,7 @@ public desactivarMP() {
   }
 
   public getCatUIE(valor: number): void {
-    console.log(valor);
+    // console.log(valor);
     if (valor !== undefined) {
       this.validarModal = true;
       // console.log(valor);
@@ -901,7 +901,6 @@ public desactivarMP() {
         // console.log(this.catUIE);
         if(this.catUIE.some(cat => cat.catUIE_id !== 0)) {
           this.val = this.catUIE.map(cat => cat.catUIE_id);
-          console.log("");
         }else{
           this.val = [0];
           // console.log(this.val);
@@ -914,7 +913,7 @@ public desactivarMP() {
     if(valor !== undefined){
       this.membershipService.getfunciMP(valor).subscribe( funciMP => {
         this.funciMP = funciMP
-        console.log("Este es el valor que comparan => "+valor);
+        // console.log("Este es el valor que comparan => "+valor);
         if (this.funciMP.some(cat => cat.iClaveFuncionario !== 0)) {
           this.clavedelactaul = this.funciMP.map(cat => cat.iClaveFuncionario);
           // console.log(this.clavedelactaul);
@@ -928,10 +927,10 @@ public desactivarMP() {
     if(valor !==undefined){
       
       var clave  = parseInt((<HTMLInputElement>document.getElementById("iclavefuncionarioselect")).value);
-      console.log(clave);
+      // console.log(clave);
       this.membershipService.getCounthelper( clave, valor ).subscribe( countHelper => {
       this.countHelper = countHelper
-      console.log(countHelper);
+      // console.log(countHelper);
 
         if(this.countHelper > 0){
           this.getFunAgPendientes(valor);
@@ -1132,7 +1131,7 @@ public desactivarMP() {
                                           this.funcionario.catDiscriminante_id,
                                           this.selectedRolF).subscribe( revision => {
                                             this.revisarRoles = revision
-                                            console.log(this.revisarRoles);
+                                            // console.log(this.revisarRoles);
 
                                             if (this.selectedRolF == 8 ||
                                                 this.selectedRolF == 7 ||
@@ -1234,7 +1233,7 @@ public desactivarMP() {
   // Se abre el modal y se cargan los datos del funcionario seleccionado
   public openModal(modalContent, funcionario, catUIE) {
     this.funcionarioSeleccionado = funcionario.iclaveFuncionario;
-    console.log(funcionario);
+    // console.log(funcionario);
     // this.getAgencias();
     // this.getRoles();
     this.getFuncionarioRol( funcionario );
@@ -1251,14 +1250,14 @@ public desactivarMP() {
     
     this.membershipService.getExisteExp( funcionario.catDiscriminante_id ).subscribe( existentes => {
       this.expSinAsignar = existentes
-      console.log(this.expSinAsignar);
+      // console.log(this.expSinAsignar);
       this.valorExpSinAsignar = this.expSinAsignar.length;
 
         this.membershipService.getCountRoles( funcionario.iClaveFuncionario,
           funcionario.catDiscriminante_id,
           6 ).subscribe( roles => {
             this.rolesAMPFac = roles;
-            console.log(this.rolesAMPFac);
+            // console.log(this.rolesAMPFac);
 
         if (this.valorExpSinAsignar > 0 && this.rolesAMPFac <= 0 && tipoUnidadAdmva == 3) {
           swal({
@@ -1482,7 +1481,7 @@ public desactivarMP() {
     this.loading = true;
     this.membershipService.getExpPendientes().subscribe( eP => {
       this.expPendientesLista = eP
-      console.log(this.expPendientesLista); 
+      // console.log(this.expPendientesLista); 
 
       for (let i = 0; i < this.expPendientesLista.length; i++) {
         const ag: number = this.expPendientesLista[i].catDiscriminanteAnterior;
@@ -1501,7 +1500,7 @@ public desactivarMP() {
         return self.indexOf(value) === index;
       }
       this.arrAgSinRepetir = this.arrAgTemp.filter( distinct );
-      console.log(this.arrAgSinRepetir);
+      // console.log(this.arrAgSinRepetir);
 
       this.membershipService.getAgencias().subscribe( agencias => {
         this.agenciasExpPend = agencias
@@ -1514,7 +1513,7 @@ public desactivarMP() {
           }
         }
 
-        console.log(this.agenciasExpPend1);
+        // console.log(this.agenciasExpPend1);
   
       });
 
@@ -1553,7 +1552,7 @@ public desactivarMP() {
   public getFuncionariosAg(expPend: ExpPendientes):void {
     this.membershipService.getFUsuarioAgencia(expPend.catDiscriminanteAnterior).subscribe( exp => {
       this.funcionariosAgencia = exp
-      console.log(this.funcionariosAgencia);
+      // console.log(this.funcionariosAgencia);
 
       for (let i = 0; i < this.funcionariosAgencia.length; i++) {
         if (this.funcionariosAgencia[i].usuario[0].bEsActivo === 0) {
@@ -1615,7 +1614,7 @@ public desactivarMP() {
     this.rolesFun = [];
     this.rolesFun2 = [];
     this.arrTempFun = [];
-    console.log("valor select agencia => " + catDiscriminanteAnterior);
+    // console.log("valor select agencia => " + catDiscriminanteAnterior);
     this.catDisGlobal = catDiscriminanteAnterior;
 
    
@@ -1639,7 +1638,7 @@ public desactivarMP() {
         }
       }
     }
-    console.log(this.funcinarioAgencia);
+    // console.log(this.funcinarioAgencia);
   }
 
   public rolesFun: Roles[] = [];
@@ -1650,7 +1649,7 @@ public desactivarMP() {
     this.rolesFun2 = [];
     this.arrTempJerar = [];
     var arrTemp: number[] = [];
-    console.log("valor select funcionario => " + iclaveFuncionarioAsign);
+    // console.log("valor select funcionario => " + iclaveFuncionarioAsign);
     this.claveglobal = iclaveFuncionarioAsign;
     this.catDis = this.catDisGlobal;
     // this.getRoles();
@@ -1669,7 +1668,7 @@ public desactivarMP() {
         this.temp = [...data];
         this.rows = data;
 
-        console.log(this.rows);
+        // console.log(this.rows);
         for (let i = 0; i < this.rows.length; i++) {
           arrTemp.push(this.rows[i].jerarquiaOrganizacional_id);
         }
@@ -1678,7 +1677,7 @@ public desactivarMP() {
           return self.indexOf(value) === index;
         }
         this.arrTempJerar = arrTemp.filter(distinct);
-        console.log(this.arrTempJerar);
+        // console.log(this.arrTempJerar);
 
         this.membershipService.getRoles().subscribe( roles => {
         this.rolesFun = roles
@@ -1712,7 +1711,7 @@ public desactivarMP() {
 
 
 
-        console.log(this.rows);
+        // console.log(this.rows);
         for (let i = 0; i < this.rows.length; i++) {
           arrTemp.push(this.rows[i].jerarquiaOrganizacional_id);
         }
@@ -1721,11 +1720,11 @@ public desactivarMP() {
           return self.indexOf(value) === index;
         }
         this.arrTempJerar = arrTemp.filter(distinct);
-        console.log(this.arrTempJerar);
+        // console.log(this.arrTempJerar);
 
         this.membershipService.getRoles().subscribe( roles => {
           this.rolesFun = roles
-          console.log(this.rolesFun);
+          // console.log(this.rolesFun);
     
           for (let j = 0; j < this.arrTempJerar.length; j++) {
             for (let k = 0; k < this.rolesFun.length; k++) {
@@ -1773,15 +1772,15 @@ public desactivarMP() {
 
     this.FiltrarJerarquia(this.jerarqVal);
 
-    console.log("Este es el rol => " + rol);
-    console.log("Esta es la jerarquia => " + this.jerarquiaOrg);
-    console.log("valor select rol => " + value);
-    console.log("valor select iclave => " + this.iclave);
-    console.log("valor select catDis => " + this.catDis);
+    // console.log("Este es el rol => " + rol);
+    // console.log("Esta es la jerarquia => " + this.jerarquiaOrg);
+    // console.log("valor select rol => " + value);
+    // console.log("valor select iclave => " + this.iclave);
+    // console.log("valor select catDis => " + this.catDis);
 
     this.membershipService.getFUsuarioAgencia(this.catDis).subscribe( exp => {
       this.funcionariosAgencia = exp
-      console.log(this.funcionariosAgencia);
+      // console.log(this.funcionariosAgencia);
 
       for (let i:number = 0; i < this.funcionariosAgencia.length; i++) {
         // if (this.funcinariosAgencia[i].usuario[0].bEsActivo === 0) {
@@ -1801,14 +1800,14 @@ public desactivarMP() {
           }
         }
         // console.log(cont);
-        console.log("posicion => " + i);
+        // console.log("posicion => " + i);
 
         if (cont) {
           this.funcionariosAgencia1.push(this.funcionariosAgencia[i]);
         }
       }
 
-      console.log(this.funcionariosAgencia1);
+      // console.log(this.funcionariosAgencia1);
 
     });
   }
@@ -1838,7 +1837,7 @@ public desactivarMP() {
       data(JSON.parse(req.response));
     };
     req.send();
-    console.log(req);
+    // console.log(req);
   }
 
   fetch2(data, clave, cat) {
@@ -1849,7 +1848,7 @@ public desactivarMP() {
       data(JSON.parse(req.response));
     };
     req.send();
-    console.log(req);
+    // console.log(req);
   }
 
   FiltrarExpediente(event) {
@@ -1878,11 +1877,11 @@ public desactivarMP() {
 
   onSelect({ selected }) {
    
-    console.log('Select Event', this.selected);
+    // console.log('Select Event', this.selected);
     this.selected.splice(0, this.selected.length);
     this.selected.push(...selected);
     this.arrayExp.push(selected);
-    console.log(this.arrayExp);
+    // console.log(this.arrayExp);
   }
   /*===================================================================================================*/
 
@@ -1930,7 +1929,7 @@ public desactivarMP() {
       const catDiscriminante: number = this.catDis;
       const justificacion: number = this.formExpPend.value.justificacion;
 
-      console.log(iclavefuncionarioAnt+"             "+iclavefuncionarioNuevo+"   "+ stringArray+"       "+catDiscriminante +"         "+justificacion);
+      // console.log(iclavefuncionarioAnt+"             "+iclavefuncionarioNuevo+"   "+ stringArray+"       "+catDiscriminante +"         "+justificacion);
 
       let asignarPendientes = new AsignarPendientes(iclavefuncionarioAnt,
                                                     iclavefuncionarioNuevo,
