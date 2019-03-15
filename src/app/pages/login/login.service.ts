@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable()
 export class loginServices {
     
-   public general = "http://localhost:55244/api";
+//    public general = "http://localhost:55244/api";
     //  public general = "http://192.168.105.53:55245/api";
-    public url = this.general+"/Auth/";
+    private API_URL = environment.API_URL + '/Auth/';
+    // public url = this.general+"/Auth/";
     public headers;
     public loggedInStatus:boolean = false;
 
@@ -34,8 +36,9 @@ export class loginServices {
 
         return !!localStorage.getItem('token');
     }
+
     userAuth( username: string, password: string ): Observable <any>{
 
-        return this.http.get<any>( this.url + "?username=" + username + "&passwordd=" + password);
+        return this.http.get<any>( this.API_URL + '?username=' + username + '&passwordd=' + password);
     }
 }

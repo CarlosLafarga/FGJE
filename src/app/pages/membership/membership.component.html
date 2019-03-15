@@ -498,7 +498,7 @@
                         <!-- </div> -->
 
                         <div class="col-12 bg-white py-1">
-                            <div *ngIf="form.get('cRFC').hasError('required')" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <div *ngIf="form.controls.cRFC.invalid" class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <strong>Atencion!</strong> Por favor ingrese la justificación.
                             </div>
                             <div class="form-group">

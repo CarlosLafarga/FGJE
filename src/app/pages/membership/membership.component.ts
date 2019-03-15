@@ -128,52 +128,52 @@ export class MembershipComponent implements OnInit, OnDestroy {
     this.getRoles();
 
     this.formExpPend =  this.fbExpPend.group({
-      cambioAdscripcion_id: null,
-      iclaveFuncionario: null,
-      catDis_ant: null,
-      catDis_asignado: null,
-      fecha_creacion: null,
-      fecha_modificacion: null,
-      esEmp: null,
-      Asignados: null,
-      iclaveFuncionarioAsign: null,
-      catDiscriminanteAnt: null,
-      rolesFAsign: null,
-      justificacion: null,
-      iclaveFuncionarioDestino: null
+      cambioAdscripcion_id: [''],
+      iclaveFuncionario: [''],
+      catDis_ant: [''],
+      catDis_asignado: [''],
+      fecha_creacion: [''],
+      fecha_modificacion: [''],
+      esEmp: [''],
+      Asignados: [''],
+      iclaveFuncionarioAsign: [''],
+      catDiscriminanteAnt: [''],
+      rolesFAsign: [''],
+      justificacion: [''],
+      iclaveFuncionarioDestino: ['']
     });
     
     this.form = this.fbf.group({
-      iClaveFuncionario: null,
-      cNombreFuncionario: null,
-      cApellidoPaternoFuncionario: null,
-      cApellidoMaternoFuncionario: null,
-      cSexo: null,
-      cRFC: null,
-      cCURP: null,
-      dFechaNacimiento: null,
-      cEmail: null,
-      cCedula: null,
-      iClaveFuncionarioJefe: null,
-      especialidad_val: null,
-      puesto_val: null,
-      jerarquiaOrganizacional_id: null,
-      dcCargaTrabajo: null,
-      tipoEspecialidad_val: null,
-      bEsPar: null,
-      cNumeroEmpleado: null,
-      catDiscriminante_id: null,
-      dFechaIngreso: null,
-      archivoDigital_id: null,
-      catUIE_id: null,
-      catAreasNegocio_id: null,
-      esMP: null,
-      cNumeroCertificado: null,
-      bEsActivo: null,
-      cClaveUsuario: null,
-      cNombre: null,
-      usuario: null,
-      numeroExpediente: null
+      iClaveFuncionario: [''],
+      cNombreFuncionario: [''],
+      cApellidoPaternoFuncionario: [''],
+      cApellidoMaternoFuncionario: [''],
+      cSexo: [''],
+      cRFC: ['', Validators.required],
+      cCURP: [''],
+      dFechaNacimiento: [''],
+      cEmail: [''],
+      cCedula: [''],
+      iClaveFuncionarioJefe: [''],
+      especialidad_val: [''],
+      puesto_val: [''],
+      jerarquiaOrganizacional_id: [''],
+      dcCargaTrabajo: [''],
+      tipoEspecialidad_val: [''],
+      bEsPar: [''],
+      cNumeroEmpleado: [''],
+      catDiscriminante_id: [''],
+      dFechaIngreso: [''],
+      archivoDigital_id: [''],
+      catUIE_id: [''],
+      catAreasNegocio_id: [''],
+      esMP: [''],
+      cNumeroCertificado: [''],
+      bEsActivo: [''],
+      cClaveUsuario: [''],
+      cNombre: [''],
+      usuario: [''],
+      numeroExpediente: ['']
     });
 
   }
@@ -1831,7 +1831,7 @@ public desactivarMP() {
 
   fetch(data, clave, cat, jerarquiaOrg) {
     const req = new XMLHttpRequest();
-    req.open('GET', this.membershipService.general + '/listarExp/GetExpedientes?clavefunci=' + clave
+    req.open('GET', this.membershipService.API_URL + '/listarExp/GetExpedientes?clavefunci=' + clave
                     + '&catDis=' + cat
                     + '&jerarquia=' + jerarquiaOrg); 
     req.onload = () => {
@@ -1843,7 +1843,7 @@ public desactivarMP() {
 
   fetch2(data, clave, cat) {
     const req = new XMLHttpRequest();
-    req.open('GET', this.membershipService.general + '/listarExp/GetExpedientesSinJera?clavefunci=' + clave
+    req.open('GET', this.membershipService.API_URL + '/listarExp/GetExpedientesSinJera?clavefunci=' + clave
                     + '&catDis=' + cat); 
     req.onload = () => {
       data(JSON.parse(req.response));
