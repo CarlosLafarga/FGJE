@@ -9,7 +9,7 @@ export class AppSettings {
         {
             menu: 'vertical', //horizontal , vertical
             menuType: 'default', //default, compact, mini
-            showMenu: true,
+            showMenu: false,
             navbarIsFixed: true,
             footerIsFixed: false,
             sidebarIsFixed: true,

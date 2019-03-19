@@ -26,7 +26,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public titularAgencia: string;
   public menuItems: Array<any>;  
   public cambioAdscripcion : CambioAdscripcion[];
-  public adscripcion : CambioAdscripcion;
+  public adscripcion: CambioAdscripcion;
   public funcionarios: FuncionariosData[] = [];
   public funcionarioss: FuncionariosData[] = [];
   public listaExp: listarExp[] = [];
@@ -34,7 +34,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public roles: Roles[] = [];
   public funcionarioRol: Roles[] = [];
   public count : number;
-  public countHelper : number;
+  public countHelper: number;
   public agencias: Agencias[] = [];
   public agencia: Agencias;
   public users: User[];
@@ -56,9 +56,9 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public funciAgencia: FunciAgencia[] = [];
   public catUIE: catUIE[] = [];
   public val: number[] = [];
-  public funciMP:FuncionariosData[] = [];
-  public clavedelactaul :number[] = [];
-  public cambio : any[];
+  public funciMP: FuncionariosData[] = [];
+  public clavedelactaul: number[] = [];
+  public cambio: any[];
   public expPendientes: boolean = false;
   public esMP: boolean = false;
   public soloRoles: boolean = false;
@@ -67,22 +67,23 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public soloRolesNum: number;
   public esPrincipal: number;
   public cambioEstatus1: cambioEstatus[];
-  public cambioMP : cambioMP[];
+  public cambioMP: cambioMP[];
   public mostrarActivos: boolean = true;
   public prueba: boolean = false;
   public validarModal: boolean = false;
   public claveglobal:number;
   public catDisGlobal:number;
   public myobjJson:string;
-  public jerarquia : jerarquia[]= [];
+  public jerarquia: jerarquia[]= [];
   public iclave: number = 0;
   public catDis: number = 0;
   public jerarquiaOrg: number = 0;
   public arrayExp:any[]= [];
-  public jeraTabla : number = 0;
+  public jeraTabla: number = 0;
   public contEsMP: number = 0;
-  public esmp : any[] = [];
-  public numMP : number;
+  public esmp: any[] = [];
+  public numMP: number;
+  public alertAgencia: boolean = true;
 
   // ============variables de filtrado============
   public searchText: string;
@@ -137,9 +138,9 @@ export class MembershipComponent implements OnInit, OnDestroy {
       esEmp: [''],
       Asignados: [''],
       iclaveFuncionarioAsign: [''],
-      catDiscriminanteAnt: [''],
+      catDiscriminanteAnt: ['', Validators.required],
       rolesFAsign: [''],
-      justificacion: [''],
+      justificacion: ['', Validators.required],
       iclaveFuncionarioDestino: ['']
     });
     
@@ -640,6 +641,7 @@ public desactivarMP() {
      
       this.valEsMPCheck = false;
       this.valAgenciaSelect = false;
+      this.alertAgencia = false;
       // console.log(this.count);
       // console.log(false);
     } else {
@@ -655,6 +657,7 @@ public desactivarMP() {
       }
       this.valEsMPCheck = true;
       this.valAgenciaSelect = true;
+      this.alertAgencia = true
       // console.log(true);
       // console.log(this.count);
     }
@@ -894,6 +897,7 @@ public desactivarMP() {
   public getCatUIE(valor: number): void {
     // console.log(valor);
     if (valor !== undefined) {
+      this.alertAgencia = false;
       this.validarModal = true;
       // console.log(valor);
       this.membershipService.getcatUIE(valor).subscribe( catUIE => {
@@ -907,6 +911,7 @@ public desactivarMP() {
         }
       });
     } else {
+      this.alertAgencia = true;
       // console.log("No se ha seleccionado agencia");
     }
 

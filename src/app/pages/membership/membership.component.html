@@ -290,16 +290,25 @@
                                         <hr>
                                         <!-- [(ngModel)]="catDiscriminante_id" -->
                                         <div class="form-group">
+                                            <!-- <div *ngIf="alertAgencia" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                Por favor seleccione una agencia o indique si solo es cambio de roles.
+                                            </div> -->
+
                                             <label *ngIf="valAgenciaSelect" for="catDiscriminante_id">Nueva agencia:</label>
+                                            
                                             <select *ngIf="valAgenciaSelect"
                                                     class="form-control custom-select"
                                                     id="catDiscriminante_id"
                                                     formControlName="catDiscriminante_id"
                                                     (change)="getCatUIE($event.target.value)"
                                                     [disabled]="valAgenciaSelect">
-                                                <!-- <option selected>-- Seleccione una agencia --</option> -->
+                                                <option selected value="" readonly disabled>-- Seleccione una agencia --</option>
                                                 <option *ngFor="let agencia of agencias" [value]="agencia.catDiscriminante_id">{{ agencia.cClaveDiscriminante }} - {{ agencia.cNombre }}</option>
-                                            </select><br><br>
+                                            </select>
+                                            <span class="text-danger" *ngIf="alertAgencia">
+                                                    *Por favor seleccione una agencia o indique si solo es cambio de roles.
+                                            </span>
+                                            <br><br>
                                             
                                             <input fromControlName="catUIE_id" class="form-control" type="hidden" [value]="r.catUIE_id" readonly id="catUIE_id" *ngFor="let r of catUIE">
                                             <input fromControlName="clavefunciAgenciaNueva" class="form-control" type="hidden" [value]="" readonly id="clavefunciAgenciaNueva" >
@@ -498,14 +507,17 @@
                         <!-- </div> -->
 
                         <div class="col-12 bg-white py-1">
-                            <div *ngIf="form.controls.cRFC.invalid" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <!-- <div *ngIf="form.controls.cRFC.invalid" class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <strong>Atencion!</strong> Por favor ingrese la justificación.
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <label for="justificacion">justificación</label>
                                 <textarea maxlength="150" id="justificacion" class="form-control" formControlName="cRFC" placeholder="Máximo 150 caracteres" required></textarea>
                                 <!-- <textarea id="justificacion" class="form-control" formControlName="cRFC" [(ngModel)]="cRFC" required></textarea> -->
                                 <!-- <small class="text-danger" *ngIf="form.get('cRFC').touched && form.get('cRFC').hasError('required')">Por favor ingrese la justificación</small> -->
+                                <span class="text-danger" *ngIf="form.controls.cRFC.invalid">
+                                        *Por favor ingrese la justificación.
+                                </span>
                             </div>
                         </div>
 
@@ -542,11 +554,15 @@
                                                         id="catDiscriminanteAnt"
                                                         formControlName="catDiscriminanteAnt"
                                                         (change)="onSelectAgencia($event.target.value)">
-                                                    <option selected [value]="0">-- Seleccione una agencia --</option>
+                                                    <option selected value="" readonly disabled>-- Seleccione una agencia --</option>
                                                     <option *ngFor="let expPend of agenciasExpPend1"
                                                             [value]="expPend.catDiscriminante_id"> {{ expPend.cNombre }} 
                                                     </option>
                                                 </select>
+                                                <span class="text-danger"
+                                                    *ngIf="formExpPend.controls.catDiscriminanteAnt.invalid">
+                                                    *Por favor seleccione una agencia.
+                                                </span>
                                             </div>
                                         </div>
                                         <div class="col-xl-3 col-lg-6 mb-3">
@@ -556,13 +572,17 @@
                                                         id="iclaveFuncionarioAsign"
                                                         formControlName="iclaveFuncionarioAsign"
                                                         (change)="onSelectFuncionario($event.target.value)">
-                                                    <option selected [value]="0">-- Seleccione un funcionario --</option>
+                                                    <option selected value="" readonly disabled>-- Seleccione un funcionario --</option>
                                                     <option *ngFor="let funAg of funcinarioAgencia"
                                                             [value]="funAg.iClaveFuncionario"> {{ funAg.cNombreFuncionario }} 
                                                                                                 {{ funAg.cApellidoPaternoFuncionario }} 
                                                                                                 {{ funAg.cAPellidoMaternoFuncionario }} 
                                                     </option>
                                                 </select>
+                                                <span class="text-danger"
+                                                    *ngIf="formExpPend.controls.iclaveFuncionarioAsign.invalid">
+                                                    *Por favor seleccione un funcionario.
+                                                </span>
                                             </div>
                                         </div>
                                         <div class="col-xl-3 col-lg-6 mb-3">
@@ -572,11 +592,15 @@
                                                         id="rolesFAsign"
                                                         formControlName="rolesFAsign"
                                                         (change)="onSelectRoles($event.target.value)">
-                                                    <option selected [value]="0">-- Seleccione un rol --</option>
+                                                    <option selected value="" readonly disabled>-- Seleccione un rol --</option>
                                                     <option *ngFor="let rol of rolesFun2"
                                                             [value]="rol.rol_id"> {{ rol.cDescripcionRol }} 
                                                     </option>
                                                 </select>
+                                                <span class="text-danger"
+                                                    *ngIf="formExpPend.controls.rolesFAsign.invalid">
+                                                    *Por favor seleccione un rol.
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -741,13 +765,17 @@
                         <br><br><br>
     
                         <div class="col-12 bg-white py-1">
-                            <div *ngIf="formExpPend.get('justificacion').hasError('required')" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <!-- <div *ngIf="formExpPend.controls.justificacion.invalid" class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <strong>Atencion!</strong> Por favor ingrese la justificación.
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <label for="justificacion">justificación</label>
                                 <textarea maxlength="150" id="justificacion" class="form-control" formControlName="justificacion" placeholder="Máximo 150 caracteres" required></textarea>
                             </div>
+                            <span class="text-danger"
+                                    *ngIf="formExpPend.controls.justificacion.invalid">
+                                    *Por favor ingrese la justificación.
+                            </span>
                         </div>
 
                         <div class="col-12 bg-white text-center py-2">
