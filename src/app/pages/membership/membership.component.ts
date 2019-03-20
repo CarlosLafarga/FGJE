@@ -1668,13 +1668,13 @@ public desactivarMP() {
       }
     }
     
-    if(this.jeraTabla == null){
+    if(this.jeraTabla != null){
       this.loadingIndicator = true;
       this.fetch2((data) => {
         this.temp = [...data];
         this.rows = data;
+        console.log(this.rows);
 
-        // console.log(this.rows);
         for (let i = 0; i < this.rows.length; i++) {
           arrTemp.push(this.rows[i].jerarquiaOrganizacional_id);
         }
@@ -1714,10 +1714,8 @@ public desactivarMP() {
       this.fetch((data) => {
         this.temp = [...data];
         this.rows = data;
+        console.log(this.rows);
 
-
-
-        // console.log(this.rows);
         for (let i = 0; i < this.rows.length; i++) {
           arrTemp.push(this.rows[i].jerarquiaOrganizacional_id);
         }
@@ -1843,7 +1841,7 @@ public desactivarMP() {
       data(JSON.parse(req.response));
     };
     req.send();
-    // console.log(req);
+    console.log(req);
   }
 
   fetch2(data, clave, cat) {
@@ -1854,7 +1852,7 @@ public desactivarMP() {
       data(JSON.parse(req.response));
     };
     req.send();
-    // console.log(req);
+    console.log(req);
   }
 
   FiltrarExpediente(event) {

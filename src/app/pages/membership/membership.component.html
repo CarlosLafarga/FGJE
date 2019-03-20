@@ -751,7 +751,7 @@
                                             formControlName="iclaveFuncionarioDestino"
                                             [(ngModel)]="iclaveFuncionarioDestino"
                                             required>
-                                        <option selected [value]="0">-- Seleccione un funcionario --</option>
+                                        <option selected value="" readonly disabled>-- Seleccione un funcionario --</option>
                                         <option *ngFor="let funAg of funcionariosAgencia1"
                                                 [value]="funAg.iClaveFuncionario"> {{ funAg.cNombreFuncionario }} 
                                                                                     {{ funAg.cApellidoPaternoFuncionario }} 
