@@ -30,19 +30,26 @@ import { SideChatComponent } from '../theme/components/side-chat/side-chat.compo
 import { FavoritesComponent } from '../theme/components/favorites/favorites.component';
 import { BlankComponent } from './blank/blank.component';
 import { SearchComponent } from './search/search.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+
 
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     CommonModule,
     FormsModule,
     PerfectScrollbarModule,
-    ToastrModule.forRoot(), 
+    ToastrModule.forRoot(),
     NgbModule.forRoot(),
     MultiselectDropdownModule,
     PipesModule,
     routing,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxDatatableModule,
+
   ],
   declarations: [
     PagesComponent,
@@ -62,8 +69,9 @@ import { SearchComponent } from './search/search.component';
     FavoritesComponent,
     BlankComponent,
     SearchComponent,
+    UsuariosComponent,
   ],
-  providers:[
+  providers: [
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
