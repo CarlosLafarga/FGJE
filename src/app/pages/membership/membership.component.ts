@@ -1661,16 +1661,15 @@ public desactivarMP() {
     // this.getRoles();
     // console.log(this.roles);
 /*------------------------------------------------------------------------------------------------------------------------------------*/
-    for(let h = 0; h<this.expPendientesLista.length; h++){
+    for(let h = 0; h < this.expPendientesLista.length; h ++){
       if(this.expPendientesLista[h].iClaveFuncionario == iclaveFuncionarioAsign){
-        
-      this.jeraTabla = this.expPendientesLista[h].jerarquiaOrganizacional_id;
+        this.jeraTabla = this.expPendientesLista[h].jerarquiaOrganizacional_id;
       }
     }
     
-    if(this.jeraTabla != null){
+    if(this.jeraTabla == null){
       this.loadingIndicator = true;
-      this.fetch2((data) => {
+      this.getExpedientesSinJerarquia((data) => {
         this.temp = [...data];
         this.rows = data;
         console.log(this.rows);
@@ -1711,7 +1710,7 @@ public desactivarMP() {
     // console.log(this.arrTempJerar);
     } else {
       this.loadingIndicator = true;
-      this.fetch((data) => {
+      this.getExpedientes((data) => {
         this.temp = [...data];
         this.rows = data;
         console.log(this.rows);
@@ -1832,7 +1831,7 @@ public desactivarMP() {
 
   public listaExp1 = JSON.stringify(this.listaExp);
 
-  fetch(data, clave, cat, jerarquiaOrg) {
+  getExpedientes(data, clave, cat, jerarquiaOrg) {
     const req = new XMLHttpRequest();
     req.open('GET', this.membershipService.API_URL + '/listarExp/GetExpedientes?clavefunci=' + clave
                     + '&catDis=' + cat
@@ -1844,7 +1843,7 @@ public desactivarMP() {
     console.log(req);
   }
 
-  fetch2(data, clave, cat) {
+  getExpedientesSinJerarquia(data, clave, cat) {
     const req = new XMLHttpRequest();
     req.open('GET', this.membershipService.API_URL + '/listarExp/GetExpedientesSinJera?clavefunci=' + clave
                     + '&catDis=' + cat); 
