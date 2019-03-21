@@ -561,7 +561,7 @@
                                                 </select>
                                                 <span class="text-danger"
                                                     *ngIf="formExpPend.controls.catDiscriminanteAnt.invalid">
-                                                    *Por favor seleccione una agencia.
+                                                    *Seleccione una agencia.
                                                 </span>
                                             </div>
                                         </div>
@@ -581,7 +581,7 @@
                                                 </select>
                                                 <span class="text-danger"
                                                     *ngIf="formExpPend.controls.iclaveFuncionarioAsign.invalid">
-                                                    *Por favor seleccione un funcionario.
+                                                    *Seleccione un funcionario.
                                                 </span>
                                             </div>
                                         </div>
@@ -599,7 +599,7 @@
                                                 </select>
                                                 <span class="text-danger"
                                                     *ngIf="formExpPend.controls.rolesFAsign.invalid">
-                                                    *Por favor seleccione un rol.
+                                                    *Seleccione un rol.
                                                 </span>
                                             </div>
                                         </div>
@@ -743,7 +743,7 @@
 
                             <br>
 
-                            <div class="col-xl-3 col-lg-6 mb-3">
+                            <div class="col-xl-4 col-lg-6 mb-4">
                                 <div class="form-group">
                                     <label for="iclaveFuncionarioDestino"><h6>Seleccione el funcionario para reasignar:</h6></label>
                                     <select class="form-control"
@@ -758,6 +758,10 @@
                                                                                     {{ funAg.cAPellidoMaternoFuncionario }} 
                                         </option>
                                     </select>
+                                    <span class="text-danger"
+                                            *ngIf="formExpPend.controls.rolesFAsign.invalid">
+                                            *Seleccione el funcionario para reasingar los expedientes.
+                                    </span>
                                  </div>
                             </div>
                         </div>
@@ -774,7 +778,7 @@
                             </div>
                             <span class="text-danger"
                                     *ngIf="formExpPend.controls.justificacion.invalid">
-                                    *Por favor ingrese la justificación.
+                                    *Ingrese la justificación.
                             </span>
                         </div>
 

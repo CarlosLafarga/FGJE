@@ -137,11 +137,11 @@ export class MembershipComponent implements OnInit, OnDestroy {
       fecha_modificacion: [''],
       esEmp: [''],
       Asignados: [''],
-      iclaveFuncionarioAsign: [''],
+      iclaveFuncionarioAsign: ['', Validators.required],
       catDiscriminanteAnt: ['', Validators.required],
-      rolesFAsign: [''],
+      rolesFAsign: ['', Validators.required],
       justificacion: ['', Validators.required],
-      iclaveFuncionarioDestino: ['']
+      iclaveFuncionarioDestino: ['', Validators.required]
     });
     
     this.form = this.fbf.group({
@@ -1661,11 +1661,17 @@ public desactivarMP() {
     // this.getRoles();
     // console.log(this.roles);
 /*------------------------------------------------------------------------------------------------------------------------------------*/
+    var jerarquiasString: string = "";
+    var jerarquiasTabla: number[] = [];
+
     for(let h = 0; h < this.expPendientesLista.length; h ++){
       if(this.expPendientesLista[h].iClaveFuncionario == iclaveFuncionarioAsign){
         this.jeraTabla = this.expPendientesLista[h].jerarquiaOrganizacional_id;
       }
     }
+
+      jerarquiasTabla = this.funcionarioRol.map(cat => cat.rol_id)
+      jerarquiasString = String(jerarquiasTabla);
     
     if(this.jeraTabla == null){
       this.loadingIndicator = true;
