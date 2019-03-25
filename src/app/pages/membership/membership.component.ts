@@ -1650,31 +1650,38 @@ public desactivarMP() {
   public rolesFun: Roles[] = [];
   public rolesFun2: Roles[] = [];
   public arrTempJerar: number[] = [];
+  public temp2 = [];
 
+  public jeraTablaAux: number[] = [];
+  
   public onSelectFuncionario(iclaveFuncionarioAsign: number) {
     this.rolesFun2 = [];
     this.arrTempJerar = [];
     var arrTemp: number[] = [];
+    this.jeraTablaAux = [];
+    this.rows = [];
     // console.log("valor select funcionario => " + iclaveFuncionarioAsign);
     this.claveglobal = iclaveFuncionarioAsign;
     this.catDis = this.catDisGlobal;
     // this.getRoles();
     // console.log(this.roles);
-/*------------------------------------------------------------------------------------------------------------------------------------*/
-    var jerarquiasString: string = "";
-    var jerarquiasTabla: number[] = [];
+/*-----------------------------------------------------------------------------------------------------*/
+    // var jerarquiasString: string = "";
+    // var jerarquiasTabla: number[] = [];
 
     for(let h = 0; h < this.expPendientesLista.length; h ++){
       if(this.expPendientesLista[h].iClaveFuncionario == iclaveFuncionarioAsign){
         this.jeraTabla = this.expPendientesLista[h].jerarquiaOrganizacional_id;
+        this.jeraTablaAux.push(this.expPendientesLista[h].jerarquiaOrganizacional_id);
       }
     }
 
-      jerarquiasTabla = this.funcionarioRol.map(cat => cat.rol_id)
-      jerarquiasString = String(jerarquiasTabla);
+      // jerarquiasTabla = this.funcionarioRol.map(cat => cat.rol_id)
+      // jerarquiasString = String(jerarquiasTabla);
     
     if(this.jeraTabla == null){
       this.loadingIndicator = true;
+
       this.getExpedientesSinJerarquia((data) => {
         this.temp = [...data];
         this.rows = data;
@@ -1713,47 +1720,84 @@ public desactivarMP() {
 
       setTimeout(() => { this.loadingIndicator = false; }, 1500);
     }, this.claveglobal, this.catDis);
+
     // console.log(this.arrTempJerar);
     } else {
+
+// ==============================================================================
+
+      // for (let j = 0; j < this.jeraTablaAux.length; j++) {
+
+      //   this.membershipService.getListarExp( iclaveFuncionarioAsign, this.catDis, this.jeraTablaAux[j] ).
+      //     subscribe(res => {
+      //       this.temp = res;
+      //       this.rows.push(...res);
+      //       this.rows = [...this.rows];
+      //       for (let i = 0; i < this.temp.length; i++) {
+      //         this.rows.push(this.temp[i]);
+      //       }
+      //       // this.rows = this.temp2
+      //       console.log(this.rows);
+      //     });
+
+      //     this.temp = [];
+          
+      //   }
+      //   console.log(this.temp2);
+      //   console.log(this.rows);
+
+// ==============================================================================
       this.loadingIndicator = true;
-      this.getExpedientes((data) => {
-        this.temp = [...data];
-        this.rows = data;
-        console.log(this.rows);
 
-        for (let i = 0; i < this.rows.length; i++) {
-          arrTemp.push(this.rows[i].jerarquiaOrganizacional_id);
-        }
+      console.log(this.jeraTablaAux);
 
-        const distinct = (value, index, self)=> {
-          return self.indexOf(value) === index;
-        }
-        this.arrTempJerar = arrTemp.filter(distinct);
-        // console.log(this.arrTempJerar);
+      for (let i = 0; i < this.jeraTablaAux.length; i++) {
+          
+        console.log(this.jeraTablaAux[i]);
+  
+        this.getExpedientes((data) => {
+          this.temp = [...data];
+          this.rows.push(...data);
+          this.rows = [...this.rows];
 
-        this.membershipService.getRoles().subscribe( roles => {
-          this.rolesFun = roles
-          // console.log(this.rolesFun);
-    
-          for (let j = 0; j < this.arrTempJerar.length; j++) {
-            for (let k = 0; k < this.rolesFun.length; k++) {
-              if ((this.rolesFun[k].jerarquiaOrganizacional_id) == this.arrTempJerar[j]) {
-                if (this.rolesFun[k].rol_id == 8 ||
-                    this.rolesFun[k].rol_id == 7 ||
-                    this.rolesFun[k].rol_id == 6 ||
-                    this.rolesFun[k].rol_id == 5 ||
-                    this.rolesFun[k].rol_id == 3 ||
-                    this.rolesFun[k].rol_id == 2) {
-                  this.rolesFun2.push(this.rolesFun[k]);
+          console.log(this.rows);
+  
+          for (let i = 0; i < this.rows.length; i++) {
+            arrTemp.push(this.rows[i].jerarquiaOrganizacional_id);
+          }
+  
+          const distinct = (value, index, self)=> {
+            return self.indexOf(value) === index;
+          }
+          this.arrTempJerar = arrTemp.filter(distinct);
+          // console.log(this.arrTempJerar);
+  
+          this.membershipService.getRoles().subscribe( roles => {
+            this.rolesFun = roles
+            // console.log(this.rolesFun);
+      
+            for (let j = 0; j < this.arrTempJerar.length; j++) {
+              for (let k = 0; k < this.rolesFun.length; k++) {
+                if ((this.rolesFun[k].jerarquiaOrganizacional_id) == this.arrTempJerar[j]) {
+                  if (this.rolesFun[k].rol_id == 8 ||
+                      this.rolesFun[k].rol_id == 7 ||
+                      this.rolesFun[k].rol_id == 6 ||
+                      this.rolesFun[k].rol_id == 5 ||
+                      this.rolesFun[k].rol_id == 3 ||
+                      this.rolesFun[k].rol_id == 2) {
+                    this.rolesFun2.push(this.rolesFun[k]);
+                  }
                 }
               }
             }
-          }
-          
-        });
+            
+          });
+  
+          setTimeout(() => { this.loadingIndicator = false; }, 1500);
+        }, this.claveglobal, this.catDis, this.jeraTablaAux[i]);
 
-        setTimeout(() => { this.loadingIndicator = false; }, 1500);
-      }, this.claveglobal, this.catDis,this.jeraTabla);
+      }
+
     }
   }
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
@@ -1762,6 +1806,7 @@ public desactivarMP() {
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
+  
   public jerarqVal: string = "";
   public funcionariosAgencia1: FunciAgencia[] = [];
 
