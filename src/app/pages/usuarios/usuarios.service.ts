@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import {usuario, usuarioRol} from './usuarios.model';
+import { usuario, usuarioRol } from './usuarios.model';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
 export class UsuariosService {
   // public generals = 'http://localhost:55244/api';
   // public general = "http://192.168.105.53:55245/api";
-  private API_URL = environment.API_URL;
+  public API_URL = environment.API_URL;
   // public url = this.API_URL + '/Usuarios';
   private headers;
 
@@ -20,5 +20,5 @@ export class UsuariosService {
 
   getUsuarios(): Observable<usuario[]> {
     return this.http.get<usuario[]>(this.API_URL + '/Usuarios');
-}
+  }
 }

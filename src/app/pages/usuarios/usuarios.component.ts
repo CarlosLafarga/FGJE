@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { UsuariosService } from './usuarios.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -49,18 +50,22 @@ export class UsuariosComponent implements OnInit {
       },
       cPalabraSecreta: {
         title: 'Palabra Secreta',
+        editable: false,
         type: 'string'
       },
       iClaveFuncionario: {
         title: 'Clave Funcionario',
+        editable: false,
         type: 'number'
       },
       password: {
         title: 'Password',
+        editable: false,
         type: 'string'
       },
       cllave: {
         title: 'Key',
+        editable: false,
         type: 'string'
       }
     },
@@ -69,14 +74,16 @@ export class UsuariosComponent implements OnInit {
       perPage: 15
     }
   };
-  constructor() {
+  constructor(
+    private usuariosService: UsuariosService
+  ) {
     this.getData((data) => {
       this.data = data;
     });
   }
   public getData(data) {
     const req = new XMLHttpRequest();
-    req.open('GET', 'http://localhost:55244/api/Usuarios');
+    req.open('GET', this.usuariosService.API_URL + '/Usuarios');
     req.onload = () => {
       data(JSON.parse(req.response));
       console.log(req.response);
@@ -93,11 +100,11 @@ export class UsuariosComponent implements OnInit {
   }
 
   public onRowSelect(event) {
-   // console.log(event);
+    console.log(event);
   }
 
   public onUserRowSelect(event) {
-    // console.log(event);   //this select return only one page rows
+    console.log(event);   //this select return only one page rows
   }
 
   public onRowHover(event) {
@@ -105,7 +112,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   ngOnInit() {
-   
+
   }
 
 }
