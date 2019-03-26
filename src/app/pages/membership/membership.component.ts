@@ -1615,6 +1615,9 @@ public desactivarMP() {
   public arrTempFunSinRep: number[] = [];
 
   public onSelectAgencia(catDiscriminanteAnterior: number) {
+    this.formExpPend.controls['iclaveFuncionarioAsign'].setValue("");
+    this.formExpPend.controls['rolesFAsign'].setValue("");
+    this.formExpPend.controls['iclaveFuncionarioDestino'].setValue("");
     this.rows = [];
     this.funcinarioAgencia = [];
     this.rolesFun = [];
@@ -1790,7 +1793,6 @@ public desactivarMP() {
                 }
               }
             }
-            
           });
   
           setTimeout(() => { this.loadingIndicator = false; }, 1500);
@@ -1799,6 +1801,7 @@ public desactivarMP() {
       }
 
     }
+
   }
 /*------------------** --------------------------------------------------------------------------------------------------------------*/
 /*----------------- ** --------------------------------------------------------------------------------------------------------------*/
