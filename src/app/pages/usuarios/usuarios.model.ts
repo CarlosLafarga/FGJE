@@ -23,8 +23,3 @@ export interface usuario {
     dFechaFin: Date;
     esPrincipal: number;
   }
-
-  export interface cambioEstatus{
-    Usuario_id : number;
-    iClaveFuncionario : number;
-  }

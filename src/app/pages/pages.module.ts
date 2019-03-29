@@ -33,7 +33,6 @@ import { SearchComponent } from './search/search.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 
 
@@ -50,7 +49,6 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     routing,
     ReactiveFormsModule,
     NgxDatatableModule,
-    Ng2SmartTableModule
 
   ],
   declarations: [

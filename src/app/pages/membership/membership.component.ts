@@ -1072,8 +1072,8 @@ public desactivarMP() {
     //   });
   }
 
-    public cambioEstatus(cambioEstatus: cambioEstatus){
-      this.membershipService.cambioEstatus(cambioEstatus).subscribe(cambioEstatus =>{
+  public cambioEstatus(cambioEstatus: cambioEstatus){
+    this.membershipService.cambioEstatus(cambioEstatus).subscribe(cambioEstatus =>{
       this.cambioEstatus;
     });
     // console.log("se ejecuto cambio de estatus.");

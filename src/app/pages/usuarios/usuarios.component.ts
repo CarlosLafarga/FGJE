@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuarios',
@@ -14,17 +13,17 @@ export class UsuariosComponent implements OnInit {
     hideSubHeader: false,
     actions: {
       columnTitle: 'Actions',
-      add: false,
+      add: true,
       edit: true,
-      delete: false,
+      delete: true,
       custom: [],
       position: 'right' // left|right
     },
-    // add: {
-    //   addButtonContent: '<h4 class="mb-1"><i class="fa fa-plus ml-3 text-success"></i></h4>',
-    //   createButtonContent: '<i class="fa fa-check mr-3 text-success"></i>',
-    //   cancelButtonContent: '<i class="fa fa-times text-danger"></i>'
-    // },
+    add: {
+      addButtonContent: '<h4 class="mb-1"><i class="fa fa-plus ml-3 text-success"></i></h4>',
+      createButtonContent: '<i class="fa fa-check mr-3 text-success"></i>',
+      cancelButtonContent: '<i class="fa fa-times text-danger"></i>'
+    },
     edit: {
       editButtonContent: '<i class="fa fa-pencil mr-3 text-primary"></i>',
       saveButtonContent: '<i class="fa fa-check mr-3 text-success"></i>',
@@ -37,9 +36,9 @@ export class UsuariosComponent implements OnInit {
     noDataMessage: 'No data found',
     columns: {
       usuario_id: {
-        title: 'ID Usuario',
+        title: 'ID',
         editable: false,
-        width: '200px',
+        width: '60px',
         type: 'html',
         valuePrepareFunction: (value) => { return '<div class="text-center">' + value + '</div>'; }
       },
@@ -48,35 +47,22 @@ export class UsuariosComponent implements OnInit {
         type: 'string',
         filter: true
       },
-      cNombreFuncionario: {
-        title: 'Nombre',
-        editable: false,
-        type: 'string'
-      },
-      cApellidoPaternoFuncionario: {
-        title: 'Apellido Paterno',
-        editable: false,
-        type: 'string'
-      },
-      cApellidoMaternoFuncionario: {
-        title: 'Apellido Paterno',
-        editable: false,
+      cPalabraSecreta: {
+        title: 'Palabra Secreta',
         type: 'string'
       },
       iClaveFuncionario: {
         title: 'Clave Funcionario',
-        editable: false,
-        type: 'number',
-        filter: true
+        type: 'number'
       },
-      bEsActivo: {
-        title: 'Activo',
-        editable: false,
-        type: 'html',
-        filter: false,
-        valuePrepareFunction: (value) => { if(value == 0 ){return '<i class="fa fa-user mr-2 text-danger" [ngbTooltip]="Inactivo" placement="bottom" ></i>'}else{ return '<i  class="fa fa-user mr-2 text-success" [ngbTooltip]="Inactivo" placement="bottom" ></i>'}}
+      password: {
+        title: 'Password',
+        type: 'string'
       },
-      
+      cllave: {
+        title: 'Key',
+        type: 'string'
+      }
     },
     pager: {
       display: true,
@@ -99,41 +85,15 @@ export class UsuariosComponent implements OnInit {
   }
 
   public onDeleteConfirm(event): void {
-    
-    if(event.data.bEsActivo == 1){
-    swal({
-      title: 'Desactivar Usuario ',
-      text: '¿Esta seguro que desea desactivar al usuario?',
-      type: 'warning',
-      html: '<b>¿Esta seguro que desea desactivar al usuario?</b><br><label><b>Justificacion:</b></label>',
-      showCancelButton: true,
-      confirmButtonText: 'Desactivar',
-      cancelButtonText: 'Cancelar'
-
-     }).then((result) => {
-
-      if (result.value) {
-        
-        console.log(event.data);
-
-      } else if (result.dismiss === swal.DismissReason.cancel) {
-        
-      }
-    });
-  }else{
-    swal({
-      title:"Cuidado",
-      text: "Usuario ya se encentra desactivado.",
-      type: "warning"
-      }).then(() =>{
-      
-      // location.reload();
-      });
-  }
+    if (window.confirm('Are you sure you want to delete?')) {
+      event.confirm.resolve();
+    } else {
+      event.confirm.reject();
+    }
   }
 
   public onRowSelect(event) {
-    //console.log(event);
+   // console.log(event);
   }
 
   public onUserRowSelect(event) {
@@ -143,8 +103,6 @@ export class UsuariosComponent implements OnInit {
   public onRowHover(event) {
     // console.log(event);
   }
-
-  
 
   ngOnInit() {
    
