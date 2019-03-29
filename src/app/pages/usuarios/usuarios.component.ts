@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import swal from 'sweetalert2';
+import { UsuariosService } from './usuarios.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -83,14 +84,16 @@ export class UsuariosComponent implements OnInit {
       perPage: 15
     }
   };
-  constructor() {
+  constructor(
+    private usuariosService: UsuariosService
+  ) {
     this.getData((data) => {
       this.data = data;
     });
   }
   public getData(data) {
     const req = new XMLHttpRequest();
-    req.open('GET', 'http://localhost:55244/api/Usuarios');
+    req.open('GET', this.usuariosService.API_URL + '/Usuarios');
     req.onload = () => {
       data(JSON.parse(req.response));
       console.log(req.response);

@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
 export class UsuariosService {
   // public generals = 'http://localhost:55244/api';
   // public general = "http://192.168.105.53:55245/api";
-  private API_URL = environment.API_URL;
+  public API_URL = environment.API_URL;
   // public url = this.API_URL + '/Usuarios';
   private headers;
 
