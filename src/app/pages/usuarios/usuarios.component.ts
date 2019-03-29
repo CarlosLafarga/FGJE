@@ -42,7 +42,9 @@ export class UsuariosComponent implements OnInit {
         editable: false,
         width: '200px',
         type: 'html',
-        valuePrepareFunction: (value) => { return '<div class="text-center">' + value + '</div>'; }
+        valuePrepareFunction: (value) => {
+          return '<div class="text-center">' + value + '</div>';
+        }
       },
       cClaveUsuario: {
         title: 'Usuario',
@@ -75,7 +77,12 @@ export class UsuariosComponent implements OnInit {
         editable: false,
         type: 'html',
         filter: false,
-        valuePrepareFunction: (value) => { if(value == 0 ){return '<i class="fa fa-user mr-2 text-danger" [ngbTooltip]="Inactivo" placement="bottom" ></i>'}else{ return '<i  class="fa fa-user mr-2 text-success" [ngbTooltip]="Inactivo" placement="bottom" ></i>'}}
+        valuePrepareFunction: (value) => { 
+          if( value == 0 )
+            {return '<i class="fa fa-user mr-2 text-danger" [ngbTooltip]="Inactivo" placement="bottom" ></i>'}
+          else
+            { return '<i  class="fa fa-user mr-2 text-success" [ngbTooltip]="Inactivo" placement="bottom" ></i>'}
+        }
       },
       
     },
@@ -96,7 +103,7 @@ export class UsuariosComponent implements OnInit {
     req.open('GET', this.usuariosService.API_URL + '/Usuarios');
     req.onload = () => {
       data(JSON.parse(req.response));
-      console.log(req.response);
+      // console.log(req.response);
     };
     req.send();
   }
@@ -147,7 +154,9 @@ export class UsuariosComponent implements OnInit {
     // console.log(event);
   }
 
-  
+  onCustom(e) {
+    console.log(e);
+  }
 
   ngOnInit() {
    
