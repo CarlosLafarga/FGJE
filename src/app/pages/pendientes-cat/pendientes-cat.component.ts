@@ -12,13 +12,18 @@ export class PendientesCatComponent implements OnInit {
   public formPendientesCat: FormGroup;
   public funcionariosAgencia1: any[] = [];
 
+  messages = {
+    emptyMessage: 'No se encontraron datos',
+    totalMessage: 'total'
+  }
+
   constructor(
     private fbPendientesCat: FormBuilder
   ) { }
 
   ngOnInit() {
 
-    this.formPendientesCat =  this.fbPendientesCat.group({
+    this.formPendientesCat = this.fbPendientesCat.group({
       catDiscriminanteAnt: ['', Validators.required],
       iclaveFuncionarioAsign: ['', Validators.required],
       rolesFAsign: ['', Validators.required],
