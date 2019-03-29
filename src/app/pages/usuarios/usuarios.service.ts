@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import {usuario, usuarioRol} from './usuarios.model';
+import {usuario, usuarioRol,cambioEstatus} from './usuarios.model';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -21,4 +21,10 @@ export class UsuariosService {
   getUsuarios(): Observable<usuario[]> {
     return this.http.get<usuario[]>(this.API_URL + '/Usuarios');
 }
+
+cambioEstatus(cambioEstatus:cambioEstatus){
+  const estatus = JSON.stringify(cambioEstatus);
+  return this.http.post(this.API_URL + '/cambiarEstatus', estatus, { headers: this.headers });
+}
+
 }
