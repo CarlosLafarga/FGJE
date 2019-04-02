@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
 export class UsuariosService {
   // public generals = 'http://localhost:55244/api';
   // public general = "http://192.168.105.53:55245/api";
-  private API_URL = environment.API_URL + '/Usuarios';
+  public API_URL = environment.API_URL + '/Usuarios';
   // public url = this.API_URL + '/Usuarios';
   private headers;
 
@@ -22,10 +22,10 @@ export class UsuariosService {
     return this.http.get<usuario[]>(this.API_URL + '/GetUsuario');
 }
 
-cambioEstatus(cambioEstatus:cambioEstatus){
-  const estatus = JSON.stringify(cambioEstatus);
-  return this.http.post(this.API_URL + '/cambiarEstatus', estatus, { headers: this.headers });
-}
+  cambioEstatus(cambioEstatus: cambioEstatus) {
+    const estatus = JSON.stringify(cambioEstatus);
+    return this.http.post(this.API_URL + '/cambiarEstatus', estatus, { headers: this.headers });
+  }
 
 actualizarUsuario(id: number ,usuario: usuariosViewModel) {
   return this.http.put(this.API_URL+ '/PutUsuario/'+ id , usuario , {headers: this.headers});
