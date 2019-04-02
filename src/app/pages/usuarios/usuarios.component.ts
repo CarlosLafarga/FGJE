@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { UsuariosService } from './usuarios.service';
 import swal from 'sweetalert2';
 
 @Component({
@@ -20,21 +21,23 @@ export class UsuariosComponent implements OnInit {
       custom: [],
       position: 'right' // left|right
     },
-    // add: {
-    //   addButtonContent: '<h4 class="mb-1"><i class="fa fa-plus ml-3 text-success"></i></h4>',
-    //   createButtonContent: '<i class="fa fa-check mr-3 text-success"></i>',
-    //   cancelButtonContent: '<i class="fa fa-times text-danger"></i>'
-    // },
+    add: {
+      addButtonContent: '<h4 class="mb-1"><i class="fa fa-plus ml-3 text-success"></i></h4>',
+      createButtonContent: '<i class="fa fa-check mr-3 text-success"></i>',
+      cancelButtonContent: '<i class="fa fa-times text-danger"></i>'
+    },
     edit: {
       editButtonContent: '<i class="fa fa-pencil mr-3 text-primary"></i>',
       saveButtonContent: '<i class="fa fa-check mr-3 text-success"></i>',
-      cancelButtonContent: '<i class="fa fa-times text-danger"></i>'
+      cancelButtonContent: '<i class="fa fa-times text-danger"></i>',
+      confirmSave:true
     },
     delete: {
       deleteButtonContent: '<i class="fa fa-trash-o text-danger"></i>',
       confirmDelete: true
     },
-    noDataMessage: 'No data found',
+    noDataMessage: 'No hay registros que mostrar.',
+    
     columns: {
       usuario_id: {
         title: 'ID Usuario',
@@ -80,10 +83,10 @@ export class UsuariosComponent implements OnInit {
     },
     pager: {
       display: true,
-      perPage: 15
+      perPage: 20
     }
   };
-  constructor() {
+  constructor( private usuarioService : UsuariosService) {
     this.getData((data) => {
       this.data = data;
     });
@@ -93,7 +96,7 @@ export class UsuariosComponent implements OnInit {
     req.open('GET', 'http://localhost:55244/api/Usuarios');
     req.onload = () => {
       data(JSON.parse(req.response));
-      console.log(req.response);
+      
     };
     req.send();
   }
@@ -132,17 +135,62 @@ export class UsuariosComponent implements OnInit {
   }
   }
 
-  public onRowSelect(event) {
-    //console.log(event);
+  public onSaveConfirm(event) {
+    if (window.confirm('Are you sure you want to save?')) {
+      event.newData['name'] += ' + added in code';
+      event.confirm.resolve(event.newData);
+      console.log("event newData",event.newData);
+
+      this.usuarioService.actualizarUsuario(event.newData.usuario_id,event.newData).subscribe(resp =>{
+        console.log(resp);
+        alert("Usuario acualizado con exito!");
+      },err =>{
+        console.log(err);
+        alert(err.message);
+      });
+      
+    } else {
+      event.confirm.reject();
+    }
+
+    // swal({
+    //   title: 'Actualizar Usuario',
+    //   text: '¿Esta seguro que desea Actualizar al usuario   '+event.data.cClaveUsuario+'?',
+    //   type: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonText: 'Desactivar',
+    //   cancelButtonText: 'Cancelar'
+
+    //  }).then((result) => {
+
+    //   if (result.value) {
+        
+    //     console.log("aceptar",result.value);
+    //     console.log("evento",event);
+    //     event.confirm.resolve(event.data);
+    //     console.log(event.data);
+    //     console.log(event.newData);
+
+    //   } else if (result.dismiss === swal.DismissReason.cancel) {
+    //     console.log("cancelar",result.dismiss)
+    //     event.confirm.reject();
+    //   }
+    // });
+
+    
   }
 
-  public onUserRowSelect(event) {
-    // console.log(event);   //this select return only one page rows
-  }
+  // public onRowSelect(event) {
+  //   //console.log(event);
+  // }
 
-  public onRowHover(event) {
-    // console.log(event);
-  }
+  // public onUserRowSelect(event) {
+  //   // console.log(event);   //this select return only one page rows
+  // }
+
+  // public onRowHover(event) {
+  //   // console.log(event);
+  // }
 
   
 

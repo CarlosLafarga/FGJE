@@ -659,7 +659,8 @@
                                         [loadingIndicator]="loadingIndicator"
                                         [selected]="selected"
                                         [selectionType]="'checkbox'"
-                                        (select)='onSelect($event)'>
+                                        (select)='onSelect($event)'
+                                        [messages]="messages">
                                         <ngx-datatable-column
                                             [width]="30"
                                             [sortable]="false"

@@ -28,3 +28,15 @@ export interface usuario {
     Usuario_id : number;
     iClaveFuncionario : number;
   }
+
+  export interface usuariosViewModel{
+    Usuario_id: number;
+    cClaveUsuario: string;
+    cNombreFuncionario: string;
+    cApellidoPaternoFuncionario: string;
+    cApellidoMaternoFuncionario: string;
+    iClaveFuncionario: number;
+    bEsActivo: number;
+  }
+
+

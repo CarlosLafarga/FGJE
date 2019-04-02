@@ -85,6 +85,11 @@ export class MembershipComponent implements OnInit, OnDestroy {
   public numMP: number;
   public alertAgencia: boolean = true;
 
+  messages = {
+    emptyMessage: 'No se encontraron datos',
+    totalMessage: 'total'
+  }
+
   // ============variables de filtrado============
   public searchText: string;
   public searchActivos: string = "1";

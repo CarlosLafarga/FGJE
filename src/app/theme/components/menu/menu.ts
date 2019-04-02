@@ -52,6 +52,7 @@ export const verticalMenuItems = [
     // new Menu (201, 'Pruebas Carlos', '/pages/prueba', null, 'trash', null, false, 0),
     new Menu (2, 'Cambio de adscripción', '/pages/membership', null, 'exchange', null, false, 0), 
     new Menu (3, 'Control Usuarios', '/pages/usuarios', null, 'user', null, false, 0), 
+    new Menu (4, 'CAT Pendientes', '/pages/pendientes-cat', null, 'file-text', null, false, 0), 
     //new Menu (202, 'Cambio de adscripción', '/pages/cambio-adscripcion', null, 'exchange', null, false, 0)
 ]
 
