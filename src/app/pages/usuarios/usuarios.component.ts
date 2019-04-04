@@ -109,6 +109,8 @@ export class UsuariosComponent implements OnInit {
 
   public onDeleteConfirm(event): void {
 
+    
+
     if (event.data.bEsActivo == 1) {
       swal({
         title: 'Desactivar Usuario ',
@@ -142,23 +144,72 @@ export class UsuariosComponent implements OnInit {
   }
 
   public onSaveConfirm(event) {
-    if (window.confirm('Are you sure you want to save?')) {
+
+    //console.log("include",this.data.includes("+event.newData.cClaveUsuario+"));
+   var found  = false;
+   console.log("new data nombre usuario: ", event.newData.cClaveUsuario);
+   for(var i = 0; i< this.data.length; i++){
+      if( this.data[i].cClaveUsuario == ''+event.newData.cClaveUsuario+''){
+        found = true;
+        break;
+      }
+      
+   }
+   console.log("found: ",found);
+   if(found == false){
+    swal({
+      title: 'Actualizar Usuario',
+      text: '¿Esta seguro que desea Actualizar al usuario   '+event.data.cClaveUsuario+'?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Actualizar',
+      cancelButtonText: 'Cancelar'
+
+     }).then((result) => {
+      
+      if (result.value) {
+
       event.newData['name'] += ' + added in code';
       event.confirm.resolve(event.newData);
       console.log("event newData", event.newData);
 
       this.usuarioService.actualizarUsuario(event.newData.usuario_id, event.newData).subscribe(resp => {
         console.log(resp);
-        alert("Usuario acualizado con exito!");
+        //alert("Usuario acualizado con exito!");
+        swal({
+          title: "Usuario acualizado con exito!",
+          // text: this.titularAgencia,
+          //text: "Debe seleccionar un rol del catalogo de roles.",
+          type: "success"
+        });
+
       }, err => {
         console.log(err);
         // alert(err.message);
-        alert(err.error.innerException.innerException.exceptionMessage);
+        //alert(err.error.innerException.innerException.exceptionMessage);
+        swal({
+          title: "Error!",
+          // text: this.titularAgencia,
+          text: ""+err.error.innerException.innerException.exceptionMessage+"",
+          type: "error"
+        });
       });
 
-    } else {
-      event.confirm.reject();
-    }
+     } else if (result.dismiss === swal.DismissReason.cancel) {
+
+        console.log("cancelar",result.dismiss)
+        event.confirm.reject();
+      }
+    });
+
+  }else{
+    swal({
+      title: "Error!",
+      // text: this.titularAgencia,
+      text: "Ya existe un perfil con ese nombre de usuario.",
+      type: "error"
+    });
+  }
 
     // swal({
     //   title: 'Actualizar Usuario',
