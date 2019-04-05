@@ -121,10 +121,10 @@
           <label for="justificacion">justificación</label>
           <textarea maxlength="150" id="justificacion" class="form-control" formControlName="justificacion"
             placeholder="Máximo 150 caracteres" required></textarea>
+            <span class="text-danger" *ngIf="formPendientesCat.controls.justificacion.invalid">
+              *Ingrese la justificación.
+            </span>
         </div>
-        <span class="text-danger" *ngIf="formPendientesCat.controls.justificacion.invalid">
-          *Ingrese la justificación.
-        </span>
       </div>
 
       <div class="col-12 bg-white text-center py-2">

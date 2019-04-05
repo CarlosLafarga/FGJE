@@ -87,7 +87,8 @@ export class MembershipComponent implements OnInit, OnDestroy {
 
   messages = {
     emptyMessage: 'No se encontraron datos',
-    totalMessage: 'total'
+    totalMessage: 'total',
+    selectedMessage: 'seleccionados'
   }
 
   // ============variables de filtrado============
