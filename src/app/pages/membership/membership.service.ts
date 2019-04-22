@@ -130,4 +130,12 @@ export class MembershipService {
         return this.http.get( this.API_URL + '/listarExp/GetExpedientesSinJA?catDis=' + catdis );
     }
 
+    getExpedientesATP( catdiscriminante: number, claveFuncionario: number ): Observable<any> {
+        return this.http.get( this.API_URL + '/GetExpedientes/GetExpedientesATP?catDiscriminante=' + catdiscriminante + '&claveFuncionario=' + claveFuncionario );
+    }
+
+    getExpedientesJA( catdiscriminante: number, claveFuncionario: number ):Observable<any>{
+        return this.http.get( this.API_URL + '/GetExpedientes/GetExpedientesJA?catDiscriminante=' + catdiscriminante + '&claveFuncionario=' + claveFuncionario );
+    }
+
 } 
