@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { FuncionariosData,
-        Roles,
-        Agencias,
-        FunciAgencia,
-        catUIE,
-        CambioAdscripcion,
-        ExpPendientes,
-        AsignarPendientes,
-        cambioEstatus
-    } from './membership.model';
+import {
+    FuncionariosData,
+    Roles,
+    Agencias,
+    FunciAgencia,
+    catUIE,
+    CambioAdscripcion,
+    ExpPendientes,
+    AsignarPendientes,
+    cambioEstatus
+} from './membership.model';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class MembershipService {
 
-//    public general = 'http://localhost:55244/api';
+    //    public general = 'http://localhost:55244/api';
     // public general = 'http://192.168.105.53:55245/api';
     public API_URL = environment.API_URL;
     // public url2 = this.general + '/funcionarios';
@@ -41,7 +42,7 @@ export class MembershipService {
     private headers;
 
     constructor(public http: HttpClient) {
-        this.headers = new HttpHeaders({ 'Content-Type': 'application/json' }); 
+        this.headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     }
 
     getFuncionarios(): Observable<FuncionariosData[]> {
@@ -52,7 +53,7 @@ export class MembershipService {
         return this.http.get<Agencias[]>(this.API_URL + '/catDiscriminantes');
     }
 
-    getFUsuarioAgencia( catdis: number ): Observable<FunciAgencia[]> {
+    getFUsuarioAgencia(catdis: number): Observable<FunciAgencia[]> {
         return this.http.get<FunciAgencia[]>(this.API_URL + '/FunciAgencia?catdis=' + catdis);
     }
 
@@ -60,82 +61,82 @@ export class MembershipService {
         return this.http.get<Roles[]>(this.API_URL + '/Roles');
     }
 
-    getFUsuarioRol( id: number ): Observable<Roles[]> {
+    getFUsuarioRol(id: number): Observable<Roles[]> {
         return this.http.get<Roles[]>(this.API_URL + '/RolFunci?iClaveFuncionario=' + id);
     }
 
-    getCountExp(iclave: number,catdis:number):Observable<any> {
+    getCountExp(iclave: number, catdis: number): Observable<any> {
         return this.http.get(this.API_URL + '/CountExp/countExp?iclavefuncionario=' + iclave + '+&catdiscriminate=' + catdis);
     }
 
-    getJerarquia(rol: number):Observable<any> {
+    getJerarquia(rol: number): Observable<any> {
         return this.http.get(this.API_URL + '/ObtJerarquia/ObtJerarquia?rol=' + rol);
     }
 
-    getCounthelper(iclave: number, catdis: number):Observable<any> {
+    getCounthelper(iclave: number, catdis: number): Observable<any> {
         return this.http.get(this.API_URL + '/HelperAgencia?iclavefuncionario=' + iclave + '+&catdiscriminate=' + catdis);
     }
     /* ----------------------------------------------------------------------------------------------------------------*/
-    getListarExp(iclave:number,catdis:number,jerarquia:number):Observable<any> {
+    getListarExp(iclave: number, catdis: number, jerarquia: number): Observable<any> {
         return this.http.get(this.API_URL + '/listarExp/GetExpedientes?clavefunci=' + iclave + '&catDis=' + catdis + '&jerarquia=' + jerarquia);
     }
 
-    getListarExpSinJera(iclave:number,catdis:number):Observable<any> {
+    getListarExpSinJera(iclave: number, catdis: number): Observable<any> {
         return this.http.get(this.API_URL + 'istarExp/GetExpedientesSinJera?clavefunci=' + iclave + '&catDis=' + catdis);
     }
-   /*-----------------------------------------------------------------------------------------------------------------*/
-    getcatUIE( catdis: number ): Observable<catUIE[]> {
+    /*-----------------------------------------------------------------------------------------------------------------*/
+    getcatUIE(catdis: number): Observable<catUIE[]> {
         //console.log(catdis);
         return this.http.get<catUIE[]>(this.API_URL + '/catUEI?catdis=' + catdis);
     }
 
-    getfunciMP(catdis:number): Observable<FuncionariosData[]> {
+    getfunciMP(catdis: number): Observable<FuncionariosData[]> {
         return this.http.get<FuncionariosData[]>(this.API_URL + '/funciActual?catdis=' + catdis);
     }
 
-    updateFuncionario( funcionario:FuncionariosData) {
+    updateFuncionario(funcionario: FuncionariosData) {
         return this.http.put(this.API_URL, funcionario);
     }
 
-    cambioAdscripcion(cambioAdscripcion:CambioAdscripcion) {
+    cambioAdscripcion(cambioAdscripcion: CambioAdscripcion) {
         const newpres = JSON.stringify(cambioAdscripcion);
         // console.log(newpres);
         return this.http.post(this.API_URL + '/CambioAD/cambioADS', newpres, { headers: this.headers });
     }
 
-    cambioEstatus(cambioEstatus:cambioEstatus) {
+    cambioEstatus(cambioEstatus: cambioEstatus) {
         const estatus = JSON.stringify(cambioEstatus);
         return this.http.post(this.API_URL + '/cambiarEstatus', estatus, { headers: this.headers });
     }
     cambioMP(cambioMP) {
         const esMP = JSON.stringify(cambioMP);
-        return this.http.post(this.API_URL + '/cambioEsMP', esMP, {headers:this.headers});
+        return this.http.post(this.API_URL + '/cambioEsMP', esMP, { headers: this.headers });
     }
 
     getExpPendientes(): Observable<ExpPendientes[]> {
         return this.http.get<ExpPendientes[]>(this.API_URL + '/cambioAdscripcionExps');
     }
 
-    asignarExpPendientes(asignarExpPendientes:AsignarPendientes) {
+    asignarExpPendientes(asignarExpPendientes: AsignarPendientes) {
         const newExp = JSON.stringify(asignarExpPendientes);
         // console.log(newExp);
-        return this.http.post(this.API_URL + '/CambioExp', newExp , { headers: this.headers });
+        return this.http.post(this.API_URL + '/CambioExp', newExp, { headers: this.headers });
     }
 
-    getCountRoles( iclaveFun: number, catdis: number, rolId: number ):Observable<any> {
-        return this.http.get( this.API_URL + '/ExisteRol/countRolAgencia?iclavefuncionario=' + iclaveFun + '&catdiscriminante=' + catdis + '&rolId=' + rolId );
+    getCountRoles(iclaveFun: number, catdis: number, rolId: number): Observable<any> {
+        return this.http.get(this.API_URL + '/ExisteRol/countRolAgencia?iclavefuncionario=' + iclaveFun + '&catdiscriminante=' + catdis + '&rolId=' + rolId);
     }
 
-    getExisteExp( catdis: number ):Observable<any> {
-        return this.http.get( this.API_URL + '/listarExp/GetExpedientesSinJA?catDis=' + catdis );
+    getExisteExp(catdis: number): Observable<any> {
+        return this.http.get(this.API_URL + '/listarExp/GetExpedientesSinJA?catDis=' + catdis);
     }
 
-    getExpedientesATP( catdiscriminante: number, claveFuncionario: number ):Observable<any> {
-        return this.http.get( this.API_URL + '/GetExpedientes/GetExpedientesATP?catDiscriminante=' + catdiscriminante + '&claveFuncionario=' + claveFuncionario );
+    getExpedientesATP(catdiscriminante: number, claveFuncionario: number): Observable<any> {
+        return this.http.get(this.API_URL + '/GetExpedientes/GetExpedientesATP?catDiscriminante=' + catdiscriminante + '&claveFuncionario=' + claveFuncionario);
     }
 
-    getExpedientesJA( catdiscriminante: number, claveFuncionario: number ):Observable<any> {
-        return this.http.get( this.API_URL + '/GetExpedientes/GetExpedientesJA?catDiscriminante=' + catdiscriminante + '&claveFuncionario=' + claveFuncionario );
+    getExpedientesJA(catdiscriminante: number, claveFuncionario: number): Observable<any> {
+        return this.http.get(this.API_URL + '/GetExpedientes/GetExpedientesJA?catDiscriminante=' + catdiscriminante + '&claveFuncionario=' + claveFuncionario);
     }
 
 } 

@@ -1669,7 +1669,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
 
     this.membershipService.getFUsuarioRol(iclaveFuncionarioAsign).subscribe(roles => {
       this.rolesFun2 = roles;
-      console.log(this.rolesFun2);
+      // console.log(this.rolesFun2);
     });
 
     this.rolesFun2 = [];
@@ -1911,6 +1911,82 @@ export class MembershipComponent implements OnInit, OnDestroy {
         });
 
       });
+    } else if (value == 2) {
+      this.loadingIndicator = true;
+      this.membershipService.getListarExp(this.catDisGlobal, this.claveglobal, 45).subscribe(data => {
+        this.rows = [...data];
+        this.loading = false;
+
+        this.membershipService.getFUsuarioAgencia(this.catDis).subscribe(exp => {
+          this.funcionariosAgencia = exp
+          // console.log(this.funcionariosAgencia);
+
+          for (let i: number = 0; i < this.funcionariosAgencia.length; i++) {
+
+            var rolIdArray: number[] = [];
+            for (let j: number = 0; j < this.funcionariosAgencia[i].usuario[0].usuarioRol.length; j++) {
+              rolIdArray.push(this.funcionariosAgencia[i].usuario[0].usuarioRol[j].rol_id);
+            }
+
+            var cont: boolean = false;
+            for (let k = 0; k < rolIdArray.length; k++) {
+              if (rolIdArray[k] === rol) {
+                cont = true;
+              }
+            }
+
+            if (cont) {
+              this.funcionariosAgencia1.push(this.funcionariosAgencia[i]);
+            }
+          }
+
+          // console.log(this.funcionariosAgencia1);
+
+        });
+
+      });
+    } else if (value == 8 || value == 7) {
+      this.loadingIndicator = true;
+      // this.membershipService.getListarExpSinJera(this.claveglobal, this.catDisGlobal).subscribe(data => {
+      //   this.rows = [...data];
+      //   this.loadingIndicator = false;
+
+      this.getExpedientesSinJerarquia((data) => {
+            this.temp = [...data];
+            this.rows = data;
+            console.log(this.rows);
+            this.loadingIndicator = false;
+
+            this.membershipService.getFUsuarioAgencia(this.catDis).subscribe(exp => {
+              this.funcionariosAgencia = exp
+              // console.log(this.funcionariosAgencia);
+    
+              for (let i: number = 0; i < this.funcionariosAgencia.length; i++) {
+    
+                var rolIdArray: number[] = [];
+                for (let j: number = 0; j < this.funcionariosAgencia[i].usuario[0].usuarioRol.length; j++) {
+                  rolIdArray.push(this.funcionariosAgencia[i].usuario[0].usuarioRol[j].rol_id);
+                }
+    
+                var cont: boolean = false;
+                for (let k = 0; k < rolIdArray.length; k++) {
+                  if (rolIdArray[k] === rol) {
+                    cont = true;
+                  }
+                }
+    
+                if (cont) {
+                  this.funcionariosAgencia1.push(this.funcionariosAgencia[i]);
+                }
+              }
+    
+              // console.log(this.funcionariosAgencia1);
+    
+            });
+
+          }, this.claveglobal, this.catDis);
+
+      // });
     }
 
     // this.funcionariosAgencia1 = [];
@@ -2004,7 +2080,7 @@ export class MembershipComponent implements OnInit, OnDestroy {
       data(JSON.parse(req.response));
     };
     req.send();
-    console.log(req);
+    // console.log(req);
   }
 
   FiltrarExpediente(event) {
